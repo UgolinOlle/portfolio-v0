@@ -1,12 +1,13 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from '~/layouts/docs/page';
-import type { componentsSource } from '~/lib/source';
+import type { blocksSource, componentsSource } from '~/lib/source';
 
 import { Preview } from './preview';
 
-type RegistrySource = typeof componentsSource;
+type RegistrySource = typeof componentsSource | typeof blocksSource;
 
 type RegistryDocsPageProps = {
   source: RegistrySource;
@@ -22,6 +23,10 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
   }
 
   const MDX = page.data.body;
+  const isRootIndex = !slug || slug.length === 0;
+  // Sur /ui/blocks, on affiche en plus une galerie avec la preview live de chaque block.
+  const galleryPages =
+    isRootIndex && type === 'block' ? source.getPages().filter((p) => p.url !== page.url) : [];
 
   return (
     <DocsPage toc={page.data.toc}>
@@ -40,6 +45,23 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
           }}
         />
       </DocsBody>
+      {galleryPages.length > 0 && (
+        <div className="mt-4 flex flex-col gap-16">
+          {galleryPages.map((galleryPage) => (
+            <section className="flex flex-col gap-4" key={galleryPage.url}>
+              <div>
+                <Link className="text-lg font-medium hover:underline" href={galleryPage.url}>
+                  {galleryPage.data.title}
+                </Link>
+                {galleryPage.data.description && (
+                  <p className="text-fd-muted-foreground text-sm">{galleryPage.data.description}</p>
+                )}
+              </div>
+              {galleryPage.data.preview && <Preview path={galleryPage.data.preview} type="block" />}
+            </section>
+          ))}
+        </div>
+      )}
     </DocsPage>
   );
 };

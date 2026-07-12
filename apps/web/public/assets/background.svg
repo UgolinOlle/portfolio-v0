@@ -1,0 +1,58 @@
+<svg width="1000" height="1000" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_436_2)">
+<rect width="1000" height="1000" fill="currentColor" fill-opacity="0.03"/>
+<circle cx="250.5" cy="250.5" r="4" fill="currentColor" fill-opacity="0.5" stroke="url(#paint0_linear_436_2)"/>
+<circle cx="250.5" cy="750.5" r="4" fill="currentColor" fill-opacity="0.5" stroke="url(#paint1_linear_436_2)"/>
+<circle cx="750.5" cy="250.5" r="4" fill="currentColor" fill-opacity="0.5" stroke="url(#paint2_linear_436_2)"/>
+<circle cx="750.5" cy="750.5" r="4" fill="currentColor" fill-opacity="0.5" stroke="url(#paint3_linear_436_2)"/>
+<path d="M750.5 0L750.5 1000" stroke="url(#paint4_linear_436_2)"/>
+<line x1="1000" y1="250.5" y2="250.5" stroke="url(#paint5_linear_436_2)"/>
+<line x1="1000" y1="750.5" y2="750.5" stroke="url(#paint6_linear_436_2)"/>
+<line x1="250.5" y1="-3.38259e-08" x2="250.5" y2="1000" stroke="url(#paint7_linear_436_2)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_436_2" x1="246" y1="250.5" x2="255" y2="250.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="currentColor" stop-opacity="0"/>
+<stop offset="0.5" stop-color="currentColor" stop-opacity="0.5"/>
+<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_436_2" x1="246" y1="750.5" x2="255" y2="750.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="currentColor" stop-opacity="0"/>
+<stop offset="0.5" stop-color="currentColor" stop-opacity="0.5"/>
+<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint2_linear_436_2" x1="746" y1="250.5" x2="755" y2="250.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="currentColor" stop-opacity="0"/>
+<stop offset="0.5" stop-color="currentColor" stop-opacity="0.5"/>
+<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint3_linear_436_2" x1="746" y1="750.5" x2="755" y2="750.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="currentColor" stop-opacity="0"/>
+<stop offset="0.5" stop-color="currentColor" stop-opacity="0.5"/>
+<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint4_linear_436_2" x1="750.031" y1="3.38265e-08" x2="750.031" y2="1000" gradientUnits="userSpaceOnUse">
+<stop stop-color="currentColor" stop-opacity="0"/>
+<stop offset="0.5" stop-color="currentColor" stop-opacity="0.5"/>
+<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint5_linear_436_2" x1="1000" y1="249.5" x2="0" y2="249.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="currentColor" stop-opacity="0"/>
+<stop offset="0.5" stop-color="currentColor" stop-opacity="0.5"/>
+<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint6_linear_436_2" x1="1000" y1="749.5" x2="0" y2="749.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="currentColor" stop-opacity="0"/>
+<stop offset="0.5" stop-color="currentColor" stop-opacity="0.5"/>
+<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint7_linear_436_2" x1="249.5" y1="3.38259e-08" x2="249.5" y2="1000" gradientUnits="userSpaceOnUse">
+<stop stop-color="currentColor" stop-opacity="0"/>
+<stop offset="0.5" stop-color="currentColor" stop-opacity="0.5"/>
+<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="clip0_436_2">
+<rect width="1000" height="1000" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,93 @@
+{
+  "navigation": {
+    "portfolio": "P0rtfoli0",
+    "projects": "Pr0jets",
+    "components": "C0mposants",
+    "writings": "Articles"
+  },
+  "header": {
+    "title": "Développeur Full Stack - ជរាបសួរ",
+    "profileAlt": "Photo de profil d'Ugolin Ollé"
+  },
+  "about": {
+    "description": "Développeur full-stack freelance et product builder, je conçois et développe des applications web modernes, des landings page & des tools pour développeurs.\n\nDans mes projets, je fais attention autant à la qualité du code qu’à l’expérience utilisateur et aux performances.\n\nUne attention particulière est portée aux outils, à l’automatisation et aux petits détails qui transforment un bon logiciel en excellent produit.\n\nCe que j’aime, c’est construire des produits utiles, bien pensés, et faits pour durer."
+  },
+  "sections": {
+    "about": "À propos",
+    "projects": "Projets",
+    "stacks": "Technologies",
+    "resources": "Ressources",
+    "contact": "Contact"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "readMore": "Lire plus",
+    "viewProject": "Voir le projet",
+    "notFound": {
+      "title": "404 - Page introuvable",
+      "description": "La page que vous recherchez a peut-être été supprimée, renommée ou est temporairement indisponible.",
+      "link": "Retour à la page d'accueil"
+    }
+  },
+  "projects": {
+    "title": "Mes projets",
+    "description": "Explorez mon portfolio de projets et réalisations.",
+    "readMore": "Voir plus",
+    "githubTitle": "Projets sur Github",
+    "discover": "Découvrir",
+    "noProjects": "Aucun projets trouvé",
+    "pageTitle": "Projets",
+    "pageSubtitle": "Une sélection de projets que j'ai créés et auxquels j'ai contribué",
+    "pageNoProjects": "Aucun projet disponible en français",
+    "descriptions": {
+      "whoa-ui": "Composants d'interface animés conçus pour React et Next.js. (Projet en construction)",
+      "whoa-ide": "Application mobile de suivi nutritionnel & tracker les calorie."
+    }
+  },
+  "stacks": {
+    "title": "Mes compétences",
+    "categories": {
+      "languages": "Langages",
+      "frameworks": "Frameworks",
+      "devops": "DevOps",
+      "tools": "Outils",
+      "databases": "Bases de données"
+    }
+  },
+  "resources": {
+    "title": "Matériels utilisées",
+    "filterAll": "Tous",
+    "showMore": "Voir tout",
+    "showLess": "Voir moins",
+    "types": {
+      "Matériel": "Matériel",
+      "App": "App",
+      "IDE": "IDE"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "N'hésitez pas à me contacter à"
+  },
+  "components": {
+    "title": "Bibliothèque de Composants",
+    "description": "Explorez ma collection de composants UI interactifs construits avec React, Next.js, et Framer Motion. Copiez le code et utilisez-les dans vos projets.",
+    "backToComponents": "Retour aux Composants",
+    "preview": "Aperçu",
+    "code": "Code",
+    "usage": "Utilisation",
+    "variants": "Variantes",
+    "componentCode": "Code du Composant",
+    "basicUsage": "Utilisation de Base",
+    "props": "Props",
+    "propName": "Prop",
+    "type": "Type",
+    "default": "Défaut",
+    "dependencies": "Dépendances",
+    "relatedComponents": "Composants Liés",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "download": "Télécharger"
+  }
+}

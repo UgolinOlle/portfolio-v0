@@ -11,11 +11,13 @@
     "build": "turbo build",
     "check-types": "turbo check-types",
     "check": "oxlint && oxfmt --write",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "dotenv": "^17.2.2",
-    "zod": "^4.1.13"
+    "format": "oxfmt --write",
+    "prepare": "husky",
+    "test": "turbo test",
+    "analyze": "turbo analyze",
+    "bump-deps": "npx npm-check-updates --deep -u -x shiki,next,recharts,require-in-the-middle && bun install",
+    "bump-ui": "npx shadcn@latest add --all --overwrite -c packages/shadcn && npx shadcn@latest migrate radix -c packages/shadcn",
+    "clean": "turbo clean && git clean -xdf node_modules .cache .turbo dist"
   },
   "devDependencies": {
     "@portfolio-v0/config": "workspace:*",

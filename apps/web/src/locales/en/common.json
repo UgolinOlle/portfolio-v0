@@ -1,0 +1,93 @@
+{
+  "navigation": {
+    "portfolio": "P0rtfoli0",
+    "projects": "Pr0jects",
+    "components": "C0mponents",
+    "writing": "Writings"
+  },
+  "header": {
+    "title": "Full Stack Developer - ជរាបសួរ",
+    "profileAlt": "Ugolin Ollé profile picture"
+  },
+  "about": {
+    "description": "I'm a freelance full-stack developer and product builder who designs and engineers modern web apps, desktop tools, and developer experiences.\n\nI work at the intersection of clean architecture, thoughtful UX, and practical performance.\n\nI care deeply about tooling, automation, and the small details that turn good software into great products.\n\nI enjoy building focused products with strong identity, fast feedback loops, and long-term maintainability in mind."
+  },
+  "sections": {
+    "about": "About",
+    "projects": "Projects",
+    "stacks": "Technologies",
+    "resources": "Resources",
+    "contact": "Contact"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "readMore": "Read more",
+    "viewProject": "View project",
+    "notFound": {
+      "title": "404 - Documentation Not Found",
+      "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+      "link": "Go back to the homepage"
+    }
+  },
+  "projects": {
+    "title": "My projects",
+    "description": "Explore my portfolio of projects and achievements.",
+    "readMore": "Read more",
+    "githubTitle": "Github projects",
+    "discover": "Discover",
+    "noProjects": "No project found",
+    "pageTitle": "Projects",
+    "pageSubtitle": "A selection of projects I've built and contributed to",
+    "pageNoProjects": "No projects available in English",
+    "descriptions": {
+      "whoa-ui": "Animated UI components designed for React and Next.js. (Project under construction)",
+      "whoa-ide": "Mobile nutritional tracking application & calorie tracker."
+    }
+  },
+  "stacks": {
+    "title": "My Skills",
+    "categories": {
+      "languages": "Languages",
+      "frameworks": "Frameworks",
+      "tools": "Tools",
+      "devops": "DevOps",
+      "databases": "Databases"
+    }
+  },
+  "resources": {
+    "title": "Tools & Equipment",
+    "filterAll": "All",
+    "showMore": "Show all",
+    "showLess": "Show less",
+    "types": {
+      "Matériel": "Hardware",
+      "App": "Apps",
+      "IDE": "IDEs"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Feel free to contact me at"
+  },
+  "components": {
+    "title": "Component Library",
+    "description": "Explore my collection of interactive UI components built with React, Next.js, and Framer Motion. Copy the code and use them in your projects.",
+    "backToComponents": "Back to Components",
+    "preview": "Preview",
+    "code": "Code",
+    "usage": "Usage",
+    "variants": "Variants",
+    "componentCode": "Component Code",
+    "basicUsage": "Basic Usage",
+    "props": "Props",
+    "propName": "Prop",
+    "type": "Type",
+    "default": "Default",
+    "dependencies": "Dependencies",
+    "relatedComponents": "Related Components",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "download": "Download"
+  }
+}

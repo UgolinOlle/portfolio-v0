@@ -16,6 +16,16 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test": {
+      "dependsOn": ["^test"]
+    },
+    "analyze": {
+      "dependsOn": ["^analyze"]
+    },
+    "clean": {
+      "cache": false,
+      "outputs": []
     }
   }
 }

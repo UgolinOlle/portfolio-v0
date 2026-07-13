@@ -197,7 +197,7 @@ export function SidebarViewport({
       <ScrollViewport
         {...viewport}
         className={cn(
-          'overscroll-contain mask-[linear-gradient(to_bottom,transparent,white_12px,white_calc(100%-12px),transparent)] p-4 *:flex! *:flex-col! *:gap-0.5!',
+          'overscroll-contain mask-[linear-gradient(to_bottom,transparent,white_20px,white_calc(100%-20px),transparent)] p-4 *:flex! *:flex-col! *:gap-1!',
           viewport?.className,
         )}
       >

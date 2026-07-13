@@ -2,6 +2,7 @@ import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { ReactNode } from 'react';
 
 import { Navbar } from '~/components/docs/navbar';
+import { Sidebar, SidebarProvider, SidebarTrigger, useSidebar } from '~/layouts/docs/slots/sidebar';
 import { componentsSource } from '~/lib/source';
 
 type LayoutProps = {
@@ -11,10 +12,17 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <DocsLayout
-      containerProps={{ className: '[--fd-layout-width:1900px]' }}
+      containerProps={{ className: '[--fd-layout-width:1900px] [--fd-banner-height:3.5rem]' }}
       nav={{ component: <Navbar /> }}
       searchToggle={{ enabled: false }}
-      sidebar={{ collapsible: false, tabs: false, className: 'border-none' }}
+      slots={{
+        sidebar: {
+          provider: SidebarProvider,
+          root: Sidebar,
+          trigger: SidebarTrigger,
+          useSidebar,
+        },
+      }}
       themeSwitch={{ enabled: false }}
       tree={componentsSource.pageTree}
     >

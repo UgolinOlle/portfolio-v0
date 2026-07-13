@@ -5,6 +5,8 @@ import {
   blocksMeta,
   componentsDocs,
   componentsMeta,
+  templatesDocs,
+  templatesMeta,
 } from 'fumadocs-mdx:collections/server';
 import { icons } from 'lucide-react';
 import { createElement } from 'react';
@@ -31,9 +33,16 @@ export const blocksSource = loader({
   icon,
 });
 
+export const templatesSource = loader({
+  baseUrl: '/ui/templates',
+  source: toFumadocsSource(templatesDocs, templatesMeta),
+  icon,
+});
+
 type RegistryPage =
   | ReturnType<typeof componentsSource.getPages>[number]
-  | ReturnType<typeof blocksSource.getPages>[number];
+  | ReturnType<typeof blocksSource.getPages>[number]
+  | ReturnType<typeof templatesSource.getPages>[number];
 
 export const getLLMText = async (page: RegistryPage) => {
   const raw = await page.data.getText('raw');

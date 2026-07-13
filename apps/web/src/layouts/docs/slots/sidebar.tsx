@@ -6,6 +6,7 @@ import { useDocsLayout } from 'fumadocs-ui/layouts/docs';
 import { LinkItem } from 'fumadocs-ui/layouts/shared';
 import { isLayoutTabActive, type LayoutTab } from 'fumadocs-ui/layouts/shared';
 import { Check, ChevronDown, ChevronsUpDown, Languages, SidebarIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 import { type ComponentProps, type ReactNode, useMemo, useRef, useState } from 'react';
 
 import * as Base from '../../../components/docs-sidebar/base';
@@ -21,20 +22,26 @@ import { mergeRefs } from '../../../lib/merge-refs';
 import { SearchTrigger } from '../../shared/slots/search-trigger';
 
 const itemVariants = cva(
-  'relative flex flex-row items-center gap-2 rounded-lg p-2 text-start text-fd-muted-foreground wrap-anywhere [&_svg]:size-4 [&_svg]:shrink-0',
+  'relative flex flex-row items-center gap-2 rounded-xl p-2 text-start text-fd-muted-foreground wrap-anywhere transition-colors duration-150 [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        link: 'transition-colors hover:bg-fd-accent/50 hover:text-fd-accent-foreground/80 hover:transition-none data-[active=true]:bg-fd-primary/10 data-[active=true]:text-fd-primary data-[active=true]:hover:transition-colors',
-        button:
-          'transition-colors hover:bg-fd-accent/50 hover:text-fd-accent-foreground/80 hover:transition-none',
-      },
-      highlight: {
-        true: "data-[active=true]:before:content-[''] data-[active=true]:before:bg-fd-primary data-[active=true]:before:absolute data-[active=true]:before:w-px data-[active=true]:before:inset-y-2.5 data-[active=true]:before:inset-s-2.5",
+        link: 'hover:bg-fd-accent/60 hover:text-fd-accent-foreground data-[active=true]:bg-fd-primary/[0.08] data-[active=true]:text-fd-primary data-[active=true]:font-medium',
+        button: 'hover:bg-fd-accent/60 hover:text-fd-accent-foreground',
       },
     },
   },
 );
+
+function ActiveIndicator() {
+  return (
+    <motion.span
+      className="bg-fd-primary absolute inset-y-2.5 inset-s-1 w-1 rounded-full shadow-[0_0_6px_-1px_var(--color-fd-primary)]"
+      layoutId="sidebar-active-indicator"
+      transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+    />
+  );
+}
 
 export interface SidebarProps extends ComponentProps<'aside'> {
   components?: Partial<SidebarPageTreeComponents>;
@@ -90,7 +97,8 @@ export function Sidebar({ footer, banner, collapsible = true, components, ...res
                   buttonVariants({
                     color: 'ghost',
                     size: 'icon-sm',
-                    className: 'mb-auto text-fd-muted-foreground',
+                    className:
+                      'mb-auto text-fd-muted-foreground transition-transform hover:scale-105 active:scale-95',
                   }),
                 )}
               >
@@ -214,7 +222,7 @@ function SidebarContent({ ref: refProp, className, children, ...props }: Compone
               data-collapsed={collapsed}
               data-hovered={collapsed && hovered}
               className={cn(
-                'absolute inset-y-0 inset-s-0 flex w-full flex-col items-end border-e bg-white text-sm duration-250 *:w-(--fd-sidebar-width)',
+                'bg-fd-background absolute inset-y-0 inset-s-0 flex w-full flex-col items-end border-e text-sm duration-250 *:w-(--fd-sidebar-width)',
                 collapsed && [
                   'inset-y-2 w-(--fd-sidebar-width) rounded-xl border transition-transform',
                   hovered
@@ -244,13 +252,16 @@ function SidebarContent({ ref: refProp, className, children, ...props }: Compone
                 buttonVariants({
                   color: 'ghost',
                   size: 'icon-sm',
-                  className: 'rounded-lg',
+                  className: 'rounded-lg transition-transform hover:scale-105 active:scale-95',
                 }),
               )}
             >
               <SidebarIcon />
             </Base.SidebarCollapseTrigger>
-            <SearchTrigger className="rounded-lg" hideIfDisabled />
+            <SearchTrigger
+              className="rounded-lg transition-transform hover:scale-105 active:scale-95"
+              hideIfDisabled
+            />
           </div>
         </>
       )}
@@ -273,8 +284,8 @@ function SidebarDrawer({
       />
       <Base.SidebarDrawerContent
         className={cn(
-          'fixed inset-y-0 inset-e-0 z-40 flex w-[85%] max-w-95 flex-col border-s text-[0.9375rem] shadow-lg',
-          'data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out bg-white',
+          'bg-fd-background fixed inset-y-0 inset-e-0 z-40 flex w-[85%] max-w-95 flex-col border-s text-[0.9375rem] shadow-lg',
+          'data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out',
           className,
         )}
         {...props}
@@ -310,19 +321,22 @@ function SidebarItem({
   className,
   style,
   children,
+  active,
   ...props
 }: ComponentProps<typeof Base.SidebarItem>) {
   const depth = Base.useFolderDepth();
 
   return (
     <Base.SidebarItem
-      className={cn(itemVariants({ variant: 'link', highlight: depth >= 1 }), className)}
+      active={active}
+      className={cn(itemVariants({ variant: 'link' }), className)}
       style={{
         paddingInlineStart: getItemOffset(depth),
         ...style,
       }}
       {...props}
     >
+      {active && <ActiveIndicator />}
       {children}
     </Base.SidebarItem>
   );
@@ -352,19 +366,22 @@ function SidebarFolderTrigger({
 function SidebarFolderLink({
   className,
   style,
+  active,
   ...props
 }: ComponentProps<typeof Base.SidebarFolderLink>) {
   const depth = Base.useFolderDepth();
 
   return (
     <Base.SidebarFolderLink
-      className={cn(itemVariants({ variant: 'link', highlight: depth > 1 }), 'w-full', className)}
+      active={active}
+      className={cn(itemVariants({ variant: 'link' }), 'w-full', className)}
       style={{
         paddingInlineStart: getItemOffset(depth - 1),
         ...style,
       }}
       {...props}
     >
+      {active && <ActiveIndicator />}
       {props.children}
     </Base.SidebarFolderLink>
   );

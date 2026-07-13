@@ -17,4 +17,9 @@ export const { docs: blocksDocs, meta: blocksMeta } = defineDocs({
   docs: { schema: registrySchema },
 });
 
+export const { docs: templatesDocs, meta: templatesMeta } = defineDocs({
+  dir: 'content/templates',
+  docs: { schema: registrySchema },
+});
+
 export default defineConfig();

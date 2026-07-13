@@ -17,7 +17,7 @@ export interface DocsPageProps {
 export function DocsPage({ toc = [], ...props }: DocsPageProps) {
   return (
     <AnchorProvider toc={toc}>
-      <main className="flex w-full min-w-0 flex-col">
+      <main className="flex w-full min-w-0 flex-col pt-(--fd-banner-height)">
         <article className="flex w-full max-w-215 flex-1 flex-col gap-6 px-4 py-8 md:mx-auto md:px-6">
           {props.children}
           <Footer />
@@ -26,8 +26,8 @@ export function DocsPage({ toc = [], ...props }: DocsPageProps) {
       {toc.length > 0 && (
         <div
           className={cn(
-            'sticky top-(--fd-nav-height) h-[calc(100dvh-var(--fd-nav-height))] w-71.5 shrink-0 overflow-auto',
-            'p-4 max-xl:hidden',
+            'sticky top-(--fd-banner-height) h-[calc(100dvh-var(--fd-banner-height))] w-71.5 shrink-0 overflow-auto',
+            'px-4 pt-[calc(var(--fd-banner-height)+--spacing(4))] pb-4 max-xl:hidden',
           )}
         >
           <p className="text-fd-muted-foreground mb-2 text-sm">On this page</p>

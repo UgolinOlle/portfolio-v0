@@ -1,5 +1,14 @@
+'use client';
+
+import { motion } from 'motion/react';
+
 export const Logo = () => (
-  <div className="flex items-center gap-2">
+  <motion.div
+    className="flex items-center gap-2"
+    whileHover={{ scale: 1.04 }}
+    whileTap={{ scale: 0.97 }}
+    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+  >
     <svg
       className="h-3 w-auto"
       fill="none"
@@ -15,6 +24,6 @@ export const Logo = () => (
         />
       </g>
     </svg>
-    <span className="font-semibold">Kibo UI</span>
-  </div>
+    <span className="font-semibold tracking-tight">Whoa UI</span>
+  </motion.div>
 );

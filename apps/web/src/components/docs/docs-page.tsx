@@ -3,16 +3,16 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from '~/layouts/docs/page';
-import type { blocksSource, componentsSource } from '~/lib/source';
+import type { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
 import { Preview } from './preview';
 
-type RegistrySource = typeof componentsSource | typeof blocksSource;
+type RegistrySource = typeof componentsSource | typeof blocksSource | typeof templatesSource;
 
 type RegistryDocsPageProps = {
   source: RegistrySource;
   slug: string[] | undefined;
-  type: 'component' | 'block';
+  type: 'component' | 'block' | 'template';
 };
 
 export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) => {
@@ -24,9 +24,9 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
 
   const MDX = page.data.body;
   const isRootIndex = !slug || slug.length === 0;
-  // Sur /ui/blocks, on affiche en plus une galerie avec la preview live de chaque block.
+  // Sur /ui/blocks et /ui/templates, on affiche en plus une galerie avec la preview live de chaque page.
   const galleryPages =
-    isRootIndex && type === 'block' ? source.getPages().filter((p) => p.url !== page.url) : [];
+    isRootIndex && type !== 'component' ? source.getPages().filter((p) => p.url !== page.url) : [];
 
   return (
     <DocsPage toc={page.data.toc}>
@@ -57,7 +57,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
                   <p className="text-fd-muted-foreground text-sm">{galleryPage.data.description}</p>
                 )}
               </div>
-              {galleryPage.data.preview && <Preview path={galleryPage.data.preview} type="block" />}
+              {galleryPage.data.preview && <Preview path={galleryPage.data.preview} type={type} />}
             </section>
           ))}
         </div>

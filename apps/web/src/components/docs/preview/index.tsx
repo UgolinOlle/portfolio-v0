@@ -13,7 +13,7 @@ type PreviewProps = {
   // Nom du fichier dans `apps/web/examples/` (sans extension), ex. "blog".
   path: string;
   className?: string;
-  type?: 'component' | 'block';
+  type?: 'component' | 'block' | 'template';
 };
 
 export const Preview = async ({ path, className, type = 'component' }: PreviewProps) => {
@@ -22,12 +22,13 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
   const Component = await import(`../../../../examples/${path}.tsx`).then(
     (module) => module.default,
   );
+  const isFullPage = type !== 'component';
 
   return (
     <div
       className={cn(
         'size-full overflow-hidden rounded-lg border bg-background',
-        type === 'block' ? 'h-192' : 'h-128',
+        isFullPage ? 'h-192' : 'h-128',
         className,
       )}
     >
@@ -45,11 +46,11 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
         <TabsContent
           className={cn(
             'not-fumadocs-codeblock size-full',
-            type === 'block' ? 'overflow-auto' : 'overflow-hidden',
+            isFullPage ? 'overflow-auto' : 'overflow-hidden',
           )}
           value="preview"
         >
-          {type === 'block' ? (
+          {isFullPage ? (
             <Component />
           ) : (
             <PreviewFrame>

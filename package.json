@@ -30,7 +30,7 @@
   },
   "lint-staged": {
     "*": [
-      "oxlint",
+      "oxlint --no-error-on-unmatched-pattern",
       "oxfmt --write"
     ]
   },

@@ -1,0 +1,5 @@
+{
+  "title": "Layout",
+  "icon": "PanelsTopLeft",
+  "pages": ["header", "footer", "sidebar", "container"]
+}

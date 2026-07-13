@@ -1,0 +1,5 @@
+{
+  "title": "Footer",
+  "icon": "PanelBottom",
+  "pages": ["simple", "newsletter", "columns"]
+}

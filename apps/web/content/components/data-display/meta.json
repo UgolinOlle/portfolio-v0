@@ -1,0 +1,5 @@
+{
+  "title": "Data Display",
+  "icon": "Table2",
+  "pages": ["table", "avatar", "badge", "tooltip"]
+}

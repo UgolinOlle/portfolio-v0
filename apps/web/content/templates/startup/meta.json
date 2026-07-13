@@ -1,0 +1,5 @@
+{
+  "title": "Startup",
+  "icon": "Building2",
+  "pages": ["landing-page", "about", "careers"]
+}

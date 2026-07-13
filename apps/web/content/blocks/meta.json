@@ -1,4 +1,4 @@
 {
   "title": "Blocks",
-  "pages": ["index", "blog"]
+  "pages": ["index", "hero", "features", "pricing", "content", "footer", "cta"]
 }

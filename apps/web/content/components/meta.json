@@ -1,4 +1,4 @@
 {
   "title": "Components",
-  "pages": ["status-card"]
+  "pages": ["layout", "navigation", "forms", "feedback", "data-display", "overlay"]
 }

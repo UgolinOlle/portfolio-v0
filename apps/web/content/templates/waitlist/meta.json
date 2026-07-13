@@ -1,0 +1,5 @@
+{
+  "title": "Waitlist",
+  "icon": "Hourglass",
+  "pages": ["simple", "with-countdown"]
+}

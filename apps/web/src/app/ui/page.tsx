@@ -2,6 +2,7 @@ import { ArrowRight, Blocks, LayoutGrid, LayoutTemplate } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { Breadcrumbs } from '~/components/docs/breadcrumbs';
 import { Navbar } from '~/components/docs/navbar';
 import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
@@ -40,7 +41,8 @@ const UiIndexPage = () => {
   return (
     <>
       <Navbar />
-      <main className="mx-auto max-w-4xl px-4 pt-32 pb-20">
+      <Breadcrumbs className="pt-14" />
+      <main className="mx-auto max-w-4xl px-4 pt-8 pb-20">
         <div className="mb-12 space-y-4">
           <h1 className="text-3xl font-semibold">UI</h1>
           <p className="text-lg text-muted-foreground">

@@ -36,7 +36,7 @@ export function createLinkItemRenderer({
 
     if (item.type === 'menu')
       return (
-        <SidebarFolder {...props}>
+        <SidebarFolder collapsible={false} defaultOpen {...props}>
           {item.url ? (
             <SidebarFolderLink href={item.url} active={active} external={item.external}>
               {item.icon}

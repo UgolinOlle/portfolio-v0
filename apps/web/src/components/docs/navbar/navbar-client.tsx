@@ -1,11 +1,9 @@
 'use client';
 
-import { Button } from '@portfolio-v0/shadcn/components/button';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { useMotionValueEvent, useScroll } from 'motion/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { type ReactNode, useState } from 'react';
 
 import { Links } from './links';
@@ -28,7 +26,6 @@ export function NavbarClient({
   templatesCount,
   github,
 }: NavbarClientProps) {
-  const router = useRouter();
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
 
@@ -39,9 +36,10 @@ export function NavbarClient({
   return (
     <div
       className={cn(
-        'fixed inset-x-0 top-0 z-40 flex h-14 items-center justify-between border-b border-transparent px-4',
-        'bg-background/70 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300',
+        'fixed inset-x-0 top-0 z-40 flex h-14 items-center justify-between px-4',
+        'bg-background/70 backdrop-blur-md transition-[background-color,border-color,box-shadow]',
         scrolled && 'border-border bg-background/85 shadow-[0_1px_12px_-4px_rgba(0,0,0,0.08)]',
+        'border-b-fd-accent border-b duration-300',
       )}
     >
       <div className="flex items-center gap-3">
@@ -63,14 +61,6 @@ export function NavbarClient({
         <Search />
         <div className="mx-1 h-5 w-px bg-border" />
         <ThemeToggle />
-        <Button
-          className="h-8 rounded-lg shadow-none transition-transform hover:scale-105"
-          size="sm"
-          variant="outline"
-          onClick={() => router.push('/')}
-        >
-          Portfolio-v0
-        </Button>
         {github}
       </div>
 

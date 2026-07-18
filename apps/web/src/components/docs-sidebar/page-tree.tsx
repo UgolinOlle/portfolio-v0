@@ -61,11 +61,7 @@ export function createPageTreeRenderer({
       if (Folder) return <Folder item={node}>{renderList(node.children)}</Folder>;
 
       return (
-        <SidebarFolder
-          collapsible={node.collapsible}
-          active={path.includes(node)}
-          defaultOpen={node.defaultOpen}
-        >
+        <SidebarFolder collapsible={false} active={path.includes(node)} defaultOpen>
           {node.index ? (
             <SidebarFolderLink
               href={node.index.url}

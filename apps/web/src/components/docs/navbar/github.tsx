@@ -29,7 +29,7 @@ export const GitHub = async ({ className }: GitHubProps) => {
   return (
     <Button
       asChild
-      className={cn('h-8 rounded-lg shadow-none transition-transform hover:scale-105', className)}
+      className={cn('h-8 rounded-full shadow-none transition-transform hover:scale-105', className)}
       size="sm"
       variant="outline"
     >

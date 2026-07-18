@@ -61,7 +61,7 @@ export const Links = ({ className, componentsCount, blocksCount, templatesCount 
           {Boolean(link.count) && (
             <Badge
               className={cn(
-                'hidden bg-foreground/5 tabular-nums lg:inline-flex',
+                'hidden rounded-full bg-foreground/5 tabular-nums lg:inline-flex',
                 link.active && 'bg-primary text-primary-foreground',
               )}
               variant="secondary"

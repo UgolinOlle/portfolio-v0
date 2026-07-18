@@ -12,7 +12,9 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <DocsLayout
-      containerProps={{ className: '[--fd-layout-width:1900px] [--fd-banner-height:3.5rem]' }}
+      containerProps={{
+        className: '[--fd-layout-width:1900px] [--fd-banner-height:calc(3.5rem+2.75rem)]',
+      }}
       nav={{ component: <Navbar /> }}
       searchToggle={{ enabled: false }}
       slots={{

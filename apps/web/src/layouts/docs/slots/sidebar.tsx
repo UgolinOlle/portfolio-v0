@@ -7,7 +7,7 @@ import { LinkItem } from 'fumadocs-ui/layouts/shared';
 import { isLayoutTabActive, type LayoutTab } from 'fumadocs-ui/layouts/shared';
 import { Check, ChevronDown, ChevronsUpDown, Languages, SidebarIcon } from 'lucide-react';
 import { motion } from 'motion/react';
-import { type ComponentProps, type ReactNode, useMemo, useRef, useState } from 'react';
+import { type ComponentProps, type ReactNode, useMemo, useState } from 'react';
 
 import * as Base from '../../../components/docs-sidebar/base';
 import { createLinkItemRenderer } from '../../../components/docs-sidebar/link-item';
@@ -19,7 +19,6 @@ import { buttonVariants } from '../../../components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../../../components/ui/popover';
 import { cn } from '../../../lib/cn';
 import { mergeRefs } from '../../../lib/merge-refs';
-import { SearchTrigger } from '../../shared/slots/search-trigger';
 
 const itemVariants = cva(
   'relative flex flex-row items-center gap-2 rounded-xl p-2 text-start text-fd-muted-foreground wrap-anywhere transition-colors duration-150 [&_svg]:size-4 [&_svg]:shrink-0',
@@ -28,6 +27,24 @@ const itemVariants = cva(
       variant: {
         link: 'hover:bg-fd-accent/60 hover:text-fd-accent-foreground data-[active=true]:bg-fd-primary/[0.08] data-[active=true]:text-fd-primary data-[active=true]:font-medium',
         button: 'hover:bg-fd-accent/60 hover:text-fd-accent-foreground',
+      },
+    },
+  },
+);
+
+const folderHeaderVariants = cva(
+  cn(
+    'relative flex w-full items-center gap-2 px-2 py-1.5 text-start text-[13px]',
+    'text-fd-muted-foreground/90 font-medium',
+    '[&_svg]:text-fd-muted-foreground/70 [&_svg]:size-3.5 [&_svg]:shrink-0',
+  ),
+  {
+    variants: {
+      interactive: {
+        true: 'cursor-pointer rounded-md transition-colors duration-150 hover:text-fd-foreground',
+      },
+      active: {
+        true: 'text-fd-primary [&_svg]:text-fd-primary/70',
       },
     },
   },
@@ -47,13 +64,6 @@ export interface SidebarProps extends ComponentProps<'aside'> {
   components?: Partial<SidebarPageTreeComponents>;
   banner?: ReactNode;
   footer?: ReactNode;
-
-  /**
-   * Support collapsing the sidebar on desktop mode
-   *
-   * @defaultValue true
-   */
-  collapsible?: boolean;
 }
 
 export type SidebarProviderProps = Base.SidebarProviderProps;
@@ -64,7 +74,7 @@ export function SidebarProvider(props: SidebarProviderProps) {
   return <Base.SidebarProvider {...props} />;
 }
 
-export function Sidebar({ footer, banner, collapsible = true, components, ...rest }: SidebarProps) {
+export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
   const {
     menuItems,
     slots,
@@ -91,26 +101,14 @@ export function Sidebar({ footer, banner, collapsible = true, components, ...res
               <slots.navTitle className="me-auto inline-flex items-center gap-2.5 text-[0.9375rem] font-medium" />
             )}
             {nav?.children}
-            {collapsible && (
-              <SidebarCollapseTrigger
-                className={cn(
-                  buttonVariants({
-                    color: 'ghost',
-                    size: 'icon-sm',
-                    className:
-                      'mb-auto text-fd-muted-foreground transition-transform hover:scale-105 active:scale-95',
-                  }),
-                )}
-              >
-                <SidebarIcon />
-              </SidebarCollapseTrigger>
-            )}
           </div>
           {slots.searchTrigger && <slots.searchTrigger.full hideIfDisabled />}
           {tabs.length > 0 && tabMode === 'auto' && <SidebarTabsDropdown tabs={tabs} />}
           {banner}
         </div>
+
         {viewport}
+
         {(slots.languageSelect || iconLinks.length > 0 || slots.themeSwitch || footer) && (
           <div className="flex flex-col p-4 pt-2">
             {slots.languageSelect && (
@@ -142,6 +140,7 @@ export function Sidebar({ footer, banner, collapsible = true, components, ...res
           </div>
         )}
       </SidebarContent>
+
       <SidebarDrawer>
         <div className="flex flex-col gap-3 p-4 pb-2">
           <div className="text-fd-muted-foreground flex items-center gap-1.5">
@@ -163,13 +162,16 @@ export function Sidebar({ footer, banner, collapsible = true, components, ...res
                 </LinkItem>
               ))}
             </div>
+
             {slots.languageSelect && (
               <slots.languageSelect.root>
                 <Languages className="size-4.5" />
                 <slots.languageSelect.text />
               </slots.languageSelect.root>
             )}
+
             {slots.themeSwitch && <slots.themeSwitch className="p-0" />}
+
             <SidebarTrigger
               className={cn(
                 buttonVariants({
@@ -182,22 +184,22 @@ export function Sidebar({ footer, banner, collapsible = true, components, ...res
               <SidebarIcon />
             </SidebarTrigger>
           </div>
+
           {tabs.length > 0 && <SidebarTabsDropdown tabs={tabs} />}
+
           {banner}
         </div>
+
         {viewport}
+
         <div className="flex flex-col border-t p-4 pt-2 empty:hidden">{footer}</div>
       </SidebarDrawer>
     </>
   );
 }
 
-function SidebarFolder(props: ComponentProps<typeof Base.SidebarFolder>) {
-  return <Base.SidebarFolder {...props} />;
-}
-
-function SidebarCollapseTrigger(props: ComponentProps<typeof Base.SidebarCollapseTrigger>) {
-  return <Base.SidebarCollapseTrigger {...props} />;
+function SidebarFolder({ className, ...props }: ComponentProps<typeof Base.SidebarFolder>) {
+  return <Base.SidebarFolder className={cn('py-2 first:pt-4 last:pb-0', className)} {...props} />;
 }
 
 export function SidebarTrigger(props: ComponentProps<'button'>) {
@@ -205,65 +207,25 @@ export function SidebarTrigger(props: ComponentProps<'button'>) {
 }
 
 function SidebarContent({ ref: refProp, className, children, ...props }: ComponentProps<'aside'>) {
-  const ref = useRef<HTMLElement>(null);
-
   return (
     <Base.SidebarContent>
-      {({ collapsed, hovered, ref: asideRef, ...rest }) => (
-        <>
-          <div
-            data-sidebar-placeholder=""
-            className="md:layout:[--fd-sidebar-width:268px] pointer-events-none sticky top-(--fd-docs-row-1) z-20 h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] [grid-area:sidebar] *:pointer-events-auto max-md:hidden"
-          >
-            {collapsed && <div className="absolute inset-y-0 inset-s-0 w-4" {...rest} />}
-            <aside
-              id="nd-sidebar"
-              ref={mergeRefs(ref, refProp, asideRef)}
-              data-collapsed={collapsed}
-              data-hovered={collapsed && hovered}
-              className={cn(
-                'bg-fd-background absolute inset-y-0 inset-s-0 flex w-full flex-col items-end border-e text-sm duration-250 *:w-(--fd-sidebar-width)',
-                collapsed && [
-                  'inset-y-2 w-(--fd-sidebar-width) rounded-xl border transition-transform',
-                  hovered
-                    ? 'translate-x-2 shadow-lg rtl:-translate-x-2'
-                    : '-translate-x-(--fd-sidebar-width) rtl:translate-x-full',
-                ],
-                ref.current &&
-                  (ref.current.getAttribute('data-collapsed') === 'true') !== collapsed &&
-                  'transition-[width,inset-block,translate,background-color]',
-                className,
-              )}
-              {...props}
-              {...rest}
-            >
-              {children}
-            </aside>
-          </div>
-          <div
-            data-sidebar-panel=""
+      {({ ref: asideRef }) => (
+        <div
+          data-sidebar-placeholder=""
+          className="md:layout:[--fd-sidebar-width:268px] pointer-events-none sticky top-(--fd-docs-row-1) z-20 h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] [grid-area:sidebar] *:pointer-events-auto max-md:hidden"
+        >
+          <aside
+            id="nd-sidebar"
+            ref={mergeRefs(refProp, asideRef)}
             className={cn(
-              'bg-fd-muted text-fd-muted-foreground fixed inset-s-4 top-[calc(--spacing(4)+var(--fd-docs-row-3))] z-10 flex rounded-xl border p-0.5 shadow-lg transition-opacity',
-              (!collapsed || hovered) && 'pointer-events-none opacity-0',
+              'bg-fd-background absolute inset-y-0 inset-s-0 flex w-full flex-col items-end border-e text-sm *:w-(--fd-sidebar-width)',
+              className,
             )}
+            {...props}
           >
-            <Base.SidebarCollapseTrigger
-              className={cn(
-                buttonVariants({
-                  color: 'ghost',
-                  size: 'icon-sm',
-                  className: 'rounded-lg transition-transform hover:scale-105 active:scale-95',
-                }),
-              )}
-            >
-              <SidebarIcon />
-            </Base.SidebarCollapseTrigger>
-            <SearchTrigger
-              className="rounded-lg transition-transform hover:scale-105 active:scale-95"
-              hideIfDisabled
-            />
-          </div>
-        </>
+            {children}
+          </aside>
+        </div>
       )}
     </Base.SidebarContent>
   );
@@ -347,11 +309,11 @@ function SidebarFolderTrigger({
   style,
   ...props
 }: ComponentProps<typeof Base.SidebarFolderTrigger>) {
-  const { depth, collapsible } = Base.useFolder()!;
+  const { depth } = Base.useFolder()!;
 
   return (
     <Base.SidebarFolderTrigger
-      className={cn(itemVariants({ variant: collapsible ? 'button' : null }), 'w-full', className)}
+      className={cn(folderHeaderVariants(), className)}
       style={{
         paddingInlineStart: getItemOffset(depth - 1),
         ...style,
@@ -374,7 +336,7 @@ function SidebarFolderLink({
   return (
     <Base.SidebarFolderLink
       active={active}
-      className={cn(itemVariants({ variant: 'link' }), 'w-full', className)}
+      className={cn(folderHeaderVariants({ active, interactive: true }), className)}
       style={{
         paddingInlineStart: getItemOffset(depth - 1),
         ...style,
@@ -392,18 +354,8 @@ function SidebarFolderContent({
   children,
   ...props
 }: ComponentProps<typeof Base.SidebarFolderContent>) {
-  const depth = Base.useFolderDepth();
-
   return (
-    <Base.SidebarFolderContent
-      className={cn(
-        'relative',
-        depth === 1 &&
-          "before:bg-fd-border before:absolute before:inset-y-1 before:inset-s-2.5 before:w-px before:content-['']",
-        className,
-      )}
-      {...props}
-    >
+    <Base.SidebarFolderContent className={cn('relative', className)} {...props}>
       <div className="flex flex-col gap-0.5 pt-0.5">{children}</div>
     </Base.SidebarFolderContent>
   );
@@ -497,7 +449,7 @@ function SidebarTabsDropdown({
 }
 
 function getItemOffset(depth: number) {
-  return `calc(${2 + 3 * depth} * var(--spacing))`;
+  return `calc(${3 + 3 * depth} * var(--spacing))`;
 }
 
 const SidebarPageTree = createPageTreeRenderer({

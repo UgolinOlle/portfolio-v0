@@ -2,7 +2,6 @@ import { defineConfig, defineDocs, frontmatterSchema } from 'fumadocs-mdx/config
 import { z } from 'zod';
 
 const registrySchema = frontmatterSchema.extend({
-  // Nom du fichier dans `examples/` utilisé pour la preview (rendu + code source).
   preview: z.string().optional(),
   dependencies: z.array(z.string()).optional(),
 });

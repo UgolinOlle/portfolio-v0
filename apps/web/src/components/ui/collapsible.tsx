@@ -26,6 +26,8 @@ export function CollapsibleContent({
         'overflow-hidden',
         mounted &&
           'data-[state=closed]:animate-fd-collapsible-up data-[state=open]:animate-fd-collapsible-down',
+        mounted &&
+          'data-[state=closed]:![animation-duration:180ms] data-[state=open]:![animation-duration:220ms]',
         props.className,
       )}
     >

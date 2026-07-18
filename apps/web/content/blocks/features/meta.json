@@ -1,5 +1,4 @@
 {
   "title": "Features",
-  "icon": "Sparkles",
   "pages": ["feature-grid", "feature-list", "feature-cards"]
 }

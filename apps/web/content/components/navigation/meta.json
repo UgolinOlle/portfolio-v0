@@ -1,5 +1,4 @@
 {
   "title": "Navigation",
-  "icon": "Compass",
   "pages": ["navbar", "breadcrumb", "tabs", "pagination"]
 }

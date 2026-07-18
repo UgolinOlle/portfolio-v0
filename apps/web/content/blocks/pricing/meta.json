@@ -1,5 +1,4 @@
 {
   "title": "Pricing",
-  "icon": "Tag",
   "pages": ["pricing-table", "pricing-cards", "pricing-comparison"]
 }

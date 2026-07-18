@@ -1,5 +1,4 @@
 {
   "title": "Hero Sections",
-  "icon": "LayoutTemplate",
   "pages": ["simple", "with-image", "split"]
 }

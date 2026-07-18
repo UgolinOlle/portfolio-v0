@@ -1,5 +1,4 @@
 {
   "title": "Content",
-  "icon": "Newspaper",
   "pages": ["blog", "blog-grid", "testimonials"]
 }

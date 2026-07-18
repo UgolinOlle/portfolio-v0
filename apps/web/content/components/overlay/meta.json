@@ -1,5 +1,4 @@
 {
   "title": "Overlay",
-  "icon": "Layers",
   "pages": ["dialog", "drawer", "popover", "dropdown-menu"]
 }

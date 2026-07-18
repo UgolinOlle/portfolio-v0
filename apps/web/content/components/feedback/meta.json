@@ -1,5 +1,4 @@
 {
   "title": "Feedback",
-  "icon": "MessageSquare",
   "pages": ["alert", "toast", "progress", "status-card"]
 }

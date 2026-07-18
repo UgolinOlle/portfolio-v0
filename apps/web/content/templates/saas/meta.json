@@ -1,5 +1,4 @@
 {
   "title": "SaaS",
-  "icon": "Rocket",
   "pages": ["landing-page", "dashboard", "onboarding"]
 }

@@ -1,4 +1,4 @@
-import { Component as ComponentIcon, Smartphone } from 'lucide-react';
+import { Command, Component as ComponentIcon } from 'lucide-react';
 
 import { LOGOS, TOOLS } from '~/components/icons';
 import type { Project, Resources, SocialLink, WorkExperience } from '~/utils/type';
@@ -22,15 +22,15 @@ export const PROJECTS: Project[] = [
     ),
   },
   {
-    name: 'Calyx',
-    description: 'Application mobile de suivi nutritionnel & tracker les calorie.',
-    link: '/projects/whoa-ide',
+    name: 'Whoa Stash',
+    description: 'Application MacOS pour gérer le son.',
+    link: '/projects/whoa-stash',
     content: (
       <div className="rounded-xl border border-zinc-200 bg-white p-2.5 shadow dark:border-zinc-700 dark:bg-zinc-950/40">
-        <Smartphone className="size-7" />
+        <Command className="size-7" />
       </div>
     ),
-    id: 'whoa-ide',
+    id: 'whoa-stash',
   },
 ];
 

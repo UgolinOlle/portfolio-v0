@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from '~/layouts/docs/page';
 import type { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
+import { RegistryInstall } from './install';
 import { Preview } from './preview';
 
 type RegistrySource = typeof componentsSource | typeof blocksSource | typeof templatesSource;
@@ -24,7 +25,6 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
 
   const MDX = page.data.body;
   const isRootIndex = !slug || slug.length === 0;
-  // Sur /ui/blocks et /ui/templates, on affiche en plus une galerie avec la preview live de chaque page.
   const galleryPages =
     isRootIndex && type !== 'component' ? source.getPages().filter((p) => p.url !== page.url) : [];
 
@@ -32,11 +32,17 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
     <DocsPage toc={page.data.toc}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
+
       {page.data.preview && (
-        <div className="mb-8">
+        <div className="mb-8 flex flex-col gap-10">
           <Preview path={page.data.preview} type={type} />
+          <section className="flex flex-col gap-3">
+            <h2 className="text-lg font-medium">Installation</h2>
+            <RegistryInstall path={page.data.preview} />
+          </section>
         </div>
       )}
+
       <DocsBody>
         <MDX
           components={{
@@ -45,6 +51,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
           }}
         />
       </DocsBody>
+
       {galleryPages.length > 0 && (
         <div className="mt-4 flex flex-col gap-16">
           {galleryPages.map((galleryPage) => (
@@ -53,6 +60,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
                 <Link className="text-lg font-medium hover:underline" href={galleryPage.url}>
                   {galleryPage.data.title}
                 </Link>
+
                 {galleryPage.data.description && (
                   <p className="text-fd-muted-foreground text-sm">{galleryPage.data.description}</p>
                 )}

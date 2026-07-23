@@ -179,18 +179,17 @@ const lineNumberClassNames = cn(
   '[&_.line]:before:content-[counter(line)]',
   '[&_.line]:before:inline-block',
   '[&_.line]:before:[counter-increment:line]',
-  '[&_.line]:before:w-4',
+  '[&_.line]:before:w-5',
   '[&_.line]:before:mr-4',
-  '[&_.line]:before:text-[13px]',
+  '[&_.line]:before:text-[0.8125rem]',
   '[&_.line]:before:text-right',
-  '[&_.line]:before:text-muted-foreground/50',
+  '[&_.line]:before:text-muted-foreground/40',
   '[&_.line]:before:font-mono',
   '[&_.line]:before:select-none',
 );
 
 const darkModeClassNames = cn(
   'dark:[&_.shiki]:!text-[var(--shiki-dark)]',
-  // "dark:[&_.shiki]:!bg-[var(--shiki-dark-bg)]",
   'dark:[&_.shiki]:![font-style:var(--shiki-dark-font-style)]',
   'dark:[&_.shiki]:![font-weight:var(--shiki-dark-font-weight)]',
   'dark:[&_.shiki]:![text-decoration:var(--shiki-dark-text-decoration)]',
@@ -235,10 +234,21 @@ const wordHighlightClassNames = cn(
   'dark:[&_.highlighted-word]:!bg-blue-500/10',
 );
 
+// Scrollbar fine et discrète, cohérente clair/sombre, qui ne s'affiche qu'au survol.
+const scrollbarClassNames = cn(
+  '[&_code]:[scrollbar-width:thin]',
+  '[&_code]:[scrollbar-color:transparent_transparent]',
+  'hover:[&_code]:[scrollbar-color:var(--color-border)_transparent]',
+  '[&_code::-webkit-scrollbar]:h-2',
+  '[&_code::-webkit-scrollbar-track]:bg-transparent',
+  '[&_code::-webkit-scrollbar-thumb]:rounded-full',
+  '[&_code::-webkit-scrollbar-thumb]:bg-transparent',
+  'hover:[&_code::-webkit-scrollbar-thumb]:bg-border',
+);
+
 const codeBlockClassName = cn(
-  'mt-0 bg-background text-sm',
+  'mt-0 bg-background font-mono text-[0.8125rem] leading-6',
   '[&_pre]:py-4',
-  // "[&_.shiki]:!bg-[var(--shiki-bg)]",
   '[&_.shiki]:!bg-transparent',
   '[&_code]:w-full',
   '[&_code]:grid',
@@ -247,6 +257,7 @@ const codeBlockClassName = cn(
   '[&_.line]:px-4',
   '[&_.line]:w-full',
   '[&_.line]:relative',
+  scrollbarClassNames,
 );
 
 const highlight = (
@@ -320,7 +331,13 @@ export const CodeBlock = ({
 
   return (
     <CodeBlockContext.Provider value={{ value, onValueChange, data }}>
-      <div className={cn('size-full overflow-hidden rounded-md border', className)} {...props} />
+      <div
+        className={cn(
+          'size-full overflow-hidden rounded-xl border bg-background shadow-xs',
+          className,
+        )}
+        {...props}
+      />
     </CodeBlockContext.Provider>
   );
 };
@@ -329,7 +346,7 @@ export type CodeBlockHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 export const CodeBlockHeader = ({ className, ...props }: CodeBlockHeaderProps) => (
   <div
-    className={cn('flex flex-row items-center border-b bg-secondary p-1', className)}
+    className={cn('flex flex-row items-center gap-2 border-b bg-muted/30 px-2 py-1.5', className)}
     {...props}
   />
 );
@@ -376,12 +393,12 @@ export const CodeBlockFilename = ({
   return (
     <div
       className={cn(
-        'flex items-center gap-2 bg-secondary px-4 py-1.5 text-xs text-muted-foreground',
+        'flex items-center gap-2 border-b bg-muted/30 px-4 py-2 font-mono text-xs text-muted-foreground',
         className,
       )}
       {...props}
     >
-      {Icon && <Icon className="h-4 w-4 shrink-0" />}
+      {Icon && <Icon className="h-3.5 w-3.5 shrink-0" />}
       <span className="flex-1 truncate">{children}</span>
     </div>
   );
@@ -447,7 +464,7 @@ export const CodeBlockCopyButton = ({
 }: CodeBlockCopyButtonProps) => {
   const [isCopied, setIsCopied] = useState(false);
   const { data, value } = useContext(CodeBlockContext);
-  const code = data.find((item) => item.language === value)?.code;
+  const code = data.find((item) => item.filename === value)?.code;
 
   const copyToClipboard = () => {
     if (typeof window === 'undefined' || !navigator.clipboard.writeText || !code) {
@@ -573,7 +590,6 @@ export const CodeBlockContent = ({
 
     highlight(children as string, language, themes)
       .then(setHtml)
-      // biome-ignore lint/suspicious/noConsole: "it's fine"
       .catch(console.error);
   }, [children, themes, syntaxHighlighting, language]);
 
@@ -581,11 +597,5 @@ export const CodeBlockContent = ({
     return <CodeBlockFallback>{children}</CodeBlockFallback>;
   }
 
-  return (
-    <div
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: "Kinda how Shiki works"
-      dangerouslySetInnerHTML={{ __html: html }}
-      {...props}
-    />
-  );
+  return <div dangerouslySetInnerHTML={{ __html: html }} {...props} />;
 };

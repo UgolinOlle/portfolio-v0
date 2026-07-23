@@ -17,6 +17,45 @@
       "registryDependencies": ["card", "badge"]
     },
     {
+      "name": "status-card-demo",
+      "type": "registry:example",
+      "title": "Status Card Demo",
+      "description": "Usage example for the Status Card component.",
+      "files": [
+        {
+          "path": "examples/status-card.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["status-card"]
+    },
+    {
+      "name": "blog",
+      "type": "registry:block",
+      "title": "Blog",
+      "description": "A responsive grid of blog post cards with image, badge and author.",
+      "files": [
+        {
+          "path": "registry/blocks/blog/blog.tsx",
+          "type": "registry:block"
+        }
+      ],
+      "registryDependencies": ["card", "badge"]
+    },
+    {
+      "name": "blog-demo",
+      "type": "registry:example",
+      "title": "Blog Demo",
+      "description": "Usage example for the Blog block.",
+      "files": [
+        {
+          "path": "examples/blog.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["blog"]
+    },
+    {
       "name": "cta-simple",
       "type": "registry:block",
       "title": "Simple CTA",
@@ -28,6 +67,19 @@
         }
       ],
       "registryDependencies": ["button"]
+    },
+    {
+      "name": "cta-simple-demo",
+      "type": "registry:example",
+      "title": "Simple CTA Demo",
+      "description": "Usage example for the Simple CTA block.",
+      "files": [
+        {
+          "path": "examples/cta-simple.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["cta-simple"]
     },
     {
       "name": "landing-saas",
@@ -44,6 +96,19 @@
         }
       ],
       "registryDependencies": ["button", "badge", "card"]
+    },
+    {
+      "name": "landing-saas-demo",
+      "type": "registry:example",
+      "title": "SaaS Landing Page Demo",
+      "description": "Usage example for the SaaS Landing Page template.",
+      "files": [
+        {
+          "path": "examples/landing-saas.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["landing-saas"]
     }
   ]
 }

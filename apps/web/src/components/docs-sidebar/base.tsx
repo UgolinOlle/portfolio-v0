@@ -1,4 +1,5 @@
 'use client';
+
 import { useTranslations } from '@fuma-translate/react';
 import { Presence } from '@radix-ui/react-presence';
 import { usePathname } from 'fumadocs-core/framework';
@@ -20,15 +21,15 @@ import {
 } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
-import { cn } from '../../lib/cn';
 import {
   Collapsible,
   CollapsibleContent,
   type CollapsibleContentProps,
   CollapsibleTrigger,
   type CollapsibleTriggerProps,
-} from '../ui/collapsible';
-import { ScrollArea, ScrollViewport } from '../ui/scroll-area';
+} from '~/components/ui/collapsible';
+import { ScrollArea, ScrollViewport } from '~/components/ui/scroll-area';
+import { cn } from '~/lib/cn';
 
 interface SidebarContext {
   open: boolean;

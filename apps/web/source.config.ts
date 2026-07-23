@@ -3,7 +3,6 @@ import { z } from 'zod';
 
 const registrySchema = frontmatterSchema.extend({
   preview: z.string().optional(),
-  dependencies: z.array(z.string()).optional(),
 });
 
 export const { docs: componentsDocs, meta: componentsMeta } = defineDocs({

@@ -1,4 +1,7 @@
 'use client';
+import { buttonVariants } from '@portfolio-v0/shadcn/components/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@portfolio-v0/shadcn/components/popover';
+
 import { cva } from 'class-variance-authority';
 import { usePathname } from 'fumadocs-core/framework';
 import Link from 'fumadocs-core/link';
@@ -9,16 +12,14 @@ import { Check, ChevronDown, ChevronsUpDown, Languages, SidebarIcon } from 'luci
 import { motion } from 'motion/react';
 import { type ComponentProps, type ReactNode, useMemo, useState } from 'react';
 
-import * as Base from '../../../components/docs-sidebar/base';
-import { createLinkItemRenderer } from '../../../components/docs-sidebar/link-item';
+import * as Base from '~/components/docs-sidebar/base';
+import { createLinkItemRenderer } from '~/components/docs-sidebar/link-item';
 import {
   createPageTreeRenderer,
   type SidebarPageTreeComponents,
-} from '../../../components/docs-sidebar/page-tree';
-import { buttonVariants } from '../../../components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '../../../components/ui/popover';
-import { cn } from '../../../lib/cn';
-import { mergeRefs } from '../../../lib/merge-refs';
+} from '~/components/docs-sidebar/page-tree';
+import { cn } from '~/lib/cn';
+import { mergeRefs } from '~/lib/merge-refs';
 
 const itemVariants = cva(
   'relative flex flex-row items-center gap-2 rounded-xl p-2 text-start text-fd-muted-foreground wrap-anywhere transition-colors duration-150 [&_svg]:size-4 [&_svg]:shrink-0',
@@ -102,6 +103,7 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
             )}
             {nav?.children}
           </div>
+
           {slots.searchTrigger && <slots.searchTrigger.full hideIfDisabled />}
           {tabs.length > 0 && tabMode === 'auto' && <SidebarTabsDropdown tabs={tabs} />}
           {banner}
@@ -121,12 +123,17 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
                 <ChevronDown className="ms-auto size-3.5" />
               </slots.languageSelect.root>
             )}
-            <div className="text-fd-muted-foreground bg-fd-secondary/50 flex items-center rounded-lg border p-0.5 pe-0 empty:hidden">
+            <div
+              className={cn(
+                'text-fd-muted-foreground bg-fd-secondary/50 flex items-center rounded-lg',
+                'border p-0.5 pe-0 empty:hidden',
+              )}
+            >
               {iconLinks.map((item, i) => (
                 <LinkItem
                   key={i}
                   item={item}
-                  className={cn(buttonVariants({ size: 'icon-sm', color: 'ghost' }))}
+                  className={cn(buttonVariants({ size: 'icon-sm', variant: 'ghost' }))}
                   aria-label={item.label}
                 >
                   {item.icon}
@@ -152,7 +159,7 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
                   className={cn(
                     buttonVariants({
                       size: 'icon-sm',
-                      color: 'ghost',
+                      variant: 'ghost',
                       className: 'p-2',
                     }),
                   )}
@@ -175,7 +182,7 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
             <SidebarTrigger
               className={cn(
                 buttonVariants({
-                  color: 'ghost',
+                  variant: 'ghost',
                   size: 'icon-sm',
                   className: 'p-2',
                 }),
@@ -212,13 +219,18 @@ function SidebarContent({ ref: refProp, className, children, ...props }: Compone
       {({ ref: asideRef }) => (
         <div
           data-sidebar-placeholder=""
-          className="md:layout:[--fd-sidebar-width:268px] pointer-events-none sticky top-(--fd-docs-row-1) z-20 h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] [grid-area:sidebar] *:pointer-events-auto max-md:hidden"
+          className={cn(
+            'md:layout:[--fd-sidebar-width:268px] pointer-events-none sticky top-(--fd-docs-row-1)',
+            'z-20 h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] [grid-area:sidebar]',
+            '*:pointer-events-auto max-md:hidden',
+          )}
         >
           <aside
             id="nd-sidebar"
             ref={mergeRefs(refProp, asideRef)}
             className={cn(
-              'bg-fd-background absolute inset-y-0 inset-s-0 flex w-full flex-col items-end border-e text-sm *:w-(--fd-sidebar-width)',
+              'bg-fd-background absolute inset-y-0 inset-s-0 flex w-full flex-col items-end',
+              'border-e text-sm *:w-(--fd-sidebar-width)',
               className,
             )}
             {...props}
@@ -246,7 +258,8 @@ function SidebarDrawer({
       />
       <Base.SidebarDrawerContent
         className={cn(
-          'bg-fd-background fixed inset-y-0 inset-e-0 z-40 flex w-[85%] max-w-95 flex-col border-s text-[0.9375rem] shadow-lg',
+          'bg-fd-background fixed inset-y-0 inset-e-0 z-40 flex w-[85%] max-w-95 flex-col',
+          'border-s text-[0.9375rem] shadow-lg',
           'data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out',
           className,
         )}

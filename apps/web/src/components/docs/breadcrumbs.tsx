@@ -80,8 +80,11 @@ export function Breadcrumbs({
   containerClassName = 'max-w-4xl px-4',
   items,
 }: BreadcrumbsProps) {
+  const router = usePathname();
   const autoItems = useAutoBreadcrumbs();
   const crumbs = items ?? autoItems;
+
+  if (router === '/ui') return null;
 
   if (crumbs.length === 0) {
     return null;

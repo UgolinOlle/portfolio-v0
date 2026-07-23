@@ -2,6 +2,7 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
+import { ArrowUpRight } from 'lucide-react';
 import { useMotionValueEvent, useScroll } from 'motion/react';
 import Link from 'next/link';
 import { type ReactNode, useState } from 'react';
@@ -43,12 +44,10 @@ export function NavbarClient({
       )}
     >
       <div className="flex items-center gap-3">
-        <Link
-          className="rounded-md px-3 py-1.5 transition-colors hover:bg-accent hover:text-accent-foreground"
-          href="/"
-        >
+        <Link className="rounded-md py-1.5 pl-3" href="/ui">
           <Logo />
         </Link>
+
         <Links
           blocksCount={blocksCount}
           className="hidden md:flex"
@@ -62,6 +61,33 @@ export function NavbarClient({
         <div className="mx-1 h-5 w-px bg-border" />
         <ThemeToggle />
         {github}
+
+        <Link
+          href="/"
+          className={cn(
+            'group inline-flex items-center rounded-full border px-3 py-1.5 text-sm',
+            'font-medium transition-colors hover:bg-accent/50',
+          )}
+        >
+          Portfolio
+          <span
+            className={cn(
+              'flex size-0 items-center justify-center overflow-hidden opacity-0 transition-all duration-300',
+              'group-hover:ml-1.5 group-hover:size-3.5 group-hover:opacity-100',
+            )}
+          >
+            <ArrowUpRight
+              className={cn(
+                'size-3.5 shrink-0 leading-none transition-transform duration-300',
+                'group-hover:translate-x-0.5 group-hover:-translate-y-0.5',
+              )}
+            />
+          </span>
+        </Link>
+
+        <span className="text-sm text-muted-foreground">
+          {`v${process.env.NEXT_PUBLIC_APP_VERSION}`}
+        </span>
       </div>
 
       <div className="flex items-center gap-2 md:hidden">

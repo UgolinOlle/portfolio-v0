@@ -1,53 +1,57 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@portfolio-v0/shadcn/components/tabs';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { CodeIcon, EyeIcon } from 'lucide-react';
 
-import { PreviewCode } from './preview-code';
+import { RegistryCodeBlock } from '~/components/docs/code-block/registry-code-block';
+import { getRegistryDemoName } from '~/lib/registry';
+import { getRegistryItemManifest } from '~/lib/registry-item';
+
 import { PreviewFrame } from './preview-frame';
 
 type PreviewProps = {
-  // Nom du fichier dans `apps/web/examples/` (sans extension), ex. "blog".
   path: string;
   className?: string;
   type?: 'component' | 'block' | 'template';
 };
 
 export const Preview = async ({ path, className, type = 'component' }: PreviewProps) => {
-  const code = await readFile(join(process.cwd(), 'examples', `${path}.tsx`), 'utf-8');
-
-  const Component = await import(`../../../../examples/${path}.tsx`).then(
-    (module) => module.default,
-  );
+  const [Component, demoManifest] = await Promise.all([
+    import(`../../../../examples/${path}.tsx`).then((module) => module.default),
+    getRegistryItemManifest(getRegistryDemoName(path)),
+  ]);
   const isFullPage = type !== 'component';
 
   return (
     <div
       className={cn(
-        'size-full overflow-hidden rounded-lg border bg-background',
-        isFullPage ? 'h-192' : 'h-128',
+        'size-full overflow-hidden rounded-xl border bg-background shadow-xs',
         className,
       )}
     >
       <Tabs className="size-full gap-0" defaultValue="preview">
-        <TabsList className="w-full rounded-none border-b">
-          <TabsTrigger value="preview">
-            <EyeIcon className="text-muted-foreground" size={16} />
-            Preview
-          </TabsTrigger>
-          <TabsTrigger value="code">
-            <CodeIcon className="text-muted-foreground" size={16} />
-            Code
-          </TabsTrigger>
-        </TabsList>
+        <div className="flex items-center border-b bg-muted/30 px-2">
+          <TabsList className="h-11 bg-transparent p-0" variant="line">
+            <TabsTrigger
+              className="gap-1.5 text-xs font-medium text-muted-foreground data-active:text-foreground"
+              value="preview"
+            >
+              <EyeIcon size={14} />
+              Preview
+            </TabsTrigger>
+
+            <TabsTrigger
+              className="gap-1.5 text-xs font-medium text-muted-foreground data-active:text-foreground"
+              value="code"
+            >
+              <CodeIcon size={14} />
+              Code
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
         <TabsContent
-          className={cn(
-            'not-fumadocs-codeblock size-full',
-            isFullPage ? 'overflow-auto' : 'overflow-hidden',
-          )}
+          className={cn(isFullPage ? 'h-192 overflow-auto' : 'h-128 overflow-hidden')}
           value="preview"
         >
           {isFullPage ? (
@@ -58,8 +62,12 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
             </PreviewFrame>
           )}
         </TabsContent>
-        <TabsContent className="size-full overflow-y-auto bg-background" value="code">
-          <PreviewCode code={code} filename={`${path}.tsx`} language="tsx" />
+
+        <TabsContent className="h-128 overflow-hidden" value="code">
+          <RegistryCodeBlock
+            className="size-full max-h-none rounded-none border-none shadow-none"
+            files={demoManifest.files}
+          />
         </TabsContent>
       </Tabs>
     </div>

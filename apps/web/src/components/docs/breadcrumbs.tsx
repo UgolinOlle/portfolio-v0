@@ -71,9 +71,7 @@ const useAutoBreadcrumbs = (): BreadcrumbEntry[] => {
 
 type BreadcrumbsProps = {
   className?: string;
-  /** Width/padding of the inner container, kept in sync with the page content it sits above. */
   containerClassName?: string;
-  /** Override the auto-generated crumbs (derived from the current route by default). */
   items?: BreadcrumbEntry[];
 };
 
@@ -99,7 +97,7 @@ export function Breadcrumbs({
       initial={{ opacity: 0, y: -4 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
-      <div className={cn('mx-auto', containerClassName)}>
+      <div className={cn(containerClassName)}>
         <Breadcrumb>
           <BreadcrumbList>
             {crumbs.map((crumb, index) => {
@@ -169,7 +167,7 @@ function BreadcrumbEllipsisMenu({ items }: BreadcrumbEllipsisMenuProps) {
       >
         <BreadcrumbEllipsis className="size-4" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="max-h-80 w-56">
+      <DropdownMenuContent align="start" className="max-h-80 w-56 bg-secondary">
         {groups.map(([group, groupItems], index) => (
           <Fragment key={group || '_root'}>
             {index > 0 && <DropdownMenuSeparator />}

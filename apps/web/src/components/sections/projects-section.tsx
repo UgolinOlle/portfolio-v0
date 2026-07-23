@@ -51,7 +51,6 @@ export function ProjectsSection() {
                 </div>
               </div>
             </Link>
-
             <div className="px-1 py-2">
               <Link
                 className="group font-base relative inline-block font-[450] text-zinc-900 dark:text-zinc-50"

@@ -1,7 +1,6 @@
 export * from './language-switcher';
 export * from './magnetic';
 export * from './magnetic-social-link';
-export * from './project-card';
 export * from './spotlight';
 export * from './status';
 export * from './text-effect';

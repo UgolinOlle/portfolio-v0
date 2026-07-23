@@ -27,10 +27,10 @@ export function LanguageSwitcher() {
 
   return (
     <Button
-      className="font-mono text-xs active:scale-[0.95]"
+      className="rounded-full px-3 py-4 font-mono text-xs active:scale-[0.95]"
       onClick={toggleLanguage}
       size="sm"
-      variant="ghost"
+      variant="outline"
     >
       {i18n.language === 'fr' ? 'EN' : 'FR'}
     </Button>

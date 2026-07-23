@@ -129,6 +129,7 @@ export type Component = {
  * @property {string} title - The title of experience
  * @property {start} string - Date start
  * @property {end} string - Date end
+ * @property {logo} string - Logo of the experience
  * @property {link} string - Link of the experience
  * @property {id} string - ID of the experience
  */
@@ -137,6 +138,7 @@ export type WorkExperience = {
   title: string;
   start: string;
   end?: string;
+  logo?: string;
   link: string;
   id: string;
 };

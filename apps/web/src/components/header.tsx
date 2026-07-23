@@ -6,10 +6,12 @@ import Link from 'next/link';
 
 import { useTranslation } from '~/components/i18n/i18n-provider';
 import { LOGOS } from '~/components/icons';
-import { TextEffect, TextHoverEnter } from '~/components/ui';
+import { LanguageSwitcher, TextEffect, TextHoverEnter } from '~/components/ui';
 import { SOCIAL_LINKS } from '~/lib/data';
 import { cn } from '~/lib/utils';
 import type { SocialLink } from '~/utils/type';
+
+import { ThemeToggle } from './docs/navbar/theme-toggle';
 
 function SocialLinkIcon({
   link,
@@ -57,19 +59,27 @@ function Header() {
   return (
     <header className="mb-14 flex flex-col items-start justify-between gap-4 sm:items-center sm:gap-6">
       <div className="flex w-full flex-col items-start gap-2">
-        <div>
-          <Link className="text-xl text-black dark:text-white" href="/">
-            Ugolin Ollé
-          </Link>
-          <TextEffect
-            as="p"
-            className="font-sans font-normal text-primary"
-            delay={0.5}
-            per="char"
-            preset="fade"
-          >
-            {t('header.title')}
-          </TextEffect>
+        <div className="flex w-full items-end justify-between gap-4">
+          <div>
+            <Link className="text-xl text-black dark:text-white" href="/">
+              Ugolin Ollé
+            </Link>
+
+            <TextEffect
+              as="p"
+              className="font-sans font-normal text-primary"
+              delay={0.5}
+              per="char"
+              preset="fade"
+            >
+              {t('header.title')}
+            </TextEffect>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <LanguageSwitcher />
+          </div>
         </div>
 
         <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800" />

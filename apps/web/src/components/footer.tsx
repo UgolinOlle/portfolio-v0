@@ -10,6 +10,10 @@ export function Footer() {
             <span>Built with ❤️.</span>
           </TextLoop>
         </a>
+
+        <a href="/inspirations" className="text-xs text-zinc-500">
+          Inspirations list available here.
+        </a>
       </div>
     </footer>
   );

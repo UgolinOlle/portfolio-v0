@@ -111,6 +111,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Developer Full Stack',
     start: '2025',
     link: 'https://maia-host.com',
+    logo: '/assets/logos/maia-host.png',
     id: 'maia-host',
   },
   {
@@ -118,6 +119,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Developer Full Stack',
     start: '2025',
     link: 'https://digitalcreator.app/',
+    logo: 'https://digitalcreator.app/favicon.ico?favicon.4b4ac5f9.ico',
     id: 'digital-creator',
   },
   {
@@ -125,6 +127,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Developer Backend',
     start: '2025',
     link: 'https://sugarai.app/',
+    logo: 'https://www.sugarai.app/favicon-16x16.png',
     id: 'sugar-ai',
   },
   {
@@ -133,6 +136,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2024',
     end: '2025',
     link: 'https://leboutiquier.fr/',
+    logo: 'https://res.cloudinary.com/djher1fiu/image/upload/v1758012423/xop0sw1gbaky4eiicifj.png',
     id: 'le-boutiquier',
   },
   {
@@ -140,6 +144,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Developer Front-end',
     start: '2024',
     link: '',
+    logo: '/assets/logos/connectra_logo.webp',
     id: 'connectra',
   },
   {
@@ -155,6 +160,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2021',
     end: 'Present',
     link: 'https://ugolin-olle.com',
+    logo: '/favicon.ico',
     id: 'freelance',
   },
   {
@@ -163,6 +169,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2022',
     end: '2023',
     link: 'https://azertyconsulting.fr/',
+    logo: 'https://azertyconsulting.fr/icon.png?27ebc0b5cfa491cd',
     id: 'azerty-consulting',
   },
   {
@@ -170,6 +177,36 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Back-end Developer (Stage)',
     start: '2022',
     link: 'https://nicoka.com',
+    logo: 'https://www.nicoka.com/assets/img/favicon.ico',
     id: 'nicoka',
+  },
+];
+
+/**
+ * @constant INSPIRATIONS
+ * @description List of inspirations with their details
+ * @type {Array<{ name: string; href: string; description: string }>}
+ */
+export const INSPIRATIONS = [
+  {
+    name: 'Vercel',
+    href: 'https://vercel.com',
+    description:
+      'Pour la simplicité des interfaces, les micro-interactions et le soin apporté aux détails.',
+  },
+  {
+    name: 'Linear',
+    href: 'https://linear.app',
+    description: "Une référence pour les animations et l'expérience utilisateur.",
+  },
+  {
+    name: 'shadcn/ui',
+    href: 'https://ui.shadcn.com',
+    description: 'Une excellente base de composants modernes et accessibles.',
+  },
+  {
+    name: 'Aceternity UI',
+    href: 'https://ui.aceternity.com',
+    description: "Pour certaines idées d'animations et de compositions.",
   },
 ];

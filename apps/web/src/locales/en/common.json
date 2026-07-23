@@ -89,5 +89,13 @@
     "copy": "Copy",
     "copied": "Copied!",
     "download": "Download"
+  },
+  "registry": {
+    "title": "Registry",
+    "description": "Explore my curated collection of tools, libraries, and resources that I use and recommend for web development.",
+    "card": {
+      "previewComingSoon": "Preview coming soon",
+      "viewDetails": "View Details"
+    }
   }
 }

@@ -89,5 +89,13 @@
     "copy": "Copier",
     "copied": "Copié !",
     "download": "Télécharger"
+  },
+  "registry": {
+    "title": "Registre",
+    "description": "Explorez ma collection de ressources, outils et bibliothèques que j'utilise et recommande pour le développement web.",
+    "card": {
+      "previewComingSoon": "Aperçu à venir",
+      "viewDetails": "Voir les détails"
+    }
   }
 }

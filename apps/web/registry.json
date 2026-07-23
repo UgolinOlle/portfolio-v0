@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "portfolio-v0",
+  "homepage": "https://ugolin-olle.com/ui",
+  "items": [
+    {
+      "name": "status-card",
+      "type": "registry:component",
+      "title": "Status Card",
+      "description": "A compact card that pairs a status badge with a short message.",
+      "files": [
+        {
+          "path": "registry/components/status-card/status-card.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": ["card", "badge"]
+    },
+    {
+      "name": "cta-simple",
+      "type": "registry:block",
+      "title": "Simple CTA",
+      "description": "A centered call-to-action section with a heading, description and two buttons.",
+      "files": [
+        {
+          "path": "registry/blocks/cta-simple/cta-simple.tsx",
+          "type": "registry:block"
+        }
+      ],
+      "registryDependencies": ["button"]
+    },
+    {
+      "name": "landing-saas",
+      "type": "registry:block",
+      "title": "SaaS Landing Page",
+      "description": "A full landing page combining a hero, a feature grid and a call-to-action section.",
+      "meta": {
+        "category": "template"
+      },
+      "files": [
+        {
+          "path": "registry/templates/landing-saas/landing-saas.tsx",
+          "type": "registry:block"
+        }
+      ],
+      "registryDependencies": ["button", "badge", "card"]
+    }
+  ]
+}

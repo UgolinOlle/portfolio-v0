@@ -1,0 +1,70 @@
+'use client';
+
+import { buttonVariants } from '@portfolio-v0/shadcn/components/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@portfolio-v0/shadcn/components/popover';
+import { cn } from '@portfolio-v0/shadcn/utils';
+
+import { useTranslations } from '@fuma-translate/react';
+import { useI18n } from '@fumadocs/base-ui/contexts/i18n';
+import type { VariantProps } from 'class-variance-authority';
+import type { ComponentProps } from 'react';
+
+export interface LanguageSelectProps extends ComponentProps<'button'> {
+  variant?: VariantProps<typeof buttonVariants>['variant'];
+}
+
+export function LanguageSelect({
+  className,
+  variant = 'ghost',
+  children,
+  ...rest
+}: LanguageSelectProps): React.ReactElement {
+  const context = useI18n();
+  const t = useTranslations({ note: 'language switcher' });
+  if (!context.locales) throw new Error('Missing `<I18nProvider />`');
+
+  const chooseLanguage = t('Choose a language');
+
+  return (
+    <Popover>
+      <PopoverTrigger
+        aria-label={t('Choose a language', { note: 'aria-label' })}
+        className={(s) =>
+          cn(buttonVariants({ variant }), 'gap-1.5 p-1.5', s.open && 'bg-fd-accent', className)
+        }
+        {...rest}
+      >
+        {children}
+      </PopoverTrigger>
+      <PopoverContent className="flex flex-col gap-0.5 p-1">
+        <p className="text-fd-muted-foreground p-2 text-xs font-medium">{chooseLanguage}</p>
+        {context.locales.map((item) => (
+          <button
+            key={item.locale}
+            type="button"
+            className={cn(
+              'rounded-lg px-2 py-1.5 text-start text-sm transition-colors',
+              item.locale === context.locale
+                ? 'bg-fd-primary/10 text-fd-primary'
+                : 'text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-accent-foreground',
+            )}
+            onClick={() => {
+              context.onChange?.(item.locale);
+            }}
+          >
+            {item.name}
+          </button>
+        ))}
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+export type LanguageSelectTextProps = ComponentProps<'span'>;
+
+export function LanguageSelectText(props: LanguageSelectTextProps) {
+  const { locales, locale } = useI18n();
+  const text = locales?.find((item) => item.locale === locale)?.name;
+
+  return <span {...props}>{text}</span>;
+}

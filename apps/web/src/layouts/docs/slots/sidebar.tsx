@@ -1,25 +1,26 @@
 'use client';
 import { buttonVariants } from '@portfolio-v0/shadcn/components/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@portfolio-v0/shadcn/components/popover';
+import { cn } from '@portfolio-v0/shadcn/utils';
 
+import { useTreePath } from '@fumadocs/base-ui/contexts/tree';
 import { cva } from 'class-variance-authority';
 import { usePathname } from 'fumadocs-core/framework';
 import Link from 'fumadocs-core/link';
-import { useDocsLayout } from 'fumadocs-ui/layouts/docs';
-import { LinkItem } from 'fumadocs-ui/layouts/shared';
-import { isLayoutTabActive, type LayoutTab } from 'fumadocs-ui/layouts/shared';
 import { Check, ChevronDown, ChevronsUpDown, Languages, SidebarIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { type ComponentProps, type ReactNode, useMemo, useState } from 'react';
 
-import * as Base from '~/components/docs-sidebar/base';
-import { createLinkItemRenderer } from '~/components/docs-sidebar/link-item';
+import * as Base from '~/components/docs/sidebar/base';
+import { createLinkItemRenderer } from '~/components/docs/sidebar/link-item';
 import {
   createPageTreeRenderer,
   type SidebarPageTreeComponents,
-} from '~/components/docs-sidebar/page-tree';
-import { cn } from '~/lib/cn';
+} from '~/components/docs/sidebar/page-tree';
+import { LinkItem, isLayoutTabActive, type LayoutTab } from '~/layouts/shared';
 import { mergeRefs } from '~/lib/merge-refs';
+
+import { useDocsLayout } from '../client';
 
 const itemVariants = cva(
   'relative flex flex-row items-center gap-2 rounded-xl p-2 text-start text-fd-muted-foreground wrap-anywhere transition-colors duration-150 [&_svg]:size-4 [&_svg]:shrink-0',
@@ -33,6 +34,8 @@ const itemVariants = cva(
   },
 );
 
+// Category headers are static section labels — a classic, always-expanded sidebar layout
+// (no folder/file-tree affordance, no click-to-toggle, no chevron).
 const folderHeaderVariants = cva(
   cn(
     'relative flex w-full items-center gap-2 px-2 py-1.5 text-start text-[13px]',
@@ -41,6 +44,7 @@ const folderHeaderVariants = cva(
   ),
   {
     variants: {
+      // only used when the category itself is a navigable link (has an index page)
       interactive: {
         true: 'cursor-pointer rounded-md transition-colors duration-150 hover:text-fd-foreground',
       },
@@ -84,12 +88,14 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
   const iconLinks = menuItems.filter((item) => item.type === 'icon');
   const viewport = (
     <Base.SidebarViewport>
-      {menuItems
-        .filter((v) => v.type !== 'icon')
-        .map((item, i, list) => (
-          <SidebarLinkItem key={i} item={item} className={cn(i === list.length - 1 && 'mb-4')} />
-        ))}
-      <SidebarPageTree {...components} />
+      <div className="flex flex-col gap-0.5">
+        {menuItems
+          .filter((v) => v.type !== 'icon')
+          .map((item, i, list) => (
+            <SidebarLinkItem key={i} item={item} className={cn(i === list.length - 1 && 'mb-4')} />
+          ))}
+        <SidebarPageTree {...components} />
+      </div>
     </Base.SidebarViewport>
   );
 
@@ -103,14 +109,11 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
             )}
             {nav?.children}
           </div>
-
           {slots.searchTrigger && <slots.searchTrigger.full hideIfDisabled />}
           {tabs.length > 0 && tabMode === 'auto' && <SidebarTabsDropdown tabs={tabs} />}
           {banner}
         </div>
-
         {viewport}
-
         {(slots.languageSelect || iconLinks.length > 0 || slots.themeSwitch || footer) && (
           <div className="flex flex-col p-4 pt-2">
             {slots.languageSelect && (
@@ -123,12 +126,7 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
                 <ChevronDown className="ms-auto size-3.5" />
               </slots.languageSelect.root>
             )}
-            <div
-              className={cn(
-                'text-fd-muted-foreground bg-fd-secondary/50 flex items-center rounded-lg',
-                'border p-0.5 pe-0 empty:hidden',
-              )}
-            >
+            <div className="text-fd-muted-foreground bg-fd-secondary/50 flex items-center rounded-lg border p-0.5 pe-0 empty:hidden">
               {iconLinks.map((item, i) => (
                 <LinkItem
                   key={i}
@@ -147,7 +145,6 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
           </div>
         )}
       </SidebarContent>
-
       <SidebarDrawer>
         <div className="flex flex-col gap-3 p-4 pb-2">
           <div className="text-fd-muted-foreground flex items-center gap-1.5">
@@ -169,16 +166,13 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
                 </LinkItem>
               ))}
             </div>
-
             {slots.languageSelect && (
               <slots.languageSelect.root>
                 <Languages className="size-4.5" />
                 <slots.languageSelect.text />
               </slots.languageSelect.root>
             )}
-
             {slots.themeSwitch && <slots.themeSwitch className="p-0" />}
-
             <SidebarTrigger
               className={cn(
                 buttonVariants({
@@ -191,14 +185,10 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
               <SidebarIcon />
             </SidebarTrigger>
           </div>
-
           {tabs.length > 0 && <SidebarTabsDropdown tabs={tabs} />}
-
           {banner}
         </div>
-
         {viewport}
-
         <div className="flex flex-col border-t p-4 pt-2 empty:hidden">{footer}</div>
       </SidebarDrawer>
     </>
@@ -206,7 +196,7 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
 }
 
 function SidebarFolder({ className, ...props }: ComponentProps<typeof Base.SidebarFolder>) {
-  return <Base.SidebarFolder className={cn('py-2 first:pt-4 last:pb-0', className)} {...props} />;
+  return <Base.SidebarFolder className={cn('py-6 first:pt-0 last:pb-0', className)} {...props} />;
 }
 
 export function SidebarTrigger(props: ComponentProps<'button'>) {
@@ -219,18 +209,13 @@ function SidebarContent({ ref: refProp, className, children, ...props }: Compone
       {({ ref: asideRef }) => (
         <div
           data-sidebar-placeholder=""
-          className={cn(
-            'md:layout:[--fd-sidebar-width:268px] pointer-events-none sticky top-(--fd-docs-row-1)',
-            'z-20 h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] [grid-area:sidebar]',
-            '*:pointer-events-auto max-md:hidden',
-          )}
+          className="md:layout:[--fd-sidebar-width:268px] pointer-events-none sticky top-(--fd-docs-row-1) z-20 h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] [grid-area:sidebar] *:pointer-events-auto max-md:hidden"
         >
           <aside
             id="nd-sidebar"
             ref={mergeRefs(refProp, asideRef)}
             className={cn(
-              'bg-fd-background absolute inset-y-0 inset-s-0 flex w-full flex-col items-end',
-              'border-e text-sm *:w-(--fd-sidebar-width)',
+              'bg-fd-card absolute inset-y-0 inset-s-0 flex w-full flex-col items-end border-e text-sm *:w-(--fd-sidebar-width)',
               className,
             )}
             {...props}
@@ -250,17 +235,12 @@ function SidebarDrawer({
 }: ComponentProps<typeof Base.SidebarDrawerContent>) {
   return (
     <>
-      <Base.SidebarDrawerOverlay
-        className={cn(
-          'data-[state=open]:animate-fd-fade-in fixed inset-0 z-40 backdrop-blur-xs',
-          'data-[state=closed]:animate-fd-fade-out',
-        )}
-      />
+      <Base.SidebarDrawerOverlay className="data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out fixed inset-0 z-40 backdrop-blur-xs" />
       <Base.SidebarDrawerContent
         className={cn(
-          'bg-fd-background fixed inset-y-0 inset-e-0 z-40 flex w-[85%] max-w-95 flex-col',
-          'border-s text-[0.9375rem] shadow-lg',
-          'data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out',
+          'bg-fd-background data-[state=open]:animate-fd-sidebar-in',
+          'data-[state=closed]:animate-fd-sidebar-out fixed inset-y-0 inset-e-0 z-40 flex w-[85%]',
+          'max-w-95 flex-col border-s text-[0.9375rem] shadow-lg',
           className,
         )}
         {...props}
@@ -368,8 +348,11 @@ function SidebarFolderContent({
   ...props
 }: ComponentProps<typeof Base.SidebarFolderContent>) {
   return (
-    <Base.SidebarFolderContent className={cn('relative', className)} {...props}>
-      <div className="flex flex-col gap-0.5 pt-0.5">{children}</div>
+    <Base.SidebarFolderContent
+      className={cn('relative flex flex-col gap-0.5 pt-0.5', className)}
+      {...props}
+    >
+      {children}
     </Base.SidebarFolderContent>
   );
 }
@@ -385,10 +368,11 @@ function SidebarTabsDropdown({
   const [open, setOpen] = useState(false);
   const { closeOnRedirect } = useSidebar();
   const pathname = usePathname();
+  const path = useTreePath();
 
   const selected = useMemo(() => {
-    return tabs.findLast((item) => isLayoutTabActive(item, pathname));
-  }, [tabs, pathname]);
+    return tabs.findLast((item) => isLayoutTabActive(item, path, pathname));
+  }, [tabs, path, pathname]);
 
   const onClick = () => {
     closeOnRedirect.current = false;
@@ -415,7 +399,9 @@ function SidebarTabsDropdown({
         <PopoverTrigger
           {...props}
           className={cn(
-            'bg-fd-secondary/50 text-fd-secondary-foreground hover:bg-fd-accent data-[state=open]:bg-fd-accent data-[state=open]:text-fd-accent-foreground flex items-center gap-2 rounded-lg border p-2 text-start transition-colors',
+            'bg-fd-secondary/50 text-fd-secondary-foreground hover:bg-fd-accent flex',
+            'data-popup-open:bg-fd-accent data-popup-open:text-fd-accent-foreground gap-2',
+            'items-center rounded-lg border p-2 text-start transition-colors',
             props.className,
           )}
         >
@@ -423,7 +409,7 @@ function SidebarTabsDropdown({
           <ChevronsUpDown className="text-fd-muted-foreground ms-auto size-4 shrink-0" />
         </PopoverTrigger>
       )}
-      <PopoverContent className="fd-scroll-container flex w-(--radix-popover-trigger-width) flex-col gap-1 p-1">
+      <PopoverContent className="fd-scroll-container flex w-(--anchor-width) flex-col gap-1 p-1">
         {tabs.map((item) => {
           const isActive = selected && item.url === selected.url;
           if (!isActive && item.unlisted) return;

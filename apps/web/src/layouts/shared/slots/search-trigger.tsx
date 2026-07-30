@@ -1,44 +1,43 @@
 'use client';
+import { type ButtonProps, buttonVariants } from '@portfolio-v0/shadcn/components/button';
+import { cn } from '@portfolio-v0/shadcn/utils';
+
+import { Dialog } from '@base-ui/react/dialog';
 import { useTranslations } from '@fuma-translate/react';
-import { useSearchContext } from 'fumadocs-ui/contexts/search';
+import { useSearchContext } from '@fumadocs/base-ui/contexts/search';
 import { Search } from 'lucide-react';
 import type { ComponentProps } from 'react';
 
-import { type ButtonProps, buttonVariants } from '../../../components/ui/button';
-import { cn } from '../../../lib/cn';
-
-export interface SearchTriggerProps extends Omit<ComponentProps<'button'>, 'color'>, ButtonProps {
+export interface SearchTriggerProps extends Omit<ComponentProps<'button'>, 'variant'>, ButtonProps {
   hideIfDisabled?: boolean;
 }
 
 export function SearchTrigger({
   hideIfDisabled,
   size = 'icon-sm',
-  color = 'ghost',
+  variant = 'ghost',
   ...props
 }: SearchTriggerProps) {
-  const { setOpenSearch, enabled } = useSearchContext();
+  const { enabled, dialogHandle } = useSearchContext();
   const t = useTranslations({ note: 'search trigger' });
   if (hideIfDisabled && !enabled) return null;
 
   return (
-    <button
+    <Dialog.Trigger
+      handle={dialogHandle}
       type="button"
       className={cn(
         buttonVariants({
           size,
-          color,
+          variant,
         }),
         props.className,
       )}
       data-search=""
       aria-label={t('Open Search', { note: 'aria-label' })}
-      onClick={() => {
-        setOpenSearch(true);
-      }}
     >
       <Search />
-    </button>
+    </Dialog.Trigger>
   );
 }
 
@@ -47,12 +46,13 @@ export interface FullSearchTriggerProps extends ComponentProps<'button'> {
 }
 
 export function FullSearchTrigger({ hideIfDisabled, ...props }: FullSearchTriggerProps) {
-  const { enabled, hotKey, setOpenSearch } = useSearchContext();
+  const { enabled, hotKey, dialogHandle } = useSearchContext();
   const t = useTranslations({ note: 'search trigger' });
   if (hideIfDisabled && !enabled) return null;
 
   return (
-    <button
+    <Dialog.Trigger
+      handle={dialogHandle}
       type="button"
       data-search-full=""
       {...props}
@@ -60,9 +60,6 @@ export function FullSearchTrigger({ hideIfDisabled, ...props }: FullSearchTrigge
         'bg-fd-secondary/50 text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-accent-foreground inline-flex items-center gap-2 rounded-lg border p-1.5 ps-2 text-sm transition-colors',
         props.className,
       )}
-      onClick={() => {
-        setOpenSearch(true);
-      }}
     >
       <Search className="size-4" />
       {t('Search')}
@@ -73,6 +70,6 @@ export function FullSearchTrigger({ hideIfDisabled, ...props }: FullSearchTrigge
           </kbd>
         ))}
       </div>
-    </button>
+    </Dialog.Trigger>
   );
 }

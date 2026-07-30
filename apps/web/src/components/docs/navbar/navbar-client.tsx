@@ -7,12 +7,13 @@ import { useMotionValueEvent, useScroll } from 'motion/react';
 import Link from 'next/link';
 import { type ReactNode, useState } from 'react';
 
+import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
+
 import { Links } from './links';
 import { Logo } from './logo';
 import { MobileMenu } from './mobile-menu';
 import { MobileSearch } from './mobile-search';
 import { Search } from './search';
-import { ThemeToggle } from './theme-toggle';
 
 type NavbarClientProps = {
   componentsCount: number;
@@ -59,7 +60,7 @@ export function NavbarClient({
       <div className="hidden items-center gap-2 md:flex">
         <Search />
         <div className="mx-1 h-5 w-px bg-border" />
-        <ThemeToggle />
+        <ThemeSwitch />
         {github}
 
         <Link

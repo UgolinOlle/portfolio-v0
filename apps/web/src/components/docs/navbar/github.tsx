@@ -23,7 +23,7 @@ async function getStarCount() {
   }
 }
 
-export const GitHub = async ({ className }: GitHubProps) => {
+const GitHub = async ({ className }: GitHubProps) => {
   const stars = await getStarCount();
 
   return (
@@ -51,3 +51,9 @@ export const GitHub = async ({ className }: GitHubProps) => {
     </Button>
   );
 };
+
+const GitHubSkeleton = () => (
+  <div className="h-8 w-16 animate-pulse rounded-lg border bg-muted/50" />
+);
+
+export { GitHubSkeleton, GitHub };

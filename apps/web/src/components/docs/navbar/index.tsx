@@ -2,8 +2,7 @@ import { Suspense } from 'react';
 
 import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
-import { GitHub } from './github';
-import { GitHubSkeleton } from './github-skeleton';
+import { GitHub, GitHubSkeleton } from './github';
 import { NavbarClient } from './navbar-client';
 
 const componentsCount = componentsSource.getPages().length;

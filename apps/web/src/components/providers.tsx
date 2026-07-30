@@ -10,7 +10,7 @@ import { I18nProvider } from '~/components/i18n/i18n-provider';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <RootProvider>
+    <RootProvider theme={{ enabled: false }}>
       <ThemeProvider
         enableSystem
         disableTransitionOnChange

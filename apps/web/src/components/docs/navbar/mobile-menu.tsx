@@ -11,9 +11,8 @@ import {
 import { Blocks, LayoutGrid, LayoutTemplate, MenuIcon } from 'lucide-react';
 import Link from 'next/link';
 
+import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
 import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
-
-import { ThemeToggle } from './theme-toggle';
 
 const groups = [
   { title: 'Components', pages: componentsSource.getPages(), icon: LayoutGrid },
@@ -21,7 +20,7 @@ const groups = [
   { title: 'Templates', pages: templatesSource.getPages(), icon: LayoutTemplate },
 ];
 
-export const MobileMenu = () => (
+const MobileMenu = () => (
   <Drawer>
     <DrawerTrigger asChild>
       <Button className="size-8" size="icon" variant="ghost">
@@ -31,7 +30,7 @@ export const MobileMenu = () => (
     <DrawerContent>
       <DrawerHeader className="flex-row items-center justify-between border-b pb-4">
         <DrawerTitle className="text-base font-semibold">Menu</DrawerTitle>
-        <ThemeToggle />
+        <ThemeSwitch />
       </DrawerHeader>
       <div className="flex flex-col gap-6 overflow-y-auto px-6 py-6">
         {groups.map((group) => (
@@ -56,3 +55,5 @@ export const MobileMenu = () => (
     </DrawerContent>
   </Drawer>
 );
+
+export { MobileMenu };

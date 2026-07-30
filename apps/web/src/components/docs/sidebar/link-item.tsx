@@ -1,7 +1,8 @@
 'use client';
 import { usePathname } from 'fumadocs-core/framework';
-import { isLinkItemActive, type LinkItemType } from 'fumadocs-ui/layouts/shared';
 import type { HTMLAttributes } from 'react';
+
+import { isLinkItemActive, type LinkItemType } from '~/layouts/shared';
 
 import type * as Base from './base';
 

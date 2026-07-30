@@ -7,6 +7,7 @@ import type { blocksSource, componentsSource, templatesSource } from '~/lib/sour
 
 import { RegistryInstall } from './install';
 import { Preview } from './preview';
+import { RegistryBreadcrumb } from './registry-breadcrumb';
 
 type RegistrySource = typeof componentsSource | typeof blocksSource | typeof templatesSource;
 
@@ -29,7 +30,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
     isRootIndex && type !== 'component' ? source.getPages().filter((p) => p.url !== page.url) : [];
 
   return (
-    <DocsPage toc={page.data.toc}>
+    <DocsPage breadcrumb={{ component: <RegistryBreadcrumb /> }} toc={page.data.toc}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
 

@@ -1,7 +1,19 @@
 'use client';
+import {
+  Collapsible,
+  CollapsibleContent,
+  type CollapsibleContentProps,
+  CollapsibleTrigger,
+  type CollapsibleTriggerProps,
+} from '@portfolio-v0/shadcn/components/collapsible';
+import {
+  ScrollArea,
+  type ScrollAreaProps,
+  ScrollViewport,
+} from '@portfolio-v0/shadcn/components/scroll-area';
+import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { useTranslations } from '@fuma-translate/react';
-import { Presence } from '@radix-ui/react-presence';
 import { usePathname } from 'fumadocs-core/framework';
 import Link, { type LinkProps } from 'fumadocs-core/link';
 import { useMediaQuery } from 'fumadocs-core/utils/use-media-query';
@@ -19,17 +31,8 @@ import {
   useRef,
   useState,
 } from 'react';
+import ReactDOM from 'react-dom';
 import scrollIntoView from 'scroll-into-view-if-needed';
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  type CollapsibleContentProps,
-  CollapsibleTrigger,
-  type CollapsibleTriggerProps,
-} from '~/components/ui/collapsible';
-import { ScrollArea, ScrollViewport } from '~/components/ui/scroll-area';
-import { cn } from '~/lib/cn';
 
 interface SidebarContext {
   open: boolean;
@@ -132,10 +135,8 @@ export function useFolderDepth() {
 }
 
 export function SidebarContent({
-  mode: allowedMode = 'full',
   children,
 }: {
-  mode?: Mode | true;
   children: (state: {
     ref: RefObject<HTMLElement | null>;
     collapsed: boolean;
@@ -153,7 +154,7 @@ export function SidebarContent({
     if (collapsed) setHover(false);
   });
 
-  if (allowedMode !== true && allowedMode !== mode) return;
+  if (mode !== 'full') return;
 
   function shouldIgnoreHover(e: PointerEvent): boolean {
     const element = ref.current;
@@ -184,64 +185,74 @@ export function SidebarContent({
   });
 }
 
-export function SidebarViewport({
-  area,
-  viewport,
-  children,
-}: {
-  area?: ComponentProps<typeof ScrollArea>;
-  viewport?: ComponentProps<typeof ScrollViewport>;
-  children: ReactNode;
-}) {
-  return (
-    <ScrollArea {...area} className={cn('min-h-0 flex-1', area?.className)}>
-      <ScrollViewport
-        {...viewport}
-        className={cn(
-          'overscroll-contain mask-[linear-gradient(to_bottom,transparent,white_20px,white_calc(100%-20px),transparent)] p-4 *:flex! *:flex-col! *:gap-1!',
-          viewport?.className,
-        )}
-      >
-        {children}
-      </ScrollViewport>
-    </ScrollArea>
-  );
-}
-
 export function SidebarDrawerOverlay(props: ComponentProps<'div'>) {
   const { open, setOpen, mode } = useSidebar();
+  const [hidden, setHidden] = useState(!open);
 
-  if (mode !== 'drawer') return;
+  if (open && hidden) setHidden(false);
+  if (mode !== 'drawer' || hidden) return;
   return (
-    <Presence present={open}>
-      <div data-state={open ? 'open' : 'closed'} onClick={() => setOpen(false)} {...props} />
-    </Presence>
+    <div
+      data-state={open ? 'open' : 'closed'}
+      onClick={() => setOpen(false)}
+      onAnimationEnd={() => {
+        if (!open) ReactDOM.flushSync(() => setHidden(true));
+      }}
+      {...props}
+    />
   );
 }
 
 export function SidebarDrawerContent({ className, children, ...props }: ComponentProps<'aside'>) {
   const { open, mode } = useSidebar();
-  const state = open ? 'open' : 'closed';
+  const [hidden, setHidden] = useState(!open);
 
+  if (open && hidden) setHidden(false);
   if (mode !== 'drawer') return;
   return (
-    <Presence present={open}>
-      {({ present }) => (
-        <aside
-          id="nd-sidebar-mobile"
-          data-state={state}
-          className={cn(!present && 'invisible', className)}
-          {...props}
-        >
-          {children}
-        </aside>
-      )}
-    </Presence>
+    <aside
+      id="nd-sidebar-mobile"
+      data-state={open ? 'open' : 'closed'}
+      className={cn(hidden && 'invisible', className)}
+      onAnimationEnd={() => {
+        if (!open) ReactDOM.flushSync(() => setHidden(true));
+      }}
+      {...props}
+    >
+      {children}
+    </aside>
+  );
+}
+
+export function SidebarViewport({ className, ...props }: ScrollAreaProps) {
+  return (
+    <ScrollArea
+      className={(s: any) =>
+        cn('min-h-0 flex-1', typeof className === 'function' ? className(s) : className)
+      }
+      {...props}
+    >
+      <ScrollViewport className="overscroll-contain mask-[linear-gradient(to_bottom,transparent,white_20px,white_calc(100%-20px),transparent)] p-4">
+        {props.children}
+      </ScrollViewport>
+    </ScrollArea>
   );
 }
 
 export function SidebarSeparator(props: ComponentProps<'p'>) {
-  return <p {...props} />;
+  const depth = useFolderDepth();
+  return (
+    <p
+      {...props}
+      className={cn(
+        'mt-6 mb-1.5 inline-flex items-center gap-2 px-2 empty:mb-0',
+        depth === 0 && 'first:mt-0',
+        props.className,
+      )}
+    >
+      {props.children}
+    </p>
+  );
 }
 
 export function SidebarItem({
@@ -362,12 +373,19 @@ export function SidebarFolderContent(props: CollapsibleContentProps) {
 }
 
 export function SidebarTrigger({ children, ...props }: ComponentProps<'button'>) {
-  const { setOpen } = useSidebar();
+  const { open, setOpen } = useSidebar();
   const t = useTranslations({ note: 'sidebar' });
 
   return (
     <button
-      aria-label={t('Open Sidebar', { note: 'aria-label' })}
+      type="button"
+      aria-label={
+        open
+          ? t('Close Sidebar', { note: 'aria-label' })
+          : t('Open Sidebar', { note: 'aria-label' })
+      }
+      aria-expanded={open}
+      aria-controls="nd-sidebar-mobile"
       onClick={() => setOpen((prev) => !prev)}
       {...props}
     >

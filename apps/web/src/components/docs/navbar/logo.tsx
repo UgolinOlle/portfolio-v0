@@ -3,7 +3,7 @@
 import { motion } from 'motion/react';
 import Image from 'next/image';
 
-export const Logo = () => (
+const Logo = () => (
   <motion.div
     className="flex items-center gap-2"
     whileHover={{ scale: 1.04 }}
@@ -13,3 +13,5 @@ export const Logo = () => (
     <Image src="/favicon.ico" alt="Whoa UI Logo" width={32} height={32} className="rounded-md" />
   </motion.div>
 );
+
+export { Logo };

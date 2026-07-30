@@ -3,13 +3,15 @@ import type { Metadata } from 'next';
 import { Breadcrumbs } from '~/components/docs/breadcrumbs';
 import { Navbar } from '~/components/docs/navbar';
 import { RegistrySection } from '~/components/registry';
+import { createMetadata } from '~/lib/metadata';
 import { getRegistrySections } from '~/lib/registry';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: 'UI',
   description:
-    'Composants, blocks et templates construits avec shadcn/ui, utilisés dans ce portfolio.',
-};
+    'Composants, blocks et templates construits avec shadcn/ui, utilisés dans ce portfolio : code source, previews et snippets d’installation prêts à copier.',
+  pathname: '/ui',
+});
 
 const UiIndexPage = () => {
   const sections = getRegistrySections();
@@ -18,6 +20,7 @@ const UiIndexPage = () => {
     <>
       <Navbar />
       <Breadcrumbs className="pt-14" />
+
       <main className="mx-auto max-w-6xl px-4 pt-20 pb-20">
         <div className="mb-12 space-y-4">
           <h1 className="text-3xl font-semibold">UI</h1>

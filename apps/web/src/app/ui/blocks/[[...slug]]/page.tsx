@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { RegistryDocsPage } from '~/components/docs/docs-page';
+import { createDocsMetadata } from '~/lib/metadata';
 import { blocksSource } from '~/lib/source';
 
 type PageProps = {
@@ -26,24 +27,14 @@ export const generateMetadata = async (props: {
     notFound();
   }
 
-  const ogUrl = `/og/docs/blocks/${params.slug?.join('/') ?? ''}/image.png`;
+  const slugPath = params.slug?.join('/') ?? '';
 
-  return {
+  return createDocsMetadata({
     title: page.data.title,
     description: page.data.description,
-    openGraph: {
-      title: page.data.title,
-      description: page.data.description,
-      type: 'website',
-      images: [{ url: ogUrl, width: 1200, height: 630 }],
-    },
-    twitter: {
-      title: page.data.title,
-      description: page.data.description,
-      card: 'summary_large_image',
-      images: [ogUrl],
-    },
-  };
+    pathname: `/ui/blocks${slugPath ? `/${slugPath}` : ''}`,
+    ogImage: `/og/docs/blocks/${slugPath}/image.png`,
+  });
 };
 
 export default BlocksPage;

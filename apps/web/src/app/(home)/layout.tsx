@@ -1,10 +1,5 @@
-import type { Metadata } from 'next';
-
 import { Footer } from '~/components/footer';
 import { Header } from '~/components/header';
-import { defaultMetadata } from '~/utils/metadata';
-
-export const metadata: Metadata = defaultMetadata;
 
 export default function HomeLayout({ children }: { children: React.ReactNode }) {
   return (

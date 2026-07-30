@@ -16,7 +16,7 @@
     "test": "turbo test",
     "analyze": "turbo analyze",
     "bump-deps": "npx npm-check-updates --deep -u -x shiki,next,recharts,require-in-the-middle && bun install",
-    "bump-ui": "npx shadcn@latest add --all --overwrite -c packages/shadcn && npx shadcn@latest migrate radix -c packages/shadcn",
+    "bump-ui": "npx shadcn@latest add --all --overwrite -c packages/shadcn && npx shadcn@latest migrate base-ui -c packages/shadcn",
     "clean": "turbo clean && git clean -xdf node_modules .cache .turbo dist"
   },
   "devDependencies": {

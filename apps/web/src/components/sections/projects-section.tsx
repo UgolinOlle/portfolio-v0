@@ -1,12 +1,13 @@
 'use client';
 
+import { cn } from '@portfolio-v0/shadcn/utils';
+
 import { motion } from 'motion/react';
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/i18n/i18n-provider';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { PROJECTS } from '~/lib/data';
-import { cn } from '~/lib/utils';
 
 export function ProjectsSection() {
   const { t } = useTranslation();

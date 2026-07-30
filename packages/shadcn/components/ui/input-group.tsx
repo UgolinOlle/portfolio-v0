@@ -7,7 +7,7 @@ import { Textarea } from '@portfolio-v0/shadcn/components/ui/textarea';
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
-import { cn } from '~/lib/utils';
+import { cn } from '../../lib/utils';
 
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (

@@ -5,7 +5,7 @@ import { Button } from '@portfolio-v0/shadcn/components/ui/button';
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog';
 import * as React from 'react';
 
-import { cn } from '~/lib/utils';
+import { cn } from '../../lib/utils';
 
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;

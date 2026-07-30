@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
+import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { cn } from '~/lib/utils';
+import type { ReactNode } from 'react';
 
 type PreviewFrameProps = {
   children: ReactNode;

@@ -21,7 +21,7 @@ import { Menubar as MenubarPrimitive } from '@base-ui/react/menubar';
 import { CheckIcon } from 'lucide-react';
 import * as React from 'react';
 
-import { cn } from '~/lib/utils';
+import { cn } from '../../lib/utils';
 
 function Menubar({ className, ...props }: MenubarPrimitive.Props) {
   return (

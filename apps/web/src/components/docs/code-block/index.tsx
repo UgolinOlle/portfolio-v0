@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@portfolio-v0/shadcn/components/select';
+import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import {
@@ -92,8 +93,6 @@ import {
   SiWebassembly,
 } from 'react-icons/si';
 import { type BundledLanguage, type CodeOptionsMultipleThemes, codeToHtml } from 'shiki';
-
-import { cn } from '~/lib/utils';
 
 export type { BundledLanguage } from 'shiki';
 

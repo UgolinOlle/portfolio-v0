@@ -170,7 +170,7 @@ export type Component = {
  * @property {end} string - Date end
  * @property {logo} string - Logo of the experience
  * @property {link} string - Link of the experience
- * @property {icon} ReactNode | ComponentType<{ className?: string }> - Icon of the experience
+ * @property {icon} ComponentType<{ className?: string; strokeWidth?: number }> - Icon of the experience
  * @property {id} string - ID of the experience
  */
 export type WorkExperience = {
@@ -180,6 +180,6 @@ export type WorkExperience = {
   end?: string;
   logo?: string;
   link: string;
-  icon: ReactNode | ComponentType<{ className?: string }>;
+  icon: ComponentType<{ className?: string; strokeWidth?: number }>;
   id: string;
 };

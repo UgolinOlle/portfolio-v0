@@ -18,7 +18,7 @@
     "@fumadocs/base-ui": "^16.13.0",
     "@icons-pack/react-simple-icons": "^13.13.0",
     "@portfolio-v0/shadcn": "workspace:*",
-    "@shikijs/transformers": "^4.0.2",
+    "@shikijs/transformers": "^4.3.1",
     "class-variance-authority": "^0.7.1",
     "fumadocs-core": "16.8.8",
     "fumadocs-mdx": "15.0.0",

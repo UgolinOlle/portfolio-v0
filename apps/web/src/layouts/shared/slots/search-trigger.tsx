@@ -8,9 +8,10 @@ import { useSearchContext } from '@fumadocs/base-ui/contexts/search';
 import { Search } from 'lucide-react';
 import type { ComponentProps } from 'react';
 
-export interface SearchTriggerProps extends Omit<ComponentProps<'button'>, 'variant'>, ButtonProps {
-  hideIfDisabled?: boolean;
-}
+export type SearchTriggerProps = Omit<ComponentProps<'button'>, 'variant' | 'className'> &
+  ButtonProps & {
+    hideIfDisabled?: boolean;
+  };
 
 export function SearchTrigger({
   hideIfDisabled,

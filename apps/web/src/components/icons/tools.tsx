@@ -1,4 +1,4 @@
-import type { IconProps } from '~/utils/type';
+import type { IconProps } from '~/types';
 
 export const TOOLS = {
   GitHub: ({ className }: IconProps) => (

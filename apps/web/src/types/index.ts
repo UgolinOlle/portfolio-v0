@@ -34,16 +34,55 @@ export type Resources = {
 };
 
 /**
+ * @name SocialPreviewKind
+ * @description Discriminates which layout/copy a SocialPreviewCard should use
+ */
+export type SocialPreviewKind = 'github' | 'linkedin' | 'malt' | 'twitter' | 'generic';
+
+/**
+ * @name SocialPreviewStat
+ * @description A single labeled stat shown in a SocialPreviewCard (e.g. "Repos" / "20+")
+ */
+export type SocialPreviewStat = {
+  label: string;
+  value: string;
+};
+
+/**
+ * @name SocialPreview
+ * @description Data-driven content rendered inside the hover preview card for a social link
+ * @property {SocialPreviewKind} kind - Which preview layout/copy to use
+ * @property {string} name - Display name shown in the card
+ * @property {string} handle - Username/handle shown under the name
+ * @property {string} role - Short role/title line
+ * @property {string} bio - Short bio/description line
+ * @property {string} avatar - Avatar image URL, falls back to initials when absent
+ * @property {SocialPreviewStat[]} stats - Optional row of small stats (followers, repos, ...)
+ */
+export type SocialPreview = {
+  kind: SocialPreviewKind;
+  name: string;
+  handle?: string;
+  role?: string;
+  bio?: string;
+  avatar?: string;
+  stats?: SocialPreviewStat[];
+};
+
+/**
  * @name SocialLink
  * @description Type for social links
  * @property {string} label - The label of the social link
  * @property {string} link - The link of the social link
+ * @property {SocialPreview} preview - Optional hover preview content (desktop only)
  */
 export type SocialLink = {
   label: string;
   link: string;
   favicon?: string;
-  icon?: React.ComponentType<{ className?: string }>;
+  icon?: ComponentType<{ className?: string }>;
+  iconDark?: ComponentType<{ className?: string }>;
+  preview?: SocialPreview;
 };
 
 /**
@@ -131,6 +170,7 @@ export type Component = {
  * @property {end} string - Date end
  * @property {logo} string - Logo of the experience
  * @property {link} string - Link of the experience
+ * @property {icon} ReactNode | ComponentType<{ className?: string }> - Icon of the experience
  * @property {id} string - ID of the experience
  */
 export type WorkExperience = {
@@ -140,5 +180,6 @@ export type WorkExperience = {
   end?: string;
   logo?: string;
   link: string;
+  icon: ReactNode | ComponentType<{ className?: string }>;
   id: string;
 };

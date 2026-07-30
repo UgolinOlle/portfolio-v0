@@ -1,4 +1,4 @@
-import type { IconProps } from '~/utils/type';
+import type { IconProps } from '~/types';
 
 export const LOGOS = {
   XDark: ({ className }: IconProps) => (

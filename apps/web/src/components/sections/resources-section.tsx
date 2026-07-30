@@ -1,5 +1,7 @@
 'use client';
 
+import { cn } from '@portfolio-v0/shadcn/utils';
+
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -8,8 +10,7 @@ import { Spotlight } from '~/components/ui/spotlight';
 import { TextHoverEnter } from '~/components/ui/text-hover';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { RESOURCES } from '~/lib/data';
-import { cn } from '~/lib/utils';
-import type { Resources } from '~/utils/type';
+import type { Resources } from '~/types';
 
 const DEFAULT_VISIBLE_RESOURCES = 4;
 const BLUR_CUTOFF_INDEX = 3;

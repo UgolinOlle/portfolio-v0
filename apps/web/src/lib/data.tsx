@@ -1,13 +1,22 @@
-import { Command, Component as ComponentIcon } from 'lucide-react';
+import { cn } from '@portfolio-v0/shadcn/utils';
+
+import {
+  Apple,
+  Bolt,
+  Bot,
+  Building2,
+  Command,
+  Component as ComponentIcon,
+  HomeIcon,
+  House,
+  Palette,
+  User,
+  Users,
+} from 'lucide-react';
 
 import { LOGOS, TOOLS } from '~/components/icons';
-import type { Project, Resources, SocialLink, WorkExperience } from '~/utils/type';
+import type { Project, Resources, SocialLink, WorkExperience } from '~/types';
 
-/**
- * @constant PROJECTS
- * @description List of projects with their details
- * @type {Project[]}
- */
 export const PROJECTS: Project[] = [
   {
     name: 'Whoa UI Components',
@@ -16,8 +25,18 @@ export const PROJECTS: Project[] = [
     link: '/ui',
     id: 'whoa-ui',
     content: (
-      <div className="rounded-xl border border-zinc-200 bg-white p-2.5 shadow dark:border-zinc-700 dark:bg-zinc-950/40">
-        <ComponentIcon className="size-7" />
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <ComponentIcon className="size-7" />
+        </div>
       </div>
     ),
   },
@@ -26,52 +45,90 @@ export const PROJECTS: Project[] = [
     description: 'Application MacOS pour gérer le son.',
     link: '/projects/whoa-stash',
     content: (
-      <div className="rounded-xl border border-zinc-200 bg-white p-2.5 shadow dark:border-zinc-700 dark:bg-zinc-950/40">
-        <Command className="size-7" />
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <Command className="size-7" />
+        </div>
       </div>
     ),
     id: 'whoa-stash',
   },
 ];
 
-/**
- * @constant SOCIAL_LINKS
- * @description List of social links with their details
- * @type {SocialLink[]}
- */
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'LinkedIn',
     link: 'https://www.linkedin.com/in/ugolin-olle',
     favicon: 'https://static.licdn.com/aero-v1/sc/h/90y3av2ns08iojcadywbxioqh',
+    preview: {
+      kind: 'linkedin',
+      name: 'Ugolin Ollé',
+      handle: '@ugolin-olle',
+      role: 'Développeur Full Stack freelance',
+      bio: 'Expériences produit, sites vitrines et outils sur-mesure.',
+    },
   },
   {
     label: 'Github',
     link: 'https://github.com/UgolinOlle',
     icon: LOGOS.GithubLight,
+    iconDark: LOGOS.GithubDark,
+    preview: {
+      kind: 'github',
+      name: 'Ugolin Ollé',
+      handle: '@UgolinOlle',
+      avatar: 'https://github.com/UgolinOlle.png',
+      bio: 'Composants, expérimentations et side-projects open source.',
+      stats: [
+        { label: 'Repos', value: '20+' },
+        { label: 'Followers', value: '15+' },
+      ],
+    },
   },
   {
     label: 'Malt',
     link: 'https://www.malt.fr/profile/ugolinolle',
     favicon: 'https://dam.malt.com/favicon.png',
+    preview: {
+      kind: 'malt',
+      name: 'Ugolin Ollé',
+      role: 'Développeur Full Stack',
+      bio: 'Disponible pour des missions freelance en développement web.',
+    },
   },
   {
     label: 'Twitter',
     link: 'https://twitter.com/ugolin_olle',
     icon: LOGOS.XLight,
+    iconDark: LOGOS.XDark,
+    preview: {
+      kind: 'twitter',
+      name: 'Ugolin Ollé',
+      handle: '@ugolin_olle',
+      bio: "Développeur, partage de builds et d'expérimentations frontend.",
+    },
   },
   {
     label: 'NPM',
     link: 'https://www.npmjs.com/~whoa-studio',
     icon: LOGOS.NPM,
+    preview: {
+      kind: 'generic',
+      name: 'Whoa Studio',
+      handle: '@whoa-studio',
+      bio: 'Packages publiés et maintenus sur npm.',
+    },
   },
 ];
 
-/**
- * @constant RESOURCES
- * @description List of resources with their details
- * @type {Resources[]}
- */
 export const RESOURCES: Resources[] = [
   {
     name: 'MacBook Pro M4',
@@ -112,6 +169,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2025',
     link: 'https://maia-host.com',
     logo: '/assets/logos/maia-host.png',
+    icon: HomeIcon,
     id: 'maia-host',
   },
   {
@@ -120,6 +178,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2025',
     link: 'https://digitalcreator.app/',
     logo: 'https://digitalcreator.app/favicon.ico?favicon.4b4ac5f9.ico',
+    icon: Palette,
     id: 'digital-creator',
   },
   {
@@ -128,6 +187,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2025',
     link: 'https://sugarai.app/',
     logo: 'https://www.sugarai.app/favicon-16x16.png',
+    icon: Apple,
     id: 'sugar-ai',
   },
   {
@@ -137,6 +197,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     end: '2025',
     link: 'https://leboutiquier.fr/',
     logo: 'https://res.cloudinary.com/djher1fiu/image/upload/v1758012423/xop0sw1gbaky4eiicifj.png',
+    icon: House,
     id: 'le-boutiquier',
   },
   {
@@ -145,6 +206,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2024',
     link: '',
     logo: '/assets/logos/connectra_logo.webp',
+    icon: Bolt,
     id: 'connectra',
   },
   {
@@ -152,6 +214,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Developer Full Stack',
     start: '2024',
     link: '',
+    icon: Bot,
     id: 'comai',
   },
   {
@@ -161,6 +224,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     end: 'Present',
     link: 'https://ugolin-olle.com',
     logo: '/favicon.ico',
+    icon: User,
     id: 'freelance',
   },
   {
@@ -170,6 +234,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     end: '2023',
     link: 'https://azertyconsulting.fr/',
     logo: 'https://azertyconsulting.fr/icon.png?27ebc0b5cfa491cd',
+    icon: Users,
     id: 'azerty-consulting',
   },
   {
@@ -178,15 +243,11 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2022',
     link: 'https://nicoka.com',
     logo: 'https://www.nicoka.com/assets/img/favicon.ico',
+    icon: Building2,
     id: 'nicoka',
   },
 ];
 
-/**
- * @constant INSPIRATIONS
- * @description List of inspirations with their details
- * @type {Array<{ name: string; href: string; description: string }>}
- */
 export const INSPIRATIONS = [
   {
     name: 'Vercel',

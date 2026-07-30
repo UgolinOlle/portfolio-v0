@@ -1,55 +1,14 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/i18n/i18n-provider';
-import { LOGOS } from '~/components/icons';
-import { LanguageSwitcher, TextEffect, TextHoverEnter } from '~/components/ui';
+import { LanguageSwitcher, TextEffect } from '~/components/ui';
+import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
 import { SOCIAL_LINKS } from '~/lib/data';
-import { cn } from '~/lib/utils';
-import type { SocialLink } from '~/utils/type';
 
-import { ThemeToggle } from './docs/navbar/theme-toggle';
-
-function SocialLinkIcon({
-  link,
-  currentTheme,
-}: {
-  link: SocialLink;
-  currentTheme: string | undefined;
-}) {
-  if (link.label === 'Twitter' && link.icon) {
-    const IconComponent = currentTheme === 'dark' ? LOGOS.XDark : LOGOS.XLight;
-    return <IconComponent className="h-4 w-4" />;
-  }
-
-  if (link.label === 'Github' && link.icon) {
-    const IconComponent = currentTheme === 'dark' ? LOGOS.GithubDark : LOGOS.GithubLight;
-    return <IconComponent className="h-4 w-4" />;
-  }
-
-  if (link.favicon) {
-    return (
-      <Image
-        alt={`${link.label} icon`}
-        className="h-4 w-4"
-        height={16}
-        loading="lazy"
-        src={link.favicon}
-        width={16}
-      />
-    );
-  }
-
-  if (link.icon) {
-    const IconComponent = link.icon;
-    return <IconComponent className="h-4 w-4" />;
-  }
-
-  return null;
-}
+import { SocialLinksNav } from './ui/social-links-nav';
 
 function Header() {
   const { t } = useTranslation();
@@ -77,31 +36,14 @@ function Header() {
           </div>
 
           <div className="flex items-center gap-2">
-            <ThemeToggle />
+            <ThemeSwitch />
             <LanguageSwitcher />
           </div>
         </div>
 
         <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800" />
 
-        <div className="my-1 grid w-fit grid-cols-2 gap-x-4 gap-y-2 md:flex md:flex-row md:items-center md:gap-3">
-          {SOCIAL_LINKS.map((link) => (
-            <Link
-              className={cn(
-                'group flex w-fit items-center gap-2 rounded-sm px-2 py-1 text-primary/80',
-                'border border-primary/20 transition-all duration-300 hover:bg-primary-foreground',
-                'active:scale-[0.95]',
-              )}
-              key={link.label}
-              rel="noopener noreferrer"
-              target="_blank"
-              href={link.link}
-            >
-              <SocialLinkIcon currentTheme={currentTheme} link={link} />
-              <TextHoverEnter className="text-sm">{link.label}</TextHoverEnter>
-            </Link>
-          ))}
-        </div>
+        <SocialLinksNav currentTheme={currentTheme} links={SOCIAL_LINKS} />
       </div>
     </header>
   );

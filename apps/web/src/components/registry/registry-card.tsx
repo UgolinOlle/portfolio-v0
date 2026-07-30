@@ -1,13 +1,12 @@
 'use client';
 
 import { Badge } from '@portfolio-v0/shadcn/components/badge';
+import { cn } from '@portfolio-v0/shadcn/utils';
 
 import Link from 'next/link';
-import { Suspense } from 'react';
+import type { ReactNode } from 'react';
 
-import { PreviewThumbnail } from '~/components/docs/preview/preview-thumbnail';
 import { useTranslation } from '~/components/i18n/i18n-provider';
-import { cn } from '~/lib/cn';
 import type { RegistryCategory, RegistryItem } from '~/lib/registry';
 
 const CATEGORY_LABELS: Record<RegistryCategory, string> = {
@@ -18,20 +17,17 @@ const CATEGORY_LABELS: Record<RegistryCategory, string> = {
 
 type RegistryCardProps = {
   item: RegistryItem;
+  preview?: ReactNode;
 };
 
-export const RegistryCard = ({ item }: RegistryCardProps) => {
+export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
   const { t } = useTranslation();
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-xl border bg-card">
       {/* Contenu de la card */}
       <div className="h-40 shrink-0 border-b">
-        {item.preview ? (
-          <Suspense fallback={<div className="size-full animate-pulse bg-muted/40" />}>
-            <PreviewThumbnail path={item.preview} type={item.category} />
-          </Suspense>
-        ) : (
+        {preview ?? (
           <div className="flex size-full items-center justify-center bg-muted/20 text-xs text-muted-foreground">
             {t('registry.card.previewComingSoon')}
           </div>

@@ -20,6 +20,7 @@ import {
 } from '@portfolio-v0/shadcn/components/dropdown-menu';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
+import { LayoutGrid } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -103,6 +104,7 @@ export function Breadcrumbs({
       <div className={cn(containerClassName)}>
         <Breadcrumb>
           <BreadcrumbList>
+            <LayoutGrid className="text-fd-muted-foreground mr-2 size-3 shrink-0" />
             {crumbs.map((crumb, index) => {
               const isLast = index === crumbs.length - 1;
               const key = crumb.ellipsisItems ? 'ellipsis' : (crumb.href ?? String(crumb.label));
@@ -170,6 +172,7 @@ function BreadcrumbEllipsisMenu({ items }: BreadcrumbEllipsisMenuProps) {
       >
         <BreadcrumbEllipsis className="size-4" />
       </DropdownMenuTrigger>
+
       <DropdownMenuContent align="start" className="max-h-80 w-56 bg-secondary">
         {groups.map(([group, groupItems], index) => (
           <Fragment key={group || '_root'}>

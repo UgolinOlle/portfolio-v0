@@ -5,7 +5,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { useTreePath, useTreeContext } from '@fumadocs/base-ui/contexts/tree';
 import { type BreadcrumbOptions, getBreadcrumbItemsFromPath } from 'fumadocs-core/breadcrumb';
 import Link from 'fumadocs-core/link';
-import { ChevronRight } from 'lucide-react';
+import { Slash } from 'lucide-react';
 import { type ComponentProps, useMemo, Fragment } from 'react';
 
 export type BreadcrumbProps = BreadcrumbOptions & ComponentProps<'div'>;
@@ -38,7 +38,7 @@ export function Breadcrumb({
 
         return (
           <Fragment key={i}>
-            {i !== 0 && <ChevronRight className="size-3.5 shrink-0" />}
+            {i !== 0 && <Slash className="size-3.5 shrink-0" />}
             {item.url ? (
               <Link
                 href={item.url}

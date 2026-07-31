@@ -85,10 +85,6 @@ export function NavbarClient({
             />
           </span>
         </Link>
-
-        <span className="text-sm text-muted-foreground">
-          {`v${process.env.NEXT_PUBLIC_APP_VERSION}`}
-        </span>
       </div>
 
       <div className="flex items-center gap-2 md:hidden">

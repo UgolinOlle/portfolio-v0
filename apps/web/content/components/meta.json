@@ -1,4 +1,14 @@
 {
   "title": "Components",
-  "pages": ["index", "layout", "navigation", "forms", "feedback", "data-display", "overlay"]
+  "pages": [
+    "index",
+    "core",
+    "buttons",
+    "layout",
+    "navigation",
+    "forms",
+    "feedback",
+    "data-display",
+    "overlay"
+  ]
 }

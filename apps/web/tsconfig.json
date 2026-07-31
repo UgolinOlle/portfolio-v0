@@ -14,6 +14,13 @@
       "fumadocs-mdx:collections/*": [".source/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next.config.mjs"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "next.config.mjs",
+    "content/components/core/headers.mdx"
+  ],
   "exclude": ["node_modules"]
 }

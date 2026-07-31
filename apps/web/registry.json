@@ -4,13 +4,143 @@
   "homepage": "https://ugolin-olle.com/ui",
   "items": [
     {
+      "name": "headers",
+      "type": "registry:component",
+      "title": "Headers",
+      "description": "Components for displaying hierarchical titles.",
+      "files": [
+        {
+          "path": "registry/components/core/headers/headers.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "headers-demo",
+      "type": "registry:example",
+      "title": "Headers Demo",
+      "description": "Usage example for the Headers component.",
+      "files": [
+        {
+          "path": "examples/headers.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "button",
+      "type": "registry:component",
+      "title": "Button",
+      "description": "A button component for displaying interactive elements.",
+      "files": [
+        {
+          "path": "registry/components/core/button/button.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "button-demo",
+      "type": "registry:example",
+      "title": "Button Demo",
+      "description": "Usage example for the Button component.",
+      "files": [
+        {
+          "path": "examples/button.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "button-gandi",
+      "type": "registry:component",
+      "title": "Gandi Button",
+      "description": "A button component styled after Gandi.net's design.",
+      "files": [
+        {
+          "path": "registry/components/core/button/button.gandi.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "button-gandi-demo",
+      "type": "registry:example",
+      "title": "Gandi Button Demo",
+      "description": "Usage example for the Gandi Button component.",
+      "files": [
+        {
+          "path": "examples/button-gandi.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["button-gandi"]
+    },
+    {
+      "name": "button-apple",
+      "type": "registry:component",
+      "title": "Apple Button",
+      "description": "A button component styled after Apple's Human Interface Guidelines.",
+      "files": [
+        {
+          "path": "registry/components/core/button/button.apple.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "button-apple-demo",
+      "type": "registry:example",
+      "title": "Apple Button Demo",
+      "description": "Usage example for the Apple Button component.",
+      "files": [
+        {
+          "path": "examples/button-apple.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["button-apple"]
+    },
+    {
+      "name": "button-shopify",
+      "type": "registry:component",
+      "title": "Shopify Button",
+      "description": "A button component styled after Shopify's Polaris design system.",
+      "files": [
+        {
+          "path": "registry/components/core/button/button.shopify.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "button-shopify-demo",
+      "type": "registry:example",
+      "title": "Shopify Button Demo",
+      "description": "Usage example for the Shopify Button component.",
+      "files": [
+        {
+          "path": "examples/button-shopify.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["button-shopify"]
+    },
+    {
       "name": "status-card",
       "type": "registry:component",
       "title": "Status Card",
       "description": "A compact card that pairs a status badge with a short message.",
       "files": [
         {
-          "path": "registry/components/status-card/status-card.tsx",
+          "path": "registry/blocks/status-card/status-card.tsx",
           "type": "registry:component"
         }
       ],
@@ -23,11 +153,37 @@
       "description": "Usage example for the Status Card component.",
       "files": [
         {
-          "path": "examples/status-card.tsx",
+          "path": "registry/blocks/status-card/status-card.tsx",
           "type": "registry:example"
         }
       ],
       "registryDependencies": ["status-card"]
+    },
+    {
+      "name": "avatars",
+      "type": "registry:component",
+      "title": "Avatars",
+      "description": "A component for displaying user avatars.",
+      "files": [
+        {
+          "path": "registry/components/core/avatars/avatars.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "avatars-demo",
+      "type": "registry:example",
+      "title": "Avatars Demo",
+      "description": "Usage example for the Avatars component.",
+      "files": [
+        {
+          "path": "examples/avatars.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["avatar"]
     },
     {
       "name": "blog",

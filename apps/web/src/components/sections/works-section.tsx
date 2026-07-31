@@ -12,6 +12,7 @@ function WorksSection() {
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
       <h3 className="mb-3 text-lg font-medium">Works Experiences</h3>
+
       <div className="flex flex-col space-y-2">
         {WORKS_EXPERIENCES.map((job) => (
           <motion.div
@@ -19,11 +20,11 @@ function WorksSection() {
             onHoverStart={() => job.logo && setHoveredId(job.id)}
             onHoverEnd={() => setHoveredId(null)}
             className={cn(
-              'relative -mx-3 flex w-full flex-col justify-between gap-2',
-              'overflow-hidden rounded-xl px-3 py-3 text-sm lg:flex-row lg:gap-0',
+              'relative -mx-3 flex w-full justify-between gap-2',
+              'flex-row overflow-hidden rounded-xl px-3 py-3 text-sm lg:gap-0',
             )}
           >
-            <div className="flex flex-col justify-start lg:flex-row lg:items-center lg:gap-2">
+            <div className="flex flex-row justify-start lg:items-center lg:gap-2">
               <div className="mr-1 h-8 w-8" style={{ perspective: 1000 }}>
                 <motion.div
                   className="relative h-full w-full"
@@ -72,9 +73,13 @@ function WorksSection() {
                   )}
                 </motion.div>
               </div>
-              <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
-              <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
+
+              <div className="flex flex-col px-2">
+                <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
+                <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
+              </div>
             </div>
+
             <p className="text-zinc-600 dark:text-zinc-400">
               {job.start} {job.end && `- ${job.end}`}
             </p>

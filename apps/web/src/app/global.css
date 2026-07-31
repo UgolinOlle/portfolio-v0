@@ -29,3 +29,19 @@ html > body[data-scroll-locked] {
     clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
   }
 }
+
+@layer utilities {
+  .border-blur {
+    position: relative;
+  }
+
+  .border-blur::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: white;
+    filter: blur(4px);
+    z-index: -1;
+  }
+}

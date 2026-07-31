@@ -25,13 +25,14 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-xl border bg-card">
-      {/* Contenu de la card */}
-      <div className="h-40 shrink-0 border-b">
-        {preview ?? (
-          <div className="flex size-full items-center justify-center bg-muted/20 text-xs text-muted-foreground">
-            {t('registry.card.previewComingSoon')}
-          </div>
-        )}
+      <div className="relative">
+        <div className={cn('border-blur h-40 shrink-0 border-b', preview && 'p-2')}>
+          {preview ?? (
+            <div className="flex size-full items-center justify-center bg-muted/20 text-xs text-muted-foreground">
+              {t('registry.card.previewComingSoon')}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col gap-1.5 p-4">

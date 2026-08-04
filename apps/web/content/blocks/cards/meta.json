@@ -1,4 +1,4 @@
 {
   "title": "Cards",
-  "pages": ["status-card"]
+  "pages": ["status-card", "activity"]
 }

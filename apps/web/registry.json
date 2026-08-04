@@ -23,7 +23,7 @@
       "description": "Usage example for the Headers component.",
       "files": [
         {
-          "path": "examples/headers.tsx",
+          "path": "examples/components/headers.tsx",
           "type": "registry:example"
         }
       ],
@@ -49,7 +49,7 @@
       "description": "Usage example for the Button component.",
       "files": [
         {
-          "path": "examples/button.tsx",
+          "path": "examples/components/button.tsx",
           "type": "registry:example"
         }
       ],
@@ -75,7 +75,7 @@
       "description": "Usage example for the Gandi Button component.",
       "files": [
         {
-          "path": "examples/button-gandi.tsx",
+          "path": "examples/components/button-gandi.tsx",
           "type": "registry:example"
         }
       ],
@@ -101,7 +101,7 @@
       "description": "Usage example for the Apple Button component.",
       "files": [
         {
-          "path": "examples/button-apple.tsx",
+          "path": "examples/components/button-apple.tsx",
           "type": "registry:example"
         }
       ],
@@ -127,7 +127,7 @@
       "description": "Usage example for the Shopify Button component.",
       "files": [
         {
-          "path": "examples/button-shopify.tsx",
+          "path": "examples/components/button-shopify.tsx",
           "type": "registry:example"
         }
       ],
@@ -179,11 +179,95 @@
       "description": "Usage example for the Avatars component.",
       "files": [
         {
-          "path": "examples/avatars.tsx",
+          "path": "examples/components/avatars.tsx",
           "type": "registry:example"
         }
       ],
       "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "input",
+      "type": "registry:component",
+      "title": "Input",
+      "description": "A component for displaying user avatars.",
+      "files": [
+        {
+          "path": "registry/components/core/input/input.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "input-demo",
+      "type": "registry:example",
+      "title": "Input Demo",
+      "description": "Usage example for the Input component.",
+      "files": [
+        {
+          "path": "examples/components/input.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["avatar"]
+    },
+    {
+      "name": "activity",
+      "type": "registry:block",
+      "title": "Activity",
+      "description": "An annual activity heatmap card with dynamic tabs, stats and a legend.",
+      "files": [
+        {
+          "path": "registry/blocks/activity/activity.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/activity/activity-header.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/activity/activity-tabs.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/activity/activity-heatmap.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/activity/activity-stats.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/activity/activity-legend.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/activity/activity-tooltip.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/activity/utils.ts",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/activity/types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "activity-demo",
+      "type": "registry:example",
+      "title": "Activity Demo",
+      "description": "Usage example for the Activity block.",
+      "files": [
+        {
+          "path": "examples/activity.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["activity"]
     },
     {
       "name": "blog",

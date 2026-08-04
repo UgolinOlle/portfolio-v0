@@ -60,13 +60,13 @@ export function NavbarClient({
       <div className="hidden items-center gap-2 md:flex">
         <Search />
         <div className="mx-1 h-5 w-px bg-border" />
-        <ThemeSwitch />
+        <ThemeSwitch className="h-8" />
         {github}
 
         <Link
           href="/"
           className={cn(
-            'group inline-flex items-center rounded-full border px-3 py-1.5 text-sm',
+            'group inline-flex h-8 items-center rounded-full border px-3 text-sm',
             'font-medium transition-colors hover:bg-accent/50',
           )}
         >

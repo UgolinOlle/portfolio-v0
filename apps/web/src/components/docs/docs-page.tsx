@@ -66,6 +66,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
                   <p className="text-fd-muted-foreground text-sm">{galleryPage.data.description}</p>
                 )}
               </div>
+
               {galleryPage.data.preview && <Preview path={galleryPage.data.preview} type={type} />}
             </section>
           ))}

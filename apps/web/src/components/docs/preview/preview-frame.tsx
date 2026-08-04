@@ -15,7 +15,6 @@ export const PreviewFrame = ({ children }: PreviewFrameProps) => {
         'dark:[--primary-foreground:oklch(0.205_0_0)] dark:[--primary:oklch(0.985_0_0)]',
       )}
     >
-      {/* Trame de points subtile, alignée à la grille, qui s'estompe vers les bords. */}
       <div
         aria-hidden
         className={cn(
@@ -26,7 +25,7 @@ export const PreviewFrame = ({ children }: PreviewFrameProps) => {
         )}
       />
 
-      <div className="relative flex flex-col items-center gap-4">{children}</div>
+      <div className="relative flex flex-col items-center gap-4 p-1">{children}</div>
     </div>
   );
 };

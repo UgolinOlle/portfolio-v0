@@ -8,7 +8,7 @@ import { useTheme } from 'next-themes';
 import { type ComponentProps, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 
-const itemVariants = cva('size-6.5 p-1.5 text-fd-muted-foreground', {
+const itemVariants = cva('size-6 p-1 text-fd-muted-foreground', {
   variants: {
     active: {
       true: 'bg-fd-accent text-fd-accent-foreground',

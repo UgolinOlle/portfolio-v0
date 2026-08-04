@@ -17,7 +17,10 @@ type PreviewProps = {
 
 export const Preview = async ({ path, className, type = 'component' }: PreviewProps) => {
   const [Component, demoManifest] = await Promise.all([
-    import(`../../../../examples/${path}.tsx`).then((module) => module.default),
+    (type === 'component'
+      ? import(`../../../../examples/components/${path}.tsx`)
+      : import(`../../../../examples/${path}.tsx`)
+    ).then((module) => module.default),
     getRegistryItemManifest(getRegistryDemoName(path)),
   ]);
   const isFullPage = type !== 'component';
@@ -51,7 +54,10 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
         </div>
 
         <TabsContent
-          className={cn(isFullPage ? 'h-192 overflow-auto' : 'h-128 overflow-hidden')}
+          className={cn(
+            isFullPage ? 'h-192 overflow-auto' : 'h-128 overflow-hidden',
+            'flex items-center justify-center p-3',
+          )}
           value="preview"
         >
           {isFullPage ? (

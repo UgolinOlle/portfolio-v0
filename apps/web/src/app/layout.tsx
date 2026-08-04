@@ -1,6 +1,8 @@
 import './global.css';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { IBM_Plex_Mono, Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
@@ -30,6 +32,8 @@ export default function AppLayout({ children }: LayoutProps) {
     <html lang="fr" className={cn(inter.className, ibmPlexMono.variable)} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         <Providers>{children}</Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

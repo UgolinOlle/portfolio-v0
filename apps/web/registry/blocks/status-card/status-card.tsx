@@ -1,4 +1,4 @@
-import { Check, ChevronRight, Loader2 } from 'lucide-react';
+import { Check, ChevronRight, LoaderCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
@@ -89,7 +89,7 @@ export function StatusCard() {
                   filter: 'blur(5px)',
                 }}
               >
-                <Loader2 className="size-3 animate-spin" />
+                <LoaderCircle className="size-3 animate-spin" />
                 Build
               </motion.span>
             ) : (

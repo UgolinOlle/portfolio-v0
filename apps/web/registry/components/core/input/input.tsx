@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, X, Loader2 } from 'lucide-react';
+import { Check, X, LoaderCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import * as React from 'react';
 
@@ -180,7 +180,7 @@ text-muted-foreground
                   scale: 0.7,
                 }}
               >
-                <Loader2
+                <LoaderCircle
                   className="
 size-4
 animate-spin

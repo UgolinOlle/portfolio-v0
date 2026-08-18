@@ -4,7 +4,7 @@ import { Badge } from '@portfolio-v0/shadcn/components/badge';
 import { Card, CardContent, CardHeader } from '@portfolio-v0/shadcn/components/card';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { Check, ChevronRight, Loader2 } from 'lucide-react';
+import { Check, ChevronRight, LoaderCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
@@ -91,7 +91,7 @@ export default function StatusCardExample() {
                   filter: 'blur(5px)',
                 }}
               >
-                <Loader2 className="size-3 animate-spin" />
+                <LoaderCircle className="size-3 animate-spin" />
                 Build
               </motion.span>
             ) : (

@@ -4,7 +4,6 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { useTranslations } from '@fuma-translate/react';
 import type { TOCItemType } from 'fumadocs-core/toc';
-import { Edit } from 'lucide-react';
 import {
   type ComponentProps,
   createContext,
@@ -14,6 +13,8 @@ import {
   useEffect,
   useState,
 } from 'react';
+
+import { EditIcon } from '~/components/icons/ui';
 
 import { Breadcrumb, type BreadcrumbProps } from './slots/breadcrumb';
 import { Container } from './slots/container';
@@ -166,7 +167,7 @@ export function EditOnGitHub(props: ComponentProps<'a'>) {
     >
       {props.children ?? (
         <>
-          <Edit className="size-3.5" />
+          <EditIcon className="size-3.5" />
           {t('Edit on GitHub')}
         </>
       )}

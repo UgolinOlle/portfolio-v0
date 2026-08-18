@@ -8,7 +8,6 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { useTranslations } from '@fuma-translate/react';
 import { useTreePath } from '@fumadocs/base-ui/contexts/tree';
-import { ChevronDown, Text } from 'lucide-react';
 import {
   createContext,
   use,
@@ -21,6 +20,7 @@ import {
   type ReactNode,
 } from 'react';
 
+import { ChevronDownIcon, TextIcon } from '~/components/icons/ui';
 import * as Base from '~/components/toc';
 import * as TocClerk from '~/components/toc/clerk';
 import * as TocDefault from '~/components/toc/default';
@@ -78,7 +78,7 @@ export function TOC({ container, header, footer, style = 'normal', list }: TOCPr
         id="toc-title"
         className="text-fd-muted-foreground inline-flex items-center gap-1.5 text-sm"
       >
-        <Text className="size-4" />
+        <TextIcon className="size-4" />
         {t('On this page')}
       </h3>
       <Base.TOCScrollArea className="ms-px">
@@ -245,7 +245,9 @@ function PageTOCPopoverTrigger({ className, ...props }: ComponentProps<'button'>
           {items[selectedIdx]?.original.title}
         </span>
       </span>
-      <ChevronDown className={cn('mx-0.5 shrink-0 transition-transform', open && 'rotate-180')} />
+      <ChevronDownIcon
+        className={cn('mx-0.5 shrink-0 transition-transform', open && 'rotate-180')}
+      />
     </CollapsibleTrigger>
   );
 }

@@ -3,7 +3,8 @@
 import { Button } from '@portfolio-v0/shadcn/components/button';
 
 import { useSearchContext } from 'fumadocs-ui/contexts/search';
-import { SearchIcon } from 'lucide-react';
+
+import { SearchIcon } from '~/components/icons/ui';
 
 const MobileSearch = () => {
   const { setOpenSearch } = useSearchContext();

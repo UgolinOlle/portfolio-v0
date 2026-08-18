@@ -18,7 +18,6 @@ import { usePathname } from 'fumadocs-core/framework';
 import Link, { type LinkProps } from 'fumadocs-core/link';
 import { useMediaQuery } from 'fumadocs-core/utils/use-media-query';
 import { useOnChange } from 'fumadocs-core/utils/use-on-change';
-import { ChevronDown, ExternalLink } from 'lucide-react';
 import {
   type ComponentProps,
   createContext,
@@ -33,6 +32,8 @@ import {
 } from 'react';
 import ReactDOM from 'react-dom';
 import scrollIntoView from 'scroll-into-view-if-needed';
+
+import { ArrowUpRightIcon, ChevronDownIcon } from '~/components/icons/ui';
 
 interface SidebarContext {
   open: boolean;
@@ -271,7 +272,7 @@ export function SidebarItem({
 
   return (
     <Link ref={ref} data-active={active} prefetch={prefetch} {...props}>
-      {icon ?? (props.external ? <ExternalLink /> : null)}
+      {icon ?? (props.external ? <ArrowUpRightIcon /> : null)}
       {children}
     </Link>
   );
@@ -316,7 +317,7 @@ export function SidebarFolderTrigger({ children, ...props }: CollapsibleTriggerP
     return (
       <CollapsibleTrigger {...props}>
         {children}
-        <ChevronDown
+        <ChevronDownIcon
           data-icon
           className={cn('ms-auto transition-transform', !open && '-rotate-90 rtl:rotate-90')}
         />
@@ -359,7 +360,7 @@ export function SidebarFolderLink({
     >
       {children}
       {collapsible && (
-        <ChevronDown
+        <ChevronDownIcon
           data-icon
           className={cn('ms-auto transition-transform', !open && '-rotate-90 rtl:rotate-90')}
         />

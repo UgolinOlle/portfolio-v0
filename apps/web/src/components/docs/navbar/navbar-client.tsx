@@ -2,11 +2,11 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { ArrowUpRight } from 'lucide-react';
 import { useMotionValueEvent, useScroll } from 'motion/react';
 import Link from 'next/link';
 import { type ReactNode, useState } from 'react';
 
+import { ArrowUpRightIcon } from '~/components/icons/ui';
 import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
 
 import { Links } from './links';
@@ -77,7 +77,7 @@ export function NavbarClient({
               'group-hover:ml-1.5 group-hover:size-3.5 group-hover:opacity-100',
             )}
           >
-            <ArrowUpRight
+            <ArrowUpRightIcon
               className={cn(
                 'size-3.5 shrink-0 leading-none transition-transform duration-300',
                 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5',

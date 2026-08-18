@@ -3,9 +3,11 @@
 import { Button } from '@portfolio-v0/shadcn/components/button';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { CheckIcon, CopyIcon } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import type { ComponentProps } from 'react';
 import { useState } from 'react';
+
+import { CheckIcon, CopyIcon } from '~/components/icons/ui';
 
 type CopyButtonProps = Omit<ComponentProps<typeof Button>, 'onClick' | 'children'> & {
   // Valeur copiée dans le presse-papiers au clic, quelle que soit son origine (commande CLI,
@@ -39,8 +41,6 @@ export const CopyButton = ({
     });
   };
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
-
   return (
     <Button
       className={cn('gap-2', className)}
@@ -49,7 +49,31 @@ export const CopyButton = ({
       variant={variant}
       {...props}
     >
-      <Icon size={14} />
+      <AnimatePresence initial={false} mode="wait">
+        {isCopied ? (
+          <motion.span
+            key="check"
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.7 }}
+            transition={{ duration: 0.15 }}
+            className="inline-flex"
+          >
+            <CheckIcon size={14} />
+          </motion.span>
+        ) : (
+          <motion.span
+            key="copy"
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.7 }}
+            transition={{ duration: 0.15 }}
+            className="inline-flex"
+          >
+            <CopyIcon size={14} />
+          </motion.span>
+        )}
+      </AnimatePresence>
       {isCopied ? copiedLabel : label}
     </Button>
   );

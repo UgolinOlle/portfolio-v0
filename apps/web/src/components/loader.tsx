@@ -1,9 +1,9 @@
-import { Loader2 } from 'lucide-react';
+import { LoaderCircleIcon } from '~/components/icons/ui';
 
 export function Loader() {
   return (
     <div className="flex h-full items-center justify-center pt-8">
-      <Loader2 className="animate-spin" />
+      <LoaderCircleIcon className="animate-spin" />
     </div>
   );
 }

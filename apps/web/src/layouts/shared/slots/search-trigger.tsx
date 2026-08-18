@@ -5,8 +5,9 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { Dialog } from '@base-ui/react/dialog';
 import { useTranslations } from '@fuma-translate/react';
 import { useSearchContext } from '@fumadocs/base-ui/contexts/search';
-import { Search } from 'lucide-react';
 import type { ComponentProps } from 'react';
+
+import { SearchIcon } from '~/components/icons/ui';
 
 export type SearchTriggerProps = Omit<ComponentProps<'button'>, 'variant' | 'className'> &
   ButtonProps & {
@@ -37,7 +38,7 @@ export function SearchTrigger({
       data-search=""
       aria-label={t('Open Search', { note: 'aria-label' })}
     >
-      <Search />
+      <SearchIcon />
     </Dialog.Trigger>
   );
 }
@@ -62,7 +63,7 @@ export function FullSearchTrigger({ hideIfDisabled, ...props }: FullSearchTrigge
         props.className,
       )}
     >
-      <Search className="size-4" />
+      <SearchIcon className="size-4" />
       {t('Search')}
       <div className="ms-auto inline-flex gap-0.5">
         {hotKey.map((k, i) => (

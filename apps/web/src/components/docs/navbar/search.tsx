@@ -4,8 +4,9 @@ import { Kbd } from '@portfolio-v0/shadcn/components/kbd';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { useSearchContext } from 'fumadocs-ui/contexts/search';
-import { SearchIcon } from 'lucide-react';
 import { motion } from 'motion/react';
+
+import { SearchIcon } from '~/components/icons/ui';
 
 type SearchProps = {
   className?: string;

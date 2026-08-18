@@ -1,6 +1,6 @@
-import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
+import { ArrowRightIcon } from '~/components/icons/ui';
 import { RegistryGrid } from '~/components/registry/registry-grid';
 import type { RegistrySection as RegistrySectionData } from '~/lib/registry';
 
@@ -22,7 +22,7 @@ export const RegistrySection = ({ section }: RegistrySectionProps) => {
           href={section.href}
         >
           Tout voir
-          <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+          <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
         </Link>
       </div>
 

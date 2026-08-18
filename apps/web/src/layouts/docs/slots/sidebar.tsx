@@ -7,7 +7,6 @@ import { useTreePath } from '@fumadocs/base-ui/contexts/tree';
 import { cva } from 'class-variance-authority';
 import { usePathname } from 'fumadocs-core/framework';
 import Link from 'fumadocs-core/link';
-import { Check, ChevronDown, ChevronsUpDown, Languages, SidebarIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { type ComponentProps, type ReactNode, useMemo, useState } from 'react';
 
@@ -17,6 +16,13 @@ import {
   createPageTreeRenderer,
   type SidebarPageTreeComponents,
 } from '~/components/docs/sidebar/page-tree';
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronsUpDownIcon,
+  LanguagesIcon,
+  SidebarIcon,
+} from '~/components/icons/ui';
 import { LinkItem, isLayoutTabActive, type LayoutTab } from '~/layouts/shared';
 import { mergeRefs } from '~/lib/merge-refs';
 
@@ -121,9 +127,9 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
                 variant="secondary"
                 className="text-fd-muted-foreground bg-fd-secondary/50 mb-2 justify-start text-start"
               >
-                <Languages className="size-4.5" />
+                <LanguagesIcon className="size-4.5" />
                 <slots.languageSelect.text />
-                <ChevronDown className="ms-auto size-3.5" />
+                <ChevronDownIcon className="ms-auto size-3.5" />
               </slots.languageSelect.root>
             )}
             <div className="text-fd-muted-foreground bg-fd-secondary/50 flex items-center rounded-lg border p-0.5 pe-0 empty:hidden">
@@ -168,7 +174,7 @@ export function Sidebar({ footer, banner, components, ...rest }: SidebarProps) {
             </div>
             {slots.languageSelect && (
               <slots.languageSelect.root>
-                <Languages className="size-4.5" />
+                <LanguagesIcon className="size-4.5" />
                 <slots.languageSelect.text />
               </slots.languageSelect.root>
             )}
@@ -406,7 +412,7 @@ function SidebarTabsDropdown({
           )}
         >
           {item}
-          <ChevronsUpDown className="text-fd-muted-foreground ms-auto size-4 shrink-0" />
+          <ChevronsUpDownIcon className="text-fd-muted-foreground ms-auto size-4 shrink-0" />
         </PopoverTrigger>
       )}
       <PopoverContent className="fd-scroll-container flex w-(--anchor-width) flex-col gap-1 p-1">
@@ -433,7 +439,7 @@ function SidebarTabsDropdown({
                 </p>
               </div>
 
-              <Check
+              <CheckIcon
                 className={cn(
                   'text-fd-primary ms-auto size-3.5 shrink-0',
                   !isActive && 'invisible',

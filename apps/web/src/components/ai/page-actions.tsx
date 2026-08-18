@@ -6,8 +6,15 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { useTranslations } from '@fuma-translate/react';
 import { useCopyButton } from '@fumadocs/base-ui/utils/use-copy-button';
 import { usePathname } from 'fumadocs-core/framework';
-import { Check, ChevronDown, Copy, ExternalLinkIcon, TextIcon } from 'lucide-react';
 import { type ComponentProps, useMemo, useState } from 'react';
+
+import {
+  ArrowUpRightIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+  TextIcon,
+} from '~/components/icons/ui';
 
 const cache = new Map<string, Promise<string>>();
 
@@ -58,7 +65,7 @@ export function MarkdownCopyButton({
         props.className,
       )}
     >
-      {checked ? <Check /> : <Copy />}
+      {checked ? <CheckIcon /> : <CopyIcon />}
       {props.children ?? t('Copy Markdown')}
     </button>
   );
@@ -241,7 +248,7 @@ export function ViewOptionsPopover({
         }
       >
         {props.children ?? t('Open')}
-        <ChevronDown className="text-fd-muted-foreground size-3.5" />
+        <ChevronDownIcon className="text-fd-muted-foreground size-3.5" />
       </PopoverTrigger>
       <PopoverContent className="flex flex-col">
         {items.map((item) => (
@@ -254,7 +261,7 @@ export function ViewOptionsPopover({
           >
             {item.icon}
             {item.title}
-            <ExternalLinkIcon className="text-fd-muted-foreground ms-auto size-3.5" />
+            <ArrowUpRightIcon className="text-fd-muted-foreground ms-auto size-3.5" />
           </a>
         ))}
       </PopoverContent>

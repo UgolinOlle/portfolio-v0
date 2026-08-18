@@ -7,9 +7,9 @@ import { useFooterItems } from '@fumadocs/base-ui/utils/use-footer-items';
 import { usePathname } from 'fumadocs-core/framework';
 import Link from 'fumadocs-core/link';
 import type * as PageTree from 'fumadocs-core/page-tree';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type ComponentProps, useMemo } from 'react';
 
+import { ChevronLeftIcon, ChevronRightIcon } from '~/components/icons/ui';
 import { isActive } from '~/lib/urls';
 
 type Item = Pick<PageTree.Item, 'name' | 'description' | 'url'>;
@@ -59,7 +59,7 @@ export function Footer({ items, children, className, ...props }: FooterProps) {
 
 function FooterItem({ item, index }: { item: Item; index: 0 | 1 }) {
   const t = useTranslations({ note: 'pagination' });
-  const Icon = index === 0 ? ChevronLeft : ChevronRight;
+  const Icon = index === 0 ? ChevronLeftIcon : ChevronRightIcon;
 
   return (
     <Link

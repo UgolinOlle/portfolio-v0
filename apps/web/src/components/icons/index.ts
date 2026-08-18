@@ -1,3 +1,4 @@
+export { BlockIcon, ComponentIcon, TemplateIcon } from './custom';
 export { DATABASES } from './databases';
 export { FRAMEWORKS } from './frameworks';
 export { LANGUAGES } from './languages';

@@ -20,11 +20,12 @@ import {
 } from '@portfolio-v0/shadcn/components/dropdown-menu';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { LayoutGrid } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment, type ReactNode, useMemo } from 'react';
+
+import { LayoutGridIcon } from '~/components/icons/ui';
 
 const SEGMENT_LABELS: Record<string, string> = {
   ui: 'UI',
@@ -104,7 +105,7 @@ export function Breadcrumbs({
       <div className={cn(containerClassName)}>
         <Breadcrumb>
           <BreadcrumbList>
-            <LayoutGrid className="text-fd-muted-foreground mr-2 size-3 shrink-0" />
+            <LayoutGridIcon className="text-fd-muted-foreground mr-2 size-3 shrink-0" />
             {crumbs.map((crumb, index) => {
               const isLast = index === crumbs.length - 1;
               const key = crumb.ellipsisItems ? 'ellipsis' : (crumb.href ?? String(crumb.label));

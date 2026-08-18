@@ -2,10 +2,9 @@ import { Badge } from '@portfolio-v0/shadcn/components/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@portfolio-v0/shadcn/components/tabs';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { CodeIcon, TerminalIcon } from 'lucide-react';
-
 import { RegistryCodeBlock } from '~/components/docs/code-block/registry-code-block';
 import { CopyButton } from '~/components/docs/copy-button';
+import { CodeIcon, TerminalIcon } from '~/components/icons/ui';
 import { getRegistryInstallCommand } from '~/lib/registry';
 import { getRegistryItemManifest } from '~/lib/registry-item';
 

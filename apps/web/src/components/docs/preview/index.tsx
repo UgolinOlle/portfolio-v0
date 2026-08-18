@@ -1,9 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@portfolio-v0/shadcn/components/tabs';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { CodeIcon, EyeIcon } from 'lucide-react';
-
 import { RegistryCodeBlock } from '~/components/docs/code-block/registry-code-block';
+import { CodeIcon, EyeIcon } from '~/components/icons/ui';
 import { getRegistryDemoName } from '~/lib/registry';
 import { getRegistryItemManifest } from '~/lib/registry-item';
 
@@ -56,7 +55,7 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
         <TabsContent
           className={cn(
             isFullPage ? 'h-192 overflow-auto' : 'h-128 overflow-hidden',
-            'flex items-center justify-center p-3',
+            'flex items-center justify-center bg-zinc-100/70 p-3 dark:bg-zinc-900',
           )}
           value="preview"
         >

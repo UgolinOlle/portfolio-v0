@@ -9,16 +9,17 @@ import {
 } from '@portfolio-v0/shadcn/components/drawer';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { ArrowUpRight, Blocks, LayoutGrid, LayoutTemplate, MenuIcon } from 'lucide-react';
 import Link from 'next/link';
 
+import { BlockIcon, ComponentIcon, TemplateIcon } from '~/components/icons';
+import { ArrowUpRightIcon, MenuIcon } from '~/components/icons/ui';
 import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
 import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
 const groups = [
-  { title: 'Components', pages: componentsSource.getPages(), icon: LayoutGrid },
-  { title: 'Blocks', pages: blocksSource.getPages(), icon: Blocks },
-  { title: 'Templates', pages: templatesSource.getPages(), icon: LayoutTemplate },
+  { title: 'Components', pages: componentsSource.getPages(), icon: ComponentIcon },
+  { title: 'Blocks', pages: blocksSource.getPages(), icon: BlockIcon },
+  { title: 'Templates', pages: templatesSource.getPages(), icon: TemplateIcon },
 ];
 
 const MobileMenu = () => (
@@ -48,7 +49,7 @@ const MobileMenu = () => (
                 'group-hover:ml-1.5 group-hover:size-3.5 group-hover:opacity-100',
               )}
             >
-              <ArrowUpRight
+              <ArrowUpRightIcon
                 className={cn(
                   'size-3.5 shrink-0 leading-none transition-transform duration-300',
                   'group-hover:translate-x-0.5 group-hover:-translate-y-0.5',

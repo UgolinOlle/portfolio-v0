@@ -7,6 +7,8 @@ import { motion } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { BlockIcon, ComponentIcon, TemplateIcon } from '~/components/icons';
+
 type LinksProps = {
   className?: string;
   componentsCount: number;
@@ -23,18 +25,21 @@ export const Links = ({ className, componentsCount, blocksCount, templatesCount 
       href: '/ui/components',
       active: pathname.startsWith('/ui/components'),
       count: componentsCount,
+      icon: ComponentIcon,
     },
     {
       label: 'Blocks',
       href: '/ui/blocks',
       active: pathname.startsWith('/ui/blocks'),
       count: blocksCount,
+      icon: BlockIcon,
     },
     {
       label: 'Templates',
       href: '/ui/templates',
       active: pathname.startsWith('/ui/templates'),
       count: templatesCount,
+      icon: TemplateIcon,
     },
   ];
 
@@ -57,6 +62,7 @@ export const Links = ({ className, componentsCount, blocksCount, templatesCount 
               transition={{ type: 'spring', stiffness: 500, damping: 35 }}
             />
           )}
+          <link.icon active={link.active} className="size-3.5" />
           {link.label}
           {Boolean(link.count) && (
             <Badge

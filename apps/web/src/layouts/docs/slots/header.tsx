@@ -3,8 +3,9 @@
 import { buttonVariants } from '@portfolio-v0/shadcn/components/button';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { SidebarIcon } from 'lucide-react';
 import type { ComponentProps } from 'react';
+
+import { SidebarIcon } from '~/components/icons/ui';
 
 import { useDocsLayout } from '../client';
 

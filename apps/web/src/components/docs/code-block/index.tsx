@@ -18,7 +18,7 @@ import {
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from '@shikijs/transformers';
-import { CheckIcon, CopyIcon } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import type { ComponentProps, HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { cloneElement, createContext, useContext, useEffect, useState } from 'react';
 import type { IconType } from 'react-icons';
@@ -93,6 +93,8 @@ import {
   SiWebassembly,
 } from 'react-icons/si';
 import { type BundledLanguage, type CodeOptionsMultipleThemes, codeToHtml } from 'shiki';
+
+import { CheckIcon, CopyIcon } from '~/components/icons/ui';
 
 export type { BundledLanguage } from 'shiki';
 
@@ -485,8 +487,6 @@ export const CodeBlockCopyButton = ({
     });
   }
 
-  const Icon = isCopied ? CheckIcon : CopyIcon;
-
   return (
     <Button
       className={cn('shrink-0', className)}
@@ -495,7 +495,33 @@ export const CodeBlockCopyButton = ({
       variant="ghost"
       {...props}
     >
-      {children ?? <Icon className="text-muted-foreground" size={14} />}
+      {children ?? (
+        <AnimatePresence initial={false} mode="wait">
+          {isCopied ? (
+            <motion.span
+              key="check"
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.7 }}
+              transition={{ duration: 0.15 }}
+              className="inline-flex"
+            >
+              <CheckIcon className="text-muted-foreground" size={14} />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="copy"
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.7 }}
+              transition={{ duration: 0.15 }}
+              className="inline-flex"
+            >
+              <CopyIcon className="text-muted-foreground" size={14} />
+            </motion.span>
+          )}
+        </AnimatePresence>
+      )}
     </Button>
   );
 };

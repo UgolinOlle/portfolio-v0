@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from '~/layouts/docs/page';
+import { getRegistryExamples } from '~/lib/registry';
 import type { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
 import { RegistryInstall } from './install';
@@ -28,6 +29,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
   const isRootIndex = !slug || slug.length === 0;
   const galleryPages =
     isRootIndex && type !== 'component' ? source.getPages().filter((p) => p.url !== page.url) : [];
+  const examples = page.data.preview ? getRegistryExamples(page.data.preview) : [];
 
   return (
     <DocsPage breadcrumb={{ component: <RegistryBreadcrumb /> }} toc={page.data.toc}>
@@ -36,7 +38,19 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
 
       {page.data.preview && (
         <div className="mb-8 flex flex-col gap-10">
-          <Preview path={page.data.preview} type={type} />
+          {examples.map((example) => (
+            <section className="flex flex-col gap-3" key={example.name}>
+              {examples.length > 1 && (
+                <div>
+                  <h2 className="text-lg font-medium">{example.title}</h2>
+                  {example.description && (
+                    <p className="text-fd-muted-foreground text-sm">{example.description}</p>
+                  )}
+                </div>
+              )}
+              <Preview path={example.slug} type={type} />
+            </section>
+          ))}
           <section className="flex flex-col gap-3">
             <h2 className="text-lg font-medium">Installation</h2>
             <RegistryInstall path={page.data.preview} />

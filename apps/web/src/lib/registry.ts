@@ -27,7 +27,24 @@ type RegistrySourcePage = ReturnType<typeof componentsSource.getPages>[number];
 
 type RegistryConfigItem = {
   name: string;
+  type: string;
+  title: string;
+  description?: string;
   registryDependencies?: string[];
+  meta?: {
+    example?: {
+      of: string;
+      order?: number;
+    };
+  };
+};
+
+export type RegistryExample = {
+  // Identifiant à passer à `<Preview path={...} />` (nom de l'item sans le suffixe `-demo`).
+  slug: string;
+  name: string;
+  title: string;
+  description?: string;
 };
 
 // `registry.json` est la source de vérité shadcn (cf. `pnpm registry:build`). Un item de doc ne
@@ -36,6 +53,24 @@ type RegistryConfigItem = {
 const registryItemsByName = new Map<string, RegistryConfigItem>(
   (registryConfig.items as RegistryConfigItem[]).map((item) => [item.name, item]),
 );
+
+// Un composant peut avoir plusieurs exemples (`registry:example`) : chacun se rattache à son
+// composant parent via `meta.example.of`, ordonnés par `meta.example.order`. Ajouter un exemple
+// se fait uniquement en éditant `registry.json` + son fichier dans `examples/` — aucune page ni
+// composant ne référence de nom de composant en dur.
+export const getRegistryExamples = (componentName: string): RegistryExample[] =>
+  (registryConfig.items as RegistryConfigItem[])
+    .filter(
+      (item): item is RegistryConfigItem & { meta: { example: { of: string; order?: number } } } =>
+        item.type === 'registry:example' && item.meta?.example?.of === componentName,
+    )
+    .sort((a, b) => (a.meta.example.order ?? 0) - (b.meta.example.order ?? 0))
+    .map((item) => ({
+      slug: item.name.replace(/-demo$/, ''),
+      name: item.name,
+      title: item.title,
+      description: item.description,
+    }));
 
 const toRegistryItem = (page: RegistrySourcePage, category: RegistryCategory): RegistryItem => {
   const registryItem = page.data.preview ? registryItemsByName.get(page.data.preview) : undefined;

@@ -27,7 +27,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "meta": {
+        "example": { "of": "headers", "order": 0 }
+      }
     },
     {
       "name": "button",
@@ -53,7 +56,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": []
+      "registryDependencies": [],
+      "meta": {
+        "example": { "of": "button", "order": 0 }
+      }
     },
     {
       "name": "button-gandi",
@@ -79,7 +85,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["button-gandi"]
+      "registryDependencies": ["button-gandi"],
+      "meta": {
+        "example": { "of": "button-gandi", "order": 0 }
+      }
     },
     {
       "name": "button-apple",
@@ -105,7 +114,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["button-apple"]
+      "registryDependencies": ["button-apple"],
+      "meta": {
+        "example": { "of": "button-apple", "order": 0 }
+      }
     },
     {
       "name": "button-shopify",
@@ -131,7 +143,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["button-shopify"]
+      "registryDependencies": ["button-shopify"],
+      "meta": {
+        "example": { "of": "button-shopify", "order": 0 }
+      }
     },
     {
       "name": "status-card",
@@ -157,7 +172,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["status-card"]
+      "registryDependencies": ["status-card"],
+      "meta": {
+        "example": { "of": "status-card", "order": 0 }
+      }
     },
     {
       "name": "avatars",
@@ -183,7 +201,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["avatar"]
+      "registryDependencies": ["avatar"],
+      "meta": {
+        "example": { "of": "avatars", "order": 0 }
+      }
     },
     {
       "name": "input",
@@ -201,15 +222,98 @@
     {
       "name": "input-demo",
       "type": "registry:example",
-      "title": "Input Demo",
-      "description": "Usage example for the Input component.",
+      "title": "Basic Input",
+      "description": "A basic text input with a controlled value.",
       "files": [
         {
           "path": "examples/components/input.tsx",
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["avatar"]
+      "registryDependencies": ["input"],
+      "meta": {
+        "example": { "of": "input", "order": 0 }
+      }
+    },
+    {
+      "name": "input-password-demo",
+      "type": "registry:example",
+      "title": "Input Password",
+      "description": "A password input with a show/hide visibility toggle.",
+      "files": [
+        {
+          "path": "examples/components/input-password.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["input"],
+      "meta": {
+        "example": { "of": "input", "order": 1 }
+      }
+    },
+    {
+      "name": "input-password-error-demo",
+      "type": "registry:example",
+      "title": "Input Password Error",
+      "description": "A password input showing a validation error message.",
+      "files": [
+        {
+          "path": "examples/components/input-password-error.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["input"],
+      "meta": {
+        "example": { "of": "input", "order": 2 }
+      }
+    },
+    {
+      "name": "input-with-icon-demo",
+      "type": "registry:example",
+      "title": "Input With Icon",
+      "description": "A text input with a leading icon.",
+      "files": [
+        {
+          "path": "examples/components/input-with-icon.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["input"],
+      "meta": {
+        "example": { "of": "input", "order": 3 }
+      }
+    },
+    {
+      "name": "input-disabled-demo",
+      "type": "registry:example",
+      "title": "Input Disabled",
+      "description": "A disabled text input.",
+      "files": [
+        {
+          "path": "examples/components/input-disabled.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["input"],
+      "meta": {
+        "example": { "of": "input", "order": 4 }
+      }
+    },
+    {
+      "name": "input-loading-demo",
+      "type": "registry:example",
+      "title": "Input Loading",
+      "description": "A text input in a loading state.",
+      "files": [
+        {
+          "path": "examples/components/input-loading.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["input"],
+      "meta": {
+        "example": { "of": "input", "order": 5 }
+      }
     },
     {
       "name": "activity",
@@ -267,7 +371,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["activity"]
+      "registryDependencies": ["activity"],
+      "meta": {
+        "example": { "of": "activity", "order": 0 }
+      }
     },
     {
       "name": "blog",
@@ -293,7 +400,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["blog"]
+      "registryDependencies": ["blog"],
+      "meta": {
+        "example": { "of": "blog", "order": 0 }
+      }
     },
     {
       "name": "cta-simple",
@@ -319,7 +429,39 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["cta-simple"]
+      "registryDependencies": ["cta-simple"],
+      "meta": {
+        "example": { "of": "cta-simple", "order": 0 }
+      }
+    },
+    {
+      "name": "calendar-sync",
+      "type": "registry:block",
+      "title": "Calendar Sync",
+      "description": "A compact calendar sync action with an animated idle, loading and success cycle.",
+      "files": [
+        {
+          "path": "registry/blocks/calendar-sync/calendar-sync.tsx",
+          "type": "registry:block"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "calendar-sync-demo",
+      "type": "registry:example",
+      "title": "Calendar Sync Demo",
+      "description": "Usage example for the Calendar Sync block.",
+      "files": [
+        {
+          "path": "registry/blocks/calendar-sync/calendar-sync.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["calendar-sync"],
+      "meta": {
+        "example": { "of": "calendar-sync", "order": 0 }
+      }
     },
     {
       "name": "landing-saas",
@@ -348,7 +490,10 @@
           "type": "registry:example"
         }
       ],
-      "registryDependencies": ["landing-saas"]
+      "registryDependencies": ["landing-saas"],
+      "meta": {
+        "example": { "of": "landing-saas", "order": 0 }
+      }
     }
   ]
 }

@@ -17,7 +17,11 @@ export const PreviewThumbnail = async ({
   type = 'component',
   className,
 }: PreviewThumbnailProps) => {
-  const Component = await import(`../../../../examples/${path}.tsx`)
+  const Component = await (
+    type === 'component'
+      ? import(`../../../../examples/components/${path}.tsx`)
+      : import(`../../../../examples/${path}.tsx`)
+  )
     .then((module) => module.default)
     .catch(() => undefined);
 

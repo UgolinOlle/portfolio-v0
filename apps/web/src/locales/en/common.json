@@ -42,7 +42,9 @@
     "pageNoProjects": "No projects available in English",
     "descriptions": {
       "whoa-ui": "Animated UI components designed for React and Next.js. (Project under construction)",
-      "whoa-stash": "MacOS application for managing sound."
+      "whoa-stash": "MacOS application for managing sound.",
+      "neovim-config": "Neovim configuration for web development.",
+      "42": "Projects completed at 42 school, including web applications and internal tools."
     }
   },
   "stacks": {

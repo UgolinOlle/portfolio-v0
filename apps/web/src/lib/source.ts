@@ -1,3 +1,4 @@
+import { defineI18n } from 'fumadocs-core/i18n';
 import { loader } from 'fumadocs-core/source';
 import { toFumadocsSource } from 'fumadocs-mdx/runtime/server';
 import {
@@ -5,6 +6,8 @@ import {
   blocksMeta,
   componentsDocs,
   componentsMeta,
+  projectsDocs,
+  projectsMeta,
   templatesDocs,
   templatesMeta,
 } from 'fumadocs-mdx:collections/server';
@@ -36,6 +39,18 @@ export const blocksSource = loader({
 export const templatesSource = loader({
   baseUrl: '/ui/templates',
   source: toFumadocsSource(templatesDocs, templatesMeta),
+  icon,
+});
+
+export const projectsI18n = defineI18n({
+  languages: ['fr', 'en'],
+  defaultLanguage: 'fr',
+});
+
+export const projectsSource = loader({
+  baseUrl: '/projects',
+  source: toFumadocsSource(projectsDocs, projectsMeta),
+  i18n: projectsI18n,
   icon,
 });
 

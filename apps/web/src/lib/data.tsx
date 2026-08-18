@@ -1,18 +1,6 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import {
-  Apple,
-  Bolt,
-  Bot,
-  Building2,
-  Command,
-  Component as ComponentIcon,
-  HomeIcon,
-  House,
-  Palette,
-  User,
-  Users,
-} from 'lucide-react';
+import { BookOpenText, Command, Component as ComponentIcon, SquareTerminal } from 'lucide-react';
 
 import { LOGOS, TOOLS } from '~/components/icons';
 import type { Project, Resources, SocialLink, WorkExperience } from '~/types';
@@ -61,17 +49,62 @@ export const PROJECTS: Project[] = [
     ),
     id: 'whoa-stash',
   },
+  {
+    name: 'Neovim Config',
+    description: 'Configuration Neovim pour le développement web.',
+    link: '/projects/neovim',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <SquareTerminal className="size-7" />
+        </div>
+      </div>
+    ),
+    id: 'neovim-config',
+  },
+  {
+    name: '42 Bangkok',
+    description:
+      "Projets réalisés à l'école 42, incluant des applications web et des outils internes.",
+    link: '/projects/42',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <BookOpenText className="size-7" />
+        </div>
+      </div>
+    ),
+    id: '42',
+  },
 ];
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'LinkedIn',
     link: 'https://www.linkedin.com/in/ugolin-olle',
-    favicon: 'https://static.licdn.com/aero-v1/sc/h/90y3av2ns08iojcadywbxioqh',
+    icon: LOGOS.LinkedIn,
     preview: {
       kind: 'linkedin',
       name: 'Ugolin Ollé',
       handle: '@ugolin-olle',
+      avatar:
+        'https://media.licdn.com/dms/image/v2/D4E35AQHfN9OIs0vNcQ/profile-framedphoto-shrink_800_800/B4EZ_WrubXHkAY-/0/1786013214882?e=1787670000&v=beta&t=LDNTeVmDxiqV1pGarls1vdFWNKZv8kptRWEw_v-CCP8',
       role: 'Développeur Full Stack freelance',
       bio: 'Expériences produit, sites vitrines et outils sur-mesure.',
     },
@@ -96,10 +129,12 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'Malt',
     link: 'https://www.malt.fr/profile/ugolinolle',
-    favicon: 'https://dam.malt.com/favicon.png',
+    icon: LOGOS.Malt,
     preview: {
       kind: 'malt',
       name: 'Ugolin Ollé',
+      avatar:
+        'https://dam.malt.com/07c65f24-a1b7-4895-a8af-9a10e1425dc6?gravity=face&func=face&face_margin=70&w=360&h=360&force_format=webp',
       role: 'Développeur Full Stack',
       bio: 'Disponible pour des missions freelance en développement web.',
     },
@@ -113,18 +148,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
       kind: 'twitter',
       name: 'Ugolin Ollé',
       handle: '@ugolin_olle',
+      avatar: 'https://pbs.twimg.com/profile_images/1959181504485150721/7pyz6ZFZ_400x400.jpg',
       bio: "Développeur, partage de builds et d'expérimentations frontend.",
-    },
-  },
-  {
-    label: 'NPM',
-    link: 'https://www.npmjs.com/~whoa-studio',
-    icon: LOGOS.NPM,
-    preview: {
-      kind: 'generic',
-      name: 'Whoa Studio',
-      handle: '@whoa-studio',
-      bio: 'Packages publiés et maintenus sur npm.',
     },
   },
 ];
@@ -169,7 +194,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2025',
     link: 'https://maia-host.com',
     logo: '/assets/logos/maia-host.png',
-    icon: HomeIcon,
     id: 'maia-host',
   },
   {
@@ -178,7 +202,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2025',
     link: 'https://digitalcreator.app/',
     logo: 'https://digitalcreator.app/favicon.ico?favicon.4b4ac5f9.ico',
-    icon: Palette,
     id: 'digital-creator',
   },
   {
@@ -187,7 +210,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2025',
     link: 'https://sugarai.app/',
     logo: 'https://www.sugarai.app/favicon-16x16.png',
-    icon: Apple,
     id: 'sugar-ai',
   },
   {
@@ -197,7 +219,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     end: '2025',
     link: 'https://leboutiquier.fr/',
     logo: 'https://res.cloudinary.com/djher1fiu/image/upload/v1758012423/xop0sw1gbaky4eiicifj.png',
-    icon: House,
     id: 'le-boutiquier',
   },
   {
@@ -206,7 +227,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2024',
     link: '',
     logo: '/assets/logos/connectra_logo.webp',
-    icon: Bolt,
     id: 'connectra',
   },
   {
@@ -214,7 +234,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Developer Full Stack',
     start: '2024',
     link: '',
-    icon: Bot,
     id: 'comai',
   },
   {
@@ -224,7 +243,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     end: 'Present',
     link: 'https://ugolin-olle.com',
     logo: '/favicon.ico',
-    icon: User,
     id: 'freelance',
   },
   {
@@ -234,7 +252,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     end: '2023',
     link: 'https://azertyconsulting.fr/',
     logo: 'https://azertyconsulting.fr/icon.png?27ebc0b5cfa491cd',
-    icon: Users,
     id: 'azerty-consulting',
   },
   {
@@ -243,7 +260,6 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2022',
     link: 'https://nicoka.com',
     logo: 'https://www.nicoka.com/assets/img/favicon.ico',
-    icon: Building2,
     id: 'nicoka',
   },
 ];

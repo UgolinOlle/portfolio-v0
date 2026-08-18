@@ -20,4 +20,9 @@ export const { docs: templatesDocs, meta: templatesMeta } = defineDocs({
   docs: { schema: registrySchema },
 });
 
+export const { docs: projectsDocs, meta: projectsMeta } = defineDocs({
+  dir: 'content/projects',
+  docs: { schema: frontmatterSchema },
+});
+
 export default defineConfig();

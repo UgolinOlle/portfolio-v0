@@ -49,7 +49,9 @@ function WorksSection() {
                     )}
                     style={{ backfaceVisibility: 'hidden' }}
                   >
-                    <job.icon className="size-4" strokeWidth={2.25} />
+                    <span className="text-xs font-semibold">
+                      {job.company.charAt(0).toUpperCase()}
+                    </span>
                   </div>
 
                   {/* Face arrière uniquement si logo */}

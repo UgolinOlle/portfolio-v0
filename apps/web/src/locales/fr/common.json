@@ -47,6 +47,14 @@
       "42": "Projets réalisés à l'école 42, incluant des applications web et des outils internes."
     }
   },
+  "writings": {
+    "pageTitle": "Articles",
+    "pageSubtitle": "Notes et articles sur le développement web, mes projets et ce que j'apprends.",
+    "filterAll": "Tous",
+    "noWritings": "Aucun article disponible en français",
+    "recentTitle": "Derniers articles",
+    "seeAll": "Voir tous les articles"
+  },
   "stacks": {
     "title": "Mes compétences",
     "categories": {

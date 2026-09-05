@@ -30,11 +30,13 @@
     "motion": "^12.38.0",
     "next": "16.2.4",
     "next-themes": "^0.4.6",
+    "postprocessing": "^6.39.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-i18next": "^17.0.7",
     "react-icons": "^5.6.0",
     "scroll-into-view-if-needed": "^3.1.0",
+    "three": "^0.185.1",
     "zod": "^4.1.13"
   },
   "devDependencies": {
@@ -44,6 +46,7 @@
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.185.4",
     "postcss": "^8.5.13",
     "shadcn": "^4.7.0",
     "tailwindcss": "^4.2.4",

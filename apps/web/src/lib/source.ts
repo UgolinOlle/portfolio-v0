@@ -10,6 +10,8 @@ import {
   projectsMeta,
   templatesDocs,
   templatesMeta,
+  writingsDocs,
+  writingsMeta,
 } from 'fumadocs-mdx:collections/server';
 import { icons } from 'lucide-react';
 import { createElement } from 'react';
@@ -51,6 +53,18 @@ export const projectsSource = loader({
   baseUrl: '/projects',
   source: toFumadocsSource(projectsDocs, projectsMeta),
   i18n: projectsI18n,
+  icon,
+});
+
+export const writingsI18n = defineI18n({
+  languages: ['fr', 'en'],
+  defaultLanguage: 'fr',
+});
+
+export const writingsSource = loader({
+  baseUrl: '/writings',
+  source: toFumadocsSource(writingsDocs, writingsMeta),
+  i18n: writingsI18n,
   icon,
 });
 

@@ -3,7 +3,12 @@
 import { motion } from 'motion/react';
 import Link from 'next/link';
 
-function BackButton() {
+type BackButtonProps = {
+  href?: string;
+  title?: string;
+};
+
+function BackButton({ href = '/', title = 'Home' }: BackButtonProps) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -12,11 +17,11 @@ function BackButton() {
       className="mb-6 flex items-center gap-2 text-sm font-medium text-muted-foreground"
     >
       <Link
-        href="/"
+        href={href}
         className="transition-opacity hover:opacity-60"
         aria-label="Retour à l'accueil"
       >
-        ← Home
+        ← {title}
       </Link>
     </motion.div>
   );

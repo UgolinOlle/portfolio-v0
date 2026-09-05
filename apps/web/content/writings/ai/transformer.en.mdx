@@ -1,0 +1,197 @@
+---
+title: 'Transformer'
+description: 'An overview of the fundamental concepts of Transformers and their applications in modern AI systems.'
+date: '2026-08-24'
+category: 'AI'
+---
+
+A **Transformer** is a neural network architecture designed to process sequential data, particularly text, by understanding the relationships between different elements of a sequence.
+
+Introduced in the 2017 paper _Attention Is All You Need_, the Transformer became the foundation of modern **Large Language Models (LLMs)** such as GPT, Claude, and Gemini.
+
+## Core Idea
+
+The key innovation of the Transformer is **self-attention**.
+
+Instead of processing a sentence strictly from left to right, the model can look at all tokens in a sequence and determine which ones are important to each other.
+
+For example:
+
+```text
+"The cat sat on the mat because it was tired."
+
+             ┌───────────┐
+"it" ───────►│ Attention │──────► "cat"
+             └───────────┘
+                    │
+                    ▼
+          Understand the context
+```
+
+This allows the model to capture relationships between words, even when they are far apart.
+
+## Main Components
+
+A Transformer is built from several important components:
+
+### 1. Tokenization
+
+Text is converted into smaller units called **tokens**.
+
+```text
+"Hello world"
+      ↓
+["Hello", " world"]
+      ↓
+[15496, 995]
+```
+
+### 2. Embeddings
+
+Tokens are converted into numerical vectors called **embeddings**.
+
+```text
+Token → Vector
+
+"cat" → [0.21, -0.84, 0.37, ...]
+```
+
+These vectors represent semantic information that the neural network can process.
+
+### 3. Positional Encoding
+
+Because Transformers process tokens in parallel, they need information about the position of each token in the sequence.
+
+```text
+The   cat   eats   fish
+ 0     1      2      3
+```
+
+### 4. Self-Attention
+
+Self-attention determines how much each token should pay attention to the other tokens.
+
+It is commonly described using three matrices:
+
+- **Query (Q)** — what the token is looking for
+- **Key (K)** — what each token offers
+- **Value (V)** — the information associated with each token
+
+The attention mechanism is approximately:
+
+```text
+Attention(Q, K, V)
+    = softmax(QKᵀ / √dₖ)V
+```
+
+### 5. Multi-Head Attention
+
+Instead of having a single attention mechanism, Transformers use multiple **attention heads**.
+
+Each head can learn different relationships:
+
+```text
+              ┌─ Head 1 → syntax
+Input ────────┼─ Head 2 → semantics
+              ├─ Head 3 → context
+              └─ Head 4 → relationships
+```
+
+The results are then combined.
+
+### 6. Feed-Forward Network
+
+After attention, each token passes through a small neural network that further transforms its representation.
+
+### 7. Residual Connections & Layer Normalization
+
+Transformers use **residual connections** and **layer normalization** to make training deep networks more stable.
+
+## Transformer Architecture
+
+A simplified Transformer block looks like this:
+
+```text
+Input
+  │
+  ▼
+Multi-Head Self-Attention
+  │
+  ▼
+Add & Normalize
+  │
+  ▼
+Feed-Forward Network
+  │
+  ▼
+Add & Normalize
+  │
+  ▼
+Output
+```
+
+Multiple blocks can then be stacked together to create a large Transformer model.
+
+## Encoder vs Decoder
+
+The original Transformer architecture contains two parts:
+
+```text
+Input
+  │
+  ▼
+┌─────────────┐
+│   Encoder   │
+└─────────────┘
+       │
+       ▼
+┌─────────────┐
+│   Decoder   │
+└─────────────┘
+       │
+       ▼
+    Output
+```
+
+Different modern models use different configurations:
+
+- **Encoder-only** — useful for understanding text, e.g. BERT.
+- **Decoder-only** — commonly used for text generation, e.g. GPT.
+- **Encoder-decoder** — useful for tasks such as translation, e.g. T5.
+
+## Why Transformers Matter
+
+Transformers replaced many recurrent architectures such as **RNNs** and **LSTMs** for large-scale language modeling because they can process sequences much more efficiently in parallel during training.
+
+Their ability to scale with large datasets and large numbers of parameters made them the foundation of modern AI systems.
+
+## Transformers and LLMs
+
+Most modern LLMs are based on the **decoder-only Transformer** architecture.
+
+A simplified generation process looks like:
+
+```text
+Prompt
+  │
+  ▼
+Tokenization
+  │
+  ▼
+Embeddings
+  │
+  ▼
+Transformer Blocks
+  │
+  ▼
+Next-token probabilities
+  │
+  ▼
+Selected token
+  │
+  └──────────────┐
+                 ▼
+          Generate next token
+```
+
+The model repeatedly predicts the next token until the response is complete.

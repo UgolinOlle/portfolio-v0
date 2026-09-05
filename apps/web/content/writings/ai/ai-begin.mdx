@@ -1,0 +1,1107 @@
+---
+title: 'LLM - Large Language Model'
+description: 'Un aperçu des concepts fondamentaux des LLM et de leurs applications dans les systèmes d’IA modernes.'
+date: '2026-08-23'
+category: 'AI'
+---
+
+## Introduction
+
+Un **LLM (Large Language Model)** est un modèle d'intelligence artificielle entraîné sur une très grande quantité de données textuelles afin de comprendre et générer du langage naturel.
+
+Des modèles comme GPT, Claude, Gemini ou Llama sont des exemples de LLM.
+
+Un LLM ne « pense » pas comme un humain. Son fonctionnement repose principalement sur sa capacité à **prédire la suite la plus probable d'une séquence de tokens**, en utilisant les relations apprises pendant son entraînement.
+
+---
+
+## 1. Le principe fondamental
+
+À très haut niveau, un LLM fonctionne comme ceci :
+
+```text
+Texte utilisateur
+      |
+      v
+   Tokenisation
+      |
+      v
+     Tokens
+      |
+      v
+   Embeddings
+      |
+      v
+ Transformer
+      |
+      v
+ Probabilités
+      |
+      v
+ Token suivant
+      |
+      v
+ Répétition
+      |
+      v
+ Texte généré
+```
+
+Par exemple :
+
+```text
+"Le soleil se lève à"
+```
+
+Le modèle peut estimer :
+
+```text
+l'est        0.72
+Paris        0.03
+midi         0.01
+...
+```
+
+Il sélectionne ensuite un token et recommence jusqu'à produire une réponse complète.
+
+---
+
+# 2. Token
+
+Un LLM ne manipule généralement pas directement des mots.
+
+Il manipule des **tokens**.
+
+Un token peut correspondre à :
+
+- un mot ;
+- une partie de mot ;
+- un caractère ;
+- un espace ou une ponctuation.
+
+Par exemple :
+
+```text
+"Bonjour tout le monde"
+```
+
+peut être transformé en quelque chose ressemblant à :
+
+```text
+["Bonjour", " tout", " le", " monde"]
+```
+
+La tokenisation exacte dépend du modèle et de son tokenizer.
+
+### Pourquoi les tokens sont importants ?
+
+Les tokens déterminent notamment :
+
+- la taille maximale du contexte ;
+- le coût d'une requête ;
+- la quantité de texte que le modèle peut traiter ;
+- la granularité avec laquelle le modèle génère du texte.
+
+---
+
+# 3. Context Window
+
+La **context window** correspond à la quantité maximale de tokens que le modèle peut prendre en compte simultanément.
+
+```text
+┌─────────────────────────────────────────────┐
+│                Context Window               │
+├─────────────────────────────────────────────┤
+│ System prompt                               │
+│ Instructions                                │
+│ Conversation                               │
+│ Documents                                   │
+│ Tool results                                │
+│ User message                                │
+└─────────────────────────────────────────────┘
+```
+
+Plus la fenêtre de contexte est grande, plus le modèle peut travailler avec des informations importantes sur une même requête.
+
+Cependant, une grande context window ne signifie pas automatiquement que le modèle utilisera parfaitement toutes les informations présentes.
+
+---
+
+# 4. Embeddings
+
+Les **embeddings** permettent de représenter des informations sous forme de vecteurs numériques.
+
+L'idée est de transformer :
+
+```text
+"chat"
+```
+
+en un vecteur :
+
+```text
+[0.12, -0.43, 0.87, ...]
+```
+
+Deux concepts proches sémantiquement auront généralement des représentations relativement proches dans l'espace vectoriel.
+
+```text
+              chien
+                *
+              /
+             /
+            *
+          chat
+
+                  voiture *
+```
+
+Les embeddings sont particulièrement importants pour :
+
+- la recherche sémantique ;
+- les bases vectorielles ;
+- le RAG ;
+- la classification ;
+- la recommandation ;
+- la recherche de documents similaires.
+
+---
+
+# 5. Transformer
+
+Les LLM modernes reposent principalement sur l'architecture **Transformer**.
+
+Le Transformer permet au modèle de traiter les relations entre différents tokens d'une séquence.
+
+Son mécanisme central est l'**attention**.
+
+```text
+"Le développeur a corrigé le bug
+ parce qu'il avait trouvé l'erreur."
+
+        attention
+            |
+            v
+"il" ───────────────> "développeur"
+```
+
+Le modèle peut apprendre quelles parties du contexte sont importantes pour interpréter un token donné.
+
+---
+
+# 6. Attention
+
+L'**attention mechanism** permet au modèle de déterminer quelles informations du contexte sont pertinentes pour produire la suite.
+
+Une formulation simplifiée est :
+
+```text
+Attention(Q, K, V)
+        =
+softmax(QKᵀ / √d) V
+```
+
+Avec :
+
+- **Q — Query** : ce que l'on cherche ;
+- **K — Key** : ce qui permet d'identifier les informations pertinentes ;
+- **V — Value** : l'information réellement utilisée.
+
+Cette architecture permet au modèle de capturer des relations complexes entre les tokens.
+
+---
+
+# 7. Paramètres
+
+Les **paramètres** sont les valeurs numériques apprises par le modèle pendant son entraînement.
+
+On parle par exemple de :
+
+```text
+7B paramètres
+70B paramètres
+400B paramètres
+...
+```
+
+Le nombre de paramètres donne une indication sur la taille du modèle, mais **ce n'est pas une mesure directe de son intelligence**.
+
+Deux modèles ayant un nombre de paramètres similaire peuvent avoir des performances très différentes.
+
+---
+
+# 8. Training
+
+L'entraînement consiste à ajuster les paramètres du modèle afin qu'il devienne meilleur pour prédire les tokens.
+
+Une version simplifiée du processus :
+
+```text
+Dataset
+   |
+   v
+Tokenisation
+   |
+   v
+Modèle
+   |
+   v
+Prédiction
+   |
+   v
+Comparaison avec la réponse attendue
+   |
+   v
+Loss
+   |
+   v
+Backpropagation
+   |
+   v
+Mise à jour des paramètres
+   |
+   └───────────────> répétition
+```
+
+---
+
+# 9. Pretraining
+
+Le **pretraining** est la première grande phase d'entraînement.
+
+Le modèle apprend principalement les structures du langage et les relations présentes dans les données.
+
+Une tâche classique consiste à prédire le prochain token :
+
+```text
+"Paris est la capitale de"
+                    ↓
+                  France
+```
+
+À force de voir énormément d'exemples, le modèle apprend des représentations très complexes du langage.
+
+---
+
+# 10. Fine-tuning
+
+Après le pretraining, un modèle peut être spécialisé grâce au **fine-tuning**.
+
+On lui fournit des exemples ciblés afin de modifier son comportement.
+
+Par exemple :
+
+```text
+LLM général
+    |
+    v
+Fine-tuning
+    |
+    v
+LLM spécialisé
+```
+
+Le fine-tuning peut servir à améliorer :
+
+- un style de réponse ;
+- une tâche particulière ;
+- un domaine ;
+- le respect d'un format ;
+- certaines instructions.
+
+---
+
+# 11. Instruction Tuning
+
+L'**instruction tuning** consiste à entraîner un modèle à mieux suivre des instructions humaines.
+
+Par exemple :
+
+```text
+Instruction:
+"Résume ce texte en 3 phrases."
+
+Réponse attendue:
+"Le texte explique..."
+```
+
+Le modèle apprend progressivement à associer des instructions à des comportements attendus.
+
+---
+
+# 12. RLHF
+
+**RLHF — Reinforcement Learning from Human Feedback** consiste à utiliser des préférences humaines pour améliorer le comportement du modèle.
+
+Une représentation simplifiée :
+
+```text
+                 LLM
+                  |
+          plusieurs réponses
+                  |
+                  v
+          Évaluation humaine
+                  |
+                  v
+          Reward Model
+                  |
+                  v
+       Optimisation du modèle
+```
+
+L'objectif est notamment de rendre les réponses :
+
+- plus utiles ;
+- plus sûres ;
+- plus pertinentes ;
+- plus conformes aux instructions.
+
+---
+
+# 13. Inference
+
+L'**inference** correspond au moment où le modèle est utilisé pour produire une réponse.
+
+```text
+Prompt
+  |
+  v
+LLM
+  |
+  v
+Token
+  |
+  v
+Token
+  |
+  v
+Token
+  |
+  v
+Réponse
+```
+
+Le training apprend les paramètres.
+
+L'inference utilise ces paramètres pour générer une réponse.
+
+---
+
+# 14. Temperature
+
+La **temperature** influence le caractère déterministe ou aléatoire de la génération.
+
+Simplification :
+
+```text
+Temperature basse
+        |
+        v
+Réponses plus déterministes
+
+
+Temperature élevée
+        |
+        v
+Réponses plus variées
+```
+
+Une température élevée ne rend pas automatiquement le modèle « plus intelligent ».
+
+Elle modifie principalement la distribution utilisée pour sélectionner les tokens.
+
+---
+
+# 15. Hallucination
+
+Une **hallucination** apparaît lorsqu'un modèle génère une information fausse ou inventée tout en la présentant comme vraie.
+
+Exemple :
+
+```text
+Utilisateur :
+"Quel est le livre publié par X en 1987 ?"
+
+LLM :
+"X a publié Y en 1987."
+```
+
+Même si le livre n'existe pas, le modèle peut générer une réponse plausible.
+
+C'est une conséquence importante du fait qu'un LLM est avant tout un modèle génératif.
+
+---
+
+# 16. RAG
+
+**RAG — Retrieval-Augmented Generation** permet de fournir au LLM des informations externes au moment de la requête.
+
+```text
+                 Documents
+                     |
+                     v
+                Embeddings
+                     |
+                     v
+              Vector Database
+                     |
+User question ──> Retrieval
+                     |
+                     v
+              Context pertinent
+                     |
+                     v
+                    LLM
+                     |
+                     v
+                  Réponse
+```
+
+Le RAG est particulièrement utile pour travailler avec :
+
+- documentation ;
+- bases de connaissances ;
+- fichiers internes ;
+- documentation technique ;
+- données régulièrement mises à jour.
+
+Le RAG ne « réentraîne » pas le modèle.
+
+Il lui fournit simplement du contexte supplémentaire au moment de l'inference.
+
+---
+
+# 17. Vector Database
+
+Une **vector database** stocke des représentations vectorielles, généralement des embeddings.
+
+Exemples de technologies :
+
+- Pinecone ;
+- Qdrant ;
+- Weaviate ;
+- Milvus ;
+- pgvector.
+
+Une recherche classique cherche des mots.
+
+Une recherche vectorielle cherche plutôt des **similarités sémantiques**.
+
+```text
+Question
+   |
+Embedding
+   |
+   v
+[0.13, -0.42, 0.81, ...]
+   |
+   v
+Recherche de vecteurs proches
+   |
+   v
+Documents pertinents
+```
+
+---
+
+# 18. Prompt
+
+Un **prompt** est l'ensemble des instructions et informations fournies au modèle.
+
+Un prompt peut contenir :
+
+```text
+System instructions
++
+Context
++
+Examples
++
+User request
+```
+
+Un bon prompt permet notamment de préciser :
+
+- le rôle du modèle ;
+- la tâche ;
+- les contraintes ;
+- le format attendu ;
+- le contexte ;
+- les critères de réussite.
+
+---
+
+# 19. System Prompt
+
+Le **system prompt** contient les instructions générales qui définissent le comportement attendu du modèle.
+
+Architecture simplifiée :
+
+```text
+System
+  |
+  +── comportement
+  +── règles
+  +── contraintes
+  |
+User
+  |
+  +── demande
+  +── contexte
+```
+
+Le system prompt est particulièrement important dans les applications utilisant des LLM.
+
+---
+
+# 20. Tool Calling
+
+Un LLM peut être capable d'utiliser des outils externes.
+
+Par exemple :
+
+```text
+Utilisateur
+    |
+    v
+   LLM
+    |
+    | "J'ai besoin de la météo"
+    v
+Weather Tool
+    |
+    v
+Résultat
+    |
+    v
+   LLM
+    |
+    v
+Réponse
+```
+
+Les outils peuvent permettre au modèle de :
+
+- rechercher sur Internet ;
+- appeler une API ;
+- interroger une base de données ;
+- exécuter du code ;
+- envoyer un email ;
+- créer un fichier ;
+- utiliser une application.
+
+Le LLM ne fait pas nécessairement lui-même l'action : il peut **décider qu'un outil doit être appelé**, puis utiliser le résultat retourné.
+
+---
+
+# 21. Function Calling
+
+Le **function calling** est une manière structurée de permettre au modèle de demander l'exécution d'une fonction.
+
+Par exemple :
+
+```json
+{
+  "name": "get_weather",
+  "arguments": {
+    "city": "Nantes"
+  }
+}
+```
+
+L'application exécute ensuite réellement la fonction et renvoie le résultat au modèle.
+
+Cela permet de connecter un LLM à des systèmes externes de manière contrôlée.
+
+---
+
+# 22. Structured Output
+
+Un LLM peut également être contraint à retourner des données structurées.
+
+Par exemple :
+
+```json
+{
+  "name": "John",
+  "age": 32,
+  "city": "Paris"
+}
+```
+
+Cela est particulièrement utile pour connecter un LLM à une application logicielle.
+
+Au lieu de devoir parser du texte libre, l'application peut recevoir une structure définie.
+
+---
+
+# 23. Memory
+
+La **mémoire** permet à une application utilisant un LLM de conserver des informations au-delà d'une interaction immédiate.
+
+On peut distinguer plusieurs formes de mémoire.
+
+```text
+                Memory
+                   |
+       ┌───────────┴───────────┐
+       |                       |
+  Short-term              Long-term
+   memory                    memory
+       |                       |
+ Context              Database / Store
+```
+
+### Short-term memory
+
+Informations présentes dans le contexte actuel.
+
+### Long-term memory
+
+Informations stockées dans un système externe et récupérées lorsque nécessaire.
+
+La mémoire n'est donc pas forcément une propriété intrinsèque du LLM.
+
+---
+
+# 24. Agent
+
+Un **agent AI** est généralement un système capable de :
+
+1. comprendre un objectif ;
+2. analyser la situation ;
+3. décider d'une action ;
+4. utiliser des outils ;
+5. observer le résultat ;
+6. recommencer si nécessaire ;
+7. terminer lorsque l'objectif est atteint.
+
+```text
+             Goal
+              |
+              v
+           LLM / Agent
+              |
+        ┌─────┴─────┐
+        v           v
+      Think       Tool
+        ^           |
+        |           v
+        └── Result ─┘
+              |
+              v
+            Done
+```
+
+Un agent est donc davantage qu'un simple prompt envoyé à un LLM.
+
+---
+
+# 25. Agentic AI
+
+**Agentic AI** désigne une approche dans laquelle des modèles d'IA disposent d'une certaine capacité à :
+
+- planifier ;
+- prendre des décisions ;
+- utiliser des outils ;
+- maintenir un état ;
+- observer leur environnement ;
+- poursuivre un objectif.
+
+On peut voir l'évolution comme ceci :
+
+```text
+LLM
+ |
+ v
+LLM + Prompt
+ |
+ v
+LLM + Tools
+ |
+ v
+LLM + Tools + Memory
+ |
+ v
+Agent
+ |
+ v
+Multi-Agent System
+```
+
+---
+
+# 26. Skills
+
+Une **skill** représente généralement une capacité spécialisée qu'un agent peut utiliser.
+
+Par exemple :
+
+```text
+Agent
+ |
+ ├── Search skill
+ ├── GitHub skill
+ ├── Email skill
+ ├── Database skill
+ ├── Browser skill
+ └── Coding skill
+```
+
+Une skill peut regrouper :
+
+- des instructions ;
+- des outils ;
+- des connaissances ;
+- des workflows ;
+- des règles ;
+- des fichiers de référence.
+
+L'intérêt est de rendre les capacités de l'agent modulaires et réutilisables.
+
+---
+
+# 27. Workflow vs Agent
+
+Il est important de différencier un **workflow déterministe** d'un **agent**.
+
+### Workflow
+
+Les étapes sont définies à l'avance.
+
+```text
+Input
+  ↓
+Step 1
+  ↓
+Step 2
+  ↓
+Step 3
+  ↓
+Output
+```
+
+### Agent
+
+Le modèle peut décider de la prochaine action.
+
+```text
+Input
+  ↓
+Agent
+  ↓
+Decision
+ ├── Tool A
+ ├── Tool B
+ └── Tool C
+      ↓
+   Observe
+      ↓
+   Decision
+      ↓
+    Output
+```
+
+Un workflow est généralement plus prévisible.
+
+Un agent est généralement plus flexible.
+
+---
+
+# 28. MCP
+
+**MCP — Model Context Protocol** est un protocole permettant de connecter des modèles et agents à des outils et sources de données de manière standardisée.
+
+Architecture simplifiée :
+
+```text
+             AI Application
+                   |
+                  MCP
+                   |
+        ┌──────────┼──────────┐
+        v          v          v
+      GitHub    Database    Files
+```
+
+L'objectif est notamment de standardiser la manière dont les applications exposent :
+
+- des tools ;
+- des resources ;
+- des prompts.
+
+---
+
+# 29. Multimodalité
+
+Un LLM moderne peut parfois traiter plusieurs types de données.
+
+On parle alors de **multimodal AI**.
+
+```text
+Text ───────┐
+Image ──────┤
+Audio ──────┼──> Model ──> Output
+Video ──────┤
+Files ──────┘
+```
+
+Selon le modèle, les entrées et sorties peuvent inclure :
+
+- texte ;
+- images ;
+- audio ;
+- vidéo ;
+- fichiers structurés.
+
+---
+
+# 30. Latency
+
+La **latence** correspond au temps nécessaire pour obtenir une réponse.
+
+Elle dépend notamment :
+
+- du modèle ;
+- de la longueur du contexte ;
+- du nombre de tokens générés ;
+- du provider ;
+- du nombre d'appels aux outils ;
+- de l'architecture de l'application.
+
+Un agent peut être plus lent qu'un simple appel LLM car il peut effectuer plusieurs étapes.
+
+---
+
+# 31. Cost
+
+Le coût d'utilisation d'un LLM dépend généralement du nombre de tokens traités.
+
+On distingue souvent :
+
+```text
+Input tokens
++
+Output tokens
+=
+Usage
+```
+
+Dans une application agentique, il faut également prendre en compte :
+
+```text
+User
+ ↓
+LLM call
+ ↓
+Tool
+ ↓
+LLM call
+ ↓
+Tool
+ ↓
+LLM call
+```
+
+Plus le nombre d'appels augmente, plus le coût et la latence peuvent augmenter.
+
+---
+
+# 32. Evaluation
+
+Une application LLM doit être évaluée.
+
+On peut mesurer :
+
+- précision ;
+- pertinence ;
+- factualité ;
+- respect du format ;
+- latence ;
+- coût ;
+- taux d'erreur ;
+- qualité des tool calls.
+
+Une architecture LLM sans système d'évaluation est difficile à améliorer de manière fiable.
+
+---
+
+# 33. Fine-tuning vs RAG
+
+Il est important de ne pas confondre les deux.
+
+| Fine-tuning              | RAG                                      |
+| ------------------------ | ---------------------------------------- |
+| Modifie le modèle        | Ne modifie pas le modèle                 |
+| Apprend un comportement  | Fournit du contexte                      |
+| Adapté aux comportements | Adapté aux connaissances externes        |
+| Entraînement nécessaire  | Pas d'entraînement nécessaire            |
+| Peut être coûteux        | Généralement plus simple à mettre à jour |
+
+Une règle simple :
+
+```text
+Je veux changer le comportement
+        → Fine-tuning
+
+Je veux donner des connaissances externes
+        → RAG
+```
+
+---
+
+# 34. Architecture complète d'une application AI
+
+Une application moderne peut combiner plusieurs concepts :
+
+```text
+                        User
+                          |
+                          v
+                    AI Application
+                          |
+                    ┌─────┴─────┐
+                    |           |
+                 Memory       RAG
+                    |           |
+                    └─────┬─────┘
+                          |
+                          v
+                         LLM
+                          |
+                    ┌─────┴─────┐
+                    |           |
+                  Tools       Skills
+                    |           |
+                    └─────┬─────┘
+                          |
+                          v
+                   External Systems
+```
+
+Le LLM constitue alors une partie du système, et non nécessairement l'intégralité de celui-ci.
+
+---
+
+# 35. Les notions à retenir
+
+Si tu veux comprendre l'écosystème AI moderne, retiens au minimum :
+
+### Fondamentaux LLM
+
+- LLM
+- Token
+- Tokenizer
+- Context Window
+- Parameter
+- Embedding
+- Transformer
+- Attention
+- Inference
+- Training
+- Pretraining
+- Fine-tuning
+- Instruction tuning
+- RLHF
+- Temperature
+- Hallucination
+
+### AI Engineering
+
+- Prompt
+- System prompt
+- Structured output
+- Function calling
+- Tool calling
+- API
+- Streaming
+- Evaluation
+- Observability
+- Latency
+- Token cost
+
+### Knowledge & Memory
+
+- Embeddings
+- Vector database
+- Semantic search
+- RAG
+- Chunking
+- Retrieval
+- Reranking
+- Short-term memory
+- Long-term memory
+
+### Agents
+
+- Agent
+- Agentic AI
+- Tool use
+- Planning
+- Reasoning
+- Workflow
+- Skills
+- Memory
+- Multi-agent system
+- MCP
+
+---
+
+# 36. La vision globale
+
+Le plus important est de comprendre comment toutes ces notions s'assemblent.
+
+```text
+                         AI
+                          |
+             ┌────────────┴────────────┐
+             |                         |
+            LLM                  Computer Vision
+             |
+     ┌───────┼────────┐
+     |       |        |
+   Prompt   RAG     Tools
+     |       |        |
+     |    Embeddings  |
+     |       |        |
+     |   Vector DB    |
+     |       |        |
+     └───────┼────────┘
+             |
+           Agent
+             |
+      ┌──────┼──────┐
+      |      |      |
+   Memory  Skills   MCP
+      |      |      |
+      └──────┼──────┘
+             |
+        AI Application
+```
+
+La progression conceptuelle peut donc être résumée ainsi :
+
+```text
+LLM
+ ↓
+Prompt
+ ↓
+Context
+ ↓
+RAG
+ ↓
+Tools
+ ↓
+Memory
+ ↓
+Agent
+ ↓
+Skills
+ ↓
+MCP
+ ↓
+Agentic AI
+```
+
+L'objectif n'est pas seulement de savoir ce que signifie chaque terme, mais de comprendre **quel problème chaque concept résout et comment les combiner pour construire une application AI fiable**.

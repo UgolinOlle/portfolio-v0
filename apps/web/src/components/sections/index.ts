@@ -4,3 +4,4 @@ export * from './projects-section';
 export * from './resources-section';
 export * from './stacks-section';
 export * from './works-section';
+export * from './home-section';

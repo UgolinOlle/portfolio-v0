@@ -47,6 +47,14 @@
       "42": "Projects completed at 42 school, including web applications and internal tools."
     }
   },
+  "writings": {
+    "pageTitle": "Writings",
+    "pageSubtitle": "Notes and articles about web development, my projects and what I'm learning.",
+    "filterAll": "All",
+    "noWritings": "No writings available in English",
+    "recentTitle": "Recent writings",
+    "seeAll": "See all writings"
+  },
   "stacks": {
     "title": "My Skills",
     "categories": {

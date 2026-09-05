@@ -25,4 +25,14 @@ export const { docs: projectsDocs, meta: projectsMeta } = defineDocs({
   docs: { schema: frontmatterSchema },
 });
 
+const writingsSchema = frontmatterSchema.extend({
+  date: z.string(),
+  category: z.string(),
+});
+
+export const { docs: writingsDocs, meta: writingsMeta } = defineDocs({
+  dir: 'content/writings',
+  docs: { schema: writingsSchema },
+});
+
 export default defineConfig();

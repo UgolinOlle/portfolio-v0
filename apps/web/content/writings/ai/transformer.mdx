@@ -1,0 +1,205 @@
+---
+title: 'Transformer'
+description: 'Un aperçu des concepts fondamentaux des Transformers et de leurs applications dans les systèmes d’IA modernes.'
+date: '2026-08-24'
+category: 'AI'
+---
+
+Un **Transformer** est une architecture de réseau de neurones conçue pour traiter des données séquentielles, notamment du texte, en comprenant les relations entre les différents éléments d’une séquence.
+
+Introduit en 2017 dans l’article _Attention Is All You Need_, le Transformer est devenu la base de nombreux **Large Language Models (LLMs)** modernes comme GPT, Claude et Gemini.
+
+## Idée principale
+
+L’innovation principale du Transformer est le mécanisme de **self-attention** (auto-attention).
+
+Contrairement aux architectures qui traitent le texte strictement de gauche à droite, un Transformer peut analyser les tokens d’une séquence et déterminer lesquels sont importants les uns pour les autres.
+
+Par exemple :
+
+```text
+"La voiture est rouge car elle est neuve."
+
+                ┌────────────────┐
+"elle" ────────►│ Self-Attention │──────► "voiture"
+                └────────────────┘
+                       │
+                       ▼
+               Compréhension du contexte
+```
+
+Cela permet au modèle de comprendre les relations entre des mots, même lorsqu’ils sont éloignés dans une phrase.
+
+## Composants principaux
+
+Un Transformer est constitué de plusieurs composants importants.
+
+### 1. Tokenisation
+
+Le texte est découpé en petites unités appelées **tokens**.
+
+```text
+"Bonjour le monde"
+        ↓
+["Bonjour", " le", " monde"]
+        ↓
+[Token 1, Token 2, Token 3]
+```
+
+Les tokens sont ensuite convertis en représentations numériques.
+
+### 2. Embeddings
+
+Chaque token est transformé en un vecteur numérique appelé **embedding**.
+
+```text
+Token → Vecteur
+
+"chat" → [0.21, -0.84, 0.37, ...]
+```
+
+Ces vecteurs permettent au modèle de représenter des informations sémantiques.
+
+### 3. Encodage positionnel
+
+Les Transformers traitent les tokens en parallèle. Ils ont donc besoin d'informations indiquant la position de chaque token dans la séquence.
+
+```text
+Le    chat    mange    une    souris
+ 0      1       2       3       4
+```
+
+Cela permet au modèle de distinguer l'ordre des mots.
+
+### 4. Self-Attention
+
+La **self-attention** permet au modèle de déterminer l'importance de chaque token par rapport aux autres tokens.
+
+Elle repose principalement sur trois représentations :
+
+- **Query (Q)** — ce que le token recherche
+- **Key (K)** — les informations qu'un token peut fournir
+- **Value (V)** — l'information associée au token
+
+La formule de l'attention est généralement représentée ainsi :
+
+```text
+Attention(Q, K, V)
+    = softmax(QKᵀ / √dₖ)V
+```
+
+### 5. Multi-Head Attention
+
+Au lieu d'utiliser une seule attention, un Transformer utilise plusieurs **attention heads**.
+
+Chaque tête peut apprendre différents types de relations :
+
+```text
+              ┌─ Head 1 → Syntaxe
+Entrée ───────┼─ Head 2 → Sémantique
+              ├─ Head 3 → Contexte
+              └─ Head 4 → Relations
+```
+
+Les résultats sont ensuite combinés.
+
+### 6. Feed-Forward Network
+
+Après le mécanisme d'attention, chaque token passe dans un réseau de neurones appelé **Feed-Forward Network**.
+
+Il transforme davantage la représentation de chaque token.
+
+### 7. Residual Connections & Layer Normalization
+
+Les Transformers utilisent des **connexions résiduelles** et de la **normalisation** afin de stabiliser et faciliter l'entraînement de réseaux très profonds.
+
+## Architecture d'un Transformer
+
+Un bloc Transformer peut être simplifié ainsi :
+
+```text
+Entrée
+  │
+  ▼
+Multi-Head Self-Attention
+  │
+  ▼
+Add & Normalize
+  │
+  ▼
+Feed-Forward Network
+  │
+  ▼
+Add & Normalize
+  │
+  ▼
+Sortie
+```
+
+Plusieurs blocs peuvent être empilés pour construire un modèle Transformer de grande taille.
+
+## Encoder vs Decoder
+
+L'architecture Transformer originale contient deux parties :
+
+```text
+Entrée
+  │
+  ▼
+┌─────────────┐
+│   Encoder   │
+└─────────────┘
+       │
+       ▼
+┌─────────────┐
+│   Decoder   │
+└─────────────┘
+       │
+       ▼
+     Sortie
+```
+
+Les modèles modernes peuvent utiliser différentes configurations :
+
+- **Encoder-only** — principalement utilisé pour comprendre le texte, comme BERT.
+- **Decoder-only** — principalement utilisé pour générer du texte, comme GPT.
+- **Encoder-decoder** — utilisé pour des tâches comme la traduction, comme T5.
+
+## Pourquoi les Transformers sont importants
+
+Les Transformers ont progressivement remplacé de nombreuses architectures récurrentes comme les **RNN** et **LSTM** pour les grands modèles de langage.
+
+L'une de leurs principales forces est leur capacité à traiter les tokens **en parallèle pendant l'entraînement**, ce qui permet de mieux exploiter les capacités de calcul modernes.
+
+Ils peuvent également être agrandis avec davantage de données, de paramètres et de puissance de calcul.
+
+## Transformers et LLMs
+
+La majorité des LLMs modernes reposent sur une architecture **Transformer**, notamment sur des architectures **decoder-only** pour la génération de texte.
+
+Un processus simplifié ressemble à ceci :
+
+```text
+Prompt
+  │
+  ▼
+Tokenisation
+  │
+  ▼
+Embeddings
+  │
+  ▼
+Transformer Blocks
+  │
+  ▼
+Probabilités du prochain token
+  │
+  ▼
+Token sélectionné
+  │
+  └──────────────┐
+                 ▼
+        Génération du prochain token
+```
+
+Le modèle répète ce processus afin de générer progressivement une réponse.

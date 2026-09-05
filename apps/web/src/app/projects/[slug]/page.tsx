@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { Footer } from '~/components/footer';
-import { Header } from '~/components/header';
+import { PortfolioShell } from '~/components/core/portfolio-shell';
 import { BackButton } from '~/components/projects/back-button';
 import { ProjectMDX } from '~/components/projects/project-mdx';
 import { createMetadata } from '~/lib/metadata';
@@ -29,12 +28,10 @@ const Page = async ({ params, searchParams }: PageProps) => {
   }
 
   return (
-    <div className="group/layout relative mx-auto w-full flex-1 px-4 py-20 pt-24 font-sans lg:max-w-3xl">
-      <Header />
+    <PortfolioShell>
       <BackButton />
       <ProjectMDX page={page} />
-      <Footer />
-    </div>
+    </PortfolioShell>
   );
 };
 

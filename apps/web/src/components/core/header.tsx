@@ -3,12 +3,12 @@
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 
-import { useTranslation } from '~/components/i18n/i18n-provider';
+import { useTranslation } from '~/components/core/i18n-provider';
 import { LanguageSwitcher, TextEffect } from '~/components/ui';
 import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
 import { SOCIAL_LINKS } from '~/lib/data';
 
-import { SocialLinksNav } from './ui/social-links-nav';
+import { SocialLinksNav } from '../ui/social-links-nav';
 
 function Header() {
   const { t } = useTranslation();

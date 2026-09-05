@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 
-import { useTranslation } from '~/components/i18n/i18n-provider';
+import { useTranslation } from '~/components/core/i18n-provider';
 import { VARIANTS_SECTION, TRANSITION_SECTION } from '~/lib/constants';
 
 export function AboutSection() {

@@ -5,7 +5,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
-import { useTranslation } from '~/components/i18n/i18n-provider';
+import { useTranslation } from '~/components/core/i18n-provider';
 import type { RegistryItem } from '~/lib/registry';
 
 type RegistryCardProps = {

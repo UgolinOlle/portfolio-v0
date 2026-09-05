@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { useTranslation } from '~/components/i18n/i18n-provider';
+import { useTranslation } from '~/components/core/i18n-provider';
 
 export default function NotFoundPage() {
   const { t } = useTranslation();

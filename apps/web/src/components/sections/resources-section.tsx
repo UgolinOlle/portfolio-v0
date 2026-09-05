@@ -5,7 +5,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { useTranslation } from '~/components/i18n/i18n-provider';
+import { useTranslation } from '~/components/core/i18n-provider';
 import { Spotlight } from '~/components/ui/spotlight';
 import { TextHoverEnter } from '~/components/ui/text-hover';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';

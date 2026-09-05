@@ -7,7 +7,7 @@ import type { Metadata, Viewport } from 'next';
 import { IBM_Plex_Mono, Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 
-import { Providers } from '~/components/providers';
+import { Providers } from '~/components/core/providers';
 import { defaultMetadata, defaultViewport } from '~/lib/metadata';
 
 export const metadata: Metadata = defaultMetadata;

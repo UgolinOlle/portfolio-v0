@@ -11,9 +11,15 @@ export function Footer() {
           </TextLoop>
         </a>
 
-        <a href="/inspirations" className="text-xs text-zinc-500">
-          Inspirations list available here.
-        </a>
+        <div className="flex items-center gap-3">
+          <a href="/writings" className="text-xs text-zinc-500">
+            Writings
+          </a>
+
+          <a href="/inspirations" className="text-xs text-zinc-500">
+            Inspirations list available here.
+          </a>
+        </div>
       </div>
     </footer>
   );

@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 import type { ReactNode } from 'react';
 
-import { useTranslation } from '~/components/i18n/i18n-provider';
+import { useTranslation } from '~/components/core/i18n-provider';
 import { DATABASES, FRAMEWORKS, LANGUAGES, TOOLS } from '~/components/icons';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 

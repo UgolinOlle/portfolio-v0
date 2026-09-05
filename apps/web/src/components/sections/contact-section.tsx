@@ -4,7 +4,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { motion } from 'motion/react';
 
-import { useTranslation } from '~/components/i18n/i18n-provider';
+import { useTranslation } from '~/components/core/i18n-provider';
 import { MagneticSocialLink, Status } from '~/components/ui';
 import { EMAIL, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { SOCIAL_LINKS } from '~/lib/data';

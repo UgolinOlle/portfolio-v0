@@ -1,4 +1,4 @@
-import { getMDXComponents } from '~/components/mdx';
+import { getMDXComponents } from '~/components/core/mdx';
 import { DocsBody, DocsDescription, DocsTitle } from '~/layouts/docs/page';
 import type { projectsSource } from '~/lib/source';
 

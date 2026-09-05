@@ -4,9 +4,10 @@ import { Button } from '@portfolio-v0/shadcn/components/button';
 
 import { usePathname, useRouter } from 'next/navigation';
 
-import { useTranslation } from '~/components/i18n/i18n-provider';
+import { useTranslation } from '~/components/core/i18n-provider';
 
 const PROJECT_PATH_REGEX = /^\/projects\/(.+)$/;
+const WRITING_PATH_REGEX = /^\/writings\/(.+)$/;
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation();
@@ -16,12 +17,18 @@ export function LanguageSwitcher() {
   const toggleLanguage = () => {
     const newLang = i18n.language === 'fr' ? 'en' : 'fr';
     const projectMatch = pathname.match(PROJECT_PATH_REGEX);
+    const writingMatch = pathname.match(WRITING_PATH_REGEX);
 
     i18n.changeLanguage(newLang);
 
     if (projectMatch) {
       const projectSlug = projectMatch[1];
       router.push(`/projects/${projectSlug}?lang=${newLang}`);
+    } else if (writingMatch) {
+      const writingSlug = writingMatch[1];
+      router.push(`/writings/${writingSlug}?lang=${newLang}`);
+    } else if (pathname === '/writings') {
+      router.push(`/writings?lang=${newLang}`);
     }
   };
 

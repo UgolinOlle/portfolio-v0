@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { motion } from 'motion/react';
@@ -6,12 +8,18 @@ import { useState } from 'react';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { WORKS_EXPERIENCES } from '~/lib/data';
 
+import { useTranslation } from '../core/i18n-provider';
+
 function WorksSection() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
-      <h3 className="mb-3 text-lg font-medium">Works Experiences</h3>
+      <div className="mb-5 flex items-center justify-center gap-4">
+        <h3 className="w-auto text-lg font-medium whitespace-nowrap">{t('sections.works')}</h3>
+        <span className="h-px w-full bg-zinc-400" />
+      </div>
 
       <div className="flex flex-col space-y-2">
         {WORKS_EXPERIENCES.map((job) => (

@@ -27,7 +27,7 @@ function Header() {
             <TextEffect
               as="p"
               className="font-sans font-normal text-primary"
-              delay={0.5}
+              delay={0}
               per="char"
               preset="fade"
             >

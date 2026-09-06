@@ -6,15 +6,16 @@
     "writings": "Articles"
   },
   "header": {
-    "title": "Développeur Full Stack",
+    "title": "Développeur Full Stack / Administrateur Système",
     "profileAlt": "Photo de profil d'Ugolin Ollé"
   },
   "about": {
-    "description": "Développeur full-stack freelance et product builder, je conçois et développe des applications web modernes, des landings page & des tools pour développeurs.\n\nDans mes projets, je fais attention autant à la qualité du code qu’à l’expérience utilisateur et aux performances.\n\nUne attention particulière est portée aux outils, à l’automatisation et aux petits détails qui transforment un bon logiciel en excellent produit.\n\nCe que j’aime, c’est construire des produits utiles, bien pensés, et faits pour durer."
+    "description": "Actuellement en Bachelor Administrateur Systèmes, Réseaux & Cybersécurité à MyDigitalSchool Angers, je recherche une alternance d’un an pour mettre en pratique mes compétences en systèmes, réseaux et sécurité, tout en gardant une forte dimension produit et développement.\n\nMon parcours de développeur web full-stack, combiné à mon expérience à l’école 42 à Bangkok, m’a apporté des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. Deux années passées au Cambodge m’ont appris à m’adapter rapidement, à collaborer dans des contextes variés et à rester efficace dans des environnements exigeants.\n\nCe que je recherche aujourd’hui : rejoindre une équipe où je peux contribuer concrètement à l’infrastructure, à la fiabilité et à la sécurité des systèmes, tout en continuant à construire des outils et produits utiles, pensés pour durer."
   },
   "sections": {
     "about": "À propos",
     "projects": "Projets",
+    "works": "Mes Expériences",
     "stacks": "Technologies",
     "resources": "Ressources",
     "contact": "Contact"

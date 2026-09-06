@@ -6,15 +6,16 @@
     "writing": "Writings"
   },
   "header": {
-    "title": "Full Stack Developer",
+    "title": "Full Stack Developer / Sys Admin",
     "profileAlt": "Ugolin Ollé profile picture"
   },
   "about": {
-    "description": "I'm a freelance full-stack developer and product builder who designs and engineers modern web apps, desktop tools, and developer experiences.\n\nI work at the intersection of clean architecture, thoughtful UX, and practical performance.\n\nI care deeply about tooling, automation, and the small details that turn good software into great products.\n\nI enjoy building focused products with strong identity, fast feedback loops, and long-term maintainability in mind."
+    "description": "Currently enrolled in a Bachelor’s degree in Systems, Networks & Cybersecurity at MyDigitalSchool Angers, I am looking for a one-year apprenticeship to put my skills in systems, networks and security into practice, while keeping a strong focus on product and development.\n\nMy background as a full-stack web developer, combined with my experience at 42 in Bangkok, has given me solid technical foundations, real discipline and a pragmatic approach to problem-solving. Two years spent in Cambodia taught me to adapt quickly, collaborate in diverse environments and remain effective in demanding contexts.\n\nWhat I am looking for today is to join a team where I can make a concrete contribution to infrastructure, reliability and system security, while continuing to build useful, long-lasting tools and products."
   },
   "sections": {
     "about": "About",
     "projects": "Projects",
+    "works": "Works Experiences",
     "stacks": "Technologies",
     "resources": "Resources",
     "contact": "Contact"

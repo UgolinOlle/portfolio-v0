@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 
+import { ConstructionBanner } from '~/components/core/construction-banner';
 import { Navbar } from '~/components/docs/navbar';
 import { DocsLayout } from '~/layouts/docs';
 import { Sidebar, SidebarProvider, SidebarTrigger, useSidebar } from '~/layouts/docs/slots/sidebar';
@@ -28,6 +29,7 @@ export default function Layout({ children }: LayoutProps) {
       themeSwitch={{ enabled: false }}
       tree={componentsSource.pageTree}
     >
+      <ConstructionBanner />
       {children}
     </DocsLayout>
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { ConstructionBanner } from '~/components/core/construction-banner';
 import { Breadcrumbs } from '~/components/docs/breadcrumbs';
 import { Navbar } from '~/components/docs/navbar';
 import { RegistrySection } from '~/components/registry';
@@ -20,6 +21,7 @@ const UiIndexPage = () => {
     <>
       <Navbar />
       <Breadcrumbs className="pt-14" />
+      <ConstructionBanner />
 
       <main className="mx-auto max-w-6xl px-4 pt-20 pb-20">
         <div className="mb-12 space-y-4">

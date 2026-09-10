@@ -17,9 +17,14 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="group relative flex flex-col overflow-hidden">
+    <div className="group relative flex flex-col overflow-hidden [content-visibility:auto]">
       <div className="relative rounded-xl border bg-card">
-        <div className={cn('border-blur h-40 shrink-0', preview && 'p-2')}>
+        <div
+          className={cn(
+            'border-blur aspect-[16/10] min-h-32 shrink-0 sm:min-h-40',
+            preview && 'p-2',
+          )}
+        >
           {preview ?? (
             <div className="flex size-full items-center justify-center text-xs text-muted-foreground">
               {t('registry.card.previewComingSoon')}
@@ -31,14 +36,14 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
         <div
           className={cn(
             'absolute inset-0 z-10 flex items-center justify-center bg-background/30 opacity-0',
-            'backdrop-blur-md transition-all duration-300 group-hover:opacity-100',
+            'backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100',
           )}
         >
           <Link
             href={item.href}
             className={cn(
               'rounded-full bg-primary px-5 py-2 text-sm font-medium',
-              'text-primary-foreground shadow-lg transition-transform duration-200 hover:scale-105',
+              'text-primary-foreground shadow-lg transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
             )}
           >
             {t('registry.card.viewDetails')}

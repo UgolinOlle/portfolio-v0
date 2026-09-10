@@ -23,10 +23,10 @@ function WorksSection() {
         <span className="h-px w-full bg-zinc-400" />
       </div>
 
-      <div className="flex flex-col space-y-2">
+      <motion.div className="flex flex-col space-y-2" layout>
         {WORKS_EXPERIENCES.map((job) => (
           <motion.div
-            layout
+            layout="position"
             key={job.id}
             onFocus={() => setActiveId(job.id)}
             onHoverStart={() => setActiveId(job.id)}
@@ -38,6 +38,14 @@ function WorksSection() {
               'flex-row items-start rounded-xl px-3 py-3 text-sm outline-none lg:gap-0',
               'focus-visible:ring-2 focus-visible:ring-primary/40',
             )}
+            transition={{
+              layout: {
+                type: 'spring',
+                stiffness: 420,
+                damping: 38,
+                mass: 0.8,
+              },
+            }}
           >
             <div className="flex min-w-0 flex-row items-start justify-start lg:gap-2">
               <div className="mr-1 h-8 w-8" style={{ perspective: 1000 }}>
@@ -102,7 +110,7 @@ function WorksSection() {
                       exit={{ height: 0, opacity: 0, scaleY: 0.96, y: -4 }}
                       initial={{ height: 0, opacity: 0, scaleY: 0.96, y: -6 }}
                       transition={{
-                        duration: shouldReduceMotion ? 0 : 0.24,
+                        duration: shouldReduceMotion ? 0 : 0.3,
                         ease: [0.22, 1, 0.36, 1],
                       }}
                     >
@@ -142,7 +150,7 @@ function WorksSection() {
             </p>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </motion.section>
   );
 }

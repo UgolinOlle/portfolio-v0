@@ -195,6 +195,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     link: 'https://maia-host.com',
     logo: '/assets/logos/maia-host.png',
     id: 'maia-host',
+    details: {
+      fr: [
+        'Développement de fonctionnalités full-stack pour une plateforme web.',
+        "Contribution aux choix techniques et à l'amélioration continue du produit.",
+      ],
+      en: [
+        'Developed full-stack features for a web platform.',
+        'Contributed to technical decisions and continuous product improvement.',
+      ],
+    },
   },
   {
     company: 'Digital Creator',
@@ -203,6 +213,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     link: 'https://digitalcreator.app/',
     logo: 'https://digitalcreator.app/favicon.ico?favicon.4b4ac5f9.ico',
     id: 'digital-creator',
+    details: {
+      fr: [
+        "Développement d'outils web orientés création et gestion de contenu.",
+        "Participation à la conception d'interfaces et de fonctionnalités produit.",
+      ],
+      en: [
+        'Developed web tools focused on content creation and management.',
+        'Contributed to interface design and product feature development.',
+      ],
+    },
   },
   {
     company: 'Sugar AI',
@@ -211,6 +231,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     link: 'https://sugarai.app/',
     logo: 'https://www.sugarai.app/favicon-16x16.png',
     id: 'sugar-ai',
+    details: {
+      fr: [
+        'Développement backend et intégration de services pour une application IA.',
+        'Travail sur la fiabilité des échanges entre les différents composants.',
+      ],
+      en: [
+        'Developed backend features and service integrations for an AI application.',
+        'Worked on the reliability of communication between application components.',
+      ],
+    },
   },
   {
     company: 'Le Boutiquier',
@@ -220,6 +250,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     link: 'https://leboutiquier.fr/',
     logo: 'https://res.cloudinary.com/djher1fiu/image/upload/v1758012423/xop0sw1gbaky4eiicifj.png',
     id: 'le-boutiquier',
+    details: {
+      fr: [
+        'Développement et maintenance de fonctionnalités full-stack.',
+        "Support technique et résolution de problèmes rencontrés par les utilisateurs.",
+      ],
+      en: [
+        'Developed and maintained full-stack features.',
+        'Provided technical support and resolved user-facing issues.',
+      ],
+    },
   },
   {
     company: 'Connectra',
@@ -228,6 +268,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     link: '',
     logo: '/assets/logos/connectra_logo.webp',
     id: 'connectra',
+    details: {
+      fr: [
+        "Développement d'interfaces web et intégration de fonctionnalités frontend.",
+        "Amélioration de l'expérience utilisateur et de la qualité du code.",
+      ],
+      en: [
+        'Developed web interfaces and integrated frontend features.',
+        'Improved user experience and code quality.',
+      ],
+    },
   },
   {
     company: 'ComAI',
@@ -235,6 +285,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2024',
     link: '',
     id: 'comai',
+    details: {
+      fr: [
+        'Développement de fonctionnalités full-stack pour un produit web.',
+        "Collaboration sur la conception et l'évolution de l'application.",
+      ],
+      en: [
+        'Developed full-stack features for a web product.',
+        "Collaborated on the application's design and evolution.",
+      ],
+    },
   },
   {
     company: 'Freelance',
@@ -244,6 +304,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     link: 'https://ugolin-olle.com',
     logo: '/favicon.ico',
     id: 'freelance',
+    details: {
+      fr: [
+        "Conception et développement de sites web et d'applications sur mesure.",
+        "Accompagnement technique, de la définition du besoin au déploiement.",
+      ],
+      en: [
+        'Designed and developed websites and custom applications.',
+        'Provided technical support from requirements gathering through deployment.',
+      ],
+    },
   },
   {
     company: 'Azerty Consulting',
@@ -253,6 +323,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     link: 'https://azertyconsulting.fr/',
     logo: 'https://azertyconsulting.fr/icon.png?27ebc0b5cfa491cd',
     id: 'azerty-consulting',
+    details: {
+      fr: [
+        'Développement de fonctionnalités web full-stack pour différents projets clients.',
+        'Adaptation à des contextes techniques et besoins métier variés.',
+      ],
+      en: [
+        'Developed full-stack web features for different client projects.',
+        'Adapted to varied technical contexts and business requirements.',
+      ],
+    },
   },
   {
     company: 'Nicoka',
@@ -261,6 +341,16 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     link: 'https://nicoka.com',
     logo: 'https://www.nicoka.com/assets/img/favicon.ico',
     id: 'nicoka',
+    details: {
+      fr: [
+        'Participation au développement backend pendant un stage.',
+        "Découverte des pratiques de développement en équipe et de la maintenance applicative.",
+      ],
+      en: [
+        'Contributed to backend development during an internship.',
+        'Learned team development practices and application maintenance.',
+      ],
+    },
   },
 ];
 

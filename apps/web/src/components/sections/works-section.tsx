@@ -12,7 +12,8 @@ import { useTranslation } from '../core/i18n-provider';
 
 function WorksSection() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language === 'en' ? 'en' : 'fr';
 
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
@@ -87,6 +88,24 @@ function WorksSection() {
               <div className="flex flex-col px-2">
                 <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
                 <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
+                <div className="mt-3 border-l border-zinc-300 pl-4 text-xs dark:border-zinc-700">
+                  <p className="relative text-zinc-600 before:absolute before:-left-[1.05rem] before:top-1/2 before:w-3 before:border-t before:border-zinc-300 before:content-[''] dark:text-zinc-400 dark:before:border-zinc-700">
+                    {job.details[language].length}{' '}
+                    {job.details[language].length === 1
+                      ? t('sections.achievement')
+                      : t('sections.achievements')}
+                  </p>
+                  <ul className="mt-1 space-y-1 text-zinc-500 dark:text-zinc-400">
+                    {job.details[language].map((detail) => (
+                      <li
+                        className="relative pl-4 before:absolute before:-left-4 before:top-0 before:h-full before:border-l before:border-zinc-300 after:absolute after:-left-4 after:top-1/2 after:w-3 after:border-t after:border-zinc-300 after:content-[''] last:before:h-1/2 dark:before:border-zinc-700 dark:after:border-zinc-700"
+                        key={detail}
+                      >
+                        {detail}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
 

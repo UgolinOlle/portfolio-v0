@@ -32,7 +32,12 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
   const examples = page.data.preview ? getRegistryExamples(page.data.preview) : [];
 
   return (
-    <DocsPage breadcrumb={{ component: <RegistryBreadcrumb /> }} toc={page.data.toc}>
+    <DocsPage
+      breadcrumb={{ component: <RegistryBreadcrumb /> }}
+      tableOfContent={{ enabled: false }}
+      tableOfContentPopover={{ enabled: false }}
+      toc={page.data.toc}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
 

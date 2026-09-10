@@ -23,7 +23,7 @@ const UiIndexPage = () => {
       <Breadcrumbs className="pt-14" />
       <ConstructionBanner />
 
-      <main className="mx-auto max-w-6xl px-4 pt-16 pb-16 sm:px-6 sm:pt-20 sm:pb-20 lg:px-8">
+      <main className="w-full px-4 pt-16 pb-16 sm:px-6 sm:pt-20 sm:pb-20 lg:px-8">
         <div className="mb-12 space-y-4">
           <h1 className="text-3xl font-semibold">UI</h1>
           <p className="text-lg text-muted-foreground">

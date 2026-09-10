@@ -33,7 +33,7 @@ export const PreviewThumbnail = async ({
 
   return (
     <div className={cn('relative size-full overflow-hidden bg-muted/20', className)}>
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      <div className="pointer-events-none absolute inset-0 flex min-w-0 items-center justify-center overflow-hidden">
         {isFullPage ? (
           <div
             style={{
@@ -44,7 +44,9 @@ export const PreviewThumbnail = async ({
             <Component />
           </div>
         ) : (
-          <Component />
+          <div className="w-full min-w-0 max-w-full [zoom:0.7] max-sm:[zoom:0.5] [&>*]:w-full [&>*]:min-w-0 [&>*]:max-w-full">
+            <Component />
+          </div>
         )}
       </div>
     </div>

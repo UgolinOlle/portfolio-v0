@@ -11,10 +11,10 @@ type RegistrySectionProps = {
 export const RegistrySection = ({ section }: RegistrySectionProps) => {
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex items-end justify-between gap-4">
-        <div>
+      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <h2 className="text-xl font-medium">{section.title}</h2>
-          <p className="text-sm text-muted-foreground">{section.description}</p>
+          <p className="text-pretty text-sm text-muted-foreground">{section.description}</p>
         </div>
 
         <Link
@@ -22,7 +22,10 @@ export const RegistrySection = ({ section }: RegistrySectionProps) => {
           href={section.href}
         >
           Tout voir
-          <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+          <ArrowRightIcon
+            aria-hidden="true"
+            className="size-3.5 transition-transform group-hover:translate-x-0.5"
+          />
         </Link>
       </div>
 

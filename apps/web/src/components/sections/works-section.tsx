@@ -30,10 +30,10 @@ function WorksSection() {
             onHoverEnd={() => setHoveredId(null)}
             className={cn(
               'relative -mx-3 flex w-full justify-between gap-2',
-              'flex-row overflow-hidden rounded-xl px-3 py-3 text-sm lg:gap-0',
+              'flex-row items-start overflow-hidden rounded-xl px-3 py-3 text-sm lg:gap-0',
             )}
           >
-            <div className="flex flex-row justify-start lg:items-center lg:gap-2">
+            <div className="flex min-w-0 flex-row items-start justify-start lg:gap-2">
               <div className="mr-1 h-8 w-8" style={{ perspective: 1000 }}>
                 <motion.div
                   className="relative h-full w-full"
@@ -89,7 +89,12 @@ function WorksSection() {
                 <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
                 <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
                 <div className="mt-3 border-l border-zinc-300 pl-4 text-xs dark:border-zinc-700">
-                  <p className="relative text-zinc-600 before:absolute before:-left-[1.05rem] before:top-1/2 before:w-3 before:border-t before:border-zinc-300 before:content-[''] dark:text-zinc-400 dark:before:border-zinc-700">
+                  <p
+                    className={cn(
+                      'relative text-zinc-600 before:absolute before:top-1/2 before:left-[-1.05rem] before:w-3 before:border-t',
+                      "before:border-zinc-300 before:content-[''] dark:text-zinc-400 dark:before:border-zinc-700",
+                    )}
+                  >
                     {job.details[language].length}{' '}
                     {job.details[language].length === 1
                       ? t('sections.achievement')
@@ -98,7 +103,11 @@ function WorksSection() {
                   <ul className="mt-1 space-y-1 text-zinc-500 dark:text-zinc-400">
                     {job.details[language].map((detail) => (
                       <li
-                        className="relative pl-4 before:absolute before:-left-4 before:top-0 before:h-full before:border-l before:border-zinc-300 after:absolute after:-left-4 after:top-1/2 after:w-3 after:border-t after:border-zinc-300 after:content-[''] last:before:h-1/2 dark:before:border-zinc-700 dark:after:border-zinc-700"
+                        className={cn(
+                          'relative pl-4 before:absolute before:top-1/2 before:-left-4 before:w-3',
+                          "before:border-t before:border-zinc-300 before:content-['']",
+                          'dark:before:border-zinc-700',
+                        )}
                         key={detail}
                       >
                         {detail}

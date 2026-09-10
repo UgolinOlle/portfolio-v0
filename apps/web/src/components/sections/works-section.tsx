@@ -2,7 +2,7 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
 
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
@@ -11,9 +11,10 @@ import { WORKS_EXPERIENCES } from '~/lib/data';
 import { useTranslation } from '../core/i18n-provider';
 
 function WorksSection() {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const { t, i18n } = useTranslation();
   const language = i18n.language === 'en' ? 'en' : 'fr';
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
@@ -25,12 +26,17 @@ function WorksSection() {
       <div className="flex flex-col space-y-2">
         {WORKS_EXPERIENCES.map((job) => (
           <motion.div
+            layout
             key={job.id}
-            onHoverStart={() => job.logo && setHoveredId(job.id)}
-            onHoverEnd={() => setHoveredId(null)}
+            onFocus={() => setActiveId(job.id)}
+            onHoverStart={() => setActiveId(job.id)}
+            onHoverEnd={() => setActiveId(null)}
+            onBlur={() => setActiveId(null)}
+            tabIndex={0}
             className={cn(
               'relative -mx-3 flex w-full justify-between gap-2',
-              'flex-row items-start overflow-hidden rounded-xl px-3 py-3 text-sm lg:gap-0',
+              'flex-row items-start rounded-xl px-3 py-3 text-sm outline-none lg:gap-0',
+              'focus-visible:ring-2 focus-visible:ring-primary/40',
             )}
           >
             <div className="flex min-w-0 flex-row items-start justify-start lg:gap-2">
@@ -38,8 +44,8 @@ function WorksSection() {
                 <motion.div
                   className="relative h-full w-full"
                   animate={{
-                    rotateY: job.logo && hoveredId === job.id ? 180 : 0,
-                    scale: job.logo && hoveredId === job.id ? 1.05 : 1,
+                    rotateY: job.logo && activeId === job.id ? 180 : 0,
+                    scale: job.logo && activeId === job.id ? 1.05 : 1,
                   }}
                   transition={{
                     type: 'spring',
@@ -88,33 +94,46 @@ function WorksSection() {
               <div className="flex flex-col px-2">
                 <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
                 <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
-                <div className="mt-3 border-l border-zinc-300 pl-4 text-xs dark:border-zinc-700">
-                  <p
-                    className={cn(
-                      'relative text-zinc-600 before:absolute before:top-1/2 before:left-[-1.05rem] before:w-3 before:border-t',
-                      "before:border-zinc-300 before:content-[''] dark:text-zinc-400 dark:before:border-zinc-700",
-                    )}
-                  >
-                    {job.details[language].length}{' '}
-                    {job.details[language].length === 1
-                      ? t('sections.achievement')
-                      : t('sections.achievements')}
-                  </p>
-                  <ul className="mt-1 space-y-1 text-zinc-500 dark:text-zinc-400">
-                    {job.details[language].map((detail) => (
-                      <li
+                <AnimatePresence initial={false}>
+                  {activeId === job.id && (
+                    <motion.div
+                      animate={{ height: 'auto', opacity: 1, scaleY: 1, y: 0 }}
+                      className="mt-3 origin-top border-l border-zinc-300 pl-4 text-xs dark:border-zinc-700"
+                      exit={{ height: 0, opacity: 0, scaleY: 0.96, y: -4 }}
+                      initial={{ height: 0, opacity: 0, scaleY: 0.96, y: -6 }}
+                      transition={{
+                        duration: shouldReduceMotion ? 0 : 0.24,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                    >
+                      <p
                         className={cn(
-                          'relative pl-4 before:absolute before:top-1/2 before:-left-4 before:w-3',
-                          "before:border-t before:border-zinc-300 before:content-['']",
-                          'dark:before:border-zinc-700',
+                          'relative text-zinc-600 before:absolute before:top-1/2 before:left-[-1.05rem] before:w-3 before:border-t',
+                          "before:border-zinc-300 before:content-[''] dark:text-zinc-400 dark:before:border-zinc-700",
                         )}
-                        key={detail}
                       >
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                        {job.details[language].length}{' '}
+                        {job.details[language].length === 1
+                          ? t('sections.achievement')
+                          : t('sections.achievements')}
+                      </p>
+                      <ul className="mt-1 space-y-1 text-zinc-500 dark:text-zinc-400">
+                        {job.details[language].map((detail) => (
+                          <li
+                            className={cn(
+                              'relative pl-4 before:absolute before:top-1/2 before:-left-4 before:w-3',
+                              "before:border-t before:border-zinc-300 before:content-['']",
+                              'dark:before:border-zinc-700',
+                            )}
+                            key={detail}
+                          >
+                            {detail}
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
 

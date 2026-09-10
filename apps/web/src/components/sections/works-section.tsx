@@ -5,6 +5,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
 
+import { useMediaQuery } from '~/hooks/use-media-query';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { WORKS_EXPERIENCES } from '~/lib/data';
 
@@ -15,6 +16,7 @@ function WorksSection() {
   const { t, i18n } = useTranslation();
   const language = i18n.language === 'en' ? 'en' : 'fr';
   const shouldReduceMotion = useReducedMotion();
+  const isCompactLayout = useMediaQuery('(max-width: 1023px)');
 
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
@@ -103,7 +105,7 @@ function WorksSection() {
                 <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
                 <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
                 <AnimatePresence initial={false}>
-                  {activeId === job.id && (
+                  {(isCompactLayout || activeId === job.id) && (
                     <motion.div
                       animate={{ height: 'auto', opacity: 1, scaleY: 1, y: 0 }}
                       className={cn(

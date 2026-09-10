@@ -122,7 +122,7 @@ function WorksSection() {
                     >
                       <p
                         className={cn(
-                          'relative text-zinc-600 before:absolute before:top-1/2 before:left-[-1.05rem] before:w-3 before:border-t',
+                          'relative pl-4 text-zinc-600 before:absolute before:top-1/2 before:-left-4 before:w-4 before:border-t',
                           "before:border-zinc-300 before:content-[''] dark:text-zinc-400 dark:before:border-zinc-700",
                         )}
                       >
@@ -135,7 +135,7 @@ function WorksSection() {
                         {job.details[language].map((detail) => (
                           <li
                             className={cn(
-                              'relative pl-4 before:absolute before:top-1/2 before:-left-4 before:w-3',
+                              'relative pl-4 before:absolute before:top-1/2 before:-left-4 before:w-4',
                               "before:border-t before:border-zinc-300 before:content-['']",
                               'dark:before:border-zinc-700',
                             )}

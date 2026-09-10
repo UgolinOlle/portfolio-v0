@@ -106,7 +106,11 @@ function WorksSection() {
                   {activeId === job.id && (
                     <motion.div
                       animate={{ height: 'auto', opacity: 1, scaleY: 1, y: 0 }}
-                      className="mt-3 origin-top border-l border-zinc-300 pl-4 text-xs dark:border-zinc-700"
+                      className={cn(
+                        'relative mt-3 origin-top pl-4 text-xs',
+                        'before:absolute before:top-0 before:bottom-3 before:left-0 before:border-l',
+                        'before:border-zinc-300 dark:before:border-zinc-700',
+                      )}
                       exit={{ height: 0, opacity: 0, scaleY: 0.96, y: -4 }}
                       initial={{ height: 0, opacity: 0, scaleY: 0.96, y: -6 }}
                       transition={{

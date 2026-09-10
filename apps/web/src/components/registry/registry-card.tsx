@@ -20,10 +20,7 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
     <div className="group relative flex flex-col overflow-hidden [content-visibility:auto]">
       <div className="relative rounded-xl border bg-card">
         <div
-          className={cn(
-            'border-blur aspect-[16/10] min-h-32 shrink-0 sm:min-h-40',
-            preview && 'p-2',
-          )}
+          className={cn('border-blur aspect-[4/3] min-h-40 shrink-0 sm:min-h-48', preview && 'p-2')}
         >
           {preview ?? (
             <div className="flex size-full items-center justify-center text-xs text-muted-foreground">

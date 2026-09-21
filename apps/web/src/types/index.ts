@@ -180,8 +180,4 @@ export type WorkExperience = {
   logo?: string;
   link: string;
   id: string;
-  details: {
-    fr: string[];
-    en: string[];
-  };
 };

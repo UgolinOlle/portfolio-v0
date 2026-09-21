@@ -2,21 +2,17 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 
-import { useMediaQuery } from '~/hooks/use-media-query';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { WORKS_EXPERIENCES } from '~/lib/data';
 
 import { useTranslation } from '../core/i18n-provider';
 
 function WorksSection() {
+  const { t } = useTranslation();
   const [activeId, setActiveId] = useState<string | null>(null);
-  const { t, i18n } = useTranslation();
-  const language = i18n.language === 'en' ? 'en' : 'fr';
-  const shouldReduceMotion = useReducedMotion();
-  const isCompactLayout = useMediaQuery('(max-width: 1023px)');
 
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
@@ -25,14 +21,13 @@ function WorksSection() {
         <span className="h-px w-full bg-zinc-400" />
       </div>
 
-      <motion.div className="flex flex-col space-y-2" layout>
+      <div className="flex flex-col space-y-2">
         {WORKS_EXPERIENCES.map((job) => (
-          <motion.div
-            layout="position"
+          <div
             key={job.id}
             onFocus={() => setActiveId(job.id)}
-            onHoverStart={() => setActiveId(job.id)}
-            onHoverEnd={() => setActiveId(null)}
+            onMouseEnter={() => setActiveId(job.id)}
+            onMouseLeave={() => setActiveId(null)}
             onBlur={() => setActiveId(null)}
             tabIndex={0}
             className={cn(
@@ -40,14 +35,6 @@ function WorksSection() {
               'flex-row items-start rounded-xl px-3 py-3 text-sm outline-none lg:gap-0',
               'focus-visible:ring-2 focus-visible:ring-primary/40',
             )}
-            transition={{
-              layout: {
-                type: 'spring',
-                stiffness: 420,
-                damping: 38,
-                mass: 0.8,
-              },
-            }}
           >
             <div className="flex min-w-0 flex-row items-start justify-start lg:gap-2">
               <div className="mr-1 h-8 w-8" style={{ perspective: 1000 }}>
@@ -104,59 +91,15 @@ function WorksSection() {
               <div className="flex flex-col px-2">
                 <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
                 <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
-                <AnimatePresence initial={false}>
-                  {(isCompactLayout || activeId === job.id) && (
-                    <motion.div
-                      animate={{ height: 'auto', opacity: 1, scaleY: 1, y: 0 }}
-                      className={cn(
-                        'relative mt-3 origin-top pl-4 text-xs',
-                        'before:absolute before:top-0 before:bottom-[0.5rem] before:left-0 before:border-l',
-                        'before:border-zinc-300 dark:before:border-zinc-700',
-                      )}
-                      exit={{ height: 0, opacity: 0, scaleY: 0.96, y: -4 }}
-                      initial={{ height: 0, opacity: 0, scaleY: 0.96, y: -6 }}
-                      transition={{
-                        duration: shouldReduceMotion ? 0 : 0.3,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                    >
-                      <p
-                        className={cn(
-                          'relative pl-4 text-zinc-600 before:absolute before:top-1/2 before:-left-4 before:w-4 before:border-t',
-                          "before:border-zinc-300 before:content-[''] dark:text-zinc-400 dark:before:border-zinc-700",
-                        )}
-                      >
-                        {job.details[language].length}{' '}
-                        {job.details[language].length === 1
-                          ? t('sections.achievement')
-                          : t('sections.achievements')}
-                      </p>
-                      <ul className="mt-1 space-y-1 text-zinc-500 dark:text-zinc-400">
-                        {job.details[language].map((detail) => (
-                          <li
-                            className={cn(
-                              'relative pl-4 before:absolute before:top-1/2 before:-left-4 before:w-4',
-                              "before:border-t before:border-zinc-300 before:content-['']",
-                              'dark:before:border-zinc-700',
-                            )}
-                            key={detail}
-                          >
-                            {detail}
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
             </div>
 
             <p className="text-zinc-600 dark:text-zinc-400">
               {job.start} {job.end && `- ${job.end}`}
             </p>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
     </motion.section>
   );
 }

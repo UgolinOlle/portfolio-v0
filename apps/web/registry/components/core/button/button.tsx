@@ -152,7 +152,7 @@ export function Button({
         'group-hover:translate-x-1',
         'group-hover:-translate-y-1',
         'group-hover:opacity-100',
-        loading && '!opacity-0',
+        loading && 'opacity-0!',
       )}
     />
   ) : trailingIcon ? (

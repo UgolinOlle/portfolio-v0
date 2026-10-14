@@ -3,7 +3,7 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { motion } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { WORKS_EXPERIENCES } from '~/lib/data';
@@ -12,94 +12,85 @@ import { useTranslation } from '../core/i18n-provider';
 
 import { SectionHeading } from './section-heading';
 
+type CompanyLogoProps = {
+  company: string;
+  logo?: string;
+};
+
+/** Company logo, with the initial as a fallback when there is none or the remote favicon fails. */
+function CompanyLogo({ company, logo }: CompanyLogoProps) {
+  const [failed, setFailed] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  // An image that already failed before hydration never fires onError: catch it on mount.
+  useEffect(() => {
+    const image = imageRef.current;
+    if (image?.complete && image.naturalWidth === 0) {
+      setFailed(true);
+    }
+  }, []);
+
+  const showLogo = Boolean(logo) && !failed;
+
+  return (
+    <div
+      className={cn(
+        'flex size-8 shrink-0 items-center justify-center rounded-lg border',
+        showLogo
+          ? 'bg-white dark:bg-zinc-900'
+          : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400',
+      )}
+    >
+      {showLogo ? (
+        // Decorative: the company name is the heading right next to it.
+        <img
+          alt=""
+          className="size-5 rounded object-contain"
+          decoding="async"
+          height={20}
+          loading="lazy"
+          onError={() => setFailed(true)}
+          ref={imageRef}
+          src={logo}
+          width={20}
+        />
+      ) : (
+        <span aria-hidden="true" className="text-xs font-semibold">
+          {company.charAt(0).toUpperCase()}
+        </span>
+      )}
+    </div>
+  );
+}
+
 function WorksSection() {
   const { t } = useTranslation();
-  const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
       <SectionHeading>{t('sections.works')}</SectionHeading>
 
-      <div className="flex flex-col space-y-2">
+      <ul className="flex flex-col">
         {WORKS_EXPERIENCES.map((job) => (
-          <div
+          <li
+            className="-mx-3 flex items-start justify-between gap-4 rounded-xl px-3 py-3 text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-900/60"
             key={job.id}
-            onMouseEnter={() => setActiveId(job.id)}
-            onMouseLeave={() => setActiveId(null)}
-            className={cn(
-              'relative -mx-3 flex w-full justify-between gap-2',
-              'flex-row items-start rounded-xl px-3 py-3 text-sm lg:gap-0',
-            )}
           >
-            <div className="flex min-w-0 flex-row items-start justify-start lg:gap-2">
-              <div className="mr-1 h-8 w-8" style={{ perspective: 1000 }}>
-                <motion.div
-                  className="relative h-full w-full"
-                  animate={{
-                    rotateY: job.logo && activeId === job.id ? 180 : 0,
-                    scale: job.logo && activeId === job.id ? 1.05 : 1,
-                  }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 260,
-                    damping: 22,
-                  }}
-                  style={{
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  {/* Face avant */}
-                  <div
-                    className={cn(
-                      'absolute inset-0 flex items-center justify-center rounded-lg border',
-                      'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400',
-                    )}
-                    style={{ backfaceVisibility: 'hidden' }}
-                  >
-                    <span className="text-xs font-semibold">
-                      {job.company.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
+            <div className="flex min-w-0 items-start gap-3">
+              <CompanyLogo company={job.company} logo={job.logo} />
 
-                  {/* Face arrière uniquement si logo */}
-                  {job.logo && (
-                    <div
-                      className={cn(
-                        'absolute inset-0 flex items-center justify-center rounded-lg border bg-white',
-                        'dark:bg-zinc-900',
-                      )}
-                      style={{
-                        transform: 'rotateY(180deg)',
-                        backfaceVisibility: 'hidden',
-                      }}
-                    >
-                      {/* Decorative: the company name is the heading right next to it. */}
-                      <img
-                        src={job.logo}
-                        alt=""
-                        width={20}
-                        height={20}
-                        loading="lazy"
-                        decoding="async"
-                        className="size-5 rounded object-contain"
-                      />
-                    </div>
-                  )}
-                </motion.div>
-              </div>
-
-              <div className="flex flex-col px-2">
-                <h3 className="font-normal dark:text-zinc-100">{job.company}</h3>
+              <div className="flex min-w-0 flex-col">
+                <h3 className="font-medium text-zinc-900 dark:text-zinc-100">{job.company}</h3>
                 <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
               </div>
             </div>
 
-            <p className="text-zinc-600 dark:text-zinc-400">
-              {job.start} {job.end && `- ${job.end}`}
+            <p className="shrink-0 text-zinc-500 tabular-nums dark:text-zinc-400">
+              {job.start} {job.end && `– ${job.end}`}
             </p>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </motion.section>
   );
 }

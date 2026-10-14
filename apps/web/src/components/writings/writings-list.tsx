@@ -8,6 +8,7 @@ import { useMemo, useState } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { TextHoverEnter } from '~/components/ui/text-hover';
+import { formatDate } from '~/lib/format-date';
 
 export type WritingSummary = {
   url: string;
@@ -24,7 +25,7 @@ type WritingsListProps = {
 const SLIDE_ANIMATION_DISTANCE = 20;
 
 export function WritingsList({ pages }: WritingsListProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = useMemo(
@@ -32,8 +33,12 @@ export function WritingsList({ pages }: WritingsListProps) {
     [pages],
   );
 
+  // Newest first, like the home page's recent writings.
   const filteredPages = useMemo(
-    () => (selectedCategory ? pages.filter((page) => page.category === selectedCategory) : pages),
+    () =>
+      (selectedCategory ? pages.filter((page) => page.category === selectedCategory) : pages)
+        .slice()
+        .sort((a, b) => (a.date < b.date ? 1 : -1)),
     [pages, selectedCategory],
   );
 
@@ -43,36 +48,38 @@ export function WritingsList({ pages }: WritingsListProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-2">
-        <button
-          className={cn(
-            'px-3 py-1 text-sm transition-colors',
-            selectedCategory === null
-              ? 'bg-primary-foreground text-primary'
-              : 'border-zinc-300 text-primary/50 hover:bg-primary-foreground dark:border-zinc-700',
-          )}
-          onClick={() => setSelectedCategory(null)}
-          type="button"
-        >
-          <TextHoverEnter>{t('writings.filterAll')}</TextHoverEnter>
-        </button>
-
-        {categories.map((category) => (
+      {categories.length > 1 && (
+        <div className="flex flex-wrap gap-2">
           <button
             className={cn(
               'px-3 py-1 text-sm transition-colors',
-              selectedCategory === category
+              selectedCategory === null
                 ? 'bg-primary-foreground text-primary'
                 : 'border-zinc-300 text-primary/50 hover:bg-primary-foreground dark:border-zinc-700',
             )}
-            key={category}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => setSelectedCategory(null)}
             type="button"
           >
-            <TextHoverEnter>{category}</TextHoverEnter>
+            <TextHoverEnter>{t('writings.filterAll')}</TextHoverEnter>
           </button>
-        ))}
-      </div>
+
+          {categories.map((category) => (
+            <button
+              className={cn(
+                'px-3 py-1 text-sm transition-colors',
+                selectedCategory === category
+                  ? 'bg-primary-foreground text-primary'
+                  : 'border-zinc-300 text-primary/50 hover:bg-primary-foreground dark:border-zinc-700',
+              )}
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              type="button"
+            >
+              <TextHoverEnter>{category}</TextHoverEnter>
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
         <AnimatePresence initial={false} mode="popLayout">
@@ -100,9 +107,9 @@ export function WritingsList({ pages }: WritingsListProps) {
                   <p className="text-sm text-zinc-600 dark:text-zinc-300">{page.description}</p>
                 )}
 
-                <span className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
-                  {page.date}
-                </span>
+                <time className="text-xs text-zinc-500 dark:text-zinc-400" dateTime={page.date}>
+                  {formatDate(page.date, i18n.language)}
+                </time>
               </Link>
             </motion.div>
           ))}

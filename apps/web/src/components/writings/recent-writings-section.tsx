@@ -9,6 +9,7 @@ import { SectionHeading } from '~/components/sections/section-heading';
 import { TextHoverEnter } from '~/components/ui/text-hover';
 import type { WritingSummary } from '~/components/writings/writings-list';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
+import { formatDate } from '~/lib/format-date';
 
 const RECENT_WRITINGS_COUNT = 5;
 
@@ -72,9 +73,9 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
                 </span>
               </div>
 
-              <span className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
-                {page.date}
-              </span>
+              <time className="text-xs text-zinc-500 dark:text-zinc-400" dateTime={page.date}>
+                {formatDate(page.date, i18n.language)}
+              </time>
             </Link>
           </div>
         ))}

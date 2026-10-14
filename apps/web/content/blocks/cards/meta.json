@@ -1,4 +1,4 @@
 {
   "title": "Cards",
-  "pages": ["status-card", "activity", "calendar-sync"]
+  "pages": ["status-card", "activity", "calendar-sync", "usage-card"]
 }

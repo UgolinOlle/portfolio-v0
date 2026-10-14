@@ -55,6 +55,7 @@ export const generateMetadata = async ({ params, searchParams }: PageProps): Pro
     title: page.data.title,
     description: page.data.description,
     pathname: `/projects/${slug}`,
+    image: `/og/content/projects/${slug}/image.png`,
     ...resolvePageLocale(projectsSource, [slug], lang),
   });
 };

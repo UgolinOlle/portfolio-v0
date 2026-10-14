@@ -33,11 +33,24 @@ const Page = async ({ searchParams }: PageProps) => {
 export const generateMetadata = async ({ searchParams }: PageProps): Promise<Metadata> => {
   const { lang } = await searchParams;
 
+  const locale = resolveLocale(lang);
+  const copy = {
+    fr: {
+      title: 'Articles sur le développement web et l’IA',
+      description:
+        'Notes et articles d’Ugolin Ollé, développeur full stack : développement web, Next.js, IA et retours sur mes projets.',
+    },
+    en: {
+      title: 'Writings on web development and AI',
+      description:
+        'Notes and articles by Ugolin Ollé, full stack developer: web development, Next.js, AI and lessons from my projects.',
+    },
+  }[locale];
+
   return createMetadata({
-    title: 'Writings',
-    description: 'Notes et articles sur le développement web et mes projets.',
+    ...copy,
     pathname: '/writings',
-    lang: resolveLocale(lang),
+    lang: locale,
     languages: LOCALES,
   });
 };

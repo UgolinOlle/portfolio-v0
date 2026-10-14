@@ -6,11 +6,11 @@
     "writings": "Articles"
   },
   "header": {
-    "title": "Développeur Full Stack / Administrateur Système",
+    "title": "Développeur Full Stack Freelance",
     "profileAlt": "Photo de profil d'Ugolin Ollé"
   },
   "about": {
-    "description": "Actuellement en Bachelor Administrateur Systèmes, Réseaux & Cybersécurité à MyDigitalSchool Angers, je recherche une alternance d’un an pour mettre en pratique mes compétences en systèmes, réseaux et sécurité, tout en gardant une forte dimension produit et développement.\n\nMon parcours de développeur web full-stack, combiné à mon expérience à l’école 42 à Bangkok, m’a apporté des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. Deux années passées au Cambodge m’ont appris à m’adapter rapidement, à collaborer dans des contextes variés et à rester efficace dans des environnements exigeants.\n\nCe que je recherche aujourd’hui : rejoindre une équipe où je peux contribuer concrètement à l’infrastructure, à la fiabilité et à la sécurité des systèmes, tout en continuant à construire des outils et produits utiles, pensés pour durer."
+    "description": "Je suis développeur full stack freelance. J’accompagne startups, indépendants et PME dans la création de SaaS, d’applications web et de landing pages rapides, de la maquette à la mise en production, avec Next.js, React, NestJS et TypeScript.\n\nFormé à l’école 42 à Bangkok, j’ai acquis des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. Mon bagage en administration systèmes me permet aussi de prendre en charge le déploiement et l’infrastructure (Docker, Nginx, Vercel). Deux années passées au Cambodge m’ont appris à m’adapter rapidement et à collaborer dans des contextes variés.\n\nEn parallèle de mes missions, je construis mes propres produits, comme Whoa UI, une bibliothèque de composants React, ou Whoa Stash, une app macOS : des outils utiles, pensés pour durer."
   },
   "sections": {
     "about": "À propos",

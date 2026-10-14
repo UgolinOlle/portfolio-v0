@@ -3,22 +3,19 @@ import type { Metadata, Viewport } from 'next';
 export const siteConfig = {
   name: 'Ugolin Ollé',
   url: 'https://ugolin-olle.com',
-  title: "Hey, I'm Ugolin Ollé, Full Stack Developer & SaaS Creator",
+  title: 'Ugolin Ollé — Développeur full stack freelance Next.js & React',
   description:
-    'Développeur full stack freelance spécialisé dans la création de SaaS, landing pages performantes et expériences web sur mesure. Expert Next.js, Tailwind CSS, Framer Motion et NestJS.',
+    'Développeur full stack freelance : SaaS, applications web et landing pages rapides avec Next.js, React, NestJS et TypeScript. Disponible pour vos projets.',
   keywords: [
-    'Développeur web freelance',
-    'Développeur full stack',
+    'Ugolin Ollé',
+    'Développeur full stack freelance',
+    'Développeur Next.js freelance',
+    'Développeur React freelance',
     'Création de SaaS',
     'Landing page',
     'Next.js',
     'NestJS',
-    'Tailwind CSS',
-    'Framer Motion',
-    'SEO',
-    'Performance web',
-    'React developer',
-    'Ugolin Ollé',
+    'TypeScript',
   ],
   locale: 'fr_FR',
   alternateLocale: 'en_US',
@@ -140,6 +137,8 @@ type PageMetadataInput = {
   lang?: Locale;
   /** Locales this page exists in. When more than one, `hreflang` alternates are emitted. */
   languages?: readonly Locale[];
+  /** Publication date (ISO) for articles: switches og:type to `article`. */
+  publishedTime?: string;
 };
 
 /**
@@ -154,6 +153,7 @@ export const createMetadata = ({
   image = siteConfig.ogImage,
   lang = DEFAULT_LOCALE,
   languages = [DEFAULT_LOCALE],
+  publishedTime,
 }: PageMetadataInput): Metadata => {
   const url = localizedPath(pathname, lang);
 
@@ -165,7 +165,9 @@ export const createMetadata = ({
       ...(languages.length > 1 && { languages: languageAlternates(pathname, languages) }),
     },
     openGraph: {
-      type: 'website',
+      ...(publishedTime
+        ? { type: 'article', publishedTime, authors: [siteConfig.url] }
+        : { type: 'website' }),
       locale: OG_LOCALES[lang],
       alternateLocale: languages.filter((l) => l !== lang).map((l) => OG_LOCALES[l]),
       url,

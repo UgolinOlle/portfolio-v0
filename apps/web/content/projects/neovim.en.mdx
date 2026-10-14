@@ -16,7 +16,7 @@ This config lives at `nvim/` inside my [dotfiles](https://github.com/UgolinOlle/
 - **oxc-first JS/TS toolchain** — [oxlint](https://oxc.rs/docs/guide/usage/linter) for linting and a custom `oxfmt` formatter wired into conform.nvim, with [typescript-tools.nvim](https://github.com/pmizio/typescript-tools.nvim) driving a fast `tsserver` instance (no `ts_ls` from Mason) and dedicated auto-import commands
 - **Custom dashboard** — the NvDash home screen is rewritten to list recent files and recent _projects_ (tracked via an autocommand) with single-letter jump keys
 - **Zellij-aware navigation** — `<C-hjkl>` moves between Neovim splits and Zellij panes seamlessly
-- **Tuned Noice UI** — command line, popupmenu, and LSP hover/signature are routed through [noice.nvim](https://github.com/folke/noice.nvim), with noisy LSP progress and "no results" messages filtered out
+- **Tuned Noice UI** — command line, popupmenu, and LSP hover/signature are routed through [noice.nvim](https://github.com/folke/noice.nvim), with noisy LSP progress and "no **results**" messages filtered out
 - **Discord Rich Presence** — toggle on demand with `:DiscordRichPresence` (wraps [cord.nvim](https://github.com/vyfor/cord.nvim))
 - **Mason-managed tooling** — LSP servers, linters, and formatters are declared once in `chadrc.lua` and auto-installed
 

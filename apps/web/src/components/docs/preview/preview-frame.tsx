@@ -10,7 +10,7 @@ export const PreviewFrame = ({ children }: PreviewFrameProps) => {
   return (
     <div
       className={cn(
-        'relative flex size-full flex-col items-center justify-center gap-4 overflow-auto bg-muted/20 p-10 sm:p-16',
+        'relative flex size-full flex-col items-center justify-center gap-4 overflow-auto p-10 sm:p-16',
         '[--primary-foreground:oklch(0.985_0_0)] [--primary:oklch(0.205_0_0)]',
         'dark:[--primary-foreground:oklch(0.205_0_0)] dark:[--primary:oklch(0.985_0_0)]',
       )}
@@ -25,7 +25,7 @@ export const PreviewFrame = ({ children }: PreviewFrameProps) => {
         )}
       />
 
-      <div className="relative flex flex-col items-center gap-4 p-1">{children}</div>
+      <div className="relative flex flex-col items-center gap-4">{children}</div>
     </div>
   );
 };

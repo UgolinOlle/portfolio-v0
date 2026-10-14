@@ -54,8 +54,8 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
 
         <TabsContent
           className={cn(
-            isFullPage ? 'h-192 overflow-auto' : 'h-128 overflow-hidden',
-            'flex items-center justify-center bg-zinc-100/70 p-3 dark:bg-zinc-900',
+            isFullPage ? 'h-192 overflow-auto p-3' : 'h-128 overflow-hidden',
+            'flex items-center justify-center bg-muted/40',
           )}
           value="preview"
         >

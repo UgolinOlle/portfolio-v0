@@ -21,7 +21,7 @@ export const RegistryInstall = async ({ path, className }: RegistryInstallProps)
   return (
     <div className={cn('flex flex-col gap-3', className)}>
       <Tabs defaultValue="cli">
-        <TabsList>
+        <TabsList variant="line">
           <TabsTrigger value="cli">
             <TerminalIcon className="text-muted-foreground" size={14} />
             CLI
@@ -47,7 +47,7 @@ export const RegistryInstall = async ({ path, className }: RegistryInstallProps)
         <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
           Dépendances :
           {manifest.registryDependencies.map((dependency) => (
-            <Badge className="text-[10px]" key={dependency} variant="secondary">
+            <Badge key={dependency} variant="secondary">
               {dependency}
             </Badge>
           ))}

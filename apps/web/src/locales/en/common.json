@@ -107,6 +107,7 @@
     "card": {
       "previewComingSoon": "Preview coming soon",
       "viewDetails": "View Details"
-    }
+    },
+    "construction": "This section is under construction and may contain bugs. Report them to"
   }
 }

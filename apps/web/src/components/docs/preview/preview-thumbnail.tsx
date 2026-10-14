@@ -1,8 +1,11 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-// Largeur virtuelle utilisée pour restituer une mise en page "desktop" avant de la réduire.
-const VIRTUAL_WIDTH = 1280;
-const THUMBNAIL_SCALE = 0.28;
+import { ScaledFrame } from './scaled-frame';
+
+// Largeurs virtuelles de rendu avant réduction : une page entière en "desktop", un block à
+// la largeur d'une colonne de contenu.
+const TEMPLATE_VIRTUAL_WIDTH = 1280;
+const BLOCK_VIRTUAL_WIDTH = 800;
 
 type PreviewThumbnailProps = {
   // Nom du fichier dans `apps/web/examples/` (sans extension), ex. "blog".
@@ -29,26 +32,30 @@ export const PreviewThumbnail = async ({
     return null;
   }
 
-  const isFullPage = type !== 'component';
-
   return (
-    <div className={cn('relative size-full overflow-hidden bg-muted/20', className)}>
-      <div className="pointer-events-none absolute inset-0 flex min-w-0 items-center justify-center overflow-hidden">
-        {isFullPage ? (
-          <div
-            style={{
-              width: VIRTUAL_WIDTH,
-              transform: `scale(${THUMBNAIL_SCALE})`,
-            }}
-          >
+    <div
+      aria-hidden="true"
+      className={cn(
+        'pointer-events-none relative size-full overflow-hidden select-none',
+        className,
+      )}
+      inert
+    >
+      {type === 'template' ? (
+        <ScaledFrame virtualWidth={TEMPLATE_VIRTUAL_WIDTH}>
+          <Component />
+        </ScaledFrame>
+      ) : type === 'block' ? (
+        <ScaledFrame fit="contain" virtualWidth={BLOCK_VIRTUAL_WIDTH}>
+          <Component />
+        </ScaledFrame>
+      ) : (
+        <div className="absolute inset-0 flex min-w-0 items-center-safe justify-center overflow-hidden p-4">
+          <div className="w-full max-w-full min-w-0 [zoom:0.7] max-sm:[zoom:0.5] [&>*]:w-full [&>*]:max-w-full [&>*]:min-w-0">
             <Component />
           </div>
-        ) : (
-          <div className="w-full min-w-0 max-w-full [zoom:0.7] max-sm:[zoom:0.5] [&>*]:w-full [&>*]:min-w-0 [&>*]:max-w-full">
-            <Component />
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

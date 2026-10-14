@@ -1,38 +1,40 @@
-import PixelBlast from '~/components/ui/pixel-blast';
+'use client';
+
+import { cn } from '@portfolio-v0/shadcn/utils';
+
+import { useTranslation } from '~/components/core/i18n-provider';
+import { EMAIL } from '~/lib/constants';
 
 type ConstructionBannerProps = {
-  readonly message?: string;
+  readonly className?: string;
 };
 
-function ConstructionBanner({
-  message = 'This section is under construction and may contain bugs. Please send an email to hello@ugolin-olle.com if you find any.',
-}: ConstructionBannerProps) {
-  return (
-    <div className="relative flex h-40 w-full items-center justify-center overflow-hidden font-semibold">
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-20">
-        <PixelBlast
-          variant="square"
-          pixelSize={4}
-          color="#B497CF"
-          patternScale={2}
-          patternDensity={1}
-          pixelSizeJitter={0}
-          enableRipples
-          rippleSpeed={0.4}
-          rippleThickness={0.12}
-          rippleIntensityScale={1.5}
-          liquid={false}
-          liquidStrength={0.12}
-          liquidRadius={1.2}
-          liquidWobbleSpeed={5}
-          speed={0.5}
-          edgeFade={0.25}
-          transparent
-        />
-      </div>
+function ConstructionBanner({ className }: ConstructionBannerProps) {
+  const { t } = useTranslation();
 
-      <p className="relative z-10 max-w-2xl px-6 text-center">{message}</p>
-    </div>
+  return (
+    <p
+      className={cn(
+        'not-prose flex flex-col gap-1.5 border border-foreground/10 px-3.5 py-3 text-sm text-foreground/65',
+        className,
+      )}
+      role="status"
+    >
+      <span className="flex items-center gap-2 font-mono text-[0.6875rem] tracking-widest text-foreground uppercase">
+        <span aria-hidden="true" className="size-1.5 bg-amber-500" />
+        Beta
+      </span>
+      <span className="text-pretty">
+        {t('registry.construction')}{' '}
+        <a
+          className="font-medium text-foreground underline underline-offset-2 hover:decoration-2"
+          href={`mailto:${EMAIL}`}
+        >
+          {EMAIL}
+        </a>
+        .
+      </span>
+    </p>
   );
 }
 

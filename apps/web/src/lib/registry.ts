@@ -11,6 +11,7 @@ export type RegistryItem = {
   description?: string;
   href: string;
   preview?: string;
+  previewWidth?: number;
   dependencies?: string[];
   category: RegistryCategory;
 };
@@ -81,6 +82,7 @@ const toRegistryItem = (page: RegistrySourcePage, category: RegistryCategory): R
     description: page.data.description,
     href: page.url,
     preview: page.data.preview,
+    previewWidth: page.data.previewWidth,
     dependencies: registryItem?.registryDependencies,
     category,
   };

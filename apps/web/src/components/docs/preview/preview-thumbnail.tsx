@@ -1,13 +1,16 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-// Largeur virtuelle utilisée pour restituer une mise en page "desktop" avant de la réduire.
-const VIRTUAL_WIDTH = 1280;
-const THUMBNAIL_SCALE = 0.28;
+// Largeur virtuelle par défaut : une mise en page "desktop" complète, réduite ensuite.
+const DEFAULT_VIRTUAL_WIDTH = 1280;
+// Largeur affichée de la miniature : la réduction est calculée depuis la largeur de conception.
+const THUMBNAIL_WIDTH = 358;
 
 type PreviewThumbnailProps = {
   // Nom du fichier dans `apps/web/examples/` (sans extension), ex. "blog".
   path: string;
   type?: 'component' | 'block' | 'template';
+  // Largeur de conception du block (frontmatter `previewWidth`) : un widget compact est moins réduit.
+  virtualWidth?: number;
   className?: string;
 };
 
@@ -15,6 +18,7 @@ type PreviewThumbnailProps = {
 export const PreviewThumbnail = async ({
   path,
   type = 'component',
+  virtualWidth = DEFAULT_VIRTUAL_WIDTH,
   className,
 }: PreviewThumbnailProps) => {
   const Component = await (
@@ -37,8 +41,8 @@ export const PreviewThumbnail = async ({
         {isFullPage ? (
           <div
             style={{
-              width: VIRTUAL_WIDTH,
-              transform: `scale(${THUMBNAIL_SCALE})`,
+              width: virtualWidth,
+              transform: `scale(${THUMBNAIL_WIDTH / virtualWidth})`,
             }}
           >
             <Component />

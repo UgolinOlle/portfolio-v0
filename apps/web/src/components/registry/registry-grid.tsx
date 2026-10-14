@@ -18,7 +18,11 @@ export const RegistryGrid = ({ items }: RegistryGridProps) => {
           preview={
             item.preview ? (
               <Suspense fallback={<div className="size-full animate-pulse bg-muted/40" />}>
-                <PreviewThumbnail path={item.preview} type={item.category} />
+                <PreviewThumbnail
+                  path={item.preview}
+                  type={item.category}
+                  virtualWidth={item.previewWidth}
+                />
               </Suspense>
             ) : undefined
           }

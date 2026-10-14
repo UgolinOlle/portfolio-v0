@@ -8,7 +8,6 @@ import {
   ContactSection,
   HeroSection,
   ProjectsSection,
-  ResourcesSection,
   StacksSection,
   WorksSection,
 } from '~/components/sections';
@@ -32,7 +31,6 @@ export function HomeContent({ recentWritings }: HomeContentProps) {
       <AboutSection />
       {recentWritings}
       <StacksSection />
-      <ResourcesSection />
       <ContactSection />
     </motion.div>
   );

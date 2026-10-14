@@ -1,3 +1,5 @@
+import { cn } from '@portfolio-v0/shadcn/utils';
+
 import Link from 'next/link';
 
 import { ArrowRightIcon } from '~/components/icons/ui';
@@ -5,20 +7,35 @@ import { RegistryGrid } from '~/components/registry/registry-grid';
 import type { RegistrySection as RegistrySectionData } from '~/lib/registry';
 
 type RegistrySectionProps = {
+  index: number;
   section: RegistrySectionData;
 };
 
-export const RegistrySection = ({ section }: RegistrySectionProps) => {
+export const RegistrySection = ({ index, section }: RegistrySectionProps) => {
+  const count = section.items.length;
+
   return (
-    <section className="flex flex-col gap-6">
-      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="min-w-0">
-          <h2 className="text-xl font-medium">{section.title}</h2>
-          <p className="text-pretty text-sm text-muted-foreground">{section.description}</p>
+    <section className="scroll-mt-(--nav-height)" id={section.category}>
+      <header className="flex flex-col gap-5 border-b border-foreground/5 px-6 py-8 sm:flex-row sm:items-end sm:justify-between lg:px-8">
+        <div className="flex min-w-0 flex-col gap-2">
+          <p className="font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase">
+            {String(index).padStart(2, '0')}
+            <span aria-hidden="true" className="px-2 text-foreground/25">
+              /
+            </span>
+            {count} {count > 1 ? 'éléments' : 'élément'}
+          </p>
+          <h2 className="text-2xl font-semibold tracking-tight">{section.title}</h2>
+          <p className="max-w-[60ch] text-sm text-pretty text-foreground/60">
+            {section.description}
+          </p>
         </div>
 
         <Link
-          className="group flex shrink-0 items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className={cn(
+            'group inline-flex h-8 shrink-0 items-center gap-2 self-start border border-foreground/10 px-3 font-mono text-[0.6875rem] tracking-widest text-foreground/70 uppercase transition-colors sm:self-auto',
+            'hover:bg-foreground hover:text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
+          )}
           href={section.href}
         >
           Tout voir
@@ -27,12 +44,14 @@ export const RegistrySection = ({ section }: RegistrySectionProps) => {
             className="size-3.5 transition-transform group-hover:translate-x-0.5"
           />
         </Link>
-      </div>
+      </header>
 
-      {section.items.length > 0 ? (
+      {count > 0 ? (
         <RegistryGrid items={section.items} />
       ) : (
-        <p className="text-sm text-muted-foreground">Aucun élément pour l'instant.</p>
+        <p className="border-b border-foreground/5 px-6 py-12 font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase lg:px-8">
+          Aucun élément pour l'instant
+        </p>
       )}
     </section>
   );

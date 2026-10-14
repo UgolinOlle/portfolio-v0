@@ -8,16 +8,18 @@ type RegistryGridProps = {
   items: RegistryItem[];
 };
 
+// Cards share hairlines instead of floating in gaps: each cell draws its own right and
+// bottom border, so neighbours never double up.
 export const RegistryGrid = ({ items }: RegistryGridProps) => {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
       {items.map((item) => (
         <RegistryCard
           item={item}
           key={item.href}
           preview={
             item.preview ? (
-              <Suspense fallback={<div className="size-full animate-pulse bg-muted/40" />}>
+              <Suspense fallback={<div className="size-full animate-pulse bg-foreground/3" />}>
                 <PreviewThumbnail path={item.preview} type={item.category} />
               </Suspense>
             ) : undefined

@@ -1,8 +1,8 @@
 import { DEFAULT_LOCALE, type Locale, localizedPath, siteConfig } from '~/lib/metadata';
 
 /**
- * schema.org JSON-LD builders. Entities reference each other by `@id` so Google can merge the
- * Person described on the home page with the author of every article and project.
+ * schema.org JSON-LD builders. Entities reference each other by `@id`. Google only resolves `@id`
+ * within a single document, so every graph that points at the Person or WebSite also includes them.
  */
 
 const absolute = (path: string) => `${siteConfig.url}${path}`;
@@ -91,6 +91,7 @@ type ArticleInput = {
   pathname: string;
   lang: Locale;
   datePublished: string;
+  image: string;
 };
 
 export const articleSchema = ({
@@ -99,12 +100,15 @@ export const articleSchema = ({
   pathname,
   lang,
   datePublished,
+  image,
 }: ArticleInput) => {
   const url = absolute(localizedPath(pathname, lang));
 
   return {
     '@context': 'https://schema.org',
     '@graph': [
+      personSchema(),
+      websiteSchema(),
       {
         '@type': 'BlogPosting',
         '@id': `${url}#article`,
@@ -117,7 +121,7 @@ export const articleSchema = ({
         author: personRef,
         publisher: personRef,
         isPartOf: { '@id': WEBSITE_ID },
-        image: absolute(siteConfig.ogImage),
+        image: absolute(image),
       },
       breadcrumbSchema([
         { name: lang === 'en' ? 'Writings' : 'Articles', path: '/writings' },
@@ -140,6 +144,8 @@ export const projectSchema = ({ title, description, pathname, lang }: ProjectInp
   return {
     '@context': 'https://schema.org',
     '@graph': [
+      personSchema(),
+      websiteSchema(),
       {
         '@type': 'CreativeWork',
         '@id': `${url}#project`,

@@ -34,7 +34,7 @@ export function LanguageSwitcher() {
 
   return (
     <Button
-      aria-label={i18n.language === 'fr' ? 'Switch to English' : 'Passer en français'}
+      aria-label={i18n.language === 'fr' ? 'English' : 'Français'}
       lang={i18n.language === 'fr' ? 'en' : 'fr'}
       className="rounded-full px-3 py-4 font-mono text-xs active:scale-[0.95]"
       onClick={toggleLanguage}

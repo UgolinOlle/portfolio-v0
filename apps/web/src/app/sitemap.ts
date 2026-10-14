@@ -21,6 +21,13 @@ type SitemapEntry = MetadataRoute.Sitemap[number];
 
 const absolute = (path: string) => `${siteConfig.url}${path}`;
 
+/** Frontmatter dates are free-form strings: an unparseable one must not crash sitemap generation. */
+const parseDate = (value: string) => {
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime()) ? undefined : date;
+};
+
 const registryRoutes = (source: RegistrySource): MetadataRoute.Sitemap =>
   source.getPages().map((page) => ({
     url: absolute(page.url),
@@ -71,7 +78,7 @@ const writingRoutes = (): MetadataRoute.Sitemap =>
       `/writings/${page.slugs.join('/')}`,
       getPageLocales(writingsSource, page.slugs),
       {
-        lastModified: new Date(page.data.date),
+        lastModified: parseDate(page.data.date),
         changeFrequency: 'yearly',
         priority: 0.7,
       },

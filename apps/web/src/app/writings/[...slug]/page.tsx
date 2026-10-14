@@ -33,6 +33,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
           pathname: `/writings/${slug.join('/')}`,
           lang: resolvePageLocale(writingsSource, slug, lang).lang,
           datePublished: page.data.date,
+          image: `/og/content/writings/${slug.join('/')}/image.png`,
         })}
       />
       <WritingsBanner />

@@ -17,7 +17,7 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/content/[
   const { slug } = await params;
   const [section, ...rest] = slug;
   const source = sourceBySection[section as keyof typeof sourceBySection];
-  const page = source?.getPage(rest.slice(0, -1));
+  const page = rest.at(-1) === 'image.png' ? source?.getPage(rest.slice(0, -1)) : undefined;
 
   if (!page) {
     notFound();

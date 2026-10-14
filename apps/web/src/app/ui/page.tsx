@@ -8,9 +8,9 @@ import { createMetadata } from '~/lib/metadata';
 import { getRegistrySections } from '~/lib/registry';
 
 export const metadata: Metadata = createMetadata({
-  title: 'UI',
+  title: 'Whoa UI : composants React pour shadcn/ui',
   description:
-    'Composants, blocks et templates construits avec shadcn/ui, utilisés dans ce portfolio : code source, previews et snippets d’installation prêts à copier.',
+    'Composants, blocks et templates React et Next.js construits avec shadcn/ui et Tailwind CSS : code source, previews et installation en une commande.',
   pathname: '/ui',
 });
 

@@ -34,14 +34,7 @@ function SocialLinkIcon({
 
   if (link.favicon) {
     return (
-      <Image
-        src={link.favicon}
-        alt={`${link.label} icon`}
-        width={16}
-        height={16}
-        className="h-4 w-4"
-        loading="lazy"
-      />
+      <Image src={link.favicon} alt="" width={16} height={16} className="h-4 w-4" loading="lazy" />
     );
   }
 

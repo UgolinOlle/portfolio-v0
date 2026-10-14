@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { TextLoop } from '~/components/ui/text-loop';
 
 export function Footer() {
@@ -12,13 +14,17 @@ export function Footer() {
         </a>
 
         <div className="flex items-center gap-3">
-          <a href="/writings" className="text-xs text-zinc-500">
+          <Link href="/writings" className="text-xs text-zinc-500">
             Writings
-          </a>
+          </Link>
 
-          <a href="/inspirations" className="text-xs text-zinc-500">
-            Inspirations list available here.
-          </a>
+          <Link href="/ui" className="text-xs text-zinc-500">
+            Whoa UI
+          </Link>
+
+          <Link href="/inspirations" className="text-xs text-zinc-500">
+            Inspirations
+          </Link>
         </div>
       </div>
     </footer>

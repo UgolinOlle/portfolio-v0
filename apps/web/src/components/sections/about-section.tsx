@@ -16,6 +16,8 @@ export function AboutSection() {
     <motion.section
       variants={VARIANTS_SECTION}
       transition={TRANSITION_SECTION}
+      // Above the fold and the LCP element: render visible from the server HTML, no entrance.
+      initial={false}
       id="about"
       className="flex flex-col space-y-5"
     >

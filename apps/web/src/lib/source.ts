@@ -16,6 +16,8 @@ import {
 import { icons } from 'lucide-react';
 import { createElement } from 'react';
 
+import { DEFAULT_LOCALE, LOCALES, type Locale, resolveLocale } from '~/lib/metadata';
+
 const icon = (name: string | undefined) => {
   if (!name) {
     return;
@@ -45,8 +47,8 @@ export const templatesSource = loader({
 });
 
 export const projectsI18n = defineI18n({
-  languages: ['fr', 'en'],
-  defaultLanguage: 'fr',
+  languages: [...LOCALES],
+  defaultLanguage: DEFAULT_LOCALE,
 });
 
 export const projectsSource = loader({
@@ -57,8 +59,8 @@ export const projectsSource = loader({
 });
 
 export const writingsI18n = defineI18n({
-  languages: ['fr', 'en'],
-  defaultLanguage: 'fr',
+  languages: [...LOCALES],
+  defaultLanguage: DEFAULT_LOCALE,
 });
 
 export const writingsSource = loader({
@@ -67,6 +69,31 @@ export const writingsSource = loader({
   i18n: writingsI18n,
   icon,
 });
+
+type LocalizedSource = typeof projectsSource | typeof writingsSource;
+
+/**
+ * Locales a page is actually translated into. Fumadocs fills missing translations with the
+ * default-language file, so a non-default locale only counts when its own `<name>.<lang>.mdx` exists.
+ */
+export const getPageLocales = (source: LocalizedSource, slugs: string[]): Locale[] =>
+  LOCALES.filter((lang) => {
+    const page = source.getPage(slugs, lang);
+
+    return lang === DEFAULT_LOCALE ? Boolean(page) : Boolean(page?.path.endsWith(`.${lang}.mdx`));
+  });
+
+/** The page's translations, and the locale actually rendered for a requested `?lang=`. */
+export const resolvePageLocale = (
+  source: LocalizedSource,
+  slugs: string[],
+  requested: string | undefined,
+) => {
+  const languages = getPageLocales(source, slugs);
+  const lang = resolveLocale(requested);
+
+  return { languages, lang: languages.includes(lang) ? lang : DEFAULT_LOCALE };
+};
 
 type RegistryPage =
   | ReturnType<typeof componentsSource.getPages>[number]

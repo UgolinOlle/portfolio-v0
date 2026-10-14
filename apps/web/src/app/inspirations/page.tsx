@@ -5,7 +5,7 @@ import { InspirationsContent } from '~/components/sections/inspirations-section'
 import { createMetadata } from '~/lib/metadata';
 
 export const metadata: Metadata = createMetadata({
-  title: 'Inspirations',
+  title: 'Inspirations design et interactions web',
   description:
     "Les inspirations visuelles, techniques et d'interaction qui ont nourri la conception de ce portfolio et de ses composants.",
   pathname: '/inspirations',

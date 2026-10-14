@@ -6,11 +6,11 @@
     "writing": "Writings"
   },
   "header": {
-    "title": "Full Stack Developer / Sys Admin",
+    "title": "Freelance Full Stack Developer",
     "profileAlt": "Ugolin Ollé profile picture"
   },
   "about": {
-    "description": "Currently enrolled in a Bachelor’s degree in Systems, Networks & Cybersecurity at MyDigitalSchool Angers, I am looking for a one-year apprenticeship to put my skills in systems, networks and security into practice, while keeping a strong focus on product and development.\n\nMy background as a full-stack web developer, combined with my experience at 42 in Bangkok, has given me solid technical foundations, real discipline and a pragmatic approach to problem-solving. Two years spent in Cambodia taught me to adapt quickly, collaborate in diverse environments and remain effective in demanding contexts.\n\nWhat I am looking for today is to join a team where I can make a concrete contribution to infrastructure, reliability and system security, while continuing to build useful, long-lasting tools and products."
+    "description": "I’m a freelance full stack developer. I help startups, independents and small businesses build SaaS products, web applications and fast landing pages, from mockup to production, with Next.js, React, NestJS and TypeScript.\n\nMy training at 42 in Bangkok gave me solid technical foundations, real discipline and a pragmatic approach to problem-solving. My systems administration background also lets me handle deployment and infrastructure (Docker, Nginx, Vercel). Two years spent in Cambodia taught me to adapt quickly and collaborate in diverse environments.\n\nAlongside client work, I build my own products, like Whoa UI, a React component library, or Whoa Stash, a macOS app: useful tools, built to last."
   },
   "sections": {
     "about": "About",
@@ -26,7 +26,7 @@
     "readMore": "Read more",
     "viewProject": "View project",
     "notFound": {
-      "title": "404 - Documentation Not Found",
+      "title": "404 - Page Not Found",
       "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
       "link": "Go back to the homepage"
     }

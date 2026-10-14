@@ -38,7 +38,7 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
       variants={VARIANTS_SECTION}
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-lg">{t('writings.recentTitle')}</h3>
+        <h2 className="text-lg">{t('writings.recentTitle')}</h2>
 
         <Link
           className="text-sm text-zinc-500 transition-opacity hover:opacity-60 dark:text-zinc-400"

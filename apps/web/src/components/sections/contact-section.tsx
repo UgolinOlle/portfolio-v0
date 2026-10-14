@@ -23,9 +23,9 @@ function ContactSection() {
       id="contact"
     >
       <div className="flex items-center gap-2">
-        <h3 className="text-lg tracking-tight text-zinc-900 dark:text-white">
+        <h2 className="text-lg tracking-tight text-zinc-900 dark:text-white">
           {t('contact.title')}
-        </h3>
+        </h2>
 
         <Status status="online" />
       </div>

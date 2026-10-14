@@ -1,10 +1,12 @@
-export const WEBSITE_URL = 'https://ugolin-olle.com';
-export const EMAIL = 'hello@ugolin-olle.com';
+import { siteConfig } from '~/lib/metadata';
 
+export const WEBSITE_URL = siteConfig.url;
+export const EMAIL = siteConfig.email;
+
+// The container only staggers its children: fading it would hide the whole page until hydration.
 export const VARIANTS_CONTAINER = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.15,
     },

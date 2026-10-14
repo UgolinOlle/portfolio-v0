@@ -17,7 +17,7 @@ function WorksSection() {
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
       <div className="mb-5 flex items-center justify-center gap-4">
-        <h3 className="w-auto text-lg font-medium whitespace-nowrap">{t('sections.works')}</h3>
+        <h2 className="w-auto text-lg font-medium whitespace-nowrap">{t('sections.works')}</h2>
         <span className="h-px w-full bg-zinc-400" />
       </div>
 
@@ -25,15 +25,11 @@ function WorksSection() {
         {WORKS_EXPERIENCES.map((job) => (
           <div
             key={job.id}
-            onFocus={() => setActiveId(job.id)}
             onMouseEnter={() => setActiveId(job.id)}
             onMouseLeave={() => setActiveId(null)}
-            onBlur={() => setActiveId(null)}
-            tabIndex={0}
             className={cn(
               'relative -mx-3 flex w-full justify-between gap-2',
-              'flex-row items-start rounded-xl px-3 py-3 text-sm outline-none lg:gap-0',
-              'focus-visible:ring-2 focus-visible:ring-primary/40',
+              'flex-row items-start rounded-xl px-3 py-3 text-sm lg:gap-0',
             )}
           >
             <div className="flex min-w-0 flex-row items-start justify-start lg:gap-2">
@@ -78,9 +74,14 @@ function WorksSection() {
                         backfaceVisibility: 'hidden',
                       }}
                     >
+                      {/* Decorative: the company name is the heading right next to it. */}
                       <img
                         src={job.logo}
-                        alt={job.company}
+                        alt=""
+                        width={20}
+                        height={20}
+                        loading="lazy"
+                        decoding="async"
                         className="size-5 rounded object-contain"
                       />
                     </div>
@@ -89,7 +90,7 @@ function WorksSection() {
               </div>
 
               <div className="flex flex-col px-2">
-                <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
+                <h3 className="font-normal dark:text-zinc-100">{job.company}</h3>
                 <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
               </div>
             </div>

@@ -19,14 +19,18 @@ const CARD_GAP = 12;
 const EDGE_PADDING = 8;
 const ARROW_PADDING = 16;
 
-function SocialLinkIcon({
-  link,
-  currentTheme,
-}: {
-  link: SocialLink;
-  currentTheme: string | undefined;
-}) {
-  const Icon = currentTheme === 'dark' && link.iconDark ? link.iconDark : link.icon;
+function SocialLinkIcon({ link }: { link: SocialLink }) {
+  const { icon: Icon, iconDark: IconDark } = link;
+
+  // Render both variants and let CSS pick, so server and client markup match.
+  if (Icon && IconDark) {
+    return (
+      <>
+        <Icon className="h-4 w-4 dark:hidden" />
+        <IconDark className="hidden h-4 w-4 dark:block" />
+      </>
+    );
+  }
 
   if (Icon) {
     return <Icon className="h-4 w-4" />;
@@ -51,13 +55,7 @@ type PreviewPosition = {
   arrowLeft: number;
 };
 
-function SocialLinksNav({
-  links,
-  currentTheme,
-}: {
-  links: SocialLink[];
-  currentTheme: string | undefined;
-}) {
+function SocialLinksNav({ links }: { links: SocialLink[] }) {
   const isDesktop = useMediaQuery(DESKTOP_QUERY);
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef(new Map<string, HTMLDivElement>());
@@ -145,7 +143,7 @@ function SocialLinksNav({
             target="_blank"
             href={link.link}
           >
-            <SocialLinkIcon currentTheme={currentTheme} link={link} />
+            <SocialLinkIcon link={link} />
             <TextHoverEnter className="text-sm">{link.label}</TextHoverEnter>
           </Link>
         </div>
@@ -156,7 +154,7 @@ function SocialLinksNav({
           {activeLink?.preview && position && (
             <SocialPreviewCard
               arrowLeft={position.arrowLeft}
-              icon={<SocialLinkIcon currentTheme={currentTheme} link={activeLink} />}
+              icon={<SocialLinkIcon link={activeLink} />}
               left={position.left}
               preview={activeLink.preview}
               top={position.top}

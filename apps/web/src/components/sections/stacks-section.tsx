@@ -3,26 +3,26 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { motion } from 'motion/react';
-import { useTheme } from 'next-themes';
-import type { ReactNode } from 'react';
+import type { ComponentType } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { DATABASES, FRAMEWORKS, LANGUAGES, TOOLS } from '~/components/icons';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 
-type IconFactory = () => React.ComponentType<{ className?: string }>;
+import { SectionHeading } from './section-heading';
+
+type IconComponent = ComponentType<{ className?: string }>;
 
 type SkillItemProps = {
   name: string;
-  icon: React.ComponentType<{ className?: string }> | IconFactory | ReactNode;
+  icon: IconComponent;
+  iconDark?: IconComponent;
 };
 
-function SkillItem({ name, icon }: SkillItemProps) {
-  const IconComponent =
-    typeof icon === 'function' && (icon as IconFactory).length === 0
-      ? (icon as IconFactory)()
-      : (icon as React.ComponentType<{ className?: string }>);
+const ICON_CLASS_NAME =
+  'h-4 w-4 transform transition-all duration-200 ease-in-out group-hover:-rotate-15';
 
+function SkillItem({ name, icon: Icon, iconDark: IconDark }: SkillItemProps) {
   return (
     <motion.div
       className={cn(
@@ -32,7 +32,15 @@ function SkillItem({ name, icon }: SkillItemProps) {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
     >
-      <IconComponent className="h-4 w-4 transform transition-all duration-200 ease-in-out group-hover:-rotate-15" />
+      {/* Render both variants and let CSS pick, so server and client markup match. */}
+      {IconDark ? (
+        <>
+          <Icon className={cn(ICON_CLASS_NAME, 'dark:hidden')} />
+          <IconDark className={cn(ICON_CLASS_NAME, 'hidden dark:block')} />
+        </>
+      ) : (
+        <Icon className={ICON_CLASS_NAME} />
+      )}
       <span className="text-sm">{name}</span>
     </motion.div>
   );
@@ -40,8 +48,6 @@ function SkillItem({ name, icon }: SkillItemProps) {
 
 function StacksSection() {
   const { t } = useTranslation();
-  const { theme, resolvedTheme } = useTheme();
-  const currentTheme = resolvedTheme || theme;
 
   const skillsData = {
     languages: [
@@ -51,10 +57,7 @@ function StacksSection() {
       { name: 'CSS', icon: LANGUAGES.CSS },
       { name: 'C', icon: LANGUAGES.C },
       { name: 'Lua', icon: LANGUAGES.Lua },
-      {
-        name: 'Bash',
-        icon: () => (currentTheme === 'dark' ? LANGUAGES.BashLight : LANGUAGES.BashDark),
-      },
+      { name: 'Bash', icon: LANGUAGES.BashDark, iconDark: LANGUAGES.BashLight },
     ],
     frameworks: [
       { name: 'React', icon: FRAMEWORKS.React },
@@ -80,10 +83,7 @@ function StacksSection() {
     ],
     databases: [
       { name: 'PostgreSQL', icon: DATABASES.Postgres },
-      {
-        name: 'Prisma',
-        icon: () => (currentTheme === 'dark' ? DATABASES.PrismaLight : DATABASES.PrismaDark),
-      },
+      { name: 'Prisma', icon: DATABASES.PrismaDark, iconDark: DATABASES.PrismaLight },
       { name: 'Redis', icon: DATABASES.Redis },
     ],
   };
@@ -95,7 +95,7 @@ function StacksSection() {
       className="space-y-8"
       id="stacks"
     >
-      <h2 className="sr-only">{t('sections.stacks')}</h2>
+      <SectionHeading>{t('sections.stacks')}</SectionHeading>
 
       {Object.entries(skillsData).map(([category, skills], categoryIndex) => (
         <div key={categoryIndex}>
@@ -104,7 +104,7 @@ function StacksSection() {
           <div className="flex flex-wrap gap-x-1 gap-y-2">
             {skills.map((skill, skillIndex) => (
               <div key={skillIndex}>
-                <SkillItem icon={skill.icon} name={skill.name} />
+                <SkillItem {...skill} />
               </div>
             ))}
           </div>

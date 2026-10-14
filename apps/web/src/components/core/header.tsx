@@ -10,6 +10,8 @@ import { SOCIAL_LINKS } from '~/lib/data';
 
 import { SocialLinksNav } from '../ui/social-links-nav';
 
+import { SiteNav } from './site-nav';
+
 function Header() {
   const { t } = useTranslation();
   const { theme, resolvedTheme } = useTheme();
@@ -37,6 +39,11 @@ function Header() {
           </div>
 
           <div className="flex items-center gap-2">
+            <SiteNav />
+            <span
+              aria-hidden="true"
+              className="mx-1 hidden h-4 w-px bg-zinc-200 sm:block dark:bg-zinc-800"
+            />
             <ThemeSwitch />
             <LanguageSwitcher />
           </div>

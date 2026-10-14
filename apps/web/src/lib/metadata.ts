@@ -23,10 +23,14 @@ export const siteConfig = {
   locale: 'fr_FR',
   alternateLocale: 'en_US',
   ogImage: '/og.png',
+  profileImage: '/assets/profile.png',
+  email: 'hello@ugolin-olle.com',
   socials: {
     twitter: '@ugolin_olle',
+    x: 'https://x.com/ugolin_olle',
     github: 'https://github.com/UgolinOlle',
     linkedin: 'https://www.linkedin.com/in/ugolin-olle',
+    malt: 'https://www.malt.fr/profile/ugolinolle',
   },
 } as const;
 

@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { JsonLd } from '~/components/core/json-ld';
 import { PortfolioShell } from '~/components/core/portfolio-shell';
 import { BackButton } from '~/components/projects/back-button';
 import { ProjectMDX } from '~/components/projects/project-mdx';
 import { createMetadata, resolveLocale } from '~/lib/metadata';
-import { getPageLocales, projectsSource } from '~/lib/source';
+import { projectsSource, resolvePageLocale } from '~/lib/source';
+import { projectSchema } from '~/lib/structured-data';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -23,6 +25,14 @@ const Page = async ({ params, searchParams }: PageProps) => {
 
   return (
     <PortfolioShell>
+      <JsonLd
+        data={projectSchema({
+          title: page.data.title,
+          description: page.data.description,
+          pathname: `/projects/${slug}`,
+          lang: resolvePageLocale(projectsSource, [slug], lang).lang,
+        })}
+      />
       <BackButton />
       <ProjectMDX page={page} />
     </PortfolioShell>
@@ -41,15 +51,11 @@ export const generateMetadata = async ({ params, searchParams }: PageProps): Pro
     notFound();
   }
 
-  const languages = getPageLocales(projectsSource, [slug]);
-  const requested = resolveLocale(lang);
-
   return createMetadata({
     title: page.data.title,
     description: page.data.description,
     pathname: `/projects/${slug}`,
-    lang: languages.includes(requested) ? requested : 'fr',
-    languages,
+    ...resolvePageLocale(projectsSource, [slug], lang),
   });
 };
 

@@ -1,7 +1,7 @@
 import { siteConfig } from '~/lib/metadata';
 
 export const WEBSITE_URL = siteConfig.url;
-export const EMAIL = 'hello@ugolin-olle.com';
+export const EMAIL = siteConfig.email;
 
 export const VARIANTS_CONTAINER = {
   hidden: { opacity: 0 },

@@ -16,7 +16,7 @@ import {
 import { icons } from 'lucide-react';
 import { createElement } from 'react';
 
-import { DEFAULT_LOCALE, LOCALES, type Locale } from '~/lib/metadata';
+import { DEFAULT_LOCALE, LOCALES, type Locale, resolveLocale } from '~/lib/metadata';
 
 const icon = (name: string | undefined) => {
   if (!name) {
@@ -82,6 +82,18 @@ export const getPageLocales = (source: LocalizedSource, slugs: string[]): Locale
 
     return lang === DEFAULT_LOCALE ? Boolean(page) : Boolean(page?.path.endsWith(`.${lang}.mdx`));
   });
+
+/** The page's translations, and the locale actually rendered for a requested `?lang=`. */
+export const resolvePageLocale = (
+  source: LocalizedSource,
+  slugs: string[],
+  requested: string | undefined,
+) => {
+  const languages = getPageLocales(source, slugs);
+  const lang = resolveLocale(requested);
+
+  return { languages, lang: languages.includes(lang) ? lang : DEFAULT_LOCALE };
+};
 
 type RegistryPage =
   | ReturnType<typeof componentsSource.getPages>[number]

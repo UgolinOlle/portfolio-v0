@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { JsonLd } from '~/components/core/json-ld';
 import { PortfolioShell } from '~/components/core/portfolio-shell';
 import { BackButton } from '~/components/projects/back-button';
 import { WritingsBanner } from '~/components/writings/banner';
 import { WritingMDX } from '~/components/writings/writing-mdx';
 import { createMetadata, resolveLocale } from '~/lib/metadata';
-import { getPageLocales, writingsSource } from '~/lib/source';
+import { writingsSource, resolvePageLocale } from '~/lib/source';
+import { articleSchema } from '~/lib/structured-data';
 
 type PageProps = {
   params: Promise<{ slug: string[] }>;
@@ -24,6 +26,15 @@ const Page = async ({ params, searchParams }: PageProps) => {
 
   return (
     <PortfolioShell>
+      <JsonLd
+        data={articleSchema({
+          title: page.data.title,
+          description: page.data.description,
+          pathname: `/writings/${slug.join('/')}`,
+          lang: resolvePageLocale(writingsSource, slug, lang).lang,
+          datePublished: page.data.date,
+        })}
+      />
       <WritingsBanner />
       <BackButton />
       <WritingMDX page={page} />
@@ -43,15 +54,11 @@ export const generateMetadata = async ({ params, searchParams }: PageProps): Pro
     notFound();
   }
 
-  const languages = getPageLocales(writingsSource, slug);
-  const requested = resolveLocale(lang);
-
   return createMetadata({
     title: page.data.title,
     description: page.data.description,
     pathname: `/writings/${slug.join('/')}`,
-    lang: languages.includes(requested) ? requested : 'fr',
-    languages,
+    ...resolvePageLocale(writingsSource, slug, lang),
   });
 };
 

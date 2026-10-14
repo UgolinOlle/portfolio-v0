@@ -12,6 +12,8 @@ import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { RESOURCES } from '~/lib/data';
 import type { Resources } from '~/types';
 
+import { SectionHeading } from './section-heading';
+
 const DEFAULT_VISIBLE_RESOURCES = 4;
 const BLUR_CUTOFF_INDEX = 3;
 const FILTER_BUTTON_BASE_DELAY = 0.3;
@@ -218,7 +220,7 @@ export function ResourcesSection() {
       variants={VARIANTS_SECTION}
       className="space-y-6"
     >
-      <h2 className="text-lg">{t('resources.title')}</h2>
+      <SectionHeading className="mb-0">{t('resources.title')}</SectionHeading>
 
       <div className="mb-4 flex flex-wrap gap-2">
         {types.map((type, index) => (

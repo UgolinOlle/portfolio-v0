@@ -6,8 +6,8 @@ import type { ReactNode } from 'react';
 import {
   AboutSection,
   ContactSection,
+  HeroSection,
   ProjectsSection,
-  ResourcesSection,
   StacksSection,
   WorksSection,
 } from '~/components/sections';
@@ -20,17 +20,17 @@ type HomeContentProps = {
 export function HomeContent({ recentWritings }: HomeContentProps) {
   return (
     <motion.div
-      className="space-y-20"
+      className="space-y-24"
       variants={VARIANTS_CONTAINER}
       initial="hidden"
       animate="visible"
     >
-      <AboutSection />
-      <WorksSection />
+      <HeroSection />
       <ProjectsSection />
+      <WorksSection />
+      <AboutSection />
       {recentWritings}
       <StacksSection />
-      <ResourcesSection />
       <ContactSection />
     </motion.div>
   );

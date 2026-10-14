@@ -3,12 +3,21 @@
 import { motion } from 'motion/react';
 import Link from 'next/link';
 
+import { useTranslation } from '~/components/core/i18n-provider';
+
+const DESTINATIONS = {
+  home: { href: '/', labelKey: 'navigation.home' },
+  writings: { href: '/writings', labelKey: 'navigation.writings' },
+} as const;
+
 type BackButtonProps = {
-  href?: string;
-  title?: string;
+  to?: keyof typeof DESTINATIONS;
 };
 
-function BackButton({ href = '/', title = 'Home' }: BackButtonProps) {
+function BackButton({ to = 'home' }: BackButtonProps) {
+  const { t } = useTranslation();
+  const { href, labelKey } = DESTINATIONS[to];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -18,10 +27,12 @@ function BackButton({ href = '/', title = 'Home' }: BackButtonProps) {
     >
       <Link
         href={href}
-        className="transition-opacity hover:opacity-60"
-        aria-label="Retour à l'accueil"
+        className="group inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
       >
-        ← {title}
+        <span aria-hidden="true" className="transition-transform group-hover:-translate-x-0.5">
+          ←
+        </span>
+        {t(labelKey)}
       </Link>
     </motion.div>
   );

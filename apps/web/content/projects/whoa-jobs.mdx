@@ -1,0 +1,222 @@
+---
+title: 'Whoa Jobs'
+description: "Une plateforme de recherche d'emploi qui collecte les offres de plusieurs job boards, les centralise dans un seul dashboard et aide à candidater."
+stack: ['Python', 'Postgres (Supabase)', 'SSE']
+links:
+  - label: 'GitHub'
+    href: 'https://github.com/WhoaStudio/whoa-jobs'
+---
+
+{/* 🖼️ PLACEHOLDER — Logo du projet (~96px) */}
+
+<img src="/assets/projects/whoa-jobs/logo.png" width="96" alt="Whoa Jobs" />
+
+<h3 align="center">Toutes les offres, un seul dashboard.</h3>
+
+Une plateforme full-stack qui collecte les offres d'alternance et de CDI de plusieurs job boards, les dédoublonne et permet de les suivre et d'y candidater depuis un seul endroit.
+
+<a href="https://github.com/WhoaStudio/whoa-jobs">GitHub</a>·
+<a href="#fonctionnalités">Fonctionnalités</a>·<a href="#architecture">Architecture</a>
+
+<br />
+
+{/* 🖼️ PLACEHOLDER — Image principale : page « Jobs » du dashboard, format large (~1800px) */}
+
+<img src="/assets/projects/whoa-jobs/hero.png" width="900" alt="Aperçu de Whoa Jobs" />
+
+---
+
+## À propos
+
+Chercher une alternance ou un premier emploi, c'est consulter LinkedIn, Indeed, HelloWork et les autres tous les jours, retrouver trois fois la même offre et perdre le fil de ses candidatures.
+
+**Whoa Jobs** règle ça avec une idée simple :
+
+> **Ce sont les job boards qui viennent à vous, pas l'inverse.**
+
+Un moteur de collecte en Python récupère les offres en arrière-plan, une API les normalise et les sert, et un dashboard permet aux candidats de les parcourir, les filtrer et y candidater — pendant que les admins pilotent tout le moteur en direct, sans jamais le redémarrer.
+
+{/* 🎬 PLACEHOLDER — Vidéo de démo principale (30–90 s) : connexion → liste des offres → filtres → auto-candidature */}
+
+<video
+  src="/assets/projects/whoa-jobs/demo.mp4"
+  poster="/assets/projects/whoa-jobs/demo-thumbnail.png"
+  controls
+  className="w-full rounded-lg border"
+/>
+
+---
+
+## ✨ Fonctionnalités
+
+### 🔎 Un flux d'offres unique
+
+Toutes les sources dans une seule liste, avec recherche et filtres par source, lieu, type de contrat et date.
+
+Quand une même offre apparaît sur plusieurs sites, elle est **regroupée entre les sources** au lieu de s'afficher trois fois.
+
+{/* 🖼️ PLACEHOLDER — Capture : liste des offres avec filtres */}
+
+<img src="/assets/projects/whoa-jobs/jobs.png" width="700" alt="Liste des offres" />
+
+---
+
+### 📄 Documents
+
+Le CV et la lettre de motivation sont envoyés une seule fois, stockés dans un bucket privé et prévisualisés directement dans la barre latérale (PDF et DOCX).
+
+{/* 🖼️ PLACEHOLDER — Capture : barre latérale Documents avec aperçu du CV */}
+
+<img src="/assets/projects/whoa-jobs/documents.png" width="700" alt="Documents" />
+
+---
+
+### 🚀 Auto-candidature
+
+Un clic retrouve où l'offre accepte les candidatures, vérifie les documents et les envoie — avec une garde atomique pour qu'une candidature ne parte jamais deux fois, et une reprise en cas d'échec.
+
+{/* 🎬 PLACEHOLDER — GIF court (≤ 15 s) : clic sur « Auto-apply » et changement de statut */}
+
+<img src="/assets/projects/whoa-jobs/auto-apply.gif" width="700" alt="Auto-candidature" />
+
+---
+
+### 🔔 Notifications en temps réel
+
+Les notifications arrivent dans le dashboard via SSE dès qu'elles sont enregistrées dans Postgres (`LISTEN/NOTIFY`), avec niveaux d'importance et statut lu/non lu.
+
+---
+
+### 🏢 Espaces de travail & équipes
+
+Entreprises, invitations, équipes, rôles des membres et personnalisation de l'apparence — construits sur les organisations Better Auth.
+
+---
+
+### 🎛️ Salle de contrôle du moteur
+
+Les super-admins disposent d'une vraie salle de contrôle pour le moteur de collecte :
+
+- **Live ops** — profondeur des files, workers actifs vs cible, requêtes par minute, taux d'erreur, état du disjoncteur
+- **Réglages à chaud** — activer le moteur ou une source, « Run now », ajuster limites de débit et mise à l'échelle, le tout appliqué **en quelques secondes, sans redémarrage**
+- **Cron jobs & logs** — planifications et événements alimentés par les vraies données du moteur
+- **Audit, impersonation & broadcast** — chaque action sensible tracée, « voir en tant que » un utilisateur, notifier tout le monde
+
+{/* 🖼️ PLACEHOLDER — Capture : Admin → Engine → Overview (Live ops) */}
+
+<img src="/assets/projects/whoa-jobs/engine-overview.png" width="700" alt="Live ops du moteur" />
+
+{/* 🎬 PLACEHOLDER — GIF court : activer un driver, « Run now », les files se remplissent dans Live ops */}
+
+<img
+  src="/assets/projects/whoa-jobs/engine-run-now.gif"
+  width="700"
+  alt="Run now depuis le dashboard"
+/>
+
+---
+
+## 🧱 Architecture
+
+```text
+ Job boards ── HTTP poli ──►  Moteur (Python)
+ LinkedIn · Indeed · HelloWork   ├── Orchestrateur : scheduler + autoscaling
+                                 └── Workers × N : fetch → parse → upsert
+                                         │
+                              Redis (files BullMQ)
+                                         │
+                                         ▼
+                        Postgres (Supabase) ◄──── NOTIFY engine_control
+                                 ▲                       │
+                                 │                       │
+                   API — NestJS + tRPC ──────────────────┘
+                                 ▲
+                                 │ tRPC / SSE
+                    Dashboard — TanStack Start
+```
+
+Le projet est un **monorepo Nx** qui mélange TypeScript (Bun) et Python (uv) :
+
+```text
+apps/
+  dashboard/   Front-end TanStack Start
+  server/      API NestJS
+  engine/      Moteur de collecte Python
+  fumadocs/    Documentation utilisateur
+packages/
+  api/         Routers tRPC, middlewares, logique métier
+  auth/        Configuration Better Auth
+  db/          Schéma Prisma & migrations
+  ui/          Composants shadcn/ui partagés
+```
+
+---
+
+## 🕷️ Le moteur de collecte
+
+La partie la plus intéressante du projet. C'est un collecteur **scalable horizontalement** et **poli par conception** :
+
+- **Files de tâches sur Redis (BullMQ)** — une tâche = une recherche ou une offre. Livraison « au moins une fois », upserts idempotents, clés de déduplication : une tâche rejouée ne crée jamais de doublon.
+- **Autoscaling** — l'orchestrateur dimensionne le pool de workers selon la profondeur des files, en processus locaux, conteneurs Docker ou réplicas fixes.
+- **Un seul client poli, partagé** — `robots.txt`, token bucket global plafonné en dur à 2 req/s, concurrence par domaine, disjoncteur commun à tous les workers, backoff exponentiel avec gigue, User-Agent honnête.
+- **Aucun contournement, jamais** — pas de rotation de proxy, pas d'usurpation d'empreinte, pas de résolution de captcha. Une source bloquée est **mise en pause** et signalée dans le dashboard, jamais contournée.
+- **Pages brutes conservées** — les parsers peuvent être relancés sur tout ce qui a déjà été téléchargé, sans une seule requête réseau.
+- **Configuration à chaud** — réglages runtime validés des deux côtés (API et moteur) contre une seule spec JSON, rechargés via `NOTIFY` Postgres.
+
+{/* 🖼️ PLACEHOLDER — Capture terminal : `uv run engine status` */}
+
+<img src="/assets/projects/whoa-jobs/engine-cli.png" width="700" alt="CLI du moteur" />
+
+---
+
+## 🛠️ Stack technique
+
+| Couche    | Technologies                                                          |
+| --------- | --------------------------------------------------------------------- |
+| Front-end | TanStack Start, React 19, Tailwind CSS 4, shadcn/ui, Motion, Recharts |
+| API       | NestJS 11, tRPC 11, Zod 4                                             |
+| Auth      | Better Auth (organisations, équipes, admin, impersonation)            |
+| Données   | PostgreSQL (Supabase), Prisma, Supabase Storage                       |
+| Moteur    | Python 3.12, BullMQ, Redis, httpx, SQLAlchemy, BeautifulSoup, Typer   |
+| Outillage | Nx, Bun, uv, Varlock, Oxlint, Oxfmt, pytest, mypy, Docker             |
+
+---
+
+## 💡 Ce que j'en retiens
+
+- **Concevoir un système distribué qui reste poli.** Ajouter des workers est facile ; garantir que dix workers envoient toujours moins de requêtes qu'un humain attentif, c'est là le vrai défi — d'où des limites de débit et un disjoncteur partagés via Redis plutôt que par processus.
+- **Faire partager une seule source de vérité à un service Python et une API TypeScript.** Le schéma de base appartient à Prisma, le moteur ne fait que le refléter ; les réglages runtime sont validés contre la même spec JSON des deux côtés.
+- **Modifier un système en marche sans risque.** Chaque changement de réglage est validé, audité et appliqué en direct via `LISTEN/NOTIFY`, avec une relecture périodique si une notification se perd.
+- **Traiter la conformité comme une fonctionnalité.** Le respect des conditions de chaque site a autant façonné l'architecture que la performance.
+
+---
+
+## 📸 Captures d'écran
+
+{/* 🖼️ PLACEHOLDER — 4 captures supplémentaires (paramètres, espace de travail, logs, notifications…) */}
+
+<img src="/assets/projects/whoa-jobs/screenshot-01.png" width="48%" alt="Capture de Whoa Jobs" />
+<img src="/assets/projects/whoa-jobs/screenshot-02.png" width="48%" alt="Capture de Whoa Jobs" />
+
+<img src="/assets/projects/whoa-jobs/screenshot-03.png" width="48%" alt="Capture de Whoa Jobs" />
+<img src="/assets/projects/whoa-jobs/screenshot-04.png" width="48%" alt="Capture de Whoa Jobs" />
+
+---
+
+## 🛣️ Roadmap
+
+- [x] Moteur de collecte (LinkedIn, Indeed, HelloWork)
+- [x] Dédoublonnage inter-sources
+- [x] Salle de contrôle du moteur (live ops, réglages à chaud, logs, cron)
+- [x] Documents avec aperçu
+- [x] Notifications en temps réel
+- [ ] Envoi des auto-candidatures par source
+- [ ] Synchronisation e-mail pour suivre les réponses
+- [ ] Davantage de job boards
+- [ ] Autoscaling Kubernetes (KEDA)
+
+---
+
+## 🌐 Liens
+
+- **Code source :** https://github.com/WhoaStudio/whoa-jobs

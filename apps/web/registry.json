@@ -464,6 +464,63 @@
       }
     },
     {
+      "name": "usage-card",
+      "type": "registry:block",
+      "title": "Usage Card",
+      "description": "A credits usage card with a category breakdown, a per-day chart and plan limits.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "registry/blocks/usage-card/usage-card.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/usage-card/usage-period-tabs.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/usage-card/usage-breakdown.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/usage-card/usage-daily-chart.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/usage-card/usage-meters.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/usage-card/utils.ts",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/usage-card/types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "usage-card-demo",
+      "type": "registry:example",
+      "title": "Usage Card Demo",
+      "description": "Usage example for the Usage Card block.",
+      "files": [
+        {
+          "path": "examples/usage-card.tsx",
+          "type": "registry:example"
+        }
+      ],
+      "registryDependencies": ["usage-card"],
+      "meta": {
+        "example": {
+          "of": "usage-card",
+          "order": 0
+        }
+      }
+    },
+    {
       "name": "landing-saas",
       "type": "registry:block",
       "title": "SaaS Landing Page",

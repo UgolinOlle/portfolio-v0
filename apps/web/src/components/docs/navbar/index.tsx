@@ -1,13 +1,17 @@
 import { Suspense } from 'react';
 
-import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
+import { getRegistrySections } from '~/lib/registry';
 
 import { GitHub, GitHubSkeleton } from './github';
 import { NavbarClient } from './navbar-client';
 
-const componentsCount = componentsSource.getPages().length;
-const blocksCount = blocksSource.getPages().length;
-const templatesCount = templatesSource.getPages().length;
+// Same item lists as the /ui grids, so category index pages aren't counted as items.
+const countByCategory = Object.fromEntries(
+  getRegistrySections().map((section) => [section.category, section.items.length]),
+);
+const componentsCount = countByCategory.component ?? 0;
+const blocksCount = countByCategory.block ?? 0;
+const templatesCount = countByCategory.template ?? 0;
 
 function Navbar() {
   return (

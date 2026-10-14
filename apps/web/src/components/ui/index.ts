@@ -3,7 +3,6 @@ export * from './magnetic';
 export * from './magnetic-social-link';
 export * from './social-preview-card';
 export * from './spotlight';
-export * from './status';
 export * from './text-effect';
 export * from './text-hover';
 export * from './text-loop';

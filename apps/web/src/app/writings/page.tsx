@@ -23,7 +23,7 @@ const Page = async ({ searchParams }: PageProps) => {
 
   return (
     <PortfolioShell>
-      <BackButton href="/writings" title="Writings" />
+      <BackButton />
       <WritingsHeader />
       <WritingsList pages={pages} />
     </PortfolioShell>

@@ -14,8 +14,9 @@ export const VARIANTS_CONTAINER = {
 };
 
 export const VARIANTS_SECTION = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  // No `filter: blur()`: animating it repaints every frame and stutters on low-end phones.
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0 },
 };
 
 export const TRANSITION_SECTION = {

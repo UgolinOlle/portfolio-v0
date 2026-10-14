@@ -1,21 +1,30 @@
 {
   "navigation": {
-    "portfolio": "P0rtfoli0",
-    "projects": "Pr0jects",
-    "components": "C0mponents",
-    "writing": "Writings"
+    "home": "Home",
+    "writings": "Writings",
+    "ui": "Whoa UI",
+    "inspirations": "Inspirations",
+    "skipToContent": "Skip to content",
+    "madeWith": "Designed and built by Ugolin Ollé"
   },
   "header": {
     "title": "Freelance Full Stack Developer",
     "profileAlt": "Ugolin Ollé profile picture"
   },
+  "hero": {
+    "availability": "Available for new projects",
+    "headline": "I design and build SaaS products and web apps, from mockup to production.",
+    "lead": "Freelance full stack developer helping startups, independents and small businesses ship with Next.js, React, NestJS and TypeScript.",
+    "ctaPrimary": "Get in touch",
+    "ctaSecondary": "See projects"
+  },
   "about": {
-    "description": "I’m a freelance full stack developer. I help startups, independents and small businesses build SaaS products, web applications and fast landing pages, from mockup to production, with Next.js, React, NestJS and TypeScript.\n\nMy training at 42 in Bangkok gave me solid technical foundations, real discipline and a pragmatic approach to problem-solving. My systems administration background also lets me handle deployment and infrastructure (Docker, Nginx, Vercel). Two years spent in Cambodia taught me to adapt quickly and collaborate in diverse environments.\n\nAlongside client work, I build my own products, like Whoa UI, a React component library, or Whoa Stash, a macOS app: useful tools, built to last."
+    "description": "My training at 42 in Bangkok gave me solid technical foundations, real discipline and a pragmatic approach to problem-solving. My systems administration background also lets me handle deployment and infrastructure (Docker, Nginx, Vercel). Two years spent in Cambodia taught me to adapt quickly and collaborate in diverse environments.\n\nAlongside client work, I build my own products, like Whoa UI, a React component library, or Whoa Stash, a macOS app: useful tools, built to last."
   },
   "sections": {
     "about": "About",
     "projects": "Projects",
-    "works": "Works Experiences",
+    "works": "Experience",
     "stacks": "Technologies",
     "resources": "Resources",
     "contact": "Contact"
@@ -26,7 +35,7 @@
     "readMore": "Read more",
     "viewProject": "View project",
     "notFound": {
-      "title": "404 - Page Not Found",
+      "title": "Page not found",
       "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
       "link": "Go back to the homepage"
     }
@@ -55,7 +64,9 @@
     "filterAll": "All",
     "noWritings": "No writings available in English",
     "recentTitle": "Recent writings",
-    "seeAll": "See all writings"
+    "seeAll": "See all writings",
+    "notice": "This article is still being reviewed and may contain mistakes. Spotted one?",
+    "noticeCta": "Let me know"
   },
   "stacks": {
     "title": "My Skills",

@@ -3,25 +3,13 @@
 import { motion } from 'motion/react';
 import Link from 'next/link';
 
+import { BackButton } from '~/components/projects/back-button';
 import { INSPIRATIONS } from '~/lib/data';
 
 export function InspirationsContent() {
   return (
     <section className="flex flex-col">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.1, duration: 0.4 }}
-        className="mb-6 flex items-center gap-2 text-sm font-medium text-muted-foreground"
-      >
-        <Link
-          href="/"
-          className="transition-opacity hover:opacity-60"
-          aria-label="Retour à l'accueil"
-        >
-          ← Home
-        </Link>
-      </motion.div>
+      <BackButton />
 
       <motion.header
         initial={{ opacity: 0, y: 12 }}

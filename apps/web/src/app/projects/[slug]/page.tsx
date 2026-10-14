@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { JsonLd } from '~/components/core/json-ld';
 import { PortfolioShell } from '~/components/core/portfolio-shell';
 import { BackButton } from '~/components/projects/back-button';
+import { NextProject } from '~/components/projects/next-project';
 import { ProjectMDX } from '~/components/projects/project-mdx';
 import { createMetadata, resolveLocale } from '~/lib/metadata';
 import { projectsSource, resolvePageLocale } from '~/lib/source';
@@ -23,6 +24,8 @@ const Page = async ({ params, searchParams }: PageProps) => {
     notFound();
   }
 
+  const pageLocale = resolvePageLocale(projectsSource, [slug], lang).lang;
+
   return (
     <PortfolioShell>
       <JsonLd
@@ -30,11 +33,12 @@ const Page = async ({ params, searchParams }: PageProps) => {
           title: page.data.title,
           description: page.data.description,
           pathname: `/projects/${slug}`,
-          lang: resolvePageLocale(projectsSource, [slug], lang).lang,
+          lang: pageLocale,
         })}
       />
       <BackButton />
       <ProjectMDX page={page} />
+      <NextProject lang={pageLocale} slug={slug} />
     </PortfolioShell>
   );
 };

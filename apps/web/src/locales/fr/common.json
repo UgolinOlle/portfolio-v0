@@ -33,7 +33,7 @@
     "readMore": "Lire plus",
     "viewProject": "Voir le projet",
     "notFound": {
-      "title": "404 - Page introuvable",
+      "title": "Page introuvable",
       "description": "La page que vous recherchez a peut-être été supprimée, renommée ou est temporairement indisponible.",
       "link": "Retour à la page d'accueil"
     }

@@ -33,7 +33,7 @@
     "readMore": "Read more",
     "viewProject": "View project",
     "notFound": {
-      "title": "404 - Page Not Found",
+      "title": "Page not found",
       "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
       "link": "Go back to the homepage"
     }

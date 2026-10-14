@@ -9,13 +9,20 @@
     "title": "Développeur Full Stack Freelance",
     "profileAlt": "Photo de profil d'Ugolin Ollé"
   },
+  "hero": {
+    "availability": "Disponible pour de nouvelles missions",
+    "headline": "Je conçois et développe des SaaS et applications web, de la maquette à la mise en production.",
+    "lead": "Développeur full stack freelance, j’accompagne startups, indépendants et PME avec Next.js, React, NestJS et TypeScript.",
+    "ctaPrimary": "Me contacter",
+    "ctaSecondary": "Voir les projets"
+  },
   "about": {
-    "description": "Je suis développeur full stack freelance. J’accompagne startups, indépendants et PME dans la création de SaaS, d’applications web et de landing pages rapides, de la maquette à la mise en production, avec Next.js, React, NestJS et TypeScript.\n\nFormé à l’école 42 à Bangkok, j’ai acquis des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. Mon bagage en administration systèmes me permet aussi de prendre en charge le déploiement et l’infrastructure (Docker, Nginx, Vercel). Deux années passées au Cambodge m’ont appris à m’adapter rapidement et à collaborer dans des contextes variés.\n\nEn parallèle de mes missions, je construis mes propres produits, comme Whoa UI, une bibliothèque de composants React, ou Whoa Stash, une app macOS : des outils utiles, pensés pour durer."
+    "description": "Formé à l’école 42 à Bangkok, j’ai acquis des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. Mon bagage en administration systèmes me permet aussi de prendre en charge le déploiement et l’infrastructure (Docker, Nginx, Vercel). Deux années passées au Cambodge m’ont appris à m’adapter rapidement et à collaborer dans des contextes variés.\n\nEn parallèle de mes missions, je construis mes propres produits, comme Whoa UI, une bibliothèque de composants React, ou Whoa Stash, une app macOS : des outils utiles, pensés pour durer."
   },
   "sections": {
     "about": "À propos",
     "projects": "Projets",
-    "works": "Mes Expériences",
+    "works": "Expériences",
     "stacks": "Technologies",
     "resources": "Ressources",
     "contact": "Contact"
@@ -68,7 +75,7 @@
     }
   },
   "resources": {
-    "title": "Matériels utilisées",
+    "title": "Matériel utilisé",
     "filterAll": "Tous",
     "showMore": "Voir tout",
     "showLess": "Voir moins",

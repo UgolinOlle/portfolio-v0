@@ -9,6 +9,8 @@ import { MagneticSocialLink, Status } from '~/components/ui';
 import { EMAIL, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { SOCIAL_LINKS } from '~/lib/data';
 
+import { SectionHeading } from './section-heading';
+
 const SOCIAL_LINK_BASE_DELAY = 0.5;
 const SOCIAL_LINK_STAGGER_MULTIPLIER = 0.1;
 
@@ -22,13 +24,9 @@ function ContactSection() {
       variants={VARIANTS_SECTION}
       id="contact"
     >
-      <div className="flex items-center gap-2">
-        <h2 className="text-lg tracking-tight text-zinc-900 dark:text-white">
-          {t('contact.title')}
-        </h2>
-
-        <Status status="online" />
-      </div>
+      <SectionHeading className="mb-0" action={<Status status="online" />}>
+        {t('contact.title')}
+      </SectionHeading>
 
       <p className="mb-5 text-sm text-zinc-600 dark:text-zinc-300">
         {t('contact.description')}{' '}

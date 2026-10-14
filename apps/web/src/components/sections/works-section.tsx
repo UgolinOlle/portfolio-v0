@@ -10,16 +10,15 @@ import { WORKS_EXPERIENCES } from '~/lib/data';
 
 import { useTranslation } from '../core/i18n-provider';
 
+import { SectionHeading } from './section-heading';
+
 function WorksSection() {
   const { t } = useTranslation();
   const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
-      <div className="mb-5 flex items-center justify-center gap-4">
-        <h2 className="w-auto text-lg font-medium whitespace-nowrap">{t('sections.works')}</h2>
-        <span className="h-px w-full bg-zinc-400" />
-      </div>
+      <SectionHeading>{t('sections.works')}</SectionHeading>
 
       <div className="flex flex-col space-y-2">
         {WORKS_EXPERIENCES.map((job) => (

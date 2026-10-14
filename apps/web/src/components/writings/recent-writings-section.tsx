@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
+import { SectionHeading } from '~/components/sections/section-heading';
 import { TextHoverEnter } from '~/components/ui/text-hover';
 import type { WritingSummary } from '~/components/writings/writings-list';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
@@ -37,16 +38,19 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
       transition={TRANSITION_SECTION}
       variants={VARIANTS_SECTION}
     >
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg">{t('writings.recentTitle')}</h2>
-
-        <Link
-          className="text-sm text-zinc-500 transition-opacity hover:opacity-60 dark:text-zinc-400"
-          href="/writings"
-        >
-          <TextHoverEnter>{t('writings.seeAll')}</TextHoverEnter>
-        </Link>
-      </div>
+      <SectionHeading
+        className="mb-0"
+        action={
+          <Link
+            className="text-sm text-zinc-500 transition-opacity hover:opacity-60 dark:text-zinc-400"
+            href="/writings"
+          >
+            <TextHoverEnter>{t('writings.seeAll')}</TextHoverEnter>
+          </Link>
+        }
+      >
+        {t('writings.recentTitle')}
+      </SectionHeading>
 
       <div className="flex flex-col space-y-2">
         {recentPages.map((page) => (

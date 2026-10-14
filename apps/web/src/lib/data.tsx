@@ -190,7 +190,7 @@ export const RESOURCES: Resources[] = [
     url: '/assets/uses/macbook.jpeg',
   },
   {
-    name: 'Keychboard Keychron K3',
+    name: 'Keychron K3',
     type: 'Matériel',
     color: '#F7AB0A',
     url: '/assets/uses/keychron.webp',

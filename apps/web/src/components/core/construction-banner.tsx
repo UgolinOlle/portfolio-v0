@@ -1,37 +1,22 @@
-import PixelBlast from '~/components/ui/pixel-blast-lazy';
+import { EMAIL } from '~/lib/constants';
 
 type ConstructionBannerProps = {
   readonly message?: string;
 };
 
+// Slim inline notice for the docs layouts (offset by the fixed 3.5rem navbar); /ui shows a Bêta tag instead.
 function ConstructionBanner({
-  message = 'This section is under construction and may contain bugs. Please send an email to hello@ugolin-olle.com if you find any.',
+  message = 'Whoa UI est en bêta : certains éléments peuvent encore changer. Un bug ?',
 }: ConstructionBannerProps) {
   return (
-    <div className="relative flex h-40 w-full items-center justify-center overflow-hidden font-semibold">
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-20">
-        <PixelBlast
-          variant="square"
-          pixelSize={4}
-          color="#B497CF"
-          patternScale={2}
-          patternDensity={1}
-          pixelSizeJitter={0}
-          enableRipples
-          rippleSpeed={0.4}
-          rippleThickness={0.12}
-          rippleIntensityScale={1.5}
-          liquid={false}
-          liquidStrength={0.12}
-          liquidRadius={1.2}
-          liquidWobbleSpeed={5}
-          speed={0.5}
-          edgeFade={0.25}
-          transparent
-        />
-      </div>
-
-      <p className="relative z-10 max-w-2xl px-6 text-center">{message}</p>
+    <div className="mt-14 w-full border-b border-dashed bg-muted/30 px-4 py-2 text-center text-xs text-pretty text-muted-foreground">
+      {message}{' '}
+      <a
+        className="font-medium text-foreground underline underline-offset-2 hover:no-underline"
+        href={`mailto:${EMAIL}`}
+      >
+        Écrivez-moi
+      </a>
     </div>
   );
 }

@@ -66,7 +66,7 @@ It selects a token and repeats the process until it produces a complete response
 
 ---
 
-# 2. Token
+## 2. Token
 
 An LLM does not usually work directly with words.
 
@@ -105,7 +105,7 @@ Tokens determine things such as:
 
 ---
 
-# 3. Context Window
+## 3. Context Window
 
 The **context window** is the maximum amount of tokens a model can consider at once.
 
@@ -127,7 +127,7 @@ However, a large context window does not automatically mean that the model will 
 
 ---
 
-# 4. Embeddings
+## 4. Embeddings
 
 **Embeddings** represent information as numerical vectors.
 
@@ -167,7 +167,7 @@ Embeddings are especially important for:
 
 ---
 
-# 5. Transformer
+## 5. Transformer
 
 Modern LLMs are primarily based on the **Transformer architecture**.
 
@@ -189,7 +189,7 @@ The model can learn which parts of the context are relevant when interpreting a 
 
 ---
 
-# 6. Attention
+## 6. Attention
 
 The **attention mechanism** allows the model to determine which pieces of context are relevant for producing the next token.
 
@@ -211,7 +211,7 @@ This mechanism allows the model to capture complex relationships between tokens.
 
 ---
 
-# 7. Parameters
+## 7. Parameters
 
 **Parameters** are the numerical values learned by the model during training.
 
@@ -230,7 +230,7 @@ Two models with a similar number of parameters can have very different capabilit
 
 ---
 
-# 8. Training
+## 8. Training
 
 Training consists of adjusting the model's parameters so that it becomes better at predicting tokens.
 
@@ -265,7 +265,7 @@ Update Parameters
 
 ---
 
-# 9. Pretraining
+## 9. Pretraining
 
 **Pretraining** is the first major training phase.
 
@@ -283,7 +283,7 @@ After seeing a huge number of examples, the model learns increasingly complex re
 
 ---
 
-# 10. Fine-tuning
+## 10. Fine-tuning
 
 After pretraining, a model can be specialized through **fine-tuning**.
 
@@ -311,7 +311,7 @@ Fine-tuning can be used to improve:
 
 ---
 
-# 11. Instruction Tuning
+## 11. Instruction Tuning
 
 **Instruction tuning** trains a model to better follow human instructions.
 
@@ -329,7 +329,7 @@ The model learns to associate instructions with expected behaviors.
 
 ---
 
-# 12. RLHF
+## 12. RLHF
 
 **RLHF — Reinforcement Learning from Human Feedback** uses human preferences to improve model behavior.
 
@@ -359,7 +359,7 @@ The goal is to make responses:
 
 ---
 
-# 13. Inference
+## 13. Inference
 
 **Inference** is the process of using a trained model to generate a response.
 
@@ -388,7 +388,7 @@ Inference uses those parameters to generate output.
 
 ---
 
-# 14. Temperature
+## 14. Temperature
 
 **Temperature** influences how deterministic or random the generation process is.
 
@@ -413,7 +413,7 @@ It mainly changes the probability distribution used when selecting tokens.
 
 ---
 
-# 15. Hallucination
+## 15. Hallucination
 
 A **hallucination** occurs when a model generates false or fabricated information while presenting it as if it were factual.
 
@@ -433,7 +433,7 @@ This is an important consequence of the generative nature of LLMs.
 
 ---
 
-# 16. RAG
+## 16. RAG
 
 **RAG — Retrieval-Augmented Generation** allows an LLM to use external information at inference time.
 
@@ -472,7 +472,7 @@ It provides additional context at inference time.
 
 ---
 
-# 17. Vector Database
+## 17. Vector Database
 
 A **vector database** stores vector representations, usually embeddings.
 
@@ -505,7 +505,7 @@ Relevant documents
 
 ---
 
-# 18. Prompt
+## 18. Prompt
 
 A **prompt** is the set of instructions and information provided to the model.
 
@@ -532,7 +532,7 @@ A good prompt can specify:
 
 ---
 
-# 19. System Prompt
+## 19. System Prompt
 
 The **system prompt** contains general instructions defining the expected behavior of the model.
 
@@ -555,7 +555,7 @@ System instructions are particularly important in applications built around LLMs
 
 ---
 
-# 20. Tool Calling
+## 20. Tool Calling
 
 An LLM can be given access to external tools.
 
@@ -597,7 +597,7 @@ It can **decide that a tool should be called**, then use the result returned by 
 
 ---
 
-# 21. Function Calling
+## 21. Function Calling
 
 **Function calling** is a structured way for a model to request the execution of a function.
 
@@ -618,7 +618,7 @@ This makes it possible to connect an LLM to external systems in a controlled way
 
 ---
 
-# 22. Structured Output
+## 22. Structured Output
 
 An LLM can also be constrained to return structured data.
 
@@ -638,7 +638,7 @@ Instead of parsing free-form text, the application can receive a predefined stru
 
 ---
 
-# 23. Memory
+## 23. Memory
 
 **Memory** allows an application using an LLM to retain information beyond the immediate interaction.
 
@@ -667,7 +667,7 @@ Memory is therefore not necessarily an intrinsic property of the LLM itself.
 
 ---
 
-# 24. Agent
+## 24. Agent
 
 An **AI agent** is generally a system capable of:
 
@@ -700,7 +700,7 @@ An agent is therefore more than simply sending a prompt to an LLM.
 
 ---
 
-# 25. Agentic AI
+## 25. Agentic AI
 
 **Agentic AI** refers to an approach where AI systems have some degree of ability to:
 
@@ -734,7 +734,7 @@ Multi-Agent System
 
 ---
 
-# 26. Skills
+## 26. Skills
 
 A **skill** generally represents a specialized capability that an agent can use.
 
@@ -764,7 +764,7 @@ The goal is to make an agent's capabilities modular and reusable.
 
 ---
 
-# 27. Workflow vs Agent
+## 27. Workflow vs Agent
 
 It is important to distinguish a **deterministic workflow** from an **agent**.
 
@@ -811,7 +811,7 @@ An agent is generally more flexible.
 
 ---
 
-# 28. MCP
+## 28. MCP
 
 **MCP — Model Context Protocol** is a protocol designed to connect AI applications and models to external tools and data sources in a standardized way.
 
@@ -835,7 +835,7 @@ MCP can standardize how applications expose:
 
 ---
 
-# 29. Multimodality
+## 29. Multimodality
 
 Modern AI models can sometimes process multiple types of data.
 
@@ -859,7 +859,7 @@ Depending on the model, inputs and outputs can include:
 
 ---
 
-# 30. Latency
+## 30. Latency
 
 **Latency** is the time required to receive a response.
 
@@ -876,7 +876,7 @@ An agent can be slower than a simple LLM call because it may perform multiple st
 
 ---
 
-# 31. Cost
+## 31. Cost
 
 LLM usage costs are generally related to the number of tokens processed.
 
@@ -910,7 +910,7 @@ The more calls an application makes, the higher the potential cost and latency.
 
 ---
 
-# 32. Evaluation
+## 32. Evaluation
 
 An LLM application needs to be evaluated.
 
@@ -929,7 +929,7 @@ An LLM architecture without an evaluation system is difficult to improve reliabl
 
 ---
 
-# 33. Fine-tuning vs RAG
+## 33. Fine-tuning vs RAG
 
 It is important not to confuse the two.
 
@@ -953,7 +953,7 @@ I want to provide external knowledge
 
 ---
 
-# 34. Complete AI Application Architecture
+## 34. Complete AI Application Architecture
 
 A modern AI application can combine many of these concepts:
 
@@ -986,7 +986,7 @@ The LLM is therefore only one part of the overall system.
 
 ---
 
-# 35. Key Concepts to Remember
+## 35. Key Concepts to Remember
 
 If you want to understand the modern AI ecosystem, you should at least know:
 
@@ -1050,7 +1050,7 @@ If you want to understand the modern AI ecosystem, you should at least know:
 
 ---
 
-# 36. The Big Picture
+## 36. The Big Picture
 
 The most important thing is to understand how all these concepts fit together.
 

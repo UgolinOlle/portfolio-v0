@@ -17,7 +17,7 @@ function WorksSection() {
   return (
     <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
       <div className="mb-5 flex items-center justify-center gap-4">
-        <h3 className="w-auto text-lg font-medium whitespace-nowrap">{t('sections.works')}</h3>
+        <h2 className="w-auto text-lg font-medium whitespace-nowrap">{t('sections.works')}</h2>
         <span className="h-px w-full bg-zinc-400" />
       </div>
 
@@ -89,7 +89,7 @@ function WorksSection() {
               </div>
 
               <div className="flex flex-col px-2">
-                <h4 className="font-normal dark:text-zinc-100">{job.company}</h4>
+                <h3 className="font-normal dark:text-zinc-100">{job.company}</h3>
                 <p className="text-zinc-500 dark:text-zinc-400">{job.title}</p>
               </div>
             </div>

@@ -19,7 +19,7 @@ export function ProjectsSection() {
       variants={VARIANTS_SECTION}
       id="projects"
     >
-      <h3 className="text-lg">{t('projects.title')}</h3>
+      <h2 className="text-lg">{t('projects.title')}</h2>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {PROJECTS.map((project, index) => (

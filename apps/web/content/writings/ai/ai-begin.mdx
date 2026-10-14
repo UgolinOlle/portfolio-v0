@@ -66,7 +66,7 @@ Il sélectionne ensuite un token et recommence jusqu'à produire une réponse co
 
 ---
 
-# 2. Token
+## 2. Token
 
 Un LLM ne manipule généralement pas directement des mots.
 
@@ -104,7 +104,7 @@ Les tokens déterminent notamment :
 
 ---
 
-# 3. Context Window
+## 3. Context Window
 
 La **context window** correspond à la quantité maximale de tokens que le modèle peut prendre en compte simultanément.
 
@@ -127,7 +127,7 @@ Cependant, une grande context window ne signifie pas automatiquement que le mod�
 
 ---
 
-# 4. Embeddings
+## 4. Embeddings
 
 Les **embeddings** permettent de représenter des informations sous forme de vecteurs numériques.
 
@@ -167,7 +167,7 @@ Les embeddings sont particulièrement importants pour :
 
 ---
 
-# 5. Transformer
+## 5. Transformer
 
 Les LLM modernes reposent principalement sur l'architecture **Transformer**.
 
@@ -189,7 +189,7 @@ Le modèle peut apprendre quelles parties du contexte sont importantes pour inte
 
 ---
 
-# 6. Attention
+## 6. Attention
 
 L'**attention mechanism** permet au modèle de déterminer quelles informations du contexte sont pertinentes pour produire la suite.
 
@@ -211,7 +211,7 @@ Cette architecture permet au modèle de capturer des relations complexes entre l
 
 ---
 
-# 7. Paramètres
+## 7. Paramètres
 
 Les **paramètres** sont les valeurs numériques apprises par le modèle pendant son entraînement.
 
@@ -230,7 +230,7 @@ Deux modèles ayant un nombre de paramètres similaire peuvent avoir des perform
 
 ---
 
-# 8. Training
+## 8. Training
 
 L'entraînement consiste à ajuster les paramètres du modèle afin qu'il devienne meilleur pour prédire les tokens.
 
@@ -265,7 +265,7 @@ Mise à jour des paramètres
 
 ---
 
-# 9. Pretraining
+## 9. Pretraining
 
 Le **pretraining** est la première grande phase d'entraînement.
 
@@ -283,7 +283,7 @@ Une tâche classique consiste à prédire le prochain token :
 
 ---
 
-# 10. Fine-tuning
+## 10. Fine-tuning
 
 Après le pretraining, un modèle peut être spécialisé grâce au **fine-tuning**.
 
@@ -311,7 +311,7 @@ Le fine-tuning peut servir à améliorer :
 
 ---
 
-# 11. Instruction Tuning
+## 11. Instruction Tuning
 
 L'**instruction tuning** consiste à entraîner un modèle à mieux suivre des instructions humaines.
 
@@ -329,7 +329,7 @@ Le modèle apprend progressivement à associer des instructions à des comportem
 
 ---
 
-# 12. RLHF
+## 12. RLHF
 
 **RLHF — Reinforcement Learning from Human Feedback** consiste à utiliser des préférences humaines pour améliorer le comportement du modèle.
 
@@ -359,7 +359,7 @@ L'objectif est notamment de rendre les réponses :
 
 ---
 
-# 13. Inference
+## 13. Inference
 
 L'**inference** correspond au moment où le modèle est utilisé pour produire une réponse.
 
@@ -388,7 +388,7 @@ L'inference utilise ces paramètres pour générer une réponse.
 
 ---
 
-# 14. Temperature
+## 14. Temperature
 
 La **temperature** influence le caractère déterministe ou aléatoire de la génération.
 
@@ -413,7 +413,7 @@ Elle modifie principalement la distribution utilisée pour sélectionner les tok
 
 ---
 
-# 15. Hallucination
+## 15. Hallucination
 
 Une **hallucination** apparaît lorsqu'un modèle génère une information fausse ou inventée tout en la présentant comme vraie.
 
@@ -433,7 +433,7 @@ C'est une conséquence importante du fait qu'un LLM est avant tout un modèle g�
 
 ---
 
-# 16. RAG
+## 16. RAG
 
 **RAG — Retrieval-Augmented Generation** permet de fournir au LLM des informations externes au moment de la requête.
 
@@ -472,7 +472,7 @@ Il lui fournit simplement du contexte supplémentaire au moment de l'inference.
 
 ---
 
-# 17. Vector Database
+## 17. Vector Database
 
 Une **vector database** stocke des représentations vectorielles, généralement des embeddings.
 
@@ -505,7 +505,7 @@ Documents pertinents
 
 ---
 
-# 18. Prompt
+## 18. Prompt
 
 Un **prompt** est l'ensemble des instructions et informations fournies au modèle.
 
@@ -532,7 +532,7 @@ Un bon prompt permet notamment de préciser :
 
 ---
 
-# 19. System Prompt
+## 19. System Prompt
 
 Le **system prompt** contient les instructions générales qui définissent le comportement attendu du modèle.
 
@@ -555,7 +555,7 @@ Le system prompt est particulièrement important dans les applications utilisant
 
 ---
 
-# 20. Tool Calling
+## 20. Tool Calling
 
 Un LLM peut être capable d'utiliser des outils externes.
 
@@ -595,7 +595,7 @@ Le LLM ne fait pas nécessairement lui-même l'action : il peut **décider qu'un
 
 ---
 
-# 21. Function Calling
+## 21. Function Calling
 
 Le **function calling** est une manière structurée de permettre au modèle de demander l'exécution d'une fonction.
 
@@ -616,7 +616,7 @@ Cela permet de connecter un LLM à des systèmes externes de manière contrôlé
 
 ---
 
-# 22. Structured Output
+## 22. Structured Output
 
 Un LLM peut également être contraint à retourner des données structurées.
 
@@ -636,7 +636,7 @@ Au lieu de devoir parser du texte libre, l'application peut recevoir une structu
 
 ---
 
-# 23. Memory
+## 23. Memory
 
 La **mémoire** permet à une application utilisant un LLM de conserver des informations au-delà d'une interaction immédiate.
 
@@ -665,7 +665,7 @@ La mémoire n'est donc pas forcément une propriété intrinsèque du LLM.
 
 ---
 
-# 24. Agent
+## 24. Agent
 
 Un **agent AI** est généralement un système capable de :
 
@@ -698,7 +698,7 @@ Un agent est donc davantage qu'un simple prompt envoyé à un LLM.
 
 ---
 
-# 25. Agentic AI
+## 25. Agentic AI
 
 **Agentic AI** désigne une approche dans laquelle des modèles d'IA disposent d'une certaine capacité à :
 
@@ -732,7 +732,7 @@ Multi-Agent System
 
 ---
 
-# 26. Skills
+## 26. Skills
 
 Une **skill** représente généralement une capacité spécialisée qu'un agent peut utiliser.
 
@@ -762,7 +762,7 @@ L'intérêt est de rendre les capacités de l'agent modulaires et réutilisables
 
 ---
 
-# 27. Workflow vs Agent
+## 27. Workflow vs Agent
 
 Il est important de différencier un **workflow déterministe** d'un **agent**.
 
@@ -809,7 +809,7 @@ Un agent est généralement plus flexible.
 
 ---
 
-# 28. MCP
+## 28. MCP
 
 **MCP — Model Context Protocol** est un protocole permettant de connecter des modèles et agents à des outils et sources de données de manière standardisée.
 
@@ -833,7 +833,7 @@ L'objectif est notamment de standardiser la manière dont les applications expos
 
 ---
 
-# 29. Multimodalité
+## 29. Multimodalité
 
 Un LLM moderne peut parfois traiter plusieurs types de données.
 
@@ -857,7 +857,7 @@ Selon le modèle, les entrées et sorties peuvent inclure :
 
 ---
 
-# 30. Latency
+## 30. Latency
 
 La **latence** correspond au temps nécessaire pour obtenir une réponse.
 
@@ -874,7 +874,7 @@ Un agent peut être plus lent qu'un simple appel LLM car il peut effectuer plusi
 
 ---
 
-# 31. Cost
+## 31. Cost
 
 Le coût d'utilisation d'un LLM dépend généralement du nombre de tokens traités.
 
@@ -908,7 +908,7 @@ Plus le nombre d'appels augmente, plus le coût et la latence peuvent augmenter.
 
 ---
 
-# 32. Evaluation
+## 32. Evaluation
 
 Une application LLM doit être évaluée.
 
@@ -927,7 +927,7 @@ Une architecture LLM sans système d'évaluation est difficile à améliorer de 
 
 ---
 
-# 33. Fine-tuning vs RAG
+## 33. Fine-tuning vs RAG
 
 Il est important de ne pas confondre les deux.
 
@@ -951,7 +951,7 @@ Je veux donner des connaissances externes
 
 ---
 
-# 34. Architecture complète d'une application AI
+## 34. Architecture complète d'une application AI
 
 Une application moderne peut combiner plusieurs concepts :
 
@@ -984,7 +984,7 @@ Le LLM constitue alors une partie du système, et non nécessairement l'intégra
 
 ---
 
-# 35. Les notions à retenir
+## 35. Les notions à retenir
 
 Si tu veux comprendre l'écosystème AI moderne, retiens au minimum :
 
@@ -1048,7 +1048,7 @@ Si tu veux comprendre l'écosystème AI moderne, retiens au minimum :
 
 ---
 
-# 36. La vision globale
+## 36. La vision globale
 
 Le plus important est de comprendre comment toutes ces notions s'assemblent.
 

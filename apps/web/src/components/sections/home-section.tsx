@@ -19,7 +19,7 @@ type HomeContentProps = {
 
 export function HomeContent({ recentWritings }: HomeContentProps) {
   return (
-    <motion.main
+    <motion.div
       className="space-y-20"
       variants={VARIANTS_CONTAINER}
       initial="hidden"
@@ -32,6 +32,6 @@ export function HomeContent({ recentWritings }: HomeContentProps) {
       <StacksSection />
       <ResourcesSection />
       <ContactSection />
-    </motion.main>
+    </motion.div>
   );
 }

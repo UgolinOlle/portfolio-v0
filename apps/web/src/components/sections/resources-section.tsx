@@ -138,13 +138,13 @@ function ResourceItem({
                   <div className="h-6 w-6 shrink-0">{renderIcon()}</div>
                 )}
               </motion.div>
-              <motion.h4
+              <motion.h3
                 className="font-sans font-normal dark:text-zinc-100"
                 layout
                 transition={{ duration: 0.2, ease: 'easeInOut' }}
               >
                 {resource.name}
-              </motion.h4>
+              </motion.h3>
             </motion.div>
             <p
               className="rounded-md px-2 font-mono text-sm text-zinc-500 dark:text-zinc-400"
@@ -216,7 +216,7 @@ export function ResourcesSection() {
       variants={VARIANTS_SECTION}
       className="space-y-6"
     >
-      <h3 className="text-lg">{t('resources.title')}</h3>
+      <h2 className="text-lg">{t('resources.title')}</h2>
 
       <div className="mb-4 flex flex-wrap gap-2">
         {types.map((type, index) => (

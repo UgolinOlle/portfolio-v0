@@ -40,7 +40,6 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
       variants={VARIANTS_SECTION}
     >
       <SectionHeading
-        className="mb-0"
         action={
           <Link
             className="text-sm text-zinc-500 transition-opacity hover:opacity-60 dark:text-zinc-400"

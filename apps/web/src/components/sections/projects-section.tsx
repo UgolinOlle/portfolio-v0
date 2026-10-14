@@ -24,8 +24,11 @@ export function ProjectsSection() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {PROJECTS.map((project, index) => (
           <div className="group aspect-video space-y-2" key={index}>
+            {/* Same destination as the title link below: hidden from keyboard and screen readers. */}
             <Link
               key={project.link}
+              aria-hidden="true"
+              tabIndex={-1}
               rel="noopener noreferrer"
               href={project.link}
               target={project.link.startsWith('http') ? '_blank' : undefined}
@@ -39,7 +42,9 @@ export function ProjectsSection() {
               >
                 <div className="absolute inset-0 aspect-video overflow-hidden rounded-2xl text-zinc-900 dark:text-zinc-50">
                   <img
-                    alt={`${project.name} background`}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
                     className="aspect-video object-cover transition duration-500 group-hover:scale-105"
                     src="/assets/background.svg"
                   />

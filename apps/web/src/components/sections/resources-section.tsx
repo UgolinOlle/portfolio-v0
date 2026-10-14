@@ -58,8 +58,10 @@ function ResourceItem({
     if (resource.url) {
       return (
         <img
-          alt={resource.name}
+          alt=""
           className="h-6 w-6 rounded object-cover"
+          decoding="async"
+          loading="lazy"
           height={24}
           src={resource.url}
           width={24}
@@ -250,8 +252,7 @@ export function ResourcesSection() {
         ))}
       </div>
 
-      <section
-        aria-label="Liste des ressources filtrées"
+      <div
         className="relative flex flex-col space-y-2 overflow-visible"
         onMouseLeave={() => {
           if (!isTouchDevice) {
@@ -287,7 +288,7 @@ export function ResourcesSection() {
             {showAll ? t('resources.showLess') : t('resources.showMore')}
           </motion.button>
         )}
-      </section>
+      </div>
     </motion.section>
   );
 }

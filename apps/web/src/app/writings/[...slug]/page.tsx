@@ -37,7 +37,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
         })}
       />
       <WritingsBanner />
-      <BackButton />
+      <BackButton to="writings" />
       <WritingMDX page={page} />
     </PortfolioShell>
   );

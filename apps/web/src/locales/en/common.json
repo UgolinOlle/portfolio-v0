@@ -1,9 +1,11 @@
 {
   "navigation": {
-    "portfolio": "P0rtfoli0",
-    "projects": "Pr0jects",
-    "components": "C0mponents",
-    "writing": "Writings"
+    "home": "Home",
+    "writings": "Writings",
+    "ui": "Whoa UI",
+    "inspirations": "Inspirations",
+    "skipToContent": "Skip to content",
+    "madeWith": "Designed and built by Ugolin Ollé"
   },
   "header": {
     "title": "Freelance Full Stack Developer",

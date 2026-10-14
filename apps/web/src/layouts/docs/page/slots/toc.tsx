@@ -82,9 +82,9 @@ export function TOC({ container, header, footer, style = 'normal', list }: TOCPr
       {header}
       <p
         id="toc-title"
-        className="text-fd-foreground inline-flex items-center gap-1.5 text-sm font-medium"
+        className="text-fd-muted-foreground inline-flex items-center gap-1.5 font-mono text-[0.6875rem] tracking-widest uppercase"
       >
-        <TextIcon aria-hidden="true" className="text-fd-muted-foreground size-4" />
+        <TextIcon aria-hidden="true" className="size-3.5" />
         {t('On this page')}
       </p>
       <Base.TOCScrollArea className="ms-px">

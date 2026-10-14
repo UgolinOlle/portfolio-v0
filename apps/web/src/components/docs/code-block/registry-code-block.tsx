@@ -55,7 +55,7 @@ export const RegistryCodeBlock = ({ files, className }: RegistryCodeBlockProps) 
           </span>
         )}
 
-        <CodeBlockCopyButton className="ml-auto" />
+        <CodeBlockCopyButton className="ml-auto size-7 rounded-none" />
       </CodeBlockHeader>
 
       <CodeBlockBody className="overflow-auto">

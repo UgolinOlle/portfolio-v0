@@ -99,7 +99,7 @@ const toRegistryItems = (
 export const getRegistrySections = (): RegistrySection[] => [
   {
     category: 'component',
-    title: 'Components',
+    title: 'Composants',
     description: "Des éléments d'interface unitaires, prêts à copier-coller dans vos projets.",
     href: '/ui/components',
     items: toRegistryItems(componentsSource, 'component'),
@@ -124,8 +124,37 @@ export const getRegistrySections = (): RegistrySection[] => [
 // du site, quel que soit le `homepage` déclaré dans registry.json.
 export const getRegistryItemUrl = (name: string): string => `${WEBSITE_URL}/r/${name}.json`;
 
-export const getRegistryInstallCommand = (name: string): string =>
-  `npx shadcn@latest add ${getRegistryItemUrl(name)}`;
+export const PACKAGE_MANAGERS = ['pnpm', 'npm', 'bun', 'yarn'] as const;
+
+export type PackageManager = (typeof PACKAGE_MANAGERS)[number];
+
+const PACKAGE_RUNNERS: Record<PackageManager, string> = {
+  pnpm: 'pnpm dlx',
+  npm: 'npx',
+  bun: 'bunx --bun',
+  yarn: 'yarn dlx',
+};
+
+// Commande d'installation shadcn de l'item, déclinée pour chaque gestionnaire de paquets.
+export const getRegistryInstallCommands = (name: string): Record<PackageManager, string> =>
+  Object.fromEntries(
+    PACKAGE_MANAGERS.map((manager) => [
+      manager,
+      `${PACKAGE_RUNNERS[manager]} shadcn@latest add ${getRegistryItemUrl(name)}`,
+    ]),
+  ) as Record<PackageManager, string>;
+
+// Une dépendance est soit un item de ce registry (lien vers sa page de doc, retrouvée via son
+// champ `preview`), soit un composant shadcn/ui (lien vers sa doc officielle).
+export const getRegistryDependencyHref = (name: string): { href: string; external: boolean } => {
+  const page = [componentsSource, blocksSource, templatesSource]
+    .flatMap((source) => source.getPages())
+    .find((candidate) => candidate.data.preview === name);
+
+  return page
+    ? { href: page.url, external: false }
+    : { href: `https://ui.shadcn.com/docs/components/${name}`, external: true };
+};
 
 // Convention d'authoring du registry : tout item `<name>` destiné à une page de doc doit avoir un
 // item jumeau `<name>-demo` (type `registry:example`, cf. registry.json) qui contient le code

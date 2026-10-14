@@ -1,12 +1,14 @@
-import { Badge } from '@portfolio-v0/shadcn/components/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@portfolio-v0/shadcn/components/tabs';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
+import Link from 'next/link';
+import { Fragment } from 'react';
+
 import { RegistryCodeBlock } from '~/components/docs/code-block/registry-code-block';
-import { CopyButton } from '~/components/docs/copy-button';
-import { CodeIcon, TerminalIcon } from '~/components/icons/ui';
-import { getRegistryInstallCommand } from '~/lib/registry';
+import { ArrowUpRightIcon, ChevronRightIcon } from '~/components/icons/ui';
+import { getRegistryDependencyHref, getRegistryInstallCommands } from '~/lib/registry';
 import { getRegistryItemManifest } from '~/lib/registry-item';
+
+import { InstallCommand } from './install-command';
 
 type RegistryInstallProps = {
   // Nom de l'item dans `registry.json`, identique au `path` passé à `Preview`.
@@ -14,45 +16,62 @@ type RegistryInstallProps = {
   className?: string;
 };
 
+const labelClassName = 'font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase';
+
 export const RegistryInstall = async ({ path, className }: RegistryInstallProps) => {
   const manifest = await getRegistryItemManifest(path);
-  const command = getRegistryInstallCommand(manifest.name);
+  const dependencies = manifest.registryDependencies ?? [];
 
   return (
-    <div className={cn('flex flex-col gap-3', className)}>
-      <Tabs defaultValue="cli">
-        <TabsList variant="line">
-          <TabsTrigger value="cli">
-            <TerminalIcon className="text-muted-foreground" size={14} />
-            CLI
-          </TabsTrigger>
-          <TabsTrigger value="manual">
-            <CodeIcon className="text-muted-foreground" size={14} />
-            Manuel
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="cli">
-          <div className="flex items-center justify-between gap-3 overflow-x-auto rounded-lg border bg-muted/40 px-4 py-2.5">
-            <code className="font-mono text-sm whitespace-nowrap text-foreground">{command}</code>
-            <CopyButton className="shrink-0" value={command} />
-          </div>
-        </TabsContent>
-        <TabsContent value="manual">
-          {/* Code complet de l'item (tous les fichiers), directement depuis le registry — pas
-          d'exemple d'usage ici, cf. `RegistryDemo` pour le code de la preview. */}
-          <RegistryCodeBlock files={manifest.files} />
-        </TabsContent>
-      </Tabs>
-      {manifest.registryDependencies && manifest.registryDependencies.length > 0 && (
-        <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
-          Dépendances :
-          {manifest.registryDependencies.map((dependency) => (
-            <Badge key={dependency} variant="secondary">
-              {dependency}
-            </Badge>
-          ))}
-        </div>
+    <div className={cn('flex flex-col gap-4', className)}>
+      <InstallCommand commands={getRegistryInstallCommands(manifest.name)} />
+
+      {dependencies.length > 0 && (
+        <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm">
+          <span className={labelClassName}>Requiert</span>
+          {dependencies.map((dependency, index) => {
+            const { href, external } = getRegistryDependencyHref(dependency);
+
+            return (
+              <Fragment key={dependency}>
+                {index > 0 && (
+                  <span aria-hidden="true" className="text-foreground/25">
+                    ·
+                  </span>
+                )}
+                <Link
+                  className="inline-flex items-center gap-0.5 font-mono text-[0.8125rem] text-foreground/80 underline decoration-foreground/20 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground"
+                  href={href}
+                  {...(external ? { rel: 'noreferrer', target: '_blank' } : {})}
+                >
+                  {dependency}
+                  {external && <ArrowUpRightIcon aria-hidden="true" className="size-3" />}
+                </Link>
+              </Fragment>
+            );
+          })}
+        </p>
       )}
+
+      {/* Code complet de l'item (tous les fichiers), directement depuis le registry — pas
+      d'exemple d'usage ici, cf. `RegistryDemo` pour le code de la preview. */}
+      <details className="group border border-foreground/10">
+        <summary
+          className={cn(
+            'flex cursor-pointer list-none items-center gap-2 px-4 py-2.5 transition-colors [&::-webkit-details-marker]:hidden',
+            'hover:bg-foreground/3 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
+            labelClassName,
+            'group-open:border-b group-open:border-foreground/10 group-open:text-foreground',
+          )}
+        >
+          <ChevronRightIcon
+            aria-hidden="true"
+            className="size-3.5 transition-transform group-open:rotate-90"
+          />
+          Installation manuelle
+        </summary>
+        <RegistryCodeBlock className="border-0" files={manifest.files} />
+      </details>
     </div>
   );
 };

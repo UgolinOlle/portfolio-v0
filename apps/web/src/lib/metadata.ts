@@ -116,7 +116,10 @@ export const localizedPath = (pathname: string, lang: Locale): string =>
   lang === DEFAULT_LOCALE ? pathname : `${pathname}?lang=${lang}`;
 
 /** `hreflang` map for a page available in `languages`, with the default locale as `x-default`. */
-export const languageAlternates = (pathname: string, languages: readonly Locale[]) =>
+export const languageAlternates = (
+  pathname: string,
+  languages: readonly Locale[],
+): Record<string, string> =>
   Object.fromEntries([
     ...languages.map((lang) => [lang, localizedPath(pathname, lang)]),
     ['x-default', localizedPath(pathname, DEFAULT_LOCALE)],

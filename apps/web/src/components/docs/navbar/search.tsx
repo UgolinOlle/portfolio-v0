@@ -4,9 +4,9 @@ import { Kbd } from '@portfolio-v0/shadcn/components/kbd';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { useSearchContext } from 'fumadocs-ui/contexts/search';
-import { motion } from 'motion/react';
 
 import { SearchIcon } from '~/components/icons/ui';
+import { useModifierKey } from '~/hooks/use-modifier-key';
 
 type SearchProps = {
   className?: string;
@@ -14,24 +14,26 @@ type SearchProps = {
 
 export const Search = ({ className }: SearchProps) => {
   const { setOpenSearch } = useSearchContext();
+  const modKey = useModifierKey();
 
   return (
-    <motion.button
+    // Icon-only below `lg` so the header fits between 768px and 1024px.
+    <button
+      aria-label="Rechercher"
       className={cn(
-        'group flex h-8 w-56 items-center gap-2 rounded-full border bg-muted/40 px-3 text-sm text-muted-foreground',
-        'transition-colors hover:border-foreground/15 hover:bg-muted',
+        'group flex items-center gap-2 border-s border-foreground/5 px-4 text-sm text-foreground/55 transition-colors lg:w-64',
+        'hover:bg-foreground/3 hover:text-foreground/80 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
         className,
       )}
       onClick={() => setOpenSearch(true)}
       type="button"
-      whileTap={{ scale: 0.98 }}
     >
-      <SearchIcon className="size-3.5 shrink-0 transition-colors group-hover:text-foreground" />
-      <span className="flex-1 text-left font-normal">Search...</span>
-      <span className="flex items-center gap-0.5">
-        <Kbd className="border bg-background">⌘</Kbd>
-        <Kbd className="border bg-background">K</Kbd>
+      <SearchIcon className="size-3.5 shrink-0" />
+      <span className="hidden flex-1 text-start lg:inline">Rechercher…</span>
+      <span aria-hidden="true" className="hidden items-center gap-0.5 lg:flex">
+        <Kbd className="h-5 rounded-none border bg-transparent text-[0.6875rem]">{modKey}</Kbd>
+        <Kbd className="h-5 rounded-none border bg-transparent text-[0.6875rem]">K</Kbd>
       </span>
-    </motion.button>
+    </button>
   );
 };

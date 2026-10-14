@@ -1,10 +1,10 @@
-import { Button } from '@portfolio-v0/shadcn/components/button';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { SiGithub } from '@icons-pack/react-simple-icons';
 
+import { GITHUB_REPO as REPO } from '~/lib/constants';
+
 const DAY = 86_400;
-const REPO = 'ugolinolle/portfolio-v0';
 
 type GitHubProps = {
   className?: string;
@@ -27,33 +27,29 @@ const GitHub = async ({ className }: GitHubProps) => {
   const stars = await getStarCount();
 
   return (
-    <Button
-      asChild
-      className={cn('h-8 rounded-full shadow-none transition-transform hover:scale-105', className)}
-      size="sm"
-      variant="outline"
+    <a
+      aria-label={stars === null ? 'GitHub' : `GitHub — ${stars} étoiles`}
+      className={cn(
+        'flex items-center gap-2 border-s border-foreground/5 px-4 font-mono text-xs text-foreground/60 transition-colors',
+        'hover:bg-foreground/3 hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
+        className,
+      )}
+      href={`https://github.com/${REPO}`}
+      rel="noreferrer"
+      target="_blank"
     >
-      <a
-        className="flex items-center gap-1.5"
-        href={`https://github.com/${REPO}`}
-        rel="noreferrer"
-        target="_blank"
-      >
-        <SiGithub className="size-3.5" />
-        {stars !== null && (
-          <span className="text-xs text-muted-foreground tabular-nums">
-            {new Intl.NumberFormat('en-US', {
-              notation: 'compact',
-            }).format(stars)}
-          </span>
-        )}
-      </a>
-    </Button>
+      <SiGithub aria-hidden="true" className="size-3.5" />
+      {stars !== null && (
+        <span className="tabular-nums">
+          {new Intl.NumberFormat('en-US', { notation: 'compact' }).format(stars)}
+        </span>
+      )}
+    </a>
   );
 };
 
 const GitHubSkeleton = () => (
-  <div className="h-8 w-16 animate-pulse rounded-lg border bg-muted/50" />
+  <div aria-hidden="true" className="w-16 border-s border-foreground/5" />
 );
 
 export { GitHubSkeleton, GitHub };

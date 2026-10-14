@@ -1,7 +1,14 @@
 @import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/shadcn.css';
 @import 'fumadocs-ui/css/preset.css';
 @import '@portfolio-v0/shadcn/styles';
+
+/* Layout tokens for the /ui registry shell (navbar, sidebar, TOC, content measure). */
+:root {
+  --nav-height: 3.5rem;
+  --rail-width: 16.75rem;
+  --docs-sidebar-width: 18.75rem;
+}
 
 html {
   scrollbar-gutter: stable;
@@ -27,21 +34,5 @@ html > body[data-scroll-locked] {
   }
   to {
     clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
-  }
-}
-
-@layer utilities {
-  .border-blur {
-    position: relative;
-  }
-
-  .border-blur::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: white;
-    filter: blur(4px);
-    z-index: -1;
   }
 }

@@ -15,8 +15,9 @@
 	---break---
 */
 :root {
-  --font-sans: 'Geist', system-ui, -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  /* Loaded with next/font in apps/web/src/app/layout.tsx; the names are fallbacks. */
+  --font-sans: var(--font-geist-sans), 'Geist', system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -185,7 +186,7 @@
   --shadow-2xl: var(--shadow-2xl);
 
   --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
-  --animate-pulse: pulse-border calc(var(--duration) * 1s) ease-in-out infinite;
+  --animate-pulse-border: pulse-border calc(var(--duration) * 1s) ease-in-out infinite;
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);

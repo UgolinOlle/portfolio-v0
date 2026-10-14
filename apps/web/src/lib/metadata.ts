@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from 'next';
 export const siteConfig = {
   name: 'Ugolin Ollé',
   url: 'https://ugolin-olle.com',
-  title: 'Ugolin Ollé — Développeur full stack freelance Next.js & React',
+  title: 'Ugolin Ollé — Développeur full stack freelance Next.js',
   description:
     'Développeur full stack freelance : SaaS, applications web et landing pages rapides avec Next.js, React, NestJS et TypeScript. Disponible pour vos projets.',
   keywords: [
@@ -194,7 +194,28 @@ export const createMetadata = ({
   };
 };
 
+export type RegistryKind = 'components' | 'blocks' | 'templates';
+
+/** Search titles for the registry: bare names ("Button", "Introduction") say nothing in a SERP. */
+const REGISTRY_TITLES: Record<RegistryKind, { index: string; item: (name: string) => string }> = {
+  components: {
+    index: 'Composants React pour shadcn/ui',
+    item: (name) => `${name} : composant React pour shadcn/ui`,
+  },
+  blocks: {
+    index: 'Blocks React et Next.js pour shadcn/ui',
+    item: (name) => `${name} : block React pour shadcn/ui`,
+  },
+  templates: {
+    index: 'Templates Next.js pour shadcn/ui',
+    item: (name) => `${name} : template Next.js`,
+  },
+};
+
 type DocsMetadataInput = {
+  kind: RegistryKind;
+  /** True for the section's index page (`/ui/components`, ...). */
+  isIndex: boolean;
   title: string;
   description?: string;
   /** Path relative to the site root, e.g. `/ui/components/button`. */
@@ -205,8 +226,16 @@ type DocsMetadataInput = {
 
 /** Shared metadata builder for the components/blocks/templates registry doc pages. */
 export const createDocsMetadata = ({
+  kind,
+  isIndex,
   title,
   description,
   pathname,
   ogImage,
-}: DocsMetadataInput): Metadata => createMetadata({ title, description, pathname, image: ogImage });
+}: DocsMetadataInput): Metadata =>
+  createMetadata({
+    title: isIndex ? REGISTRY_TITLES[kind].index : REGISTRY_TITLES[kind].item(title),
+    description,
+    pathname,
+    image: ogImage,
+  });

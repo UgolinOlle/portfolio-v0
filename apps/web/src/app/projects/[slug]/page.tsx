@@ -52,7 +52,7 @@ export const generateMetadata = async ({ params, searchParams }: PageProps): Pro
   }
 
   return createMetadata({
-    title: page.data.title,
+    title: page.data.seoTitle ?? page.data.title,
     description: page.data.description,
     pathname: `/projects/${slug}`,
     image: `/og/content/projects/${slug}/image.png`,

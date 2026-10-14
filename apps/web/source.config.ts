@@ -20,9 +20,14 @@ export const { docs: templatesDocs, meta: templatesMeta } = defineDocs({
   docs: { schema: registrySchema },
 });
 
+const projectsSchema = frontmatterSchema.extend({
+  /** Search-result title when it should say more than the H1 (e.g. product name + what it is). */
+  seoTitle: z.string().optional(),
+});
+
 export const { docs: projectsDocs, meta: projectsMeta } = defineDocs({
   dir: 'content/projects',
-  docs: { schema: frontmatterSchema },
+  docs: { schema: projectsSchema },
 });
 
 const writingsSchema = frontmatterSchema.extend({

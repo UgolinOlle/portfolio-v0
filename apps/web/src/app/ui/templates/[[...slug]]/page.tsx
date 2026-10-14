@@ -30,6 +30,8 @@ export const generateMetadata = async (props: {
   const slugPath = params.slug?.join('/') ?? '';
 
   return createDocsMetadata({
+    kind: 'templates',
+    isIndex: !slugPath,
     title: page.data.title,
     description: page.data.description,
     pathname: `/ui/templates${slugPath ? `/${slugPath}` : ''}`,

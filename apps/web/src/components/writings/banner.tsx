@@ -1,4 +1,4 @@
-import PixelBlast from '../ui/pixel-blast';
+import PixelBlast from '~/components/ui/pixel-blast-lazy';
 
 function WritingsBanner() {
   return (

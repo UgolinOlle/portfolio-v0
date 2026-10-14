@@ -1,4 +1,4 @@
-import PixelBlast from '~/components/ui/pixel-blast';
+import PixelBlast from '~/components/ui/pixel-blast-lazy';
 
 type ConstructionBannerProps = {
   readonly message?: string;

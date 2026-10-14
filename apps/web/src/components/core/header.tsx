@@ -1,6 +1,5 @@
 'use client';
 
-import { useTheme } from 'next-themes';
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/core/i18n-provider';
@@ -12,8 +11,6 @@ import { SocialLinksNav } from '../ui/social-links-nav';
 
 function Header() {
   const { t } = useTranslation();
-  const { theme, resolvedTheme } = useTheme();
-  const currentTheme = resolvedTheme || theme;
 
   return (
     <header className="mb-14 flex flex-col items-start justify-between gap-4 sm:items-center sm:gap-6">
@@ -43,7 +40,7 @@ function Header() {
 
         <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800" />
 
-        <SocialLinksNav currentTheme={currentTheme} links={SOCIAL_LINKS} />
+        <SocialLinksNav links={SOCIAL_LINKS} />
       </div>
     </header>
   );

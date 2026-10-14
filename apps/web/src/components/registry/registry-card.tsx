@@ -33,14 +33,14 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
         <div
           className={cn(
             'absolute inset-0 z-10 flex items-center justify-center bg-background/30 opacity-0',
-            'backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100',
+            'backdrop-blur-md transition-opacity duration-300 group-focus-within:opacity-100 group-hover:opacity-100',
           )}
         >
           <Link
             href={item.href}
             className={cn(
               'rounded-full bg-primary px-5 py-2 text-sm font-medium',
-              'text-primary-foreground shadow-lg transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+              'text-primary-foreground shadow-lg transition-transform duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none',
             )}
           >
             {t('registry.card.viewDetails')}

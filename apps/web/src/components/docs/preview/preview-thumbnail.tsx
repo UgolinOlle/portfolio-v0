@@ -44,7 +44,7 @@ export const PreviewThumbnail = async ({
             <Component />
           </div>
         ) : (
-          <div className="w-full min-w-0 max-w-full [zoom:0.7] max-sm:[zoom:0.5] [&>*]:w-full [&>*]:min-w-0 [&>*]:max-w-full">
+          <div className="w-full max-w-full min-w-0 [zoom:0.7] max-sm:[zoom:0.5] [&>*]:w-full [&>*]:max-w-full [&>*]:min-w-0">
             <Component />
           </div>
         )}

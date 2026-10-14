@@ -1,6 +1,12 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { BookOpenText, Command, Component as ComponentIcon, SquareTerminal } from 'lucide-react';
+import {
+  BookOpenText,
+  BriefcaseBusiness,
+  Command,
+  Component as ComponentIcon,
+  SquareTerminal,
+} from 'lucide-react';
 
 import { LOGOS, TOOLS } from '~/components/icons';
 import type { Project, Resources, SocialLink, WorkExperience } from '~/types';
@@ -69,6 +75,28 @@ export const PROJECTS: Project[] = [
       </div>
     ),
     id: 'neovim-config',
+  },
+  {
+    name: 'Whoa Jobs',
+    description:
+      'Collect, centralize and track job offers (work-study & full-time) from multiple job boards — in a single dashboard.',
+    link: '/projects/whoa-jobs',
+    id: 'whoa-jobs',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <BriefcaseBusiness className="size-7" />
+        </div>
+      </div>
+    ),
   },
   {
     name: '42 Bangkok',

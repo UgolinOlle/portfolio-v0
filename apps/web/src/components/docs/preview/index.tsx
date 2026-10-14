@@ -1,12 +1,9 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@portfolio-v0/shadcn/components/tabs';
-import { cn } from '@portfolio-v0/shadcn/utils';
-
 import { RegistryCodeBlock } from '~/components/docs/code-block/registry-code-block';
-import { CodeIcon, EyeIcon } from '~/components/icons/ui';
 import { getRegistryDemoName } from '~/lib/registry';
 import { getRegistryItemManifest } from '~/lib/registry-item';
 
 import { PreviewFrame } from './preview-frame';
+import { PreviewShell } from './preview-shell';
 
 type PreviewProps = {
   path: string;
@@ -25,56 +22,26 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
   const isFullPage = type !== 'component';
 
   return (
-    <div
-      className={cn(
-        'size-full overflow-hidden rounded-xl border bg-background shadow-xs',
-        className,
-      )}
-    >
-      <Tabs className="size-full gap-0" defaultValue="preview">
-        <div className="flex items-center border-b bg-muted/30 px-2">
-          <TabsList className="h-11 bg-transparent p-0" variant="line">
-            <TabsTrigger
-              className="gap-1.5 text-xs font-medium text-muted-foreground data-active:text-foreground"
-              value="preview"
-            >
-              <EyeIcon size={14} />
-              Preview
-            </TabsTrigger>
-
-            <TabsTrigger
-              className="gap-1.5 text-xs font-medium text-muted-foreground data-active:text-foreground"
-              value="code"
-            >
-              <CodeIcon size={14} />
-              Code
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
-        <TabsContent
-          className={cn(
-            isFullPage ? 'h-192 overflow-auto p-3' : 'h-128 overflow-hidden',
-            'flex items-center justify-center bg-muted/40',
-          )}
-          value="preview"
-        >
-          {isFullPage ? (
+    <PreviewShell
+      className={className}
+      code={
+        <RegistryCodeBlock
+          className="size-full max-h-none rounded-none border-none shadow-none"
+          files={demoManifest.files}
+        />
+      }
+      fullPage={isFullPage}
+      preview={
+        isFullPage ? (
+          <div className="w-full p-6 sm:p-10">
             <Component />
-          ) : (
-            <PreviewFrame>
-              <Component />
-            </PreviewFrame>
-          )}
-        </TabsContent>
-
-        <TabsContent className="h-128 overflow-hidden" value="code">
-          <RegistryCodeBlock
-            className="size-full max-h-none rounded-none border-none shadow-none"
-            files={demoManifest.files}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
+          </div>
+        ) : (
+          <PreviewFrame>
+            <Component />
+          </PreviewFrame>
+        )
+      }
+    />
   );
 };

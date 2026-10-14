@@ -5,14 +5,8 @@ import { PortfolioShell } from '~/components/core/portfolio-shell';
 import { BackButton } from '~/components/projects/back-button';
 import { WritingsBanner } from '~/components/writings/banner';
 import { WritingMDX } from '~/components/writings/writing-mdx';
-import { createMetadata } from '~/lib/metadata';
-import { writingsSource } from '~/lib/source';
-
-const LANGUAGES = ['fr', 'en'] as const;
-type Language = (typeof LANGUAGES)[number];
-
-const resolveLang = (lang: string | undefined): Language =>
-  LANGUAGES.includes(lang as Language) ? (lang as Language) : 'fr';
+import { createMetadata, resolveLocale } from '~/lib/metadata';
+import { getPageLocales, writingsSource } from '~/lib/source';
 
 type PageProps = {
   params: Promise<{ slug: string[] }>;
@@ -22,7 +16,7 @@ type PageProps = {
 const Page = async ({ params, searchParams }: PageProps) => {
   const { slug } = await params;
   const { lang } = await searchParams;
-  const page = writingsSource.getPage(slug, resolveLang(lang));
+  const page = writingsSource.getPage(slug, resolveLocale(lang));
 
   if (!page) {
     notFound();
@@ -43,16 +37,21 @@ export const generateStaticParams = () =>
 export const generateMetadata = async ({ params, searchParams }: PageProps): Promise<Metadata> => {
   const { slug } = await params;
   const { lang } = await searchParams;
-  const page = writingsSource.getPage(slug, resolveLang(lang));
+  const page = writingsSource.getPage(slug, resolveLocale(lang));
 
   if (!page) {
     notFound();
   }
 
+  const languages = getPageLocales(writingsSource, slug);
+  const requested = resolveLocale(lang);
+
   return createMetadata({
     title: page.data.title,
     description: page.data.description,
     pathname: `/writings/${slug.join('/')}`,
+    lang: languages.includes(requested) ? requested : 'fr',
+    languages,
   });
 };
 

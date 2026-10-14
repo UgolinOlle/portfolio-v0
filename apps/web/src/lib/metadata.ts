@@ -102,6 +102,26 @@ export const defaultMetadata: Metadata = {
   },
 };
 
+export const LOCALES = ['fr', 'en'] as const;
+export type Locale = (typeof LOCALES)[number];
+export const DEFAULT_LOCALE: Locale = 'fr';
+
+const OG_LOCALES: Record<Locale, string> = { fr: 'fr_FR', en: 'en_US' };
+
+export const resolveLocale = (lang: string | undefined): Locale =>
+  LOCALES.includes(lang as Locale) ? (lang as Locale) : DEFAULT_LOCALE;
+
+/** EN variants of projects and writings are served on the same path with `?lang=en`. */
+export const localizedPath = (pathname: string, lang: Locale): string =>
+  lang === DEFAULT_LOCALE ? pathname : `${pathname}?lang=${lang}`;
+
+/** `hreflang` map for a page available in `languages`, with the default locale as `x-default`. */
+export const languageAlternates = (pathname: string, languages: readonly Locale[]) =>
+  Object.fromEntries([
+    ...languages.map((lang) => [lang, localizedPath(pathname, lang)]),
+    ['x-default', localizedPath(pathname, DEFAULT_LOCALE)],
+  ]);
+
 type PageMetadataInput = {
   /** Plain page title, the global template (`%s | Ugolin Ollé`) is applied automatically to <title>. */
   title: string;
@@ -109,6 +129,10 @@ type PageMetadataInput = {
   /** Path relative to the site root, e.g. `/ui` or `/inspirations`. */
   pathname: string;
   image?: string;
+  /** Locale of the rendered content. Non-default locales get a self-referencing `?lang=` canonical. */
+  lang?: Locale;
+  /** Locales this page exists in. When more than one, `hreflang` alternates are emitted. */
+  languages?: readonly Locale[];
 };
 
 /**
@@ -121,37 +145,45 @@ export const createMetadata = ({
   description = siteConfig.description,
   pathname,
   image = siteConfig.ogImage,
-}: PageMetadataInput): Metadata => ({
-  title,
-  description,
-  alternates: {
-    canonical: pathname,
-  },
-  openGraph: {
-    type: 'website',
-    locale: siteConfig.locale,
-    url: pathname,
-    siteName: siteConfig.name,
+  lang = DEFAULT_LOCALE,
+  languages = [DEFAULT_LOCALE],
+}: PageMetadataInput): Metadata => {
+  const url = localizedPath(pathname, lang);
+
+  return {
     title,
     description,
-    images: [
-      {
-        url: image,
-        width: 1200,
-        height: 630,
-        alt: title,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: siteConfig.socials.twitter,
-    creator: siteConfig.socials.twitter,
-    title,
-    description,
-    images: [image],
-  },
-});
+    alternates: {
+      canonical: url,
+      ...(languages.length > 1 && { languages: languageAlternates(pathname, languages) }),
+    },
+    openGraph: {
+      type: 'website',
+      locale: OG_LOCALES[lang],
+      alternateLocale: languages.filter((l) => l !== lang).map((l) => OG_LOCALES[l]),
+      url,
+      siteName: siteConfig.name,
+      title,
+      description,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: siteConfig.socials.twitter,
+      creator: siteConfig.socials.twitter,
+      title,
+      description,
+      images: [image],
+    },
+  };
+};
 
 type DocsMetadataInput = {
   title: string;

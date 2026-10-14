@@ -64,7 +64,9 @@
     "filterAll": "All",
     "noWritings": "No writings available in English",
     "recentTitle": "Recent writings",
-    "seeAll": "See all writings"
+    "seeAll": "See all writings",
+    "notice": "This article is still being reviewed and may contain mistakes. Spotted one?",
+    "noticeCta": "Let me know"
   },
   "stacks": {
     "title": "My Skills",

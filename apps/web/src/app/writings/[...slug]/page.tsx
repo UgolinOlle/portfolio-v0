@@ -36,8 +36,8 @@ const Page = async ({ params, searchParams }: PageProps) => {
           image: `/og/content/writings/${slug.join('/')}/image.png`,
         })}
       />
-      <WritingsBanner />
       <BackButton to="writings" />
+      <WritingsBanner />
       <WritingMDX page={page} />
     </PortfolioShell>
   );

@@ -64,7 +64,9 @@
     "filterAll": "Tous",
     "noWritings": "Aucun article disponible en français",
     "recentTitle": "Derniers articles",
-    "seeAll": "Voir tous les articles"
+    "seeAll": "Voir tous les articles",
+    "notice": "Article en cours de relecture : il peut rester des erreurs. Une coquille ?",
+    "noticeCta": "Écrivez-moi"
   },
   "stacks": {
     "title": "Mes compétences",

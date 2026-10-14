@@ -1,4 +1,6 @@
-export const WEBSITE_URL = 'https://ugolin-olle.com';
+import { siteConfig } from '~/lib/metadata';
+
+export const WEBSITE_URL = siteConfig.url;
 export const EMAIL = 'hello@ugolin-olle.com';
 
 export const VARIANTS_CONTAINER = {

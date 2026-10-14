@@ -8,7 +8,7 @@ import { useTheme } from 'next-themes';
 import { type ComponentProps, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 
-import { SunMoonIcon } from '~/components/icons/ui';
+import { ThemeIcon } from '~/components/icons/ui';
 
 const itemVariants = cva('size-6 p-1 text-fd-muted-foreground', {
   variants: {
@@ -52,7 +52,7 @@ export function ThemeSwitch({ className, ...props }: ThemeSwitchProps) {
       {...props}
     >
       <span className={cn(itemVariants({ active: true }))}>
-        <SunMoonIcon className="size-full" fill="currentColor" />
+        <ThemeIcon className="size-full" weight="duotone" />
       </span>
     </button>
   );

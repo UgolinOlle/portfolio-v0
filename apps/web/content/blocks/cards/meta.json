@@ -1,5 +1,5 @@
 {
   "title": "Cartes",
-  "icon": "LayoutGrid",
+  "icon": "SquaresFour",
   "pages": ["status-card", "activity", "calendar-sync"]
 }

@@ -1,3 +1,4 @@
+import * as PhosphorIcons from '@phosphor-icons/react/ssr';
 import { defineI18n } from 'fumadocs-core/i18n';
 import { loader } from 'fumadocs-core/source';
 import { toFumadocsSource } from 'fumadocs-mdx/runtime/server';
@@ -13,16 +14,20 @@ import {
   writingsDocs,
   writingsMeta,
 } from 'fumadocs-mdx:collections/server';
-import { icons } from 'lucide-react';
-import { createElement } from 'react';
+import { type ComponentType, createElement } from 'react';
+
+// `icon` in frontmatter / meta.json is a Phosphor icon name (e.g. `BookOpen`, `CursorClick`).
+const phosphorIcons = PhosphorIcons as unknown as Record<string, ComponentType | undefined>;
 
 const icon = (name: string | undefined) => {
   if (!name) {
     return;
   }
 
-  if (name in icons) {
-    return createElement(icons[name as keyof typeof icons]);
+  const Icon = phosphorIcons[name];
+
+  if (Icon) {
+    return createElement(Icon);
   }
 };
 

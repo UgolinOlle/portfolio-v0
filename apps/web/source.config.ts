@@ -1,3 +1,4 @@
+import { remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
 import { defineConfig, defineDocs, frontmatterSchema } from 'fumadocs-mdx/config';
 import { z } from 'zod';
 
@@ -48,4 +49,9 @@ export const { docs: writingsDocs, meta: writingsMeta } = defineDocs({
   docs: { schema: writingsSchema },
 });
 
-export default defineConfig();
+export default defineConfig({
+  mdxOptions: {
+    // ```mermaid code blocks become <Mermaid chart="..." /> (see components/core/mermaid.tsx).
+    remarkPlugins: (plugins) => [remarkMdxMermaid, ...plugins],
+  },
+});

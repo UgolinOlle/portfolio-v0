@@ -16,7 +16,7 @@ type RegistryInstallProps = {
   className?: string;
 };
 
-const labelClassName = 'font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase';
+const labelClassName = 'label-mono text-foreground/45';
 
 export const RegistryInstall = async ({ path, className }: RegistryInstallProps) => {
   const manifest = await getRegistryItemManifest(path);

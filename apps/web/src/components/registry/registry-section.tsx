@@ -18,7 +18,7 @@ export const RegistrySection = ({ index, section }: RegistrySectionProps) => {
     <section className="scroll-mt-(--nav-height)" id={section.category}>
       <header className="flex flex-col gap-5 border-b border-foreground/5 px-6 py-8 sm:flex-row sm:items-end sm:justify-between lg:px-8">
         <div className="flex min-w-0 flex-col gap-2">
-          <p className="font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase">
+          <p className="label-mono text-foreground/45">
             {String(index).padStart(2, '0')}
             <span aria-hidden="true" className="px-2 text-foreground/25">
               /
@@ -33,7 +33,7 @@ export const RegistrySection = ({ index, section }: RegistrySectionProps) => {
 
         <Link
           className={cn(
-            'group inline-flex h-8 shrink-0 items-center gap-2 self-start border border-foreground/10 px-3 font-mono text-[0.6875rem] tracking-widest text-foreground/70 uppercase transition-colors sm:self-auto',
+            'label-mono group inline-flex h-8 shrink-0 items-center gap-2 self-start border border-foreground/10 px-3 text-foreground/70 transition-colors sm:self-auto',
             'hover:bg-foreground hover:text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
           )}
           href={section.href}
@@ -49,7 +49,7 @@ export const RegistrySection = ({ index, section }: RegistrySectionProps) => {
       {count > 0 ? (
         <RegistryGrid items={section.items} />
       ) : (
-        <p className="border-b border-foreground/5 px-6 py-12 font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase lg:px-8">
+        <p className="label-mono border-b border-foreground/5 px-6 py-12 text-foreground/45 lg:px-8">
           Aucun élément pour l'instant
         </p>
       )}

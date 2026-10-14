@@ -1,3 +1,5 @@
+import { cn } from '@portfolio-v0/shadcn/utils';
+
 import { Suspense } from 'react';
 
 import { PreviewThumbnail } from '~/components/docs/preview/preview-thumbnail';
@@ -6,13 +8,14 @@ import type { RegistryItem } from '~/lib/registry';
 
 type RegistryGridProps = {
   items: RegistryItem[];
+  className?: string;
 };
 
 // Cards share hairlines instead of floating in gaps: each cell draws its own right and
 // bottom border, so neighbours never double up.
-export const RegistryGrid = ({ items }: RegistryGridProps) => {
+export const RegistryGrid = ({ items, className }: RegistryGridProps) => {
   return (
-    <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+    <div className={cn('grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4', className)}>
       {items.map((item) => (
         <RegistryCard
           item={item}

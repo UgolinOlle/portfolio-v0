@@ -80,7 +80,7 @@ function FooterItem({ item, index }: { item: Item; index: 0 | 1 }) {
     >
       <span
         className={cn(
-          'inline-flex items-center gap-1 font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase',
+          'label-mono inline-flex items-center gap-1 text-foreground/45',
           index === 1 && 'flex-row-reverse',
         )}
       >

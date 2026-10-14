@@ -10,7 +10,7 @@ type UiLayoutProps = {
 export default function UiLayout({ children }: UiLayoutProps) {
   return (
     <TranslationProvider translations={registryTranslations}>
-      <div className="flex w-full flex-1 flex-col">{children}</div>
+      <main className="flex w-full flex-1 flex-col">{children}</main>
     </TranslationProvider>
   );
 }

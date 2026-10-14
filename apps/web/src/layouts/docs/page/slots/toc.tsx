@@ -82,7 +82,7 @@ export function TOC({ container, header, footer, style = 'normal', list }: TOCPr
       {header}
       <p
         id="toc-title"
-        className="text-fd-muted-foreground inline-flex items-center gap-1.5 font-mono text-[0.6875rem] tracking-widest uppercase"
+        className="label-mono text-fd-muted-foreground inline-flex items-center gap-1.5"
       >
         <TextIcon aria-hidden="true" className="size-3.5" />
         {t('On this page')}

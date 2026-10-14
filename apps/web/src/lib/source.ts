@@ -14,11 +14,14 @@ import {
   writingsDocs,
   writingsMeta,
 } from 'fumadocs-mdx:collections/server';
-import { type ComponentType, createElement } from 'react';
+import { type ComponentType, Fragment, createElement } from 'react';
 
 // `icon` in frontmatter / meta.json is a Phosphor icon name (e.g. `BookOpen`, `CursorClick`).
-const phosphorIcons = PhosphorIcons as unknown as Record<string, ComponentType | undefined>;
+type PhosphorIcon = ComponentType<{ weight?: 'regular' | 'fill'; 'data-icon-weight'?: string }>;
 
+const phosphorIcons = PhosphorIcons as unknown as Record<string, PhosphorIcon | undefined>;
+
+// Both weights are rendered; `global.css` only shows the filled one for the current page.
 const icon = (name: string | undefined) => {
   if (!name) {
     return;
@@ -27,7 +30,12 @@ const icon = (name: string | undefined) => {
   const Icon = phosphorIcons[name];
 
   if (Icon) {
-    return createElement(Icon);
+    return createElement(
+      Fragment,
+      null,
+      createElement(Icon, { 'data-icon-weight': 'regular' }),
+      createElement(Icon, { weight: 'fill', 'data-icon-weight': 'fill' }),
+    );
   }
 };
 

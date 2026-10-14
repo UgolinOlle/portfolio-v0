@@ -1,8 +1,6 @@
-import { Suspense } from 'react';
-
 import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
-import { GitHub, GitHubSkeleton } from './github';
+import { getStarCount } from './github';
 import type { MobileMenuGroup } from './mobile-menu';
 import { NavbarClient, type NavbarVariant } from './navbar-client';
 
@@ -29,7 +27,11 @@ const counts = {
   templates: itemCount(templatesSource.getPages()),
 };
 
-function Navbar({ variant = 'docs' }: NavbarProps) {
+// Async so the star count reaches the client navbar as data. Passing a suspended server
+// component through it instead triggered React's "unique key" warning.
+async function Navbar({ variant = 'docs' }: NavbarProps) {
+  const githubStars = await getStarCount();
+
   return (
     <NavbarClient
       blocksCount={counts.blocks}
@@ -37,11 +39,7 @@ function Navbar({ variant = 'docs' }: NavbarProps) {
       menuGroups={menuGroups}
       templatesCount={counts.templates}
       variant={variant}
-      github={
-        <Suspense fallback={<GitHubSkeleton />}>
-          <GitHub />
-        </Suspense>
-      }
+      githubStars={githubStars}
     />
   );
 }

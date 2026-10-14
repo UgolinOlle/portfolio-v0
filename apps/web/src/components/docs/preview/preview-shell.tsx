@@ -83,7 +83,7 @@ export const PreviewShell = ({ preview, code, fullPage, className }: PreviewShel
                 aria-controls={`${id}-${item.value}`}
                 aria-selected={selected}
                 className={cn(
-                  'relative border-e border-foreground/10 px-4 font-mono text-[0.6875rem] tracking-widest text-foreground/55 uppercase transition-colors',
+                  'label-mono relative border-e border-foreground/10 px-4 text-foreground/55 transition-colors',
                   'hover:bg-foreground/3 hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
                   selected &&
                     'bg-foreground/3 text-foreground after:absolute after:inset-x-0 after:-bottom-px after:h-px after:bg-foreground',

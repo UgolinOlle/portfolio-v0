@@ -1,3 +1,5 @@
+import { cn } from '@portfolio-v0/shadcn/utils';
+
 import type * as PageTree from 'fumadocs-core/page-tree';
 import type { TOCItemType } from 'fumadocs-core/toc';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
@@ -5,6 +7,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { ConstructionBanner } from '~/components/core/construction-banner';
+import { RegistryGrid } from '~/components/registry/registry-grid';
 import {
   DocsBody,
   DocsDescription,
@@ -14,7 +17,7 @@ import {
   ViewOptionsPopover,
 } from '~/layouts/docs/page';
 import { GITHUB_REPO } from '~/lib/constants';
-import { getRegistryExamples } from '~/lib/registry';
+import { getRegistryExamples, getRegistryItems } from '~/lib/registry';
 import type { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
 import { RegistryInstall } from './install';
@@ -33,6 +36,20 @@ const MIN_TOC_ITEMS = 3;
 
 const sectionHeadingClassName = 'scroll-mt-24 text-xl font-semibold tracking-tight';
 
+// Section heading with a "#" permalink revealed on hover / focus.
+const SectionHeading = ({ id, title }: { id: string; title: string }) => (
+  <h2 className={cn(sectionHeadingClassName, 'group/heading flex items-baseline gap-2')} id={id}>
+    {title}
+    <a
+      aria-label={`Lien vers la section « ${title} »`}
+      className="label-mono text-foreground/35 opacity-0 transition-opacity group-hover/heading:opacity-100 hover:text-foreground focus-visible:opacity-100"
+      href={`#${id}`}
+    >
+      #
+    </a>
+  </h2>
+);
+
 const SECTIONS = {
   component: { label: 'Composants', segment: 'components' },
   block: { label: 'Blocks', segment: 'blocks' },
@@ -40,7 +57,7 @@ const SECTIONS = {
 } as const;
 
 const pageActionClassName =
-  'h-7 rounded-none border border-foreground/10 bg-transparent px-2.5 font-mono text-[0.6875rem] font-normal tracking-widest text-foreground/60 uppercase shadow-none hover:bg-foreground/3 hover:text-foreground';
+  'label-mono h-7 rounded-none border border-foreground/10 bg-transparent px-2.5 font-normal text-foreground/60 shadow-none hover:bg-foreground/3 hover:text-foreground';
 
 const containsUrl = (folder: PageTree.Folder, url: string): boolean =>
   folder.index?.url === url ||
@@ -57,10 +74,9 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
 
   const MDX = page.data.body;
   const isRootIndex = !slug || slug.length === 0;
-  const galleryPages =
-    isRootIndex && type !== 'component' ? source.getPages().filter((p) => p.url !== page.url) : [];
+  // Introduction pages of blocks / templates list their items as a card grid, like /ui.
+  const galleryItems = isRootIndex && type !== 'component' ? getRegistryItems(type) : [];
   const examples = page.data.preview ? getRegistryExamples(page.data.preview) : [];
-  const galleryId = (url: string) => url.split('/').at(-1) ?? url;
 
   const section = SECTIONS[type];
   const folder = source.pageTree.children.find(
@@ -77,11 +93,6 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
       : []),
     ...(page.data.preview ? [{ title: 'Installation', url: '#installation', depth: 2 }] : []),
     ...page.data.toc,
-    ...galleryPages.map((galleryPage) => ({
-      title: galleryPage.data.title,
-      url: `#${galleryId(galleryPage.url)}`,
-      depth: 2,
-    })),
   ];
   const showToc = toc.length >= MIN_TOC_ITEMS;
 
@@ -95,7 +106,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
     >
       <header className="flex flex-col gap-3 border-b border-foreground/5 pb-8">
         <div className="flex min-h-7 flex-wrap items-center justify-between gap-3">
-          <p className="font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase">
+          <p className="label-mono text-foreground/45">
             <Link
               className="transition-colors hover:text-foreground"
               href={`/ui/${section.segment}`}
@@ -140,9 +151,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
             <section className="flex flex-col gap-4" key={example.name}>
               {examples.length > 1 && (
                 <div className="flex flex-col gap-1">
-                  <h2 className={sectionHeadingClassName} id={example.name}>
-                    {example.title}
-                  </h2>
+                  <SectionHeading id={example.name} title={example.title} />
                   {example.description && (
                     <p className="text-sm text-muted-foreground">{example.description}</p>
                   )}
@@ -152,15 +161,14 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
             </section>
           ))}
           <section className="flex flex-col gap-4">
-            <h2 className={sectionHeadingClassName} id="installation">
-              Installation
-            </h2>
+            <SectionHeading id="installation" title="Installation" />
             <RegistryInstall path={page.data.preview} />
           </section>
         </div>
       )}
 
-      <DocsBody>
+      {/* Text measure capped at ~68 characters; wider content (previews, tables) is untouched. */}
+      <DocsBody className="[&>:is(p,ul,ol,blockquote,h2,h3,h4)]:max-w-[68ch]">
         <MDX
           components={{
             ...defaultMdxComponents,
@@ -169,26 +177,11 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
         />
       </DocsBody>
 
-      {galleryPages.length > 0 && (
-        <div className="flex flex-col gap-16">
-          {galleryPages.map((galleryPage) => (
-            <section className="flex flex-col gap-4" key={galleryPage.url}>
-              <div className="flex flex-col gap-1">
-                <h2 className={sectionHeadingClassName} id={galleryId(galleryPage.url)}>
-                  <Link className="hover:underline" href={galleryPage.url}>
-                    {galleryPage.data.title}
-                  </Link>
-                </h2>
-
-                {galleryPage.data.description && (
-                  <p className="text-sm text-muted-foreground">{galleryPage.data.description}</p>
-                )}
-              </div>
-
-              {galleryPage.data.preview && <Preview path={galleryPage.data.preview} type={type} />}
-            </section>
-          ))}
-        </div>
+      {galleryItems.length > 0 && (
+        <RegistryGrid
+          className="border-s border-t border-foreground/5 xl:grid-cols-2 2xl:grid-cols-3"
+          items={galleryItems}
+        />
       )}
     </DocsPage>
   );

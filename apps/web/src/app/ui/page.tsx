@@ -28,9 +28,7 @@ const UiIndexPage = () => {
         <aside className="border-b border-foreground/5 md:border-e md:border-b-0">
           <div className="flex flex-col md:sticky md:top-(--nav-height)">
             <header className="flex flex-col gap-3 border-b border-foreground/5 px-4 py-8">
-              <p className="font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase">
-                Registre
-              </p>
+              <p className="label-mono text-foreground/45">Registre</p>
               <h1 className="text-[2rem] leading-tight font-semibold tracking-tight">UI</h1>
               <p className="text-sm text-pretty text-foreground/60">
                 Une collection de composants, blocks et templates construits avec shadcn/ui,
@@ -68,11 +66,11 @@ const UiIndexPage = () => {
           </div>
         </aside>
 
-        <main className="min-w-0">
+        <div className="min-w-0" id="main-content">
           {sections.map((section, index) => (
             <RegistrySection index={index + 1} key={section.category} section={section} />
           ))}
-        </main>
+        </div>
       </div>
     </>
   );

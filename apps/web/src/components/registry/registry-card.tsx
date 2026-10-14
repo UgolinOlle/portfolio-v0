@@ -37,7 +37,7 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
             {preview}
           </div>
         ) : (
-          <div className="flex size-full items-center justify-center font-mono text-[0.6875rem] tracking-widest text-foreground/40 uppercase">
+          <div className="label-mono flex size-full items-center justify-center text-foreground/40">
             {t('registry.card.previewComingSoon')}
           </div>
         )}

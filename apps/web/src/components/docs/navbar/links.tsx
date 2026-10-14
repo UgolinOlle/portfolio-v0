@@ -31,7 +31,7 @@ export const Links = ({ className, componentsCount, blocksCount, templatesCount 
             <Link
               aria-current={active ? 'page' : undefined}
               className={cn(
-                'relative flex items-center gap-2 border-e border-foreground/5 px-5 font-mono text-[0.6875rem] tracking-widest text-foreground/55 uppercase transition-colors',
+                'label-mono relative flex items-center gap-2 border-e border-foreground/5 px-5 text-foreground/55 transition-colors',
                 'hover:bg-foreground/3 hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
                 // The indicator sits on the header's bottom hairline.
                 active &&

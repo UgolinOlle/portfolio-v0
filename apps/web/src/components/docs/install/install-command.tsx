@@ -101,7 +101,7 @@ export const InstallCommand = ({ commands }: InstallCommandProps) => {
           {commands[manager]}
         </code>
         <CopyButton
-          className="h-7 shrink-0 rounded-none border-foreground/10 font-mono text-[0.6875rem] tracking-widest uppercase shadow-none"
+          className="label-mono h-7 shrink-0 rounded-none border-foreground/10 shadow-none"
           value={commands[manager]}
         />
       </div>

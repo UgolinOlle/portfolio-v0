@@ -20,7 +20,7 @@ function ConstructionBanner({ className }: ConstructionBannerProps) {
       )}
       role="status"
     >
-      <span className="flex items-center gap-2 font-mono text-[0.6875rem] tracking-widest text-foreground uppercase">
+      <span className="label-mono flex items-center gap-2 text-foreground">
         <span aria-hidden="true" className="size-1.5 bg-amber-500" />
         Beta
       </span>

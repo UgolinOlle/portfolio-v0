@@ -96,6 +96,16 @@ const toRegistryItems = (
     .filter((page) => page.slugs.length > 0)
     .map((page) => toRegistryItem(page, category));
 
+const SOURCES_BY_CATEGORY = {
+  component: componentsSource,
+  block: blocksSource,
+  template: templatesSource,
+};
+
+// Items d'une seule catégorie, pour les grilles des pages d'introduction.
+export const getRegistryItems = (category: RegistryCategory): RegistryItem[] =>
+  toRegistryItems(SOURCES_BY_CATEGORY[category], category);
+
 export const getRegistrySections = (): RegistrySection[] => [
   {
     category: 'component',

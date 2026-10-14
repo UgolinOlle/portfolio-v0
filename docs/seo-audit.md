@@ -102,6 +102,26 @@ One commit per step. Each ends with `bun run check` + `bun run build` green.
 8. `fix(a11y): images, labels, 404, links`: M5, M7, M8, L1–L5
 9. H8 (images): needs your asset files
 
+### Status (branch `seo-audit`)
+
+| Step              | Status                                                                                                                                                                                         |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 Canonical host  | Done in code. **Pending: Vercel domain switch** (apex primary, `www` → apex).                                                                                                                  |
+| 2 Sitemap         | Done: 42 URLs incl. projects, writings, EN alternates, `lastmod`.                                                                                                                              |
+| 3 hreflang        | Done. Known limit: `<html lang>` stays `fr` on `?lang=en` pages (set client-side). Only path-based locales would fix that.                                                                     |
+| 4 JSON-LD         | Done: Person/WebSite/ProfilePage, BlogPosting, CreativeWork, BreadcrumbList.                                                                                                                   |
+| 5 Headings        | Done. Also fixed 35 extra `<h1>`s in the `ai-begin` article.                                                                                                                                   |
+| 6 Performance     | Done: LCP element visible in server HTML, PixelBlast lazy, reduced motion respected. The header role still animates in per character (hidden until hydration). Confirm field LCP after deploy. |
+| 7 Copy & metadata | Done. **Pending: your review of the new about text** (FR + EN).                                                                                                                                |
+| 8 Accessibility   | Done. Not done: self-hosting third-party company logos (needs the files).                                                                                                                      |
+| 9 Project images  | **Pending: asset files.**                                                                                                                                                                      |
+
+Follow-ups found during implementation (not changed: they touch your uncommitted locale edits):
+
+- `locales/en/common.json`: `navigation.writing` should be `writings` (FR uses `writings`). The 404 title reads "Documentation Not Found".
+- `whoa-stash.mdx` (FR) body is in English.
+- Article titles are bare ("Transformer"). A more descriptive title would help, e.g. "Transformer : comprendre l'architecture derrière les LLM".
+
 ---
 
 ## 4. Off-page and content work (outside the codebase)

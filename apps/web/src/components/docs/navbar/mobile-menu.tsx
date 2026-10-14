@@ -72,7 +72,7 @@ const MobileMenu = ({ groups }: MobileMenuProps) => {
           </div>
         </DrawerHeader>
 
-        <nav aria-label="Registry" className="flex flex-col gap-6 overflow-y-auto px-6 py-6">
+        <nav aria-label="Registre" className="flex flex-col gap-6 overflow-y-auto px-6 py-6">
           {groups.map((group) => {
             const Icon = GROUP_ICONS[group.key];
 

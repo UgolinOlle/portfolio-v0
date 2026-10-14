@@ -1,5 +1,5 @@
 {
-  "title": "Cards",
+  "title": "Cartes",
   "icon": "LayoutGrid",
   "pages": ["status-card", "activity", "calendar-sync"]
 }

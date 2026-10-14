@@ -29,7 +29,7 @@ const UiIndexPage = () => {
           <div className="flex flex-col md:sticky md:top-(--nav-height)">
             <header className="flex flex-col gap-3 border-b border-foreground/5 px-4 py-8">
               <p className="font-mono text-[0.6875rem] tracking-widest text-foreground/45 uppercase">
-                Registry
+                Registre
               </p>
               <h1 className="text-[2rem] leading-tight font-semibold tracking-tight">UI</h1>
               <p className="text-sm text-pretty text-foreground/60">

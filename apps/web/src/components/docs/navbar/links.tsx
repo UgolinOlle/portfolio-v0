@@ -16,7 +16,7 @@ export const Links = ({ className, componentsCount, blocksCount, templatesCount 
   const pathname = usePathname();
 
   const links = [
-    { label: 'Components', href: '/ui/components', count: componentsCount },
+    { label: 'Composants', href: '/ui/components', count: componentsCount },
     { label: 'Blocks', href: '/ui/blocks', count: blocksCount },
     { label: 'Templates', href: '/ui/templates', count: templatesCount },
   ];

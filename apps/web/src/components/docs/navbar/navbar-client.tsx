@@ -50,7 +50,7 @@ export function NavbarClient({
         <span className="font-mono text-xs font-medium tracking-widest uppercase">UI</span>
       </Link>
 
-      <nav aria-label="Registry" className="hidden md:flex">
+      <nav aria-label="Registre" className="hidden md:flex">
         <Links
           blocksCount={blocksCount}
           componentsCount={componentsCount}

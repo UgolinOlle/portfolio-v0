@@ -34,7 +34,7 @@ const MIN_TOC_ITEMS = 3;
 const sectionHeadingClassName = 'scroll-mt-24 text-xl font-semibold tracking-tight';
 
 const SECTIONS = {
-  component: { label: 'Components', segment: 'components' },
+  component: { label: 'Composants', segment: 'components' },
   block: { label: 'Blocks', segment: 'blocks' },
   template: { label: 'Templates', segment: 'templates' },
 } as const;

@@ -10,7 +10,7 @@ const toMenuPages = (pages: ReturnType<typeof componentsSource.getPages>) =>
   pages.map((page) => ({ title: page.data.title, url: page.url }));
 
 const menuGroups: MobileMenuGroup[] = [
-  { key: 'components', title: 'Components', pages: toMenuPages(componentsSource.getPages()) },
+  { key: 'components', title: 'Composants', pages: toMenuPages(componentsSource.getPages()) },
   { key: 'blocks', title: 'Blocks', pages: toMenuPages(blocksSource.getPages()) },
   { key: 'templates', title: 'Templates', pages: toMenuPages(templatesSource.getPages()) },
 ];

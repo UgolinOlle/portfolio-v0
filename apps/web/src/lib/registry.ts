@@ -12,6 +12,7 @@ export type RegistryItem = {
   href: string;
   preview?: string;
   previewWidth?: number;
+  featured?: boolean;
   dependencies?: string[];
   category: RegistryCategory;
 };
@@ -83,20 +84,44 @@ const toRegistryItem = (page: RegistrySourcePage, category: RegistryCategory): R
     href: page.url,
     preview: page.data.preview,
     previewWidth: page.data.previewWidth,
+    featured: page.data.featured,
     dependencies: registryItem?.registryDependencies,
     category,
   };
 };
 
-const toRegistryItems = (
-  source: typeof componentsSource | typeof blocksSource | typeof templatesSource,
-  category: RegistryCategory,
-): RegistryItem[] =>
-  source
-    .getPages()
-    // Les pages d'index (`content/**/index.mdx`) présentent la catégorie, ce ne sont pas des items.
-    .filter((page) => page.slugs.length > 0)
-    .map((page) => toRegistryItem(page, category));
+type RegistrySource = typeof componentsSource | typeof blocksSource | typeof templatesSource;
+type PageTreeNode = { type: string; url?: string; children?: PageTreeNode[]; index?: PageTreeNode };
+
+// URLs dans l'ordre de la sidebar (les `meta.json`) : `getPages()` ne garantit aucun ordre.
+const flattenTreeUrls = (nodes: PageTreeNode[]): string[] =>
+  nodes.flatMap((node) => [
+    ...(node.index?.url ? [node.index.url] : []),
+    ...(node.type === 'page' && node.url ? [node.url] : []),
+    ...(node.children ? flattenTreeUrls(node.children) : []),
+  ]);
+
+const toRegistryItems = (source: RegistrySource, category: RegistryCategory): RegistryItem[] => {
+  const order = flattenTreeUrls(source.pageTree.children as PageTreeNode[]);
+  const position = (url: string) => {
+    const index = order.indexOf(url);
+    return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+  };
+
+  return (
+    source
+      .getPages()
+      // Les pages d'index (`content/**/index.mdx`) présentent la catégorie, ce ne sont pas des items.
+      .filter((page) => page.slugs.length > 0)
+      .map((page) => toRegistryItem(page, category))
+      // Item mis en avant d'abord, puis l'ordre de la sidebar.
+      .sort(
+        (a, b) =>
+          Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
+          position(a.href) - position(b.href),
+      )
+  );
+};
 
 export const getRegistrySections = (): RegistrySection[] => [
   {

@@ -5,6 +5,8 @@ const registrySchema = frontmatterSchema.extend({
   preview: z.string().optional(),
   /** Width (px) the block is designed at; its grid thumbnail is scaled from it. Defaults to a full page. */
   previewWidth: z.number().int().positive().optional(),
+  /** Shown first and twice as wide in the /ui grid: the showcase item of its category. */
+  featured: z.boolean().optional(),
 });
 
 export const { docs: componentsDocs, meta: componentsMeta } = defineDocs({

@@ -22,6 +22,7 @@ export const RegistryGrid = ({ items }: RegistryGridProps) => {
                   path={item.preview}
                   type={item.category}
                   virtualWidth={item.previewWidth}
+                  wide={item.featured}
                 />
               </Suspense>
             ) : undefined

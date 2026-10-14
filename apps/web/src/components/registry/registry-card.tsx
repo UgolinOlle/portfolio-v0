@@ -18,7 +18,12 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="group relative flex flex-col gap-3 [content-visibility:auto]">
+    <div
+      className={cn(
+        'group relative flex flex-col gap-3 [content-visibility:auto]',
+        item.featured && 'sm:col-span-2',
+      )}
+    >
       <div
         className={cn(
           'relative overflow-hidden rounded-xl border bg-card transition-[border-color,box-shadow] duration-200',
@@ -27,7 +32,12 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
         )}
       >
         <div
-          className={cn('border-blur aspect-[4/3] min-h-40 shrink-0 sm:min-h-48', preview && 'p-2')}
+          className={cn(
+            'border-blur aspect-[4/3] min-h-40 shrink-0 sm:min-h-48',
+            // Same row height as its neighbours, twice as wide.
+            item.featured && 'sm:aspect-[8/3]',
+            preview && 'p-2',
+          )}
         >
           {preview ?? (
             <div className="flex size-full items-center justify-center text-xs text-muted-foreground">

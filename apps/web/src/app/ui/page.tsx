@@ -21,7 +21,10 @@ const UiIndexPage = () => {
     .map((section) => `${section.items.length} ${section.title.toLowerCase()}`)
     .join(' · ');
   // Real command for an existing item, so the snippet can be pasted as-is.
-  const sampleItem = sections.flatMap((section) => section.items).find((item) => item.preview);
+  const allItems = sections.flatMap((section) => section.items);
+  // Prefer the showcased item, so the snippet installs something worth trying.
+  const sampleItem =
+    allItems.find((item) => item.featured && item.preview) ?? allItems.find((item) => item.preview);
   const installCommand = sampleItem?.preview
     ? getRegistryInstallCommand(sampleItem.preview)
     : undefined;

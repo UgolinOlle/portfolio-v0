@@ -1,4 +1,5 @@
 {
   "title": "Buttons",
+  "icon": "MousePointerClick",
   "pages": ["button", "button-gandi", "button-apple", "button-shopify"]
 }

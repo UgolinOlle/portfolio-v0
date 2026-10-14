@@ -61,26 +61,32 @@ export function TOC({ container, header, footer, style = 'normal', list }: TOCPr
   const { TOCItems, TOCEmpty, TOCItem } = style === 'clerk' ? TocClerk : TocDefault;
 
   if (items.length === 0 && !header && !footer) {
-    return <div id="nd-toc-placeholder" className="xl:layout:[--fd-toc-width:268px] hidden" />;
+    return (
+      <div
+        id="nd-toc-placeholder"
+        className="xl:layout:[--fd-toc-width:var(--rail-width)] hidden"
+      />
+    );
   }
 
   return (
-    <div
+    <nav
+      aria-labelledby="toc-title"
       id="nd-toc"
       {...container}
       className={cn(
-        'xl:layout:[--fd-toc-width:268px] sticky top-(--fd-docs-row-1) flex h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] w-(--fd-toc-width) flex-col pe-4 pt-12 pb-2 [grid-area:toc] max-xl:hidden',
+        'xl:layout:[--fd-toc-width:var(--rail-width)] sticky top-(--fd-docs-row-1) flex h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))] w-(--fd-toc-width) flex-col pe-4 pt-12 pb-2 [grid-area:toc] max-xl:hidden',
         container?.className,
       )}
     >
       {header}
-      <h3
+      <p
         id="toc-title"
-        className="text-fd-muted-foreground inline-flex items-center gap-1.5 text-sm"
+        className="text-fd-foreground inline-flex items-center gap-1.5 text-sm font-medium"
       >
-        <TextIcon className="size-4" />
+        <TextIcon aria-hidden="true" className="text-fd-muted-foreground size-4" />
         {t('On this page')}
-      </h3>
+      </p>
       <Base.TOCScrollArea className="ms-px">
         <TOCItems {...list}>
           {items.length === 0 && <TOCEmpty />}
@@ -90,7 +96,7 @@ export function TOC({ container, header, footer, style = 'normal', list }: TOCPr
         </TOCItems>
       </Base.TOCScrollArea>
       {footer}
-    </div>
+    </nav>
   );
 }
 

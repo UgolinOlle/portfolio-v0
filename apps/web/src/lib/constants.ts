@@ -1,5 +1,6 @@
 export const WEBSITE_URL = 'https://ugolin-olle.com';
 export const EMAIL = 'hello@ugolin-olle.com';
+export const GITHUB_REPO = 'ugolinolle/portfolio-v0';
 
 export const VARIANTS_CONTAINER = {
   hidden: { opacity: 0 },

@@ -1,4 +1,5 @@
 {
   "title": "Cards",
+  "icon": "LayoutGrid",
   "pages": ["status-card", "activity", "calendar-sync"]
 }

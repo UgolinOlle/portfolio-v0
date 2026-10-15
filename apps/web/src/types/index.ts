@@ -39,7 +39,7 @@ export type Resources = {
  * @name SocialPreviewKind
  * @description Discriminates which layout/copy a SocialPreviewCard should use
  */
-export type SocialPreviewKind = 'github' | 'linkedin' | 'malt' | 'twitter' | 'generic';
+export type SocialPreviewKind = 'github' | 'linkedin' | 'malt' | 'twitter' | 'npm' | 'generic';
 
 /**
  * @name SocialPreviewStat

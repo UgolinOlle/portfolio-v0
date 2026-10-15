@@ -1,3 +1,5 @@
+'use client';
+
 import { Check, ChevronRight, LoaderCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';

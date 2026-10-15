@@ -17,5 +17,8 @@
     "lib": "@portfolio-v0/shadcn/lib",
     "ui": "@portfolio-v0/shadcn/components/ui"
   },
-  "iconLibrary": "lucide"
+  "iconLibrary": "lucide",
+  "registries": {
+    "@ugolin": "https://ugolin-olle.com/r/{name}.json"
+  }
 }

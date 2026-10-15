@@ -11,6 +11,7 @@
       "@/components/ui/*": ["../../packages/shadcn/components/ui/*"],
       "@/lib/utils": ["../../packages/shadcn/lib/utils.ts"],
       "@/hooks/*": ["../../packages/shadcn/hooks/*"],
+      "registry/*": ["../../packages/ui/registry/*"],
       "fumadocs-mdx:collections/*": [".source/*"]
     }
   },

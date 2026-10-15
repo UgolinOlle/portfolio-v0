@@ -1,318 +1,392 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "portfolio-v0",
+  "name": "ugolin",
   "homepage": "https://ugolin-olle.com/ui",
   "items": [
     {
       "name": "headers",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Headers",
       "description": "Components for displaying hierarchical titles.",
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/components/core/headers/headers.tsx",
-          "type": "registry:component"
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/headers.tsx"
         }
-      ],
-      "registryDependencies": []
+      ]
     },
     {
       "name": "headers-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Headers Demo",
       "description": "Usage example for the Headers component.",
       "files": [
         {
           "path": "examples/components/headers.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": [],
       "meta": {
-        "example": { "of": "headers", "order": 0 }
+        "example": {
+          "of": "headers",
+          "order": 0
+        }
       }
     },
     {
       "name": "button",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Button",
       "description": "A button component for displaying interactive elements.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "class-variance-authority",
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/components/core/button/button.tsx",
-          "type": "registry:component"
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/button.tsx"
         }
-      ],
-      "registryDependencies": []
+      ]
     },
     {
       "name": "button-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Button Demo",
       "description": "Usage example for the Button component.",
       "files": [
         {
           "path": "examples/components/button.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": [],
       "meta": {
-        "example": { "of": "button", "order": 0 }
+        "example": {
+          "of": "button",
+          "order": 0
+        }
       }
     },
     {
       "name": "button-gandi",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Gandi Button",
       "description": "A button component styled after Gandi.net's design.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "class-variance-authority",
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/components/core/button/button.gandi.tsx",
-          "type": "registry:component"
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/button.gandi.tsx"
         }
-      ],
-      "registryDependencies": []
+      ]
     },
     {
       "name": "button-gandi-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Gandi Button Demo",
       "description": "Usage example for the Gandi Button component.",
       "files": [
         {
           "path": "examples/components/button-gandi.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["button-gandi"],
       "meta": {
-        "example": { "of": "button-gandi", "order": 0 }
+        "example": {
+          "of": "button-gandi",
+          "order": 0
+        }
       }
     },
     {
       "name": "button-apple",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Apple Button",
       "description": "A button component styled after Apple's Human Interface Guidelines.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "class-variance-authority",
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/components/core/button/button.apple.tsx",
-          "type": "registry:component"
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/button.apple.tsx"
         }
-      ],
-      "registryDependencies": []
+      ]
     },
     {
       "name": "button-apple-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Apple Button Demo",
       "description": "Usage example for the Apple Button component.",
       "files": [
         {
           "path": "examples/components/button-apple.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["button-apple"],
       "meta": {
-        "example": { "of": "button-apple", "order": 0 }
+        "example": {
+          "of": "button-apple",
+          "order": 0
+        }
       }
     },
     {
       "name": "button-shopify",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Shopify Button",
       "description": "A button component styled after Shopify's Polaris design system.",
+      "dependencies": [
+        "motion",
+        "lucide-react",
+        "class-variance-authority",
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/components/core/button/button.shopify.tsx",
-          "type": "registry:component"
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/button.shopify.tsx"
         }
-      ],
-      "registryDependencies": []
+      ]
     },
     {
       "name": "button-shopify-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Shopify Button Demo",
       "description": "Usage example for the Shopify Button component.",
       "files": [
         {
           "path": "examples/components/button-shopify.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["button-shopify"],
       "meta": {
-        "example": { "of": "button-shopify", "order": 0 }
+        "example": {
+          "of": "button-shopify",
+          "order": 0
+        }
       }
     },
     {
       "name": "status-card",
-      "type": "registry:component",
+      "type": "registry:block",
       "title": "Status Card",
       "description": "A compact card that pairs a status badge with a short message.",
+      "dependencies": ["motion", "lucide-react"],
+      "registryDependencies": ["badge", "card"],
       "files": [
         {
           "path": "registry/blocks/status-card/status-card.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/blocks/status-card/status-card.tsx"
         }
-      ],
-      "registryDependencies": ["card", "badge"]
+      ]
     },
     {
       "name": "status-card-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Status Card Demo",
       "description": "Usage example for the Status Card component.",
       "files": [
         {
-          "path": "registry/blocks/status-card/status-card.tsx",
-          "type": "registry:example"
+          "path": "examples/status-card.tsx",
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["status-card"],
       "meta": {
-        "example": { "of": "status-card", "order": 0 }
+        "example": {
+          "of": "status-card",
+          "order": 0
+        }
       }
     },
     {
       "name": "avatars",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Avatars",
       "description": "A component for displaying user avatars.",
+      "dependencies": ["motion"],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/components/core/avatars/avatars.tsx",
-          "type": "registry:component"
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/avatars.tsx"
         }
-      ],
-      "registryDependencies": ["avatar"]
+      ]
     },
     {
       "name": "avatars-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Avatars Demo",
       "description": "Usage example for the Avatars component.",
       "files": [
         {
           "path": "examples/components/avatars.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["avatar"],
       "meta": {
-        "example": { "of": "avatars", "order": 0 }
+        "example": {
+          "of": "avatars",
+          "order": 0
+        }
       }
     },
     {
       "name": "input",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Input",
       "description": "A component for displaying user avatars.",
+      "dependencies": ["motion", "lucide-react"],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/components/core/input/input.tsx",
-          "type": "registry:component"
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/input.tsx"
         }
-      ],
-      "registryDependencies": ["avatar"]
+      ]
     },
     {
       "name": "input-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Basic Input",
       "description": "A basic text input with a controlled value.",
       "files": [
         {
           "path": "examples/components/input.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["input"],
       "meta": {
-        "example": { "of": "input", "order": 0 }
+        "example": {
+          "of": "input",
+          "order": 0
+        }
       }
     },
     {
       "name": "input-password-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Input Password",
       "description": "A password input with a show/hide visibility toggle.",
       "files": [
         {
           "path": "examples/components/input-password.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["input"],
       "meta": {
-        "example": { "of": "input", "order": 1 }
+        "example": {
+          "of": "input",
+          "order": 1
+        }
       }
     },
     {
       "name": "input-password-error-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Input Password Error",
       "description": "A password input showing a validation error message.",
       "files": [
         {
           "path": "examples/components/input-password-error.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["input"],
       "meta": {
-        "example": { "of": "input", "order": 2 }
+        "example": {
+          "of": "input",
+          "order": 2
+        }
       }
     },
     {
       "name": "input-with-icon-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Input With Icon",
       "description": "A text input with a leading icon.",
       "files": [
         {
           "path": "examples/components/input-with-icon.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["input"],
       "meta": {
-        "example": { "of": "input", "order": 3 }
+        "example": {
+          "of": "input",
+          "order": 3
+        }
       }
     },
     {
       "name": "input-disabled-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Input Disabled",
       "description": "A disabled text input.",
       "files": [
         {
           "path": "examples/components/input-disabled.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["input"],
       "meta": {
-        "example": { "of": "input", "order": 4 }
+        "example": {
+          "of": "input",
+          "order": 4
+        }
       }
     },
     {
       "name": "input-loading-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Input Loading",
       "description": "A text input in a loading state.",
       "files": [
         {
           "path": "examples/components/input-loading.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["input"],
       "meta": {
-        "example": { "of": "input", "order": 5 }
+        "example": {
+          "of": "input",
+          "order": 5
+        }
       }
     },
     {
@@ -320,60 +394,73 @@
       "type": "registry:block",
       "title": "Activity",
       "description": "An annual activity heatmap card with dynamic tabs, stats and a legend.",
+      "dependencies": ["motion", "lucide-react"],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/blocks/activity/activity.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity.tsx"
         },
         {
           "path": "registry/blocks/activity/activity-header.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity-header.tsx"
         },
         {
           "path": "registry/blocks/activity/activity-tabs.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity-tabs.tsx"
         },
         {
           "path": "registry/blocks/activity/activity-heatmap.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity-heatmap.tsx"
         },
         {
           "path": "registry/blocks/activity/activity-stats.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity-stats.tsx"
         },
         {
           "path": "registry/blocks/activity/activity-legend.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity-legend.tsx"
         },
         {
           "path": "registry/blocks/activity/activity-tooltip.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity-tooltip.tsx"
         },
         {
           "path": "registry/blocks/activity/utils.ts",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/utils.ts"
         },
         {
           "path": "registry/blocks/activity/types.ts",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/activity/types.ts"
         }
-      ],
-      "registryDependencies": []
+      ]
     },
     {
       "name": "activity-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Activity Demo",
       "description": "Usage example for the Activity block.",
       "files": [
         {
           "path": "examples/activity.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["activity"],
       "meta": {
-        "example": { "of": "activity", "order": 0 }
+        "example": {
+          "of": "activity",
+          "order": 0
+        }
       }
     },
     {
@@ -381,28 +468,32 @@
       "type": "registry:block",
       "title": "Blog",
       "description": "A responsive grid of blog post cards with image, badge and author.",
+      "registryDependencies": ["card", "badge"],
       "files": [
         {
           "path": "registry/blocks/blog/blog.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/blog/blog.tsx"
         }
-      ],
-      "registryDependencies": ["card", "badge"]
+      ]
     },
     {
       "name": "blog-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Blog Demo",
       "description": "Usage example for the Blog block.",
       "files": [
         {
           "path": "examples/blog.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["blog"],
       "meta": {
-        "example": { "of": "blog", "order": 0 }
+        "example": {
+          "of": "blog",
+          "order": 0
+        }
       }
     },
     {
@@ -410,28 +501,32 @@
       "type": "registry:block",
       "title": "Simple CTA",
       "description": "A centered call-to-action section with a heading, description and two buttons.",
+      "registryDependencies": ["button"],
       "files": [
         {
           "path": "registry/blocks/cta-simple/cta-simple.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/cta-simple/cta-simple.tsx"
         }
-      ],
-      "registryDependencies": ["button"]
+      ]
     },
     {
       "name": "cta-simple-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Simple CTA Demo",
       "description": "Usage example for the Simple CTA block.",
       "files": [
         {
           "path": "examples/cta-simple.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["cta-simple"],
       "meta": {
-        "example": { "of": "cta-simple", "order": 0 }
+        "example": {
+          "of": "cta-simple",
+          "order": 0
+        }
       }
     },
     {
@@ -439,28 +534,33 @@
       "type": "registry:block",
       "title": "Calendar Sync",
       "description": "A compact calendar sync action with an animated idle, loading and success cycle.",
+      "dependencies": ["motion", "lucide-react"],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/blocks/calendar-sync/calendar-sync.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/calendar-sync/calendar-sync.tsx"
         }
-      ],
-      "registryDependencies": []
+      ]
     },
     {
       "name": "calendar-sync-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Calendar Sync Demo",
       "description": "Usage example for the Calendar Sync block.",
       "files": [
         {
-          "path": "registry/blocks/calendar-sync/calendar-sync.tsx",
-          "type": "registry:example"
+          "path": "examples/calendar-sync.tsx",
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["calendar-sync"],
       "meta": {
-        "example": { "of": "calendar-sync", "order": 0 }
+        "example": {
+          "of": "calendar-sync",
+          "order": 0
+        }
       }
     },
     {
@@ -469,47 +569,54 @@
       "title": "Usage Card",
       "description": "A credits usage card with a category breakdown, a per-day chart and plan limits.",
       "dependencies": ["motion"],
+      "registryDependencies": [],
       "files": [
         {
           "path": "registry/blocks/usage-card/usage-card.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/usage-card/usage-card.tsx"
         },
         {
           "path": "registry/blocks/usage-card/usage-period-tabs.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/usage-card/usage-period-tabs.tsx"
         },
         {
           "path": "registry/blocks/usage-card/usage-breakdown.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/usage-card/usage-breakdown.tsx"
         },
         {
           "path": "registry/blocks/usage-card/usage-daily-chart.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/usage-card/usage-daily-chart.tsx"
         },
         {
           "path": "registry/blocks/usage-card/usage-meters.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/usage-card/usage-meters.tsx"
         },
         {
           "path": "registry/blocks/usage-card/utils.ts",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/usage-card/utils.ts"
         },
         {
           "path": "registry/blocks/usage-card/types.ts",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/usage-card/types.ts"
         }
-      ],
-      "registryDependencies": []
+      ]
     },
     {
       "name": "usage-card-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "Usage Card Demo",
       "description": "Usage example for the Usage Card block.",
       "files": [
         {
           "path": "examples/usage-card.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["usage-card"],
@@ -528,28 +635,32 @@
       "meta": {
         "category": "template"
       },
+      "registryDependencies": ["button", "badge", "card"],
       "files": [
         {
           "path": "registry/templates/landing-saas/landing-saas.tsx",
-          "type": "registry:block"
+          "type": "registry:component",
+          "target": "components/blocks/landing-saas/landing-saas.tsx"
         }
-      ],
-      "registryDependencies": ["button", "badge", "card"]
+      ]
     },
     {
       "name": "landing-saas-demo",
-      "type": "registry:example",
+      "type": "registry:item",
       "title": "SaaS Landing Page Demo",
       "description": "Usage example for the SaaS Landing Page template.",
       "files": [
         {
           "path": "examples/landing-saas.tsx",
-          "type": "registry:example"
+          "type": "registry:component"
         }
       ],
       "registryDependencies": ["landing-saas"],
       "meta": {
-        "example": { "of": "landing-saas", "order": 0 }
+        "example": {
+          "of": "landing-saas",
+          "order": 0
+        }
       }
     }
   ]

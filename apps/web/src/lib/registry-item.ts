@@ -26,7 +26,7 @@ export const getRegistryItemManifest = async (name: string): Promise<RegistryIte
   const raw = await readFile(filePath, 'utf-8').catch((error: unknown) => {
     throw new Error(
       `Aucun registry item "${name}" trouvé dans public/r/${name}.json. ` +
-        `Ajoutez une entrée "${name}" dans registry.json puis relancez "pnpm registry:build".`,
+        `Ajoutez une entrée "${name}" dans registry.json puis relancez "bun run registry:build".`,
       { cause: error },
     );
   });

@@ -1,0 +1,19 @@
+{
+  "extends": "@portfolio-v0/config/react-lib.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "ignoreDeprecations": "6.0",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/lib/utils": ["../shadcn/lib/utils.ts"],
+      "@/components/ui/*": ["../shadcn/components/ui/*"],
+      "@portfolio-v0/shadcn/components/*": ["../shadcn/components/ui/*"],
+      "@portfolio-v0/shadcn/utils": ["../shadcn/lib/utils.ts"],
+      "registry/*": ["./registry/*"]
+    }
+  },
+  "include": ["registry/**/*.ts", "registry/**/*.tsx", "examples/**/*.tsx", "tsup.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

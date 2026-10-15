@@ -9,6 +9,5 @@ CLAUDE.md only points at it. Keep each file focused and under a few hundred line
 | [api-contracts.md](api-contracts.md) | touching a route handler, the registry/npm output or a frontmatter field |
 | [data-models.md](data-models.md)     | changing MDX schemas, the registry item shape or site constants          |
 | [debugging.md](debugging.md)         | something is broken and the cause isn't obvious                          |
-| [seo-audit.md](seo-audit.md)         | touching metadata, rendering mode, sitemap, structured data or i18n SEO  |
 
 Adding a registry item: see [`CONTRIBUTING.md`](../CONTRIBUTING.md).

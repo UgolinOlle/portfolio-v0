@@ -49,9 +49,12 @@ export const RegistrySection = ({ index, section }: RegistrySectionProps) => {
       {count > 0 ? (
         <RegistryGrid items={section.items} />
       ) : (
-        <p className="label-mono border-b border-foreground/5 px-6 py-12 text-foreground/45 lg:px-8">
-          Aucun élément pour l'instant
-        </p>
+        <div className="flex flex-col gap-1.5 border-b border-foreground/5 px-6 py-12 lg:px-8">
+          <p className="label-mono text-foreground">Bientôt disponible</p>
+          <p className="text-sm text-foreground/50">
+            Les premiers {section.title.toLowerCase()} sont en préparation.
+          </p>
+        </div>
       )}
     </section>
   );

@@ -4,14 +4,8 @@ import { PortfolioShell } from '~/components/core/portfolio-shell';
 import { BackButton } from '~/components/projects/back-button';
 import { WritingsHeader } from '~/components/writings/writings-header';
 import { WritingsList } from '~/components/writings/writings-list';
-import { createMetadata } from '~/lib/metadata';
+import { createMetadata, LOCALES, resolveLocale } from '~/lib/metadata';
 import { writingsSource } from '~/lib/source';
-
-const LANGUAGES = ['fr', 'en'] as const;
-type Language = (typeof LANGUAGES)[number];
-
-const resolveLang = (lang: string | undefined): Language =>
-  LANGUAGES.includes(lang as Language) ? (lang as Language) : 'fr';
 
 type PageProps = {
   searchParams: Promise<{ lang?: string }>;
@@ -19,7 +13,7 @@ type PageProps = {
 
 const Page = async ({ searchParams }: PageProps) => {
   const { lang } = await searchParams;
-  const pages = writingsSource.getPages(resolveLang(lang)).map((page) => ({
+  const pages = writingsSource.getPages(resolveLocale(lang)).map((page) => ({
     url: `/writings/${page.slugs.join('/')}`,
     title: page.data.title,
     description: page.data.description,
@@ -29,18 +23,36 @@ const Page = async ({ searchParams }: PageProps) => {
 
   return (
     <PortfolioShell>
-      <BackButton href="/writings" title="Writings" />
+      <BackButton />
       <WritingsHeader />
       <WritingsList pages={pages} />
     </PortfolioShell>
   );
 };
 
-export const generateMetadata = (): Metadata =>
-  createMetadata({
-    title: 'Writings',
-    description: 'Notes et articles sur le développement web et mes projets.',
+export const generateMetadata = async ({ searchParams }: PageProps): Promise<Metadata> => {
+  const { lang } = await searchParams;
+
+  const locale = resolveLocale(lang);
+  const copy = {
+    fr: {
+      title: 'Articles sur le développement web et l’IA',
+      description:
+        'Notes et articles d’Ugolin Ollé, développeur full stack : développement web, Next.js, IA et retours sur mes projets.',
+    },
+    en: {
+      title: 'Writings on web development and AI',
+      description:
+        'Notes and articles by Ugolin Ollé, full stack developer: web development, Next.js, AI and lessons from my projects.',
+    },
+  }[locale];
+
+  return createMetadata({
+    ...copy,
     pathname: '/writings',
+    lang: locale,
+    languages: LOCALES,
   });
+};
 
 export default Page;

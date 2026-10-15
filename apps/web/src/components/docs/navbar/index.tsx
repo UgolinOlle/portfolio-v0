@@ -1,3 +1,4 @@
+import { getRegistrySections } from '~/lib/registry';
 import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
 import { getStarCount } from './github';
@@ -17,14 +18,15 @@ type NavbarProps = {
   variant?: NavbarVariant;
 };
 
-// Section index pages (`index.mdx`) introduce a category; they aren't registry items.
-const itemCount = (pages: ReturnType<typeof componentsSource.getPages>) =>
-  pages.filter((page) => page.slugs.length > 0).length;
+// Same item lists as the /ui grids, so category index pages aren't counted as items.
+const countByCategory = Object.fromEntries(
+  getRegistrySections().map((section) => [section.category, section.items.length]),
+);
 
 const counts = {
-  components: itemCount(componentsSource.getPages()),
-  blocks: itemCount(blocksSource.getPages()),
-  templates: itemCount(templatesSource.getPages()),
+  components: countByCategory.component ?? 0,
+  blocks: countByCategory.block ?? 0,
+  templates: countByCategory.template ?? 0,
 };
 
 // Async so the star count reaches the client navbar as data. Passing a suspended server

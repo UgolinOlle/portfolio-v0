@@ -101,12 +101,14 @@ function StacksSection() {
     <motion.section
       transition={TRANSITION_SECTION}
       variants={VARIANTS_SECTION}
-      className="w-2/3 space-y-8"
+      className="space-y-8"
       id="stacks"
     >
+      <h2 className="sr-only">{t('sections.stacks')}</h2>
+
       {Object.entries(skillsData).map(([category, skills], categoryIndex) => (
         <div key={categoryIndex}>
-          <h4 className="mb-4 text-lg font-medium">{t(`stacks.categories.${category}`)}</h4>
+          <h3 className="mb-4 text-lg font-medium">{t(`stacks.categories.${category}`)}</h3>
 
           <div className="flex flex-wrap gap-x-1 gap-y-2">
             {skills.map((skill, skillIndex) => (

@@ -14,6 +14,8 @@ export type Project = {
   description: string;
   link: string;
   content?: ReactNode;
+  /** Screenshot shown on the home card; falls back to `content` over the default texture. */
+  image?: string;
   id: string;
 };
 

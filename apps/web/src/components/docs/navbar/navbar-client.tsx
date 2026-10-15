@@ -4,6 +4,8 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import Link from 'next/link';
 
+import { useTranslation } from '~/components/core/i18n-provider';
+import { MAIN_CONTENT_ID } from '~/components/core/skip-link';
 import { ArrowUpRightIcon, MenuIcon } from '~/components/icons/ui';
 import { SidebarTrigger } from '~/layouts/docs/slots/sidebar';
 import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
@@ -37,18 +39,20 @@ export function NavbarClient({
   githubStars,
   variant,
 }: NavbarClientProps) {
+  const { t } = useTranslation();
+
   return (
     <>
       {/* First focusable element: lets keyboard users jump past the header and sidebar. */}
       <a
         className="label-mono sr-only bg-foreground px-3 py-2 text-background focus:not-sr-only focus:fixed focus:start-2 focus:top-2 focus:z-50"
-        href={variant === 'docs' ? '#nd-page' : '#main-content'}
+        href={variant === 'docs' ? '#nd-page' : `#${MAIN_CONTENT_ID}`}
       >
-        Aller au contenu
+        {t('navigation.skipToContent')}
       </a>
       <header className="fixed inset-x-0 top-0 z-40 flex h-(--nav-height) items-stretch border-b border-foreground/5 bg-background">
         <Link
-          aria-label="UI — accueil"
+          aria-label="Whoa UI — accueil"
           className={cn(
             'flex shrink-0 items-center gap-2.5 border-e border-foreground/5 px-4 md:w-(--docs-sidebar-width)',
             'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
@@ -56,7 +60,7 @@ export function NavbarClient({
           href="/ui"
         >
           <Logo />
-          <span className="font-mono text-xs font-medium tracking-widest uppercase">UI</span>
+          <span className="font-mono text-xs font-medium tracking-widest uppercase">Whoa UI</span>
         </Link>
 
         <nav aria-label="Registre" className="hidden md:flex">

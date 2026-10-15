@@ -23,12 +23,16 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
     <article
       className={cn(
         'group relative flex flex-col border-e border-b border-foreground/5 transition-colors [content-visibility:auto]',
+        // Featured items span two columns.
+        item.featured && 'sm:col-span-2',
         'hover:bg-foreground/2 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:-outline-offset-2 has-[a:focus-visible]:outline-ring',
       )}
     >
       <div
         className={cn(
           'relative aspect-[4/3] overflow-hidden',
+          // Same row height as its neighbours, twice as wide.
+          item.featured && 'sm:aspect-[8/3]',
           'bg-[radial-gradient(color-mix(in_oklch,var(--color-foreground)_10%,transparent)_1px,transparent_1px)] bg-size-[16px_16px]',
         )}
       >

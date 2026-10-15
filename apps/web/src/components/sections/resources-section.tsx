@@ -12,6 +12,8 @@ import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { RESOURCES } from '~/lib/data';
 import type { Resources } from '~/types';
 
+import { SectionHeading } from './section-heading';
+
 const DEFAULT_VISIBLE_RESOURCES = 4;
 const BLUR_CUTOFF_INDEX = 3;
 const FILTER_BUTTON_BASE_DELAY = 0.3;
@@ -58,8 +60,10 @@ function ResourceItem({
     if (resource.url) {
       return (
         <img
-          alt={resource.name}
+          alt=""
           className="h-6 w-6 rounded object-cover"
+          decoding="async"
+          loading="lazy"
           height={24}
           src={resource.url}
           width={24}
@@ -138,13 +142,13 @@ function ResourceItem({
                   <div className="h-6 w-6 shrink-0">{renderIcon()}</div>
                 )}
               </motion.div>
-              <motion.h4
+              <motion.h3
                 className="font-sans font-normal dark:text-zinc-100"
                 layout
                 transition={{ duration: 0.2, ease: 'easeInOut' }}
               >
                 {resource.name}
-              </motion.h4>
+              </motion.h3>
             </motion.div>
             <p
               className="rounded-md px-2 font-mono text-sm text-zinc-500 dark:text-zinc-400"
@@ -216,7 +220,7 @@ export function ResourcesSection() {
       variants={VARIANTS_SECTION}
       className="space-y-6"
     >
-      <h3 className="text-lg">{t('resources.title')}</h3>
+      <SectionHeading className="mb-0">{t('resources.title')}</SectionHeading>
 
       <div className="mb-4 flex flex-wrap gap-2">
         {types.map((type, index) => (
@@ -250,8 +254,7 @@ export function ResourcesSection() {
         ))}
       </div>
 
-      <section
-        aria-label="Liste des ressources filtrées"
+      <div
         className="relative flex flex-col space-y-2 overflow-visible"
         onMouseLeave={() => {
           if (!isTouchDevice) {
@@ -287,7 +290,7 @@ export function ResourcesSection() {
             {showAll ? t('resources.showLess') : t('resources.showMore')}
           </motion.button>
         )}
-      </section>
+      </div>
     </motion.section>
   );
 }

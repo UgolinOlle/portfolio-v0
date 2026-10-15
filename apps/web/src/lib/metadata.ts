@@ -3,30 +3,31 @@ import type { Metadata, Viewport } from 'next';
 export const siteConfig = {
   name: 'Ugolin Ollé',
   url: 'https://ugolin-olle.com',
-  title: "Hey, I'm Ugolin Ollé, Full Stack Developer & SaaS Creator",
+  title: 'Ugolin Ollé — Développeur full stack freelance Next.js',
   description:
-    'Développeur full stack freelance spécialisé dans la création de SaaS, landing pages performantes et expériences web sur mesure. Expert Next.js, Tailwind CSS, Framer Motion et NestJS.',
+    'Développeur full stack freelance : SaaS, applications web et landing pages rapides avec Next.js, React, NestJS et TypeScript. Disponible pour vos projets.',
   keywords: [
-    'Développeur web freelance',
-    'Développeur full stack',
+    'Ugolin Ollé',
+    'Développeur full stack freelance',
+    'Développeur Next.js freelance',
+    'Développeur React freelance',
     'Création de SaaS',
     'Landing page',
     'Next.js',
     'NestJS',
-    'Tailwind CSS',
-    'Framer Motion',
-    'SEO',
-    'Performance web',
-    'React developer',
-    'Ugolin Ollé',
+    'TypeScript',
   ],
   locale: 'fr_FR',
   alternateLocale: 'en_US',
   ogImage: '/og.png',
+  profileImage: '/assets/profile.png',
+  email: 'hello@ugolin-olle.com',
   socials: {
     twitter: '@ugolin_olle',
+    x: 'https://x.com/ugolin_olle',
     github: 'https://github.com/UgolinOlle',
     linkedin: 'https://www.linkedin.com/in/ugolin-olle',
+    malt: 'https://www.malt.fr/profile/ugolinolle',
   },
 } as const;
 
@@ -102,6 +103,29 @@ export const defaultMetadata: Metadata = {
   },
 };
 
+export const LOCALES = ['fr', 'en'] as const;
+export type Locale = (typeof LOCALES)[number];
+export const DEFAULT_LOCALE: Locale = 'fr';
+
+const OG_LOCALES: Record<Locale, string> = { fr: 'fr_FR', en: 'en_US' };
+
+export const resolveLocale = (lang: string | undefined): Locale =>
+  LOCALES.includes(lang as Locale) ? (lang as Locale) : DEFAULT_LOCALE;
+
+/** EN variants of projects and writings are served on the same path with `?lang=en`. */
+export const localizedPath = (pathname: string, lang: Locale): string =>
+  lang === DEFAULT_LOCALE ? pathname : `${pathname}?lang=${lang}`;
+
+/** `hreflang` map for a page available in `languages`, with the default locale as `x-default`. */
+export const languageAlternates = (
+  pathname: string,
+  languages: readonly Locale[],
+): Record<string, string> =>
+  Object.fromEntries([
+    ...languages.map((lang) => [lang, localizedPath(pathname, lang)]),
+    ['x-default', localizedPath(pathname, DEFAULT_LOCALE)],
+  ]);
+
 type PageMetadataInput = {
   /** Plain page title, the global template (`%s | Ugolin Ollé`) is applied automatically to <title>. */
   title: string;
@@ -109,6 +133,12 @@ type PageMetadataInput = {
   /** Path relative to the site root, e.g. `/ui` or `/inspirations`. */
   pathname: string;
   image?: string;
+  /** Locale of the rendered content. Non-default locales get a self-referencing `?lang=` canonical. */
+  lang?: Locale;
+  /** Locales this page exists in. When more than one, `hreflang` alternates are emitted. */
+  languages?: readonly Locale[];
+  /** Publication date (ISO) for articles: switches og:type to `article`. */
+  publishedTime?: string;
 };
 
 /**
@@ -121,39 +151,71 @@ export const createMetadata = ({
   description = siteConfig.description,
   pathname,
   image = siteConfig.ogImage,
-}: PageMetadataInput): Metadata => ({
-  title,
-  description,
-  alternates: {
-    canonical: pathname,
-  },
-  openGraph: {
-    type: 'website',
-    locale: siteConfig.locale,
-    url: pathname,
-    siteName: siteConfig.name,
+  lang = DEFAULT_LOCALE,
+  languages = [DEFAULT_LOCALE],
+  publishedTime,
+}: PageMetadataInput): Metadata => {
+  const url = localizedPath(pathname, lang);
+
+  return {
     title,
     description,
-    images: [
-      {
-        url: image,
-        width: 1200,
-        height: 630,
-        alt: title,
-      },
-    ],
+    alternates: {
+      canonical: url,
+      ...(languages.length > 1 && { languages: languageAlternates(pathname, languages) }),
+    },
+    openGraph: {
+      ...(publishedTime
+        ? { type: 'article', publishedTime, authors: [siteConfig.url] }
+        : { type: 'website' }),
+      locale: OG_LOCALES[lang],
+      alternateLocale: languages.filter((l) => l !== lang).map((l) => OG_LOCALES[l]),
+      url,
+      siteName: siteConfig.name,
+      title,
+      description,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: siteConfig.socials.twitter,
+      creator: siteConfig.socials.twitter,
+      title,
+      description,
+      images: [image],
+    },
+  };
+};
+
+export type RegistryKind = 'components' | 'blocks' | 'templates';
+
+/** Search titles for the registry: bare names ("Button", "Introduction") say nothing in a SERP. */
+const REGISTRY_TITLES: Record<RegistryKind, { index: string; item: (name: string) => string }> = {
+  components: {
+    index: 'Composants React pour shadcn/ui',
+    item: (name) => `${name} : composant React pour shadcn/ui`,
   },
-  twitter: {
-    card: 'summary_large_image',
-    site: siteConfig.socials.twitter,
-    creator: siteConfig.socials.twitter,
-    title,
-    description,
-    images: [image],
+  blocks: {
+    index: 'Blocks React et Next.js pour shadcn/ui',
+    item: (name) => `${name} : block React pour shadcn/ui`,
   },
-});
+  templates: {
+    index: 'Templates Next.js pour shadcn/ui',
+    item: (name) => `${name} : template Next.js`,
+  },
+};
 
 type DocsMetadataInput = {
+  kind: RegistryKind;
+  /** True for the section's index page (`/ui/components`, ...). */
+  isIndex: boolean;
   title: string;
   description?: string;
   /** Path relative to the site root, e.g. `/ui/components/button`. */
@@ -164,8 +226,16 @@ type DocsMetadataInput = {
 
 /** Shared metadata builder for the components/blocks/templates registry doc pages. */
 export const createDocsMetadata = ({
+  kind,
+  isIndex,
   title,
   description,
   pathname,
   ogImage,
-}: DocsMetadataInput): Metadata => createMetadata({ title, description, pathname, image: ogImage });
+}: DocsMetadataInput): Metadata =>
+  createMetadata({
+    title: isIndex ? REGISTRY_TITLES[kind].index : REGISTRY_TITLES[kind].item(title),
+    description,
+    pathname,
+    image: ogImage,
+  });

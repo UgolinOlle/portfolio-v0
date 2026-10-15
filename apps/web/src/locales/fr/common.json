@@ -1,21 +1,30 @@
 {
   "navigation": {
-    "portfolio": "P0rtfoli0",
-    "projects": "Pr0jets",
-    "components": "C0mposants",
-    "writings": "Articles"
+    "home": "Accueil",
+    "writings": "Articles",
+    "ui": "Whoa UI",
+    "inspirations": "Inspirations",
+    "skipToContent": "Aller au contenu",
+    "madeWith": "Conçu et développé par Ugolin Ollé"
   },
   "header": {
-    "title": "Développeur Full Stack / Administrateur Système",
+    "title": "Développeur Full Stack Freelance",
     "profileAlt": "Photo de profil d'Ugolin Ollé"
   },
+  "hero": {
+    "availability": "Disponible pour de nouvelles missions",
+    "headline": "Je conçois et développe des SaaS et applications web, de la maquette à la mise en production.",
+    "lead": "Développeur full stack freelance, j’accompagne startups, indépendants et PME avec Next.js, React, NestJS et TypeScript.",
+    "ctaPrimary": "Me contacter",
+    "ctaSecondary": "Voir les projets"
+  },
   "about": {
-    "description": "Actuellement en Bachelor Administrateur Systèmes, Réseaux & Cybersécurité à MyDigitalSchool Angers, je recherche une alternance d’un an pour mettre en pratique mes compétences en systèmes, réseaux et sécurité, tout en gardant une forte dimension produit et développement.\n\nMon parcours de développeur web full-stack, combiné à mon expérience à l’école 42 à Bangkok, m’a apporté des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. Deux années passées au Cambodge m’ont appris à m’adapter rapidement, à collaborer dans des contextes variés et à rester efficace dans des environnements exigeants.\n\nCe que je recherche aujourd’hui : rejoindre une équipe où je peux contribuer concrètement à l’infrastructure, à la fiabilité et à la sécurité des systèmes, tout en continuant à construire des outils et produits utiles, pensés pour durer."
+    "description": "Formé à l’école 42 à Bangkok, j’ai acquis des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. Mon bagage en administration systèmes me permet aussi de prendre en charge le déploiement et l’infrastructure (Docker, Nginx, Vercel). Deux années passées au Cambodge m’ont appris à m’adapter rapidement et à collaborer dans des contextes variés.\n\nEn parallèle de mes missions, je construis mes propres produits, comme Whoa UI, une bibliothèque de composants React, ou Whoa Stash, une app macOS : des outils utiles, pensés pour durer."
   },
   "sections": {
     "about": "À propos",
     "projects": "Projets",
-    "works": "Mes Expériences",
+    "works": "Expériences",
     "stacks": "Technologies",
     "resources": "Ressources",
     "contact": "Contact"
@@ -26,7 +35,7 @@
     "readMore": "Lire plus",
     "viewProject": "Voir le projet",
     "notFound": {
-      "title": "404 - Page introuvable",
+      "title": "Page introuvable",
       "description": "La page que vous recherchez a peut-être été supprimée, renommée ou est temporairement indisponible.",
       "link": "Retour à la page d'accueil"
     }
@@ -45,7 +54,8 @@
       "whoa-ui": "Composants d'interface animés conçus pour React et Next.js. (Projet en construction)",
       "whoa-stash": "Application MacOS pour gérer le son.",
       "neovim-config": "Configuration Neovim pour le développement web.",
-      "42": "Projets réalisés à l'école 42, incluant des applications web et des outils internes."
+      "42": "Projets réalisés à l'école 42, incluant des applications web et des outils internes.",
+      "whoa-jobs": "Application web pour la gestion des candidatures et des offres d'emploi."
     }
   },
   "writings": {
@@ -54,7 +64,9 @@
     "filterAll": "Tous",
     "noWritings": "Aucun article disponible en français",
     "recentTitle": "Derniers articles",
-    "seeAll": "Voir tous les articles"
+    "seeAll": "Voir tous les articles",
+    "notice": "Article en cours de relecture : il peut rester des erreurs. Une coquille ?",
+    "noticeCta": "Écrivez-moi"
   },
   "stacks": {
     "title": "Mes compétences",
@@ -67,7 +79,7 @@
     }
   },
   "resources": {
-    "title": "Matériels utilisées",
+    "title": "Matériel utilisé",
     "filterAll": "Tous",
     "showMore": "Voir tout",
     "showLess": "Voir moins",
@@ -108,6 +120,6 @@
       "previewComingSoon": "Aperçu à venir",
       "viewDetails": "Voir les détails"
     },
-    "construction": "Cette section est en construction et peut contenir des bugs. Signalez-les à"
+    "construction": "Whoa UI est en bêta : certains éléments peuvent encore changer. Un bug ? Écrivez-moi à"
   }
 }

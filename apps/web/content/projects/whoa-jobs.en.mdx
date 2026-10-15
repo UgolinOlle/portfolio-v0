@@ -1,0 +1,222 @@
+---
+title: 'Whoa Jobs'
+description: 'A job-hunting platform that collects postings from several job boards, centralizes them in one dashboard and helps you apply.'
+stack: ['Python', 'Postgres (Supabase)', 'SSE']
+links:
+  - label: 'GitHub'
+    href: 'https://github.com/WhoaStudio/whoa-jobs'
+---
+
+{/* 🖼️ PLACEHOLDER — Project logo (~96px) */}
+
+<img src="/assets/projects/whoa-jobs/logo.png" width="96" alt="Whoa Jobs" />
+
+<h3 align="center">Every job offer, one dashboard.</h3>
+
+A full-stack platform that collects work-study and full-time job postings from several job boards, deduplicates them and lets you track and apply from a single place.
+
+<a href="https://github.com/WhoaStudio/whoa-jobs">GitHub</a>·<a href="#features">Features</a>·
+<a href="#architecture">Architecture</a>
+
+<br />
+
+{/* 🖼️ PLACEHOLDER — Hero image: dashboard "Jobs" page, wide (~1800px) */}
+
+<img src="/assets/projects/whoa-jobs/hero.png" width="900" alt="Whoa Jobs preview" />
+
+---
+
+## About
+
+Looking for a work-study position or a first job means checking LinkedIn, Indeed, HelloWork and others every day, finding the same offer three times and losing track of where you applied.
+
+**Whoa Jobs** fixes that with one idea:
+
+> **The job boards come to you, not the other way around.**
+
+A Python ingestion engine collects postings in the background, an API normalizes and serves them, and a dashboard lets candidates browse, filter and apply — while admins steer the whole engine live, without ever restarting it.
+
+{/* 🎬 PLACEHOLDER — Main demo video (30–90 s): sign in → job list → filters → auto-apply */}
+
+<video
+  src="/assets/projects/whoa-jobs/demo.mp4"
+  poster="/assets/projects/whoa-jobs/demo-thumbnail.png"
+  controls
+  className="w-full rounded-lg border"
+/>
+
+---
+
+## ✨ Features
+
+### 🔎 Aggregated job feed
+
+Every source in a single list, with search and filters by source, location, contract type and date.
+
+When the same offer appears on several sites, it is **grouped across sources** instead of showing up three times.
+
+{/* 🖼️ PLACEHOLDER — Screenshot: job list with filters */}
+
+<img src="/assets/projects/whoa-jobs/jobs.png" width="700" alt="Job list" />
+
+---
+
+### 📄 Documents
+
+Upload your CV and cover letter once. They are stored in a private bucket and previewed directly in the sidebar (PDF and DOCX).
+
+{/* 🖼️ PLACEHOLDER — Screenshot: Documents sidebar with CV preview */}
+
+<img src="/assets/projects/whoa-jobs/documents.png" width="700" alt="Documents" />
+
+---
+
+### 🚀 Auto-apply
+
+One click resolves where the offer takes applications, checks your documents and sends them — with an atomic guard so the same application can never be sent twice, and retry on failure.
+
+{/* 🎬 PLACEHOLDER — Short GIF (≤ 15 s): click on "Auto-apply" and the status changing */}
+
+<img src="/assets/projects/whoa-jobs/auto-apply.gif" width="700" alt="Auto-apply" />
+
+---
+
+### 🔔 Real-time notifications
+
+Notifications stream to the dashboard over SSE as soon as they are committed in Postgres (`LISTEN/NOTIFY`), with importance levels and read state.
+
+---
+
+### 🏢 Workspaces & teams
+
+Companies, invitations, teams, member roles and custom branding — built on Better Auth organizations.
+
+---
+
+### 🎛️ Engine control room
+
+Super admins get a full control room for the ingestion engine:
+
+- **Live ops** — queue depth, active vs. target workers, requests per minute, error rate, circuit-breaker state
+- **Hot settings** — enable the engine or a single source, "Run now", tune rate limits and scaling, all applied **within seconds, without a restart**
+- **Cron jobs & logs** — schedules and events backed by real engine data
+- **Audit, impersonation & broadcast** — every sensitive action traced, "view as" a user, notify everyone
+
+{/* 🖼️ PLACEHOLDER — Screenshot: Admin → Engine → Overview (Live ops) */}
+
+<img src="/assets/projects/whoa-jobs/engine-overview.png" width="700" alt="Engine live ops" />
+
+{/* 🎬 PLACEHOLDER — Short GIF: enable a driver, "Run now", queues filling up in Live ops */}
+
+<img
+  src="/assets/projects/whoa-jobs/engine-run-now.gif"
+  width="700"
+  alt="Run now from the dashboard"
+/>
+
+---
+
+## 🧱 Architecture
+
+```text
+ Job boards ── polite HTTP ──►  Engine (Python)
+ LinkedIn · Indeed · HelloWork    ├── Orchestrator : scheduler + autoscaling
+                                  └── Workers × N : fetch → parse → upsert
+                                          │
+                              Redis (BullMQ queues)
+                                          │
+                                          ▼
+                        Postgres (Supabase) ◄──── NOTIFY engine_control
+                                 ▲                       │
+                                 │                       │
+                   API — NestJS + tRPC ──────────────────┘
+                                 ▲
+                                 │ tRPC / SSE
+                    Dashboard — TanStack Start
+```
+
+The project is an **Nx monorepo** mixing TypeScript (Bun) and Python (uv):
+
+```text
+apps/
+  dashboard/   TanStack Start front end
+  server/      NestJS API
+  engine/      Python ingestion engine
+  fumadocs/    User documentation
+packages/
+  api/         tRPC routers, middlewares, business logic
+  auth/        Better Auth configuration
+  db/          Prisma schema & migrations
+  ui/          Shared shadcn/ui components
+```
+
+---
+
+## 🕷️ The ingestion engine
+
+The most interesting part of the project. It is a **horizontally scalable** collector designed to be **polite by construction**:
+
+- **Task queues on Redis (BullMQ)** — one task = one search or one posting. At-least-once delivery, idempotent upserts, deduplication keys: a replayed task never creates a duplicate.
+- **Autoscaling** — the orchestrator sizes the worker pool from queue depth, as local processes, Docker containers or fixed replicas.
+- **One shared polite client** — `robots.txt`, a global token bucket hard-capped at 2 req/s, per-domain concurrency, a circuit breaker shared by every worker, exponential backoff with jitter, honest User-Agent.
+- **No evasion, ever** — no proxy rotation, no fingerprint spoofing, no CAPTCHA solving. A blocked source is **paused** and surfaced in the dashboard, never worked around.
+- **Raw pages kept** — parsers can be re-run on everything already downloaded without a single network request.
+- **Live configuration** — runtime settings validated against a single JSON spec on both sides (API and engine), reloaded through Postgres `NOTIFY`.
+
+{/* 🖼️ PLACEHOLDER — Terminal screenshot: `uv run engine status` */}
+
+<img src="/assets/projects/whoa-jobs/engine-cli.png" width="700" alt="Engine CLI" />
+
+---
+
+## 🛠️ Tech stack
+
+| Layer     | Technologies                                                          |
+| --------- | --------------------------------------------------------------------- |
+| Front end | TanStack Start, React 19, Tailwind CSS 4, shadcn/ui, Motion, Recharts |
+| API       | NestJS 11, tRPC 11, Zod 4                                             |
+| Auth      | Better Auth (organizations, teams, admin, impersonation)              |
+| Data      | PostgreSQL (Supabase), Prisma, Supabase Storage                       |
+| Engine    | Python 3.12, BullMQ, Redis, httpx, SQLAlchemy, BeautifulSoup, Typer   |
+| Tooling   | Nx, Bun, uv, Varlock, Oxlint, Oxfmt, pytest, mypy, Docker             |
+
+---
+
+## 💡 What I learned
+
+- **Designing a distributed system that stays polite.** Scaling workers is easy; making sure ten workers still send fewer requests than one careful human is the real challenge — hence rate limits and a circuit breaker shared through Redis rather than per process.
+- **Making a Python service and a TypeScript API share one source of truth.** The database schema is owned by Prisma, the engine only reflects it; runtime settings are validated against the same JSON spec on both sides.
+- **Changing a running system safely.** Every setting change is validated, audited and applied live through `LISTEN/NOTIFY`, with a periodic fallback when a notification is lost.
+- **Treating compliance as a feature.** Respecting each site's terms shaped the architecture as much as performance did.
+
+---
+
+## 📸 Screenshots
+
+{/* 🖼️ PLACEHOLDER — 4 extra screenshots (settings, workspace, logs, notifications…) */}
+
+<img src="/assets/projects/whoa-jobs/screenshot-01.png" width="48%" alt="Whoa Jobs screenshot" />
+<img src="/assets/projects/whoa-jobs/screenshot-02.png" width="48%" alt="Whoa Jobs screenshot" />
+
+<img src="/assets/projects/whoa-jobs/screenshot-03.png" width="48%" alt="Whoa Jobs screenshot" />
+<img src="/assets/projects/whoa-jobs/screenshot-04.png" width="48%" alt="Whoa Jobs screenshot" />
+
+---
+
+## 🛣️ Roadmap
+
+- [x] Ingestion engine (LinkedIn, Indeed, HelloWork)
+- [x] Cross-source deduplication
+- [x] Engine control room (live ops, hot settings, logs, cron)
+- [x] Documents with previews
+- [x] Real-time notifications
+- [ ] Per-source auto-apply submitters
+- [ ] Email sync to track replies
+- [ ] More job boards
+- [ ] Kubernetes autoscaling (KEDA)
+
+---
+
+## 🌐 Links
+
+- **Source code:** https://github.com/WhoaStudio/whoa-jobs

@@ -2,6 +2,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import {
   BookOpenText,
+  Briefcase as BriefcaseBusiness,
   Command,
   DiamondsFour as ComponentIcon,
   TerminalWindow as SquareTerminal,
@@ -74,6 +75,28 @@ export const PROJECTS: Project[] = [
       </div>
     ),
     id: 'neovim-config',
+  },
+  {
+    name: 'Whoa Jobs',
+    description:
+      'Collect, centralize and track job offers (work-study & full-time) from multiple job boards — in a single dashboard.',
+    link: '/projects/whoa-jobs',
+    id: 'whoa-jobs',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <BriefcaseBusiness className="size-7" weight="duotone" />
+        </div>
+      </div>
+    ),
   },
   {
     name: '42 Bangkok',
@@ -167,7 +190,7 @@ export const RESOURCES: Resources[] = [
     url: '/assets/uses/macbook.jpeg',
   },
   {
-    name: 'Keychboard Keychron K3',
+    name: 'Keychron K3',
     type: 'Matériel',
     color: '#F7AB0A',
     url: '/assets/uses/keychron.webp',
@@ -206,7 +229,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Developer Full Stack',
     start: '2025',
     link: 'https://digitalcreator.app/',
-    logo: 'https://digitalcreator.app/favicon.ico?favicon.4b4ac5f9.ico',
+    logo: '/assets/logos/digital-creator.png',
     id: 'digital-creator',
   },
   {
@@ -214,7 +237,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Developer Backend',
     start: '2025',
     link: 'https://sugarai.app/',
-    logo: 'https://www.sugarai.app/favicon-16x16.png',
+    logo: '/assets/logos/sugar-ai.png',
     id: 'sugar-ai',
   },
   {
@@ -223,7 +246,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2024',
     end: '2025',
     link: 'https://leboutiquier.fr/',
-    logo: 'https://res.cloudinary.com/djher1fiu/image/upload/v1758012423/xop0sw1gbaky4eiicifj.png',
+    logo: '/assets/logos/le-boutiquier.png',
     id: 'le-boutiquier',
   },
   {
@@ -247,7 +270,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2021',
     end: 'Present',
     link: 'https://ugolin-olle.com',
-    logo: '/favicon.ico',
+    logo: '/assets/logos/freelance.png',
     id: 'freelance',
   },
   {
@@ -256,7 +279,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     start: '2022',
     end: '2023',
     link: 'https://azertyconsulting.fr/',
-    logo: 'https://azertyconsulting.fr/icon.png?27ebc0b5cfa491cd',
+    logo: '/assets/logos/azerty-consulting.png',
     id: 'azerty-consulting',
   },
   {
@@ -264,7 +287,7 @@ export const WORKS_EXPERIENCES: WorkExperience[] = [
     title: 'Back-end Developer (Stage)',
     start: '2022',
     link: 'https://nicoka.com',
-    logo: 'https://www.nicoka.com/assets/img/favicon.ico',
+    logo: '/assets/logos/nicoka.png',
     id: 'nicoka',
   },
 ];

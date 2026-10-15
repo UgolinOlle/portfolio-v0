@@ -5,9 +5,11 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { motion } from 'motion/react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { MagneticSocialLink, Status } from '~/components/ui';
+import { MagneticSocialLink } from '~/components/ui';
 import { EMAIL, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { SOCIAL_LINKS } from '~/lib/data';
+
+import { SectionHeading } from './section-heading';
 
 const SOCIAL_LINK_BASE_DELAY = 0.5;
 const SOCIAL_LINK_STAGGER_MULTIPLIER = 0.1;
@@ -22,13 +24,7 @@ function ContactSection() {
       variants={VARIANTS_SECTION}
       id="contact"
     >
-      <div className="flex items-center gap-2">
-        <h3 className="text-lg tracking-tight text-zinc-900 dark:text-white">
-          {t('contact.title')}
-        </h3>
-
-        <Status status="online" />
-      </div>
+      <SectionHeading className="mb-0">{t('contact.title')}</SectionHeading>
 
       <p className="mb-5 text-sm text-zinc-600 dark:text-zinc-300">
         {t('contact.description')}{' '}

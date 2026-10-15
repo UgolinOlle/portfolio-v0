@@ -1,0 +1,24 @@
+{
+  "name": "@portfolio-v0/headers",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Components for displaying hierarchical titles.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "registry": {
+    "title": "Headers",
+    "type": "ui"
+  }
+}

@@ -57,9 +57,212 @@
         "typescript": "^6.0.3",
       },
     },
+    "packages/activity": {
+      "name": "@portfolio-v0/activity",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "lucide-react": "^1.27.0",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/avatars": {
+      "name": "@portfolio-v0/avatars",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/blog": {
+      "name": "@portfolio-v0/blog",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/button": {
+      "name": "@portfolio-v0/button",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "@radix-ui/react-slot": "^1.2.4",
+        "class-variance-authority": "^0.7.1",
+        "lucide-react": "^1.27.0",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/button-apple": {
+      "name": "@portfolio-v0/button-apple",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "@radix-ui/react-slot": "^1.2.4",
+        "class-variance-authority": "^0.7.1",
+        "lucide-react": "^1.27.0",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/button-gandi": {
+      "name": "@portfolio-v0/button-gandi",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "@radix-ui/react-slot": "^1.2.4",
+        "class-variance-authority": "^0.7.1",
+        "lucide-react": "^1.27.0",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/button-shopify": {
+      "name": "@portfolio-v0/button-shopify",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "@radix-ui/react-slot": "^1.2.4",
+        "class-variance-authority": "^0.7.1",
+        "lucide-react": "^1.27.0",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/calendar-sync": {
+      "name": "@portfolio-v0/calendar-sync",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "lucide-react": "^1.27.0",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
     "packages/config": {
       "name": "@portfolio-v0/config",
       "version": "0.0.0",
+    },
+    "packages/cta-simple": {
+      "name": "@portfolio-v0/cta-simple",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/headers": {
+      "name": "@portfolio-v0/headers",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/input": {
+      "name": "@portfolio-v0/input",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "lucide-react": "^1.27.0",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/landing-saas": {
+      "name": "@portfolio-v0/landing-saas",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
     },
     "packages/shadcn": {
       "name": "@portfolio-v0/shadcn",
@@ -87,6 +290,38 @@
         "@portfolio-v0/config": "workspace:*",
       },
     },
+    "packages/shortcut": {
+      "name": "@portfolio-v0/shortcut",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
+    "packages/status-card": {
+      "name": "@portfolio-v0/status-card",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "lucide-react": "^1.27.0",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
+      },
+    },
     "packages/ui": {
       "name": "@ugolin-olle/ui",
       "version": "0.1.0",
@@ -100,8 +335,23 @@
         "tailwind-merge": "^3.5.0",
       },
       "devDependencies": {
+        "@portfolio-v0/activity": "workspace:*",
+        "@portfolio-v0/avatars": "workspace:*",
+        "@portfolio-v0/blog": "workspace:*",
+        "@portfolio-v0/button": "workspace:*",
+        "@portfolio-v0/button-apple": "workspace:*",
+        "@portfolio-v0/button-gandi": "workspace:*",
+        "@portfolio-v0/button-shopify": "workspace:*",
+        "@portfolio-v0/calendar-sync": "workspace:*",
         "@portfolio-v0/config": "workspace:*",
+        "@portfolio-v0/cta-simple": "workspace:*",
+        "@portfolio-v0/headers": "workspace:*",
+        "@portfolio-v0/input": "workspace:*",
+        "@portfolio-v0/landing-saas": "workspace:*",
         "@portfolio-v0/shadcn": "workspace:*",
+        "@portfolio-v0/shortcut": "workspace:*",
+        "@portfolio-v0/status-card": "workspace:*",
+        "@portfolio-v0/usage-card": "workspace:*",
         "@types/node": "^25.6.0",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
@@ -116,6 +366,22 @@
         "react": "^18.2.0 || ^19.0.0",
         "react-dom": "^18.2.0 || ^19.0.0",
         "tailwindcss": "^4.0.0",
+      },
+    },
+    "packages/usage-card": {
+      "name": "@portfolio-v0/usage-card",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "motion": "^12.43.0",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "typescript": "^6.0.3",
       },
     },
   },
@@ -476,9 +742,39 @@
 
     "@phosphor-icons/react": ["@phosphor-icons/react@2.1.10", "", { "peerDependencies": { "react": ">= 16.8", "react-dom": ">= 16.8" } }, "sha512-vt8Tvq8GLjheAZZYa+YG/pW7HDbov8El/MANW8pOAz4eGxrwhnbfrQZq0Cp4q8zBEu8NIhHdnr+r8thnfRSNYA=="],
 
+    "@portfolio-v0/activity": ["@portfolio-v0/activity@workspace:packages/activity"],
+
+    "@portfolio-v0/avatars": ["@portfolio-v0/avatars@workspace:packages/avatars"],
+
+    "@portfolio-v0/blog": ["@portfolio-v0/blog@workspace:packages/blog"],
+
+    "@portfolio-v0/button": ["@portfolio-v0/button@workspace:packages/button"],
+
+    "@portfolio-v0/button-apple": ["@portfolio-v0/button-apple@workspace:packages/button-apple"],
+
+    "@portfolio-v0/button-gandi": ["@portfolio-v0/button-gandi@workspace:packages/button-gandi"],
+
+    "@portfolio-v0/button-shopify": ["@portfolio-v0/button-shopify@workspace:packages/button-shopify"],
+
+    "@portfolio-v0/calendar-sync": ["@portfolio-v0/calendar-sync@workspace:packages/calendar-sync"],
+
     "@portfolio-v0/config": ["@portfolio-v0/config@workspace:packages/config"],
 
+    "@portfolio-v0/cta-simple": ["@portfolio-v0/cta-simple@workspace:packages/cta-simple"],
+
+    "@portfolio-v0/headers": ["@portfolio-v0/headers@workspace:packages/headers"],
+
+    "@portfolio-v0/input": ["@portfolio-v0/input@workspace:packages/input"],
+
+    "@portfolio-v0/landing-saas": ["@portfolio-v0/landing-saas@workspace:packages/landing-saas"],
+
     "@portfolio-v0/shadcn": ["@portfolio-v0/shadcn@workspace:packages/shadcn"],
+
+    "@portfolio-v0/shortcut": ["@portfolio-v0/shortcut@workspace:packages/shortcut"],
+
+    "@portfolio-v0/status-card": ["@portfolio-v0/status-card@workspace:packages/status-card"],
+
+    "@portfolio-v0/usage-card": ["@portfolio-v0/usage-card@workspace:packages/usage-card"],
 
     "@radix-ui/number": ["@radix-ui/number@1.1.1", "", {}, "sha512-MkKCwxlXTgz6CFoJx3pCwn07GKp36+aZyu/u2Ln2VrA5DcdyCZkASEDBTd8x5whTQQL5CiYf4prXKLcgQdv29g=="],
 

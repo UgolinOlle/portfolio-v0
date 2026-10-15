@@ -1,0 +1,31 @@
+{
+  "name": "@portfolio-v0/shortcut",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Composable keyboard shortcut display with platform-aware modifier keys.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "registry": {
+    "title": "Shortcut",
+    "type": "ui",
+    "examples": [
+      {
+        "name": "shortcut",
+        "title": "Shortcut Demo",
+        "description": "Key combinations and sequences rendered with Shortcut."
+      }
+    ]
+  }
+}

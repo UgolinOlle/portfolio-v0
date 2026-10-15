@@ -1,0 +1,26 @@
+{
+  "name": "@portfolio-v0/status-card",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A compact card that pairs a status badge with a short message.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "lucide-react": "^1.27.0",
+    "motion": "^12.43.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "registry": {
+    "title": "Status Card",
+    "type": "block"
+  }
+}

@@ -218,7 +218,11 @@ export const getPackageUsageSnippet = (name: string, entrySource: string): strin
 
 // Une dépendance est soit un item de ce registry (lien vers sa page de doc, retrouvée via son
 // champ `preview`), soit un composant shadcn/ui (lien vers sa doc officielle).
-export const getRegistryDependencyHref = (name: string): { href: string; external: boolean } => {
+// Les dépendances entre items du registry sont des URLs (`…/r/<name>.json`, cf. scripts/registry.ts).
+export const getRegistryDependencyHref = (
+  dependency: string,
+): { href: string; external: boolean } => {
+  const name = dependency.match(/\/r\/([\w-]+)\.json$/)?.[1] ?? dependency;
   const page = [componentsSource, blocksSource, templatesSource]
     .flatMap((source) => source.getPages())
     .find((candidate) => candidate.data.preview === name);

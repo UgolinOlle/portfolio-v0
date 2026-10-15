@@ -8,7 +8,7 @@ const TEMPLATE_VIRTUAL_WIDTH = 1280;
 const BLOCK_VIRTUAL_WIDTH = 800;
 
 type PreviewThumbnailProps = {
-  // Nom du fichier dans `packages/ui/examples/` (sans extension), ex. "blog".
+  // Nom du fichier dans `apps/web/examples/` (sans extension), ex. "blog".
   path: string;
   type?: 'component' | 'block' | 'template';
   // Largeur de conception du block (frontmatter `previewWidth`) : un widget compact est moins réduit.
@@ -26,11 +26,7 @@ export const PreviewThumbnail = async ({
   virtualWidth,
   className,
 }: PreviewThumbnailProps) => {
-  const Component = await (
-    type === 'component'
-      ? import(`../../../../../../packages/ui/examples/components/${path}.tsx`)
-      : import(`../../../../../../packages/ui/examples/${path}.tsx`)
-  )
+  const Component = await import(`../../../../examples/${path}.tsx`)
     .then((module) => module.default)
     .catch(() => undefined);
 

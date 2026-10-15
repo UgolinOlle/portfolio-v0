@@ -1,0 +1,58 @@
+{
+  "name": "@portfolio-v0/input",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A text input with icons, a clear button, and loading and validation states.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "lucide-react": "^1.27.0",
+    "motion": "^12.43.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "registry": {
+    "title": "Input",
+    "type": "ui",
+    "examples": [
+      {
+        "name": "input",
+        "title": "Basic Input",
+        "description": "A basic text input with a controlled value."
+      },
+      {
+        "name": "input-password",
+        "title": "Input Password",
+        "description": "A password input with a show/hide visibility toggle."
+      },
+      {
+        "name": "input-password-error",
+        "title": "Input Password Error",
+        "description": "A password input showing a validation error message."
+      },
+      {
+        "name": "input-with-icon",
+        "title": "Input With Icon",
+        "description": "A text input with a leading icon."
+      },
+      {
+        "name": "input-disabled",
+        "title": "Input Disabled",
+        "description": "A disabled text input."
+      },
+      {
+        "name": "input-loading",
+        "title": "Input Loading",
+        "description": "A text input in a loading state."
+      }
+    ]
+  }
+}

@@ -59,11 +59,12 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup",
-    "registry:build": "shadcn build --output ../../apps/web/public/r",
+    "build": "bun run registry:generate && tsup",
     "check-types": "tsc --noEmit",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "prepublishOnly": "bun run build",
-    "clean": "git clean -xdf .cache .turbo dist node_modules"
+    "registry:build": "bun run registry:generate && shadcn build --output ../../apps/web/public/r",
+    "registry:generate": "bun scripts/registry.ts && oxfmt --write registry.json"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -75,8 +76,23 @@
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
+    "@portfolio-v0/activity": "workspace:*",
+    "@portfolio-v0/avatars": "workspace:*",
+    "@portfolio-v0/blog": "workspace:*",
+    "@portfolio-v0/button": "workspace:*",
+    "@portfolio-v0/button-apple": "workspace:*",
+    "@portfolio-v0/button-gandi": "workspace:*",
+    "@portfolio-v0/button-shopify": "workspace:*",
+    "@portfolio-v0/calendar-sync": "workspace:*",
     "@portfolio-v0/config": "workspace:*",
+    "@portfolio-v0/cta-simple": "workspace:*",
+    "@portfolio-v0/headers": "workspace:*",
+    "@portfolio-v0/input": "workspace:*",
+    "@portfolio-v0/landing-saas": "workspace:*",
     "@portfolio-v0/shadcn": "workspace:*",
+    "@portfolio-v0/shortcut": "workspace:*",
+    "@portfolio-v0/status-card": "workspace:*",
+    "@portfolio-v0/usage-card": "workspace:*",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

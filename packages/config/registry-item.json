@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Registry item",
+  "extends": "./react-lib.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/lib/*": ["../shadcn/lib/*"],
+      "@/components/ui/ugolin/*": ["../*"],
+      "@/components/ui/*": ["../shadcn/components/ui/*"],
+      "@/components/blocks/*": ["../*"]
+    }
+  }
+}

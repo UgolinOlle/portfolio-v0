@@ -1,0 +1,28 @@
+{
+  "name": "@portfolio-v0/button-apple",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A button component styled after Apple's Human Interface Guidelines.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "lucide-react": "^1.27.0",
+    "motion": "^12.43.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "registry": {
+    "title": "Apple Button",
+    "type": "ui"
+  }
+}

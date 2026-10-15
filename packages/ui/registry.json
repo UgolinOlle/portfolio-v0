@@ -4,244 +4,14 @@
   "homepage": "https://ugolin-olle.com/ui",
   "items": [
     {
-      "name": "headers",
-      "type": "registry:ui",
-      "title": "Headers",
-      "description": "Components for displaying hierarchical titles.",
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "registry/components/core/headers/headers.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/ugolin/headers.tsx"
-        }
-      ]
-    },
-    {
-      "name": "headers-demo",
-      "type": "registry:item",
-      "title": "Headers Demo",
-      "description": "Usage example for the Headers component.",
-      "files": [
-        {
-          "path": "examples/components/headers.tsx",
-          "type": "registry:component",
-          "target": "components/examples/headers.tsx"
-        }
-      ],
-      "registryDependencies": ["https://ugolin-olle.com/r/headers.json"],
-      "meta": {
-        "example": {
-          "of": "headers",
-          "order": 0
-        }
-      }
-    },
-    {
-      "name": "button",
-      "type": "registry:ui",
-      "title": "Button",
-      "description": "A button component for displaying interactive elements.",
-      "dependencies": [
-        "motion",
-        "lucide-react",
-        "class-variance-authority",
-        "@radix-ui/react-slot"
-      ],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "registry/components/core/button/button.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/ugolin/button.tsx"
-        }
-      ]
-    },
-    {
-      "name": "button-demo",
-      "type": "registry:item",
-      "title": "Button Demo",
-      "description": "Usage example for the Button component.",
-      "files": [
-        {
-          "path": "examples/components/button.tsx",
-          "type": "registry:component",
-          "target": "components/examples/button.tsx"
-        }
-      ],
-      "registryDependencies": ["https://ugolin-olle.com/r/button.json"],
-      "meta": {
-        "example": {
-          "of": "button",
-          "order": 0
-        }
-      }
-    },
-    {
-      "name": "button-gandi",
-      "type": "registry:ui",
-      "title": "Gandi Button",
-      "description": "A button component styled after Gandi.net's design.",
-      "dependencies": [
-        "motion",
-        "lucide-react",
-        "class-variance-authority",
-        "@radix-ui/react-slot"
-      ],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "registry/components/core/button/button.gandi.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/ugolin/button.gandi.tsx"
-        }
-      ]
-    },
-    {
-      "name": "button-gandi-demo",
-      "type": "registry:item",
-      "title": "Gandi Button Demo",
-      "description": "Usage example for the Gandi Button component.",
-      "files": [
-        {
-          "path": "examples/components/button-gandi.tsx",
-          "type": "registry:component",
-          "target": "components/examples/button-gandi.tsx"
-        }
-      ],
-      "registryDependencies": ["https://ugolin-olle.com/r/button-gandi.json"],
-      "meta": {
-        "example": {
-          "of": "button-gandi",
-          "order": 0
-        }
-      }
-    },
-    {
-      "name": "button-apple",
-      "type": "registry:ui",
-      "title": "Apple Button",
-      "description": "A button component styled after Apple's Human Interface Guidelines.",
-      "dependencies": [
-        "motion",
-        "lucide-react",
-        "class-variance-authority",
-        "@radix-ui/react-slot"
-      ],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "registry/components/core/button/button.apple.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/ugolin/button.apple.tsx"
-        }
-      ]
-    },
-    {
-      "name": "button-apple-demo",
-      "type": "registry:item",
-      "title": "Apple Button Demo",
-      "description": "Usage example for the Apple Button component.",
-      "files": [
-        {
-          "path": "examples/components/button-apple.tsx",
-          "type": "registry:component",
-          "target": "components/examples/button-apple.tsx"
-        }
-      ],
-      "registryDependencies": ["https://ugolin-olle.com/r/button-apple.json"],
-      "meta": {
-        "example": {
-          "of": "button-apple",
-          "order": 0
-        }
-      }
-    },
-    {
-      "name": "button-shopify",
-      "type": "registry:ui",
-      "title": "Shopify Button",
-      "description": "A button component styled after Shopify's Polaris design system.",
-      "dependencies": [
-        "motion",
-        "lucide-react",
-        "class-variance-authority",
-        "@radix-ui/react-slot"
-      ],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "registry/components/core/button/button.shopify.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/ugolin/button.shopify.tsx"
-        }
-      ]
-    },
-    {
-      "name": "button-shopify-demo",
-      "type": "registry:item",
-      "title": "Shopify Button Demo",
-      "description": "Usage example for the Shopify Button component.",
-      "files": [
-        {
-          "path": "examples/components/button-shopify.tsx",
-          "type": "registry:component",
-          "target": "components/examples/button-shopify.tsx"
-        }
-      ],
-      "registryDependencies": ["https://ugolin-olle.com/r/button-shopify.json"],
-      "meta": {
-        "example": {
-          "of": "button-shopify",
-          "order": 0
-        }
-      }
-    },
-    {
-      "name": "status-card",
-      "type": "registry:block",
-      "title": "Status Card",
-      "description": "A compact card that pairs a status badge with a short message.",
-      "dependencies": ["motion", "lucide-react"],
-      "registryDependencies": ["badge", "card"],
-      "files": [
-        {
-          "path": "registry/blocks/status-card/status-card.tsx",
-          "type": "registry:component",
-          "target": "components/blocks/status-card/status-card.tsx"
-        }
-      ]
-    },
-    {
-      "name": "status-card-demo",
-      "type": "registry:item",
-      "title": "Status Card Demo",
-      "description": "Usage example for the Status Card component.",
-      "files": [
-        {
-          "path": "examples/status-card.tsx",
-          "type": "registry:component",
-          "target": "components/examples/status-card.tsx"
-        }
-      ],
-      "registryDependencies": ["https://ugolin-olle.com/r/status-card.json"],
-      "meta": {
-        "example": {
-          "of": "status-card",
-          "order": 0
-        }
-      }
-    },
-    {
       "name": "avatars",
       "type": "registry:ui",
       "title": "Avatars",
       "description": "A component for displaying user avatars.",
       "dependencies": ["motion"],
-      "registryDependencies": [],
       "files": [
         {
-          "path": "registry/components/core/avatars/avatars.tsx",
+          "path": "../avatars/index.tsx",
           "type": "registry:ui",
           "target": "components/ui/ugolin/avatars.tsx"
         }
@@ -252,14 +22,14 @@
       "type": "registry:item",
       "title": "Avatars Demo",
       "description": "Usage example for the Avatars component.",
+      "registryDependencies": ["https://ugolin-olle.com/r/avatars.json"],
       "files": [
         {
-          "path": "examples/components/avatars.tsx",
+          "path": "../../apps/web/examples/avatars.tsx",
           "type": "registry:component",
           "target": "components/examples/avatars.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/avatars.json"],
       "meta": {
         "example": {
           "of": "avatars",
@@ -268,15 +38,204 @@
       }
     },
     {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A button component for displaying interactive elements.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "../button/index.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/button.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button-demo",
+      "type": "registry:item",
+      "title": "Button Demo",
+      "description": "Usage example for the Button component.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["https://ugolin-olle.com/r/button.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/button.tsx",
+          "type": "registry:component",
+          "target": "components/examples/button.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "button",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "button-apple",
+      "type": "registry:ui",
+      "title": "Apple Button",
+      "description": "A button component styled after Apple's Human Interface Guidelines.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "../button-apple/index.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/button-apple.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button-apple-demo",
+      "type": "registry:item",
+      "title": "Apple Button Demo",
+      "description": "Usage example for the Apple Button component.",
+      "registryDependencies": ["https://ugolin-olle.com/r/button-apple.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/button-apple.tsx",
+          "type": "registry:component",
+          "target": "components/examples/button-apple.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "button-apple",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "button-gandi",
+      "type": "registry:ui",
+      "title": "Gandi Button",
+      "description": "A button component styled after Gandi.net's design.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "../button-gandi/index.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/button-gandi.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button-gandi-demo",
+      "type": "registry:item",
+      "title": "Gandi Button Demo",
+      "description": "Usage example for the Gandi Button component.",
+      "registryDependencies": ["https://ugolin-olle.com/r/button-gandi.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/button-gandi.tsx",
+          "type": "registry:component",
+          "target": "components/examples/button-gandi.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "button-gandi",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "button-shopify",
+      "type": "registry:ui",
+      "title": "Shopify Button",
+      "description": "A button component styled after Shopify's Polaris design system.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "../button-shopify/index.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/button-shopify.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button-shopify-demo",
+      "type": "registry:item",
+      "title": "Shopify Button Demo",
+      "description": "Usage example for the Shopify Button component.",
+      "registryDependencies": ["https://ugolin-olle.com/r/button-shopify.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/button-shopify.tsx",
+          "type": "registry:component",
+          "target": "components/examples/button-shopify.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "button-shopify",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "headers",
+      "type": "registry:ui",
+      "title": "Headers",
+      "description": "Components for displaying hierarchical titles.",
+      "files": [
+        {
+          "path": "../headers/index.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/headers.tsx"
+        }
+      ]
+    },
+    {
+      "name": "headers-demo",
+      "type": "registry:item",
+      "title": "Headers Demo",
+      "description": "Usage example for the Headers component.",
+      "registryDependencies": ["https://ugolin-olle.com/r/headers.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/headers.tsx",
+          "type": "registry:component",
+          "target": "components/examples/headers.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "headers",
+          "order": 0
+        }
+      }
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
-      "description": "A component for displaying user avatars.",
-      "dependencies": ["motion", "lucide-react"],
-      "registryDependencies": [],
+      "description": "A text input with icons, a clear button, and loading and validation states.",
+      "dependencies": ["lucide-react", "motion"],
       "files": [
         {
-          "path": "registry/components/core/input/input.tsx",
+          "path": "../input/index.tsx",
           "type": "registry:ui",
           "target": "components/ui/ugolin/input.tsx"
         }
@@ -287,14 +246,14 @@
       "type": "registry:item",
       "title": "Basic Input",
       "description": "A basic text input with a controlled value.",
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "files": [
         {
-          "path": "examples/components/input.tsx",
+          "path": "../../apps/web/examples/input.tsx",
           "type": "registry:component",
           "target": "components/examples/input.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -307,14 +266,15 @@
       "type": "registry:item",
       "title": "Input Password",
       "description": "A password input with a show/hide visibility toggle.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "files": [
         {
-          "path": "examples/components/input-password.tsx",
+          "path": "../../apps/web/examples/input-password.tsx",
           "type": "registry:component",
           "target": "components/examples/input-password.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -327,14 +287,15 @@
       "type": "registry:item",
       "title": "Input Password Error",
       "description": "A password input showing a validation error message.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "files": [
         {
-          "path": "examples/components/input-password-error.tsx",
+          "path": "../../apps/web/examples/input-password-error.tsx",
           "type": "registry:component",
           "target": "components/examples/input-password-error.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -347,14 +308,15 @@
       "type": "registry:item",
       "title": "Input With Icon",
       "description": "A text input with a leading icon.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "files": [
         {
-          "path": "examples/components/input-with-icon.tsx",
+          "path": "../../apps/web/examples/input-with-icon.tsx",
           "type": "registry:component",
           "target": "components/examples/input-with-icon.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -367,14 +329,14 @@
       "type": "registry:item",
       "title": "Input Disabled",
       "description": "A disabled text input.",
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "files": [
         {
-          "path": "examples/components/input-disabled.tsx",
+          "path": "../../apps/web/examples/input-disabled.tsx",
           "type": "registry:component",
           "target": "components/examples/input-disabled.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -387,14 +349,14 @@
       "type": "registry:item",
       "title": "Input Loading",
       "description": "A text input in a loading state.",
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "files": [
         {
-          "path": "examples/components/input-loading.tsx",
+          "path": "../../apps/web/examples/input-loading.tsx",
           "type": "registry:component",
           "target": "components/examples/input-loading.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -410,7 +372,7 @@
       "registryDependencies": ["kbd"],
       "files": [
         {
-          "path": "registry/components/core/shortcut/shortcut.tsx",
+          "path": "../shortcut/index.tsx",
           "type": "registry:ui",
           "target": "components/ui/ugolin/shortcut.tsx"
         }
@@ -421,14 +383,14 @@
       "type": "registry:item",
       "title": "Shortcut Demo",
       "description": "Key combinations and sequences rendered with Shortcut.",
+      "registryDependencies": ["https://ugolin-olle.com/r/shortcut.json"],
       "files": [
         {
-          "path": "examples/components/shortcut.tsx",
+          "path": "../../apps/web/examples/shortcut.tsx",
           "type": "registry:component",
           "target": "components/examples/shortcut.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/shortcut.json"],
       "meta": {
         "example": {
           "of": "shortcut",
@@ -441,53 +403,52 @@
       "type": "registry:block",
       "title": "Activity",
       "description": "An annual activity heatmap card with dynamic tabs, stats and a legend.",
-      "dependencies": ["motion", "lucide-react"],
-      "registryDependencies": [],
+      "dependencies": ["lucide-react", "motion"],
       "files": [
         {
-          "path": "registry/blocks/activity/activity.tsx",
+          "path": "../activity/index.tsx",
           "type": "registry:component",
-          "target": "components/blocks/activity/activity.tsx"
+          "target": "components/blocks/activity/index.tsx"
         },
         {
-          "path": "registry/blocks/activity/activity-header.tsx",
+          "path": "../activity/activity-header.tsx",
           "type": "registry:component",
           "target": "components/blocks/activity/activity-header.tsx"
         },
         {
-          "path": "registry/blocks/activity/activity-tabs.tsx",
-          "type": "registry:component",
-          "target": "components/blocks/activity/activity-tabs.tsx"
-        },
-        {
-          "path": "registry/blocks/activity/activity-heatmap.tsx",
+          "path": "../activity/activity-heatmap.tsx",
           "type": "registry:component",
           "target": "components/blocks/activity/activity-heatmap.tsx"
         },
         {
-          "path": "registry/blocks/activity/activity-stats.tsx",
-          "type": "registry:component",
-          "target": "components/blocks/activity/activity-stats.tsx"
-        },
-        {
-          "path": "registry/blocks/activity/activity-legend.tsx",
+          "path": "../activity/activity-legend.tsx",
           "type": "registry:component",
           "target": "components/blocks/activity/activity-legend.tsx"
         },
         {
-          "path": "registry/blocks/activity/activity-tooltip.tsx",
+          "path": "../activity/activity-stats.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity-stats.tsx"
+        },
+        {
+          "path": "../activity/activity-tabs.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/activity/activity-tabs.tsx"
+        },
+        {
+          "path": "../activity/activity-tooltip.tsx",
           "type": "registry:component",
           "target": "components/blocks/activity/activity-tooltip.tsx"
         },
         {
-          "path": "registry/blocks/activity/utils.ts",
-          "type": "registry:component",
-          "target": "components/blocks/activity/utils.ts"
-        },
-        {
-          "path": "registry/blocks/activity/types.ts",
+          "path": "../activity/types.ts",
           "type": "registry:component",
           "target": "components/blocks/activity/types.ts"
+        },
+        {
+          "path": "../activity/utils.ts",
+          "type": "registry:component",
+          "target": "components/blocks/activity/utils.ts"
         }
       ]
     },
@@ -496,14 +457,14 @@
       "type": "registry:item",
       "title": "Activity Demo",
       "description": "Usage example for the Activity block.",
+      "registryDependencies": ["https://ugolin-olle.com/r/activity.json"],
       "files": [
         {
-          "path": "examples/activity.tsx",
+          "path": "../../apps/web/examples/activity.tsx",
           "type": "registry:component",
           "target": "components/examples/activity.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/activity.json"],
       "meta": {
         "example": {
           "of": "activity",
@@ -516,12 +477,12 @@
       "type": "registry:block",
       "title": "Blog",
       "description": "A responsive grid of blog post cards with image, badge and author.",
-      "registryDependencies": ["card", "badge"],
+      "registryDependencies": ["badge", "card"],
       "files": [
         {
-          "path": "registry/blocks/blog/blog.tsx",
+          "path": "../blog/index.tsx",
           "type": "registry:component",
-          "target": "components/blocks/blog/blog.tsx"
+          "target": "components/blocks/blog/index.tsx"
         }
       ]
     },
@@ -530,17 +491,52 @@
       "type": "registry:item",
       "title": "Blog Demo",
       "description": "Usage example for the Blog block.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["badge", "card", "https://ugolin-olle.com/r/blog.json"],
       "files": [
         {
-          "path": "examples/blog.tsx",
+          "path": "../../apps/web/examples/blog.tsx",
           "type": "registry:component",
           "target": "components/examples/blog.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/blog.json"],
       "meta": {
         "example": {
           "of": "blog",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "calendar-sync",
+      "type": "registry:block",
+      "title": "Calendar Sync",
+      "description": "A compact calendar sync action with an animated idle, loading and success cycle.",
+      "dependencies": ["lucide-react", "motion"],
+      "files": [
+        {
+          "path": "../calendar-sync/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/calendar-sync/index.tsx"
+        }
+      ]
+    },
+    {
+      "name": "calendar-sync-demo",
+      "type": "registry:item",
+      "title": "Calendar Sync Demo",
+      "description": "Usage example for the Calendar Sync block.",
+      "registryDependencies": ["https://ugolin-olle.com/r/calendar-sync.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/calendar-sync.tsx",
+          "type": "registry:component",
+          "target": "components/examples/calendar-sync.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "calendar-sync",
           "order": 0
         }
       }
@@ -553,9 +549,9 @@
       "registryDependencies": ["button"],
       "files": [
         {
-          "path": "registry/blocks/cta-simple/cta-simple.tsx",
+          "path": "../cta-simple/index.tsx",
           "type": "registry:component",
-          "target": "components/blocks/cta-simple/cta-simple.tsx"
+          "target": "components/blocks/cta-simple/index.tsx"
         }
       ]
     },
@@ -564,14 +560,14 @@
       "type": "registry:item",
       "title": "Simple CTA Demo",
       "description": "Usage example for the Simple CTA block.",
+      "registryDependencies": ["button", "https://ugolin-olle.com/r/cta-simple.json"],
       "files": [
         {
-          "path": "examples/cta-simple.tsx",
+          "path": "../../apps/web/examples/cta-simple.tsx",
           "type": "registry:component",
           "target": "components/examples/cta-simple.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/cta-simple.json"],
       "meta": {
         "example": {
           "of": "cta-simple",
@@ -580,36 +576,37 @@
       }
     },
     {
-      "name": "calendar-sync",
+      "name": "status-card",
       "type": "registry:block",
-      "title": "Calendar Sync",
-      "description": "A compact calendar sync action with an animated idle, loading and success cycle.",
-      "dependencies": ["motion", "lucide-react"],
-      "registryDependencies": [],
+      "title": "Status Card",
+      "description": "A compact card that pairs a status badge with a short message.",
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["badge", "card"],
       "files": [
         {
-          "path": "registry/blocks/calendar-sync/calendar-sync.tsx",
+          "path": "../status-card/index.tsx",
           "type": "registry:component",
-          "target": "components/blocks/calendar-sync/calendar-sync.tsx"
+          "target": "components/blocks/status-card/index.tsx"
         }
       ]
     },
     {
-      "name": "calendar-sync-demo",
+      "name": "status-card-demo",
       "type": "registry:item",
-      "title": "Calendar Sync Demo",
-      "description": "Usage example for the Calendar Sync block.",
+      "title": "Status Card Demo",
+      "description": "Usage example for the Status Card block.",
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["badge", "card", "https://ugolin-olle.com/r/status-card.json"],
       "files": [
         {
-          "path": "examples/calendar-sync.tsx",
+          "path": "../../apps/web/examples/status-card.tsx",
           "type": "registry:component",
-          "target": "components/examples/calendar-sync.tsx"
+          "target": "components/examples/status-card.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/calendar-sync.json"],
       "meta": {
         "example": {
-          "of": "calendar-sync",
+          "of": "status-card",
           "order": 0
         }
       }
@@ -620,42 +617,41 @@
       "title": "Usage Card",
       "description": "A credits usage card with a category breakdown, a per-day chart and plan limits.",
       "dependencies": ["motion"],
-      "registryDependencies": [],
       "files": [
         {
-          "path": "registry/blocks/usage-card/usage-card.tsx",
+          "path": "../usage-card/index.tsx",
           "type": "registry:component",
-          "target": "components/blocks/usage-card/usage-card.tsx"
+          "target": "components/blocks/usage-card/index.tsx"
         },
         {
-          "path": "registry/blocks/usage-card/usage-period-tabs.tsx",
+          "path": "../usage-card/types.ts",
           "type": "registry:component",
-          "target": "components/blocks/usage-card/usage-period-tabs.tsx"
+          "target": "components/blocks/usage-card/types.ts"
         },
         {
-          "path": "registry/blocks/usage-card/usage-breakdown.tsx",
+          "path": "../usage-card/usage-breakdown.tsx",
           "type": "registry:component",
           "target": "components/blocks/usage-card/usage-breakdown.tsx"
         },
         {
-          "path": "registry/blocks/usage-card/usage-daily-chart.tsx",
+          "path": "../usage-card/usage-daily-chart.tsx",
           "type": "registry:component",
           "target": "components/blocks/usage-card/usage-daily-chart.tsx"
         },
         {
-          "path": "registry/blocks/usage-card/usage-meters.tsx",
+          "path": "../usage-card/usage-meters.tsx",
           "type": "registry:component",
           "target": "components/blocks/usage-card/usage-meters.tsx"
         },
         {
-          "path": "registry/blocks/usage-card/utils.ts",
+          "path": "../usage-card/usage-period-tabs.tsx",
           "type": "registry:component",
-          "target": "components/blocks/usage-card/utils.ts"
+          "target": "components/blocks/usage-card/usage-period-tabs.tsx"
         },
         {
-          "path": "registry/blocks/usage-card/types.ts",
+          "path": "../usage-card/utils.ts",
           "type": "registry:component",
-          "target": "components/blocks/usage-card/types.ts"
+          "target": "components/blocks/usage-card/utils.ts"
         }
       ]
     },
@@ -664,14 +660,14 @@
       "type": "registry:item",
       "title": "Usage Card Demo",
       "description": "Usage example for the Usage Card block.",
+      "registryDependencies": ["https://ugolin-olle.com/r/usage-card.json"],
       "files": [
         {
-          "path": "examples/usage-card.tsx",
+          "path": "../../apps/web/examples/usage-card.tsx",
           "type": "registry:component",
           "target": "components/examples/usage-card.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/usage-card.json"],
       "meta": {
         "example": {
           "of": "usage-card",
@@ -684,31 +680,36 @@
       "type": "registry:block",
       "title": "SaaS Landing Page",
       "description": "A full landing page combining a hero, a feature grid and a call-to-action section.",
-      "meta": {
-        "category": "template"
-      },
-      "registryDependencies": ["button", "badge", "card"],
+      "registryDependencies": ["badge", "button", "card"],
       "files": [
         {
-          "path": "registry/templates/landing-saas/landing-saas.tsx",
+          "path": "../landing-saas/index.tsx",
           "type": "registry:component",
-          "target": "components/blocks/landing-saas/landing-saas.tsx"
+          "target": "components/blocks/landing-saas/index.tsx"
         }
-      ]
+      ],
+      "meta": {
+        "category": "template"
+      }
     },
     {
       "name": "landing-saas-demo",
       "type": "registry:item",
       "title": "SaaS Landing Page Demo",
       "description": "Usage example for the SaaS Landing Page template.",
+      "registryDependencies": [
+        "badge",
+        "button",
+        "card",
+        "https://ugolin-olle.com/r/landing-saas.json"
+      ],
       "files": [
         {
-          "path": "examples/landing-saas.tsx",
+          "path": "../../apps/web/examples/landing-saas.tsx",
           "type": "registry:component",
           "target": "components/examples/landing-saas.tsx"
         }
       ],
-      "registryDependencies": ["https://ugolin-olle.com/r/landing-saas.json"],
       "meta": {
         "example": {
           "of": "landing-saas",

@@ -1,0 +1,26 @@
+{
+  "name": "@portfolio-v0/activity",
+  "version": "0.0.0",
+  "private": true,
+  "description": "An annual activity heatmap card with dynamic tabs, stats and a legend.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "lucide-react": "^1.27.0",
+    "motion": "^12.43.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "registry": {
+    "title": "Activity",
+    "type": "block"
+  }
+}

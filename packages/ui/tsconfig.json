@@ -8,20 +8,13 @@
     "baseUrl": ".",
     "paths": {
       "@/lib/utils": ["../shadcn/lib/utils.ts"],
-      "@/components/ui/ugolin/*": [
-        "./registry/components/core/avatars/*",
-        "./registry/components/core/button/*",
-        "./registry/components/core/headers/*",
-        "./registry/components/core/input/*",
-        "./registry/components/core/shortcut/*"
-      ],
-      "@/components/blocks/*": ["./registry/blocks/*", "./registry/templates/*"],
+      "@/components/ui/ugolin/*": ["../*"],
+      "@/components/blocks/*": ["../*"],
       "@/components/ui/*": ["../shadcn/components/ui/*"],
       "@portfolio-v0/shadcn/components/*": ["../shadcn/components/ui/*"],
-      "@portfolio-v0/shadcn/utils": ["../shadcn/lib/utils.ts"],
-      "registry/*": ["./registry/*"]
+      "@portfolio-v0/shadcn/utils": ["../shadcn/lib/utils.ts"]
     }
   },
-  "include": ["registry/**/*.ts", "registry/**/*.tsx", "examples/**/*.tsx", "tsup.config.ts"],
+  "include": ["scripts/**/*.ts", "tsup.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

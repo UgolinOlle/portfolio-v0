@@ -1,0 +1,25 @@
+{
+  "name": "@portfolio-v0/landing-saas",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A full landing page combining a hero, a feature grid and a call-to-action section.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "registry": {
+    "title": "SaaS Landing Page",
+    "type": "block",
+    "category": "template"
+  }
+}

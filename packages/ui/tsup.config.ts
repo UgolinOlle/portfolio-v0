@@ -4,16 +4,18 @@ import { dirname, join, resolve } from 'node:path';
 import { defineConfig, type Options } from 'tsup';
 
 /*
-  `registry.json` est l'unique source de vérité pour les deux canaux de distribution :
+  `registry.json` (généré depuis `packages/<name>/` par `scripts/registry.ts`) alimente les deux
+  canaux de distribution :
   - le registry shadcn (`shadcn build`) copie les fichiers source tels quels ;
   - ce build npm compile les mêmes fichiers, un point d'entrée par item (`@ugolin-olle/ui/<name>`).
-  Ajouter un item au registry suffit donc à l'exposer aussi dans le package npm.
+  Ajouter un package d'item suffit donc à l'exposer aussi dans le package npm.
 */
 
 type RegistryItem = { name: string; type: string; files: { path: string }[] };
 
 const root = import.meta.dirname;
-const shadcnRoot = resolve(root, '../shadcn');
+const packagesRoot = resolve(root, '..');
+const shadcnRoot = join(packagesRoot, 'shadcn');
 const outDir = join(root, 'dist');
 
 const registry = JSON.parse(readFileSync(join(root, 'registry.json'), 'utf-8')) as {
@@ -25,15 +27,22 @@ const entries = registry.items
   .filter((item) => item.type === 'registry:ui' || item.type === 'registry:block')
   .map((item) => ({ name: item.name, file: join(root, item.files[0].path) }));
 
-// Les alias `@/` des sources pointent vers les primitives shadcn vendorisées, qui sont
-// compilées dans le package (même résolution que `tsconfig.json`).
+// Les alias `@/` des sources pointent vers les primitives shadcn vendorisées ou vers les autres
+// packages d'items, compilés dans le package (même résolution que `tsconfig.json`).
+const aliases: [prefix: string, target: string][] = [
+  ['@/components/ui/ugolin/', packagesRoot],
+  ['@/components/blocks/', packagesRoot],
+  ['@/components/ui/', join(shadcnRoot, 'components/ui')],
+];
+
 const resolveImport = (from: string, specifier: string): string | undefined => {
+  const alias = aliases.find(([prefix]) => specifier.startsWith(prefix));
   const base = specifier.startsWith('.')
     ? resolve(dirname(from), specifier)
     : specifier === '@/lib/utils'
       ? join(shadcnRoot, 'lib/utils')
-      : specifier.startsWith('@/components/ui/')
-        ? join(shadcnRoot, 'components/ui', specifier.slice('@/components/ui/'.length))
+      : alias
+        ? join(alias[1], specifier.slice(alias[0].length))
         : undefined;
 
   if (!base) return undefined;

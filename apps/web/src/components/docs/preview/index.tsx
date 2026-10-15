@@ -13,10 +13,7 @@ type PreviewProps = {
 
 export const Preview = async ({ path, className, type = 'component' }: PreviewProps) => {
   const [Component, demoManifest] = await Promise.all([
-    (type === 'component'
-      ? import(`../../../../../../packages/ui/examples/components/${path}.tsx`)
-      : import(`../../../../../../packages/ui/examples/${path}.tsx`)
-    ).then((module) => module.default),
+    import(`../../../../examples/${path}.tsx`).then((module) => module.default),
     getRegistryItemManifest(getRegistryDemoName(path)),
   ]);
   const isFullPage = type !== 'component';

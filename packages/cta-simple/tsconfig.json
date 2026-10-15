@@ -1,0 +1,5 @@
+{
+  "extends": "@portfolio-v0/config/registry-item.json",
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@portfolio-v0/usage-card",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A credits usage card with a category breakdown, a per-day chart and plan limits.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "motion": "^12.43.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
+  },
+  "registry": {
+    "title": "Usage Card",
+    "type": "block"
+  }
+}

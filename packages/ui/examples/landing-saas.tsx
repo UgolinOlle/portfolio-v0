@@ -1,6 +1,6 @@
-import { Badge } from '@portfolio-v0/shadcn/components/badge';
-import { Button } from '@portfolio-v0/shadcn/components/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@portfolio-v0/shadcn/components/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const FEATURES = [
   { title: 'Fast', description: 'Ship features in minutes, not weeks.' },

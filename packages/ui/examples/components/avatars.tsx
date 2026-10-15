@@ -1,4 +1,4 @@
-import { AvatarStack } from 'registry/components/core/avatars/avatars';
+import { AvatarStack } from '@/components/ui/ugolin/avatars';
 
 const avatars = [
   {

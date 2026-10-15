@@ -1,4 +1,4 @@
-import { GandiButton } from 'registry/components/core/button/button.gandi';
+import { GandiButton } from '@/components/ui/ugolin/button.gandi';
 
 function ButtonGandiExample() {
   return (

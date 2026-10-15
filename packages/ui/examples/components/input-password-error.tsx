@@ -2,7 +2,8 @@
 
 import { Lock } from 'lucide-react';
 import { useState } from 'react';
-import { Input } from 'registry/components/core/input/input';
+
+import { Input } from '@/components/ui/ugolin/input';
 
 export default function Demo() {
   const [password, setPassword] = useState('');

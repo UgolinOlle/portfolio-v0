@@ -25,10 +25,11 @@
       "files": [
         {
           "path": "examples/components/headers.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/headers.tsx"
         }
       ],
-      "registryDependencies": [],
+      "registryDependencies": ["https://ugolin-olle.com/r/headers.json"],
       "meta": {
         "example": {
           "of": "headers",
@@ -64,10 +65,11 @@
       "files": [
         {
           "path": "examples/components/button.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/button.tsx"
         }
       ],
-      "registryDependencies": [],
+      "registryDependencies": ["https://ugolin-olle.com/r/button.json"],
       "meta": {
         "example": {
           "of": "button",
@@ -103,10 +105,11 @@
       "files": [
         {
           "path": "examples/components/button-gandi.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/button-gandi.tsx"
         }
       ],
-      "registryDependencies": ["button-gandi"],
+      "registryDependencies": ["https://ugolin-olle.com/r/button-gandi.json"],
       "meta": {
         "example": {
           "of": "button-gandi",
@@ -142,10 +145,11 @@
       "files": [
         {
           "path": "examples/components/button-apple.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/button-apple.tsx"
         }
       ],
-      "registryDependencies": ["button-apple"],
+      "registryDependencies": ["https://ugolin-olle.com/r/button-apple.json"],
       "meta": {
         "example": {
           "of": "button-apple",
@@ -181,10 +185,11 @@
       "files": [
         {
           "path": "examples/components/button-shopify.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/button-shopify.tsx"
         }
       ],
-      "registryDependencies": ["button-shopify"],
+      "registryDependencies": ["https://ugolin-olle.com/r/button-shopify.json"],
       "meta": {
         "example": {
           "of": "button-shopify",
@@ -215,10 +220,11 @@
       "files": [
         {
           "path": "examples/status-card.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/status-card.tsx"
         }
       ],
-      "registryDependencies": ["status-card"],
+      "registryDependencies": ["https://ugolin-olle.com/r/status-card.json"],
       "meta": {
         "example": {
           "of": "status-card",
@@ -249,10 +255,11 @@
       "files": [
         {
           "path": "examples/components/avatars.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/avatars.tsx"
         }
       ],
-      "registryDependencies": ["avatar"],
+      "registryDependencies": ["https://ugolin-olle.com/r/avatars.json"],
       "meta": {
         "example": {
           "of": "avatars",
@@ -283,10 +290,11 @@
       "files": [
         {
           "path": "examples/components/input.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/input.tsx"
         }
       ],
-      "registryDependencies": ["input"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -302,10 +310,11 @@
       "files": [
         {
           "path": "examples/components/input-password.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/input-password.tsx"
         }
       ],
-      "registryDependencies": ["input"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -321,10 +330,11 @@
       "files": [
         {
           "path": "examples/components/input-password-error.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/input-password-error.tsx"
         }
       ],
-      "registryDependencies": ["input"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -340,10 +350,11 @@
       "files": [
         {
           "path": "examples/components/input-with-icon.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/input-with-icon.tsx"
         }
       ],
-      "registryDependencies": ["input"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -359,10 +370,11 @@
       "files": [
         {
           "path": "examples/components/input-disabled.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/input-disabled.tsx"
         }
       ],
-      "registryDependencies": ["input"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -378,10 +390,11 @@
       "files": [
         {
           "path": "examples/components/input-loading.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/input-loading.tsx"
         }
       ],
-      "registryDependencies": ["input"],
+      "registryDependencies": ["https://ugolin-olle.com/r/input.json"],
       "meta": {
         "example": {
           "of": "input",
@@ -452,10 +465,11 @@
       "files": [
         {
           "path": "examples/activity.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/activity.tsx"
         }
       ],
-      "registryDependencies": ["activity"],
+      "registryDependencies": ["https://ugolin-olle.com/r/activity.json"],
       "meta": {
         "example": {
           "of": "activity",
@@ -485,10 +499,11 @@
       "files": [
         {
           "path": "examples/blog.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/blog.tsx"
         }
       ],
-      "registryDependencies": ["blog"],
+      "registryDependencies": ["https://ugolin-olle.com/r/blog.json"],
       "meta": {
         "example": {
           "of": "blog",
@@ -518,10 +533,11 @@
       "files": [
         {
           "path": "examples/cta-simple.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/cta-simple.tsx"
         }
       ],
-      "registryDependencies": ["cta-simple"],
+      "registryDependencies": ["https://ugolin-olle.com/r/cta-simple.json"],
       "meta": {
         "example": {
           "of": "cta-simple",
@@ -552,10 +568,11 @@
       "files": [
         {
           "path": "examples/calendar-sync.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/calendar-sync.tsx"
         }
       ],
-      "registryDependencies": ["calendar-sync"],
+      "registryDependencies": ["https://ugolin-olle.com/r/calendar-sync.json"],
       "meta": {
         "example": {
           "of": "calendar-sync",
@@ -616,10 +633,11 @@
       "files": [
         {
           "path": "examples/usage-card.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/usage-card.tsx"
         }
       ],
-      "registryDependencies": ["usage-card"],
+      "registryDependencies": ["https://ugolin-olle.com/r/usage-card.json"],
       "meta": {
         "example": {
           "of": "usage-card",
@@ -652,10 +670,11 @@
       "files": [
         {
           "path": "examples/landing-saas.tsx",
-          "type": "registry:component"
+          "type": "registry:component",
+          "target": "components/examples/landing-saas.tsx"
         }
       ],
-      "registryDependencies": ["landing-saas"],
+      "registryDependencies": ["https://ugolin-olle.com/r/landing-saas.json"],
       "meta": {
         "example": {
           "of": "landing-saas",

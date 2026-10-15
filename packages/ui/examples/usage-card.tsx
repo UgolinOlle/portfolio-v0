@@ -1,7 +1,7 @@
 'use client';
 
-import type { UsageDay, UsagePeriod } from 'registry/blocks/usage-card/usage-card';
-import { UsageCard } from 'registry/blocks/usage-card/usage-card';
+import type { UsageDay, UsagePeriod } from '@/components/blocks/usage-card/usage-card';
+import { UsageCard } from '@/components/blocks/usage-card/usage-card';
 
 function mulberry32(seed: number) {
   return function random() {

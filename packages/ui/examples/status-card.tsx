@@ -1,12 +1,12 @@
 'use client';
 
-import { Badge } from '@portfolio-v0/shadcn/components/badge';
-import { Card, CardContent, CardHeader } from '@portfolio-v0/shadcn/components/card';
-import { cn } from '@portfolio-v0/shadcn/utils';
-
 import { Check, ChevronRight, LoaderCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
+
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 const files = [
   'app/page.tsx',

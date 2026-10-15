@@ -1,4 +1,4 @@
-import { ShopifyButton } from 'registry/components/core/button/button.shopify';
+import { ShopifyButton } from '@/components/ui/ugolin/button.shopify';
 
 function ButtonShopifyExample() {
   return (

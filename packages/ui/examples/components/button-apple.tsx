@@ -1,4 +1,4 @@
-import { AppleButton } from 'registry/components/core/button/button.apple';
+import { AppleButton } from '@/components/ui/ugolin/button.apple';
 
 function ButtonAppleExample() {
   return (

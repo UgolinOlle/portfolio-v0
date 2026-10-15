@@ -1,4 +1,4 @@
-import { Header } from 'registry/components/core/headers/headers';
+import { Header } from '@/components/ui/ugolin/headers';
 
 function HeadersExample() {
   return (

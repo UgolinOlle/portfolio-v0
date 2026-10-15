@@ -1,8 +1,8 @@
-import { Badge } from '@portfolio-v0/shadcn/components/badge';
-import { Card, CardContent, CardFooter, CardHeader } from '@portfolio-v0/shadcn/components/card';
-import { cn } from '@portfolio-v0/shadcn/utils';
-
 import { ArrowRight } from 'lucide-react';
+
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface Post {
   id: string;

@@ -1,5 +1,5 @@
 {
   "title": "Composants de base",
   "icon": "Cube",
-  "pages": ["headers", "input"]
+  "pages": ["headers", "input", "shortcut"]
 }

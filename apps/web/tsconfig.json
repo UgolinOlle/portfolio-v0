@@ -12,7 +12,8 @@
         "../../packages/ui/registry/components/core/avatars/*",
         "../../packages/ui/registry/components/core/button/*",
         "../../packages/ui/registry/components/core/headers/*",
-        "../../packages/ui/registry/components/core/input/*"
+        "../../packages/ui/registry/components/core/input/*",
+        "../../packages/ui/registry/components/core/shortcut/*"
       ],
       "@/components/blocks/*": [
         "../../packages/ui/registry/blocks/*",

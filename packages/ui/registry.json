@@ -403,6 +403,40 @@
       }
     },
     {
+      "name": "shortcut",
+      "type": "registry:ui",
+      "title": "Shortcut",
+      "description": "Composable keyboard shortcut display with platform-aware modifier keys.",
+      "registryDependencies": ["kbd"],
+      "files": [
+        {
+          "path": "registry/components/core/shortcut/shortcut.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/shortcut.tsx"
+        }
+      ]
+    },
+    {
+      "name": "shortcut-demo",
+      "type": "registry:item",
+      "title": "Shortcut Demo",
+      "description": "Key combinations and sequences rendered with Shortcut.",
+      "files": [
+        {
+          "path": "examples/components/shortcut.tsx",
+          "type": "registry:component",
+          "target": "components/examples/shortcut.tsx"
+        }
+      ],
+      "registryDependencies": ["https://ugolin-olle.com/r/shortcut.json"],
+      "meta": {
+        "example": {
+          "of": "shortcut",
+          "order": 0
+        }
+      }
+    },
+    {
       "name": "activity",
       "type": "registry:block",
       "title": "Activity",

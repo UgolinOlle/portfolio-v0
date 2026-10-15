@@ -1,0 +1,14 @@
+# Docs
+
+Knowledge Claude (and people) read on demand. Nothing here is loaded into every session;
+CLAUDE.md only points at it. Keep each file focused and under a few hundred lines.
+
+| File                                 | Read it when…                                                            |
+| ------------------------------------ | ------------------------------------------------------------------------ |
+| [architecture.md](architecture.md)   | changing how parts fit together, adding a module or service              |
+| [api-contracts.md](api-contracts.md) | touching a route handler, the registry/npm output or a frontmatter field |
+| [data-models.md](data-models.md)     | changing MDX schemas, the registry item shape or site constants          |
+| [debugging.md](debugging.md)         | something is broken and the cause isn't obvious                          |
+| [seo-audit.md](seo-audit.md)         | touching metadata, rendering mode, sitemap, structured data or i18n SEO  |
+
+Adding a registry item: see [`CONTRIBUTING.md`](../CONTRIBUTING.md).

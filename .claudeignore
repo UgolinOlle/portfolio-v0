@@ -1,0 +1,74 @@
+# .claudeignore: paths Claude Code should not read (saves context, keeps secrets out).
+# Claude Code doesn't read this file directly: claude-kit compiles it into
+# permissions.deny Read(...) rules in .claude/settings.json. After editing, run: claude-kit sync
+# Syntax: gitignore. Remove a line to let Claude read that path again.
+
+# TypeScript on Bun
+node_modules/
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.turbo/
+.nx/
+.cache/
+.parcel-cache/
+coverage/
+storybook-static/
+*.min.js
+*.map
+*.tsbuildinfo
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lock
+bun.lockb
+
+# secrets & editor noise
+.git/
+.DS_Store
+*.log
+tmp/
+.idea/
+.claude-kit/index/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+
+# from .gitignore
+node_modules
+.pnp
+.pnp.js
+dist
+build
+.env*.local
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea
+.claude
+*.swp
+*.swo
+*~
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+.turbo
+.nx
+.alchemy
+coverage
+.nyc_output
+*.tgz
+.cache
+tmp
+temp

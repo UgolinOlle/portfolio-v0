@@ -11,7 +11,7 @@ bun run check          # oxlint && oxfmt --write (this rewrites files)
 bun run format         # oxfmt --write
 ```
 
-`bun run test` runs `turbo test`, but no workspace defines a `test` script yet, so it is a no-op.
+There is no `test` script; `bun run check-types` (turbo, all workspaces) and `bun run lint` are what CI runs.
 
 Useful single-package commands:
 

@@ -2,8 +2,12 @@
   "name": "@portfolio-v0/config",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  "exports": {
+    "./base.json": "./base.json",
+    "./react-lib.json": "./react-lib.json",
+    "./nextjs.json": "./nextjs.json",
+    "./registry-item.json": "./registry-item.json",
+    "./oxlint.json": "./oxlint.json",
+    "./package.json": "./package.json"
   }
 }

@@ -7,6 +7,8 @@
     "moduleResolution": "Bundler",
     "paths": {
       "@/lib/*": ["../shadcn/lib/*"],
+      "@portfolio-v0/shadcn/components/*": ["../shadcn/components/ui/*"],
+      "@portfolio-v0/shadcn/utils": ["../shadcn/lib/utils.ts"],
       "@/components/ui/ugolin/*": ["../*"],
       "@/components/ui/*": ["../shadcn/components/ui/*"],
       "@/components/blocks/*": ["../*"]

@@ -1,0 +1,188 @@
+---
+title: 'Claude Kit'
+seoTitle: 'Claude Kit — CLI to optimize Claude Code costs'
+description: 'Zero-dependency CLI that scaffolds and audits token-optimized Claude Code projects.'
+stack: ['Typescript', 'Claude', 'Python']
+links:
+  - label: 'GitHub'
+    href: 'https://github.com/UgolinOlle/claude-kit'
+---
+
+> CLI that scaffolds and audits token-optimized Claude Code projects — lean `CLAUDE.md`, smart `.claudeignore`, guardrail hooks, and model tiering out of the box.
+
+<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+  <a href="https://www.npmjs.com/package/@whoa-studio/claude-kit">
+    <img src="https://img.shields.io/npm/v/@whoa-studio/claude-kit" alt="npm" />
+  </a>
+  <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="node" />
+  <img src="https://img.shields.io/badge/runtime-Node%20%7C%20Bun-blue" alt="runtime" />
+  <img src="https://img.shields.io/badge/d%C3%A9pendances-0-success" alt="deps" />
+  <img
+    src="https://img.shields.io/badge/macOS%20%7C%20Linux%20%7C%20Windows-lightgrey"
+    alt="platforms"
+  />
+</div>
+
+**claude-kit** makes any repo cheap and safe to work on with Claude Code. It looks at your project and generates the files that cut the cost and risk of a session: a lean `CLAUDE.md`, enforced read exclusions, edit guardrails, context snapshots, subagents, and a token-budget status line. Optional extras: a ranked code search (RAG without embeddings) and MCP server templates. It then audits the setup (`doctor`) and measures what real sessions cost (`usage`).
+
+```bash
+npx @whoa-studio/claude-kit init        # or: bunx @whoa-studio/claude-kit init
+```
+
+---
+
+## 🎯 The problem
+
+Each Claude Code session pays for everything it loads: memory files, tool definitions, every file it reads, every turn of history. Most of that cost comes from defaults nobody chose:
+
+- Claude reads build output and lockfiles.
+- `CLAUDE.md` files grow past their useful size.
+- Editing the prompt prefix breaks the cache mid-session.
+- Task state is lost at compaction.
+- Claude edits files that should never be hand-edited.
+
+claude-kit sets each of those defaults **from what's actually in your repo**. Because the files it writes are ordinary Claude Code files, the setup keeps working even without claude-kit installed.
+
+---
+
+## ✨ Highlights
+
+- **Zero dependencies** — plain JavaScript (~0.5 MB), nothing to install, runs on Node 20+ or Bun.
+- **Cross-platform** — macOS, Linux, and Windows, CI-tested on Node 20/22/24 and Bun.
+- **Non-destructive** — a `manifest.json` tracks what was generated; re-runs do a 3-way merge and never clobber your edits.
+- **Self-contained** — everything it writes is a standard Claude Code file: the setup survives uninstalling the tool.
+- **Auditable** — `doctor` scores the setup out of 100 and lists prioritized fixes; CI-ready.
+
+---
+
+## 🚀 Quick start
+
+```bash
+cd your-project
+npx @whoa-studio/claude-kit init                    # interactive: pick a preset
+npx @whoa-studio/claude-kit init --preset standard  # or skip the questions
+npx @whoa-studio/claude-kit doctor                  # check the result: score + findings
+```
+
+Then commit what it generated (including `.claude-kit/manifest.json`) and start Claude Code as usual. The hooks and settings are picked up by Claude Code itself.
+
+### Pick a preset
+
+| Preset              | For                     | Adds                                                                                          |
+| ------------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
+| `minimal` (default) | Any repo, zero overhead | `.claudeignore` + deny rules, lean `CLAUDE.md`, edit-guard hook                               |
+| `standard`          | Day-to-day team use     | + task context & snapshots across compaction, context guard, team memory, `docs/`, `opusplan` |
+| `full`              | Big repos, heavy users  | + subagents and the `/fix` loop, token-budget status line, codebase map, `compress-doc` skill |
+
+Fine-tune with `--with` / `--without`, e.g. `init --preset standard --with agents --without docs`.
+
+---
+
+## 🔧 What gets generated
+
+**`minimal`** lays the foundation: `.claudeignore` (paths Claude shouldn't read), `.claude/settings.json` (`permissions.deny` rules compiled from `.claudeignore`, since Claude Code doesn't read that file itself), a `CLAUDE.md` skeleton filled in from your manifests, and the `pre-edit.cjs` hook.
+
+**`standard`** adds context persistence: a `task_context.md` re-injected after compaction, a snapshot hook, a `context-guard` that warns at 60% then 80% of the window, a shared `conversation_memory.md`, a pre-filled `docs/` folder, and the `opusplan` model (Opus in Plan Mode, Sonnet for execution).
+
+**`full`** adds subagents (`explorer` on Haiku, `debugger`, `reviewer`, `test-writer`), the `/fix` skill (find → diagnose → implement → test → review loop), a status line (context %, cache hit ratio, cost), and the `compress-doc` skill.
+
+**`--with search`** wires up an MCP server for ranked code search (BM25 + import graph), with no Python or vector database.
+
+> Supported stacks: Node/Bun, Python, Go, and Rust, including monorepos. Other stacks plug in through _stack packs_.
+
+---
+
+## 🛡️ Guardrails
+
+Claude Code runs `pre-edit.cjs` before every `Edit`, `Write`, `MultiEdit`, and `NotebookEdit`. When an edit is blocked, the hook exits with code 2 and explains why, so Claude fixes the right thing instead of retrying. It fails open on input it doesn't understand and never blocks paths outside the project.
+
+1. **Protected paths (always on)** — lockfiles, build output, `node_modules/`, `.venv/`, `.git/`, `.env*` (except `.env.example`).
+2. **Committed migrations (when detected)** — migrations already run elsewhere are history: Django, Alembic, Prisma, Drizzle, Knex, Sequelize, Diesel, SQLx, goose, Rails, Flyway… Only git-tracked files are blocked.
+3. **Content rules (opt-in)** — `no-console-log`, `no-debugger`, `no-print`, `requires-test`, etc. Only new matches count.
+
+---
+
+## 📟 Core commands
+
+```bash
+claude-kit init      # generate the setup
+claude-kit sync      # recompile rules & hooks after editing .claudeignore / config
+claude-kit doctor    # audit: score out of 100 + prioritized findings (--fix to apply)
+claude-kit context   # tokens a cold session loads (--baseline to compare)
+claude-kit usage     # real cost of past sessions, from local transcripts
+claude-kit search    # ranked code search (MCP)
+claude-kit compress  # --outline / --extract / --summarize on big files
+claude-kit add mcp   # scaffold an MCP server (templates basic | data | db | logs)
+claude-kit upgrade   # re-apply this version's templates
+```
+
+The `doctor` score starts at 100: −25 per error, −10 per warning. CI-ready on every PR:
+
+```yaml
+# .github/workflows/claude-kit.yml
+on: pull_request
+jobs:
+  claude-kit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx @whoa-studio/claude-kit doctor --check --format github
+```
+
+---
+
+## 🏗️ How it works
+
+```
+Detect ──▶ Packs ──▶ Generate ──▶ Write (3-way merge) ──▶ Doctor
+manifests   per-stack  FilePlans    the only module that    audit +
++ scan      data       per feature  touches your files      measure
+```
+
+1. **Detect** — reads manifests and lockfiles, resolves monorepo workspaces (npm/pnpm/yarn/bun, Turborepo, Nx, Lerna, Cargo, Go), measures repo size.
+2. **Packs** — each stack pack describes, as data, what Claude shouldn't read or edit, and which commands matter.
+3. **Generate** — each feature has a generator that turns context into `FilePlan`s (path + content + merge strategy).
+4. **Write** — the writer is the only module that writes: untouched files are updated, `CLAUDE.md` changes only inside its marked regions, JSON and ignore files are 3-way merged, `--dry-run` previews.
+5. **Serve / Audit** — the search server _is_ claude-kit (`serve search`); `doctor`, `context`, and `usage` measure cost at startup and after.
+
+The project follows the guide _How to Hyper-Optimise Claude Code_ and reimplements its **16 techniques** using Claude Code's real mechanisms (settings, hooks, subagents, skills, MCP), without the Python dependencies in the examples.
+
+---
+
+## 🧱 Tech stack
+
+- **Language** — TypeScript, compiled to JavaScript with zero runtime dependencies.
+- **Runtime** — Node 20+ / Bun; code in `src/` stays Node-compatible (portability test in CI).
+- **Tooling** — oxlint + oxfmt, tests via `bun test`.
+- **Distribution** — a single npm package (`@whoa-studio/claude-kit`), bundled by a build script, published with provenance.
+
+```
+src/
+  cli.ts         argument parsing, command table
+  commands/      init, doctor, context, usage, search/serve, compress, add, upgrade
+  core/          context, config, writer, merge, manifest, usage, MCP probe…
+  search/        chunking, import graph, incremental index, BM25
+  mcp/           minimal stdio MCP server (no SDK)
+  detect/        stacks, monorepo, size, migrations
+  packs/         built-in stack packs + external loader
+  generators/    one module per feature → FilePlans
+  templates/     hook, status line, agent, skill, doc, and MCP templates
+  rules/         doctor rules
+```
+
+---
+
+## 🧪 Development
+
+```bash
+bun install
+bun test
+bun run verify          # typecheck + lint + format + tests (what CI runs)
+bun index.ts detect     # try a command against this repo
+```
+
+---
+
+<p align="center">
+  Built by <a href="https://github.com/UgolinOlle">Ugolin Ollé</a>
+</p>

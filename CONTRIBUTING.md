@@ -71,3 +71,13 @@ bun publish            # not `npm publish`: bun rewrites the `workspace:*` speci
 ```
 
 The registry deploys with the site: `apps/web` rebuilds `public/r/` before every `next build`.
+
+## Updating dependencies
+
+```bash
+bun run bump-deps
+```
+
+Runs `npm-check-updates` on every workspace, then `scripts/bump-catalog.mjs` for the shared versions in the root `workspaces.catalog` (which `npm-check-updates` does not read), then `bun install`. Review the diff: it also takes major bumps.
+
+`shiki`, `next`, `recharts` and `require-in-the-middle` are excluded from the bump (`-x` in the script) and updated by hand. Add the reason here when you know it.

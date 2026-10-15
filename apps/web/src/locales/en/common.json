@@ -8,18 +8,27 @@
     "madeWith": "Designed and built by Ugolin Ollé"
   },
   "header": {
-    "title": "Freelance Full Stack Developer",
+    "title": "Full Stack Developer · Systems & Security",
     "profileAlt": "Ugolin Ollé profile picture"
   },
   "hero": {
     "availability": "Available for new projects",
     "headline": "I design and build SaaS products and web apps, from mockup to production.",
-    "lead": "Freelance full stack developer helping startups, independents and small businesses ship with Next.js, React, NestJS and TypeScript.",
+    "lead": "Freelance full stack developer helping startups, independents and small businesses ship with Next.js, React, NestJS and TypeScript, now specialising in systems, networks and cybersecurity.",
     "ctaPrimary": "Get in touch",
     "ctaSecondary": "See projects"
   },
   "about": {
-    "description": "My training at 42 in Bangkok gave me solid technical foundations, real discipline and a pragmatic approach to problem-solving. My systems administration background also lets me handle deployment and infrastructure (Docker, Nginx, Vercel). Two years spent in Cambodia taught me to adapt quickly and collaborate in diverse environments.\n\nAlongside client work, I build my own products, like Whoa UI, a React component library, or Whoa Stash, a macOS app: useful tools, built to last."
+    "languages": {
+      "title": "Languages",
+      "french": "French",
+      "frenchLevel": "Native",
+      "english": "English",
+      "englishLevel": "C2",
+      "khmer": "Khmer",
+      "khmerLevel": "Basic"
+    },
+    "description": "My training at 42 in Bangkok gave me solid technical foundations, real discipline and a pragmatic approach to problem-solving. I’m starting a bachelor’s in Systems, Networks & Cybersecurity Administration at MyDigitalSchool Angers, which also lets me handle deployment, infrastructure and security (Linux, Docker, Nginx). Two years spent in Cambodia taught me to adapt quickly and collaborate in diverse environments.\n\nAlongside client work, I build my own products, like Whoa UI, a React component library, or Whoa Stash, a macOS app: useful tools, built to last."
   },
   "sections": {
     "about": "About",
@@ -55,7 +64,8 @@
       "whoa-stash": "MacOS application for managing sound.",
       "neovim-config": "Neovim configuration for web development.",
       "42": "Projects completed at 42 school, including web applications and internal tools.",
-      "whoa-jobs": "Web application for managing job applications and job offers."
+      "whoa-jobs": "Web application for managing job applications and job offers.",
+      "claude-kit": "Zero-dependency CLI that scaffolds and audits token-optimized Claude Code projects."
     }
   },
   "writings": {
@@ -69,13 +79,16 @@
     "noticeCta": "Let me know"
   },
   "stacks": {
+    "cybersecurity": "Cybersecurity",
+    "networking": "Networking",
     "title": "My Skills",
     "categories": {
       "languages": "Languages",
       "frameworks": "Frameworks",
       "tools": "Tools",
-      "devops": "DevOps",
-      "databases": "Databases"
+      "databases": "Databases",
+      "devops": "DevOps & Monitoring",
+      "systems": "Systems, Networks & Security"
     }
   },
   "resources": {

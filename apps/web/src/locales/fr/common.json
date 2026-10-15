@@ -8,18 +8,27 @@
     "madeWith": "Conçu et développé par Ugolin Ollé"
   },
   "header": {
-    "title": "Développeur Full Stack Freelance",
+    "title": "Développeur Full Stack · Systèmes & Sécurité",
     "profileAlt": "Photo de profil d'Ugolin Ollé"
   },
   "hero": {
     "availability": "Disponible pour de nouvelles missions",
     "headline": "Je conçois et développe des SaaS et applications web, de la maquette à la mise en production.",
-    "lead": "Développeur full stack freelance, j’accompagne startups, indépendants et PME avec Next.js, React, NestJS et TypeScript.",
+    "lead": "Développeur full stack freelance, j’accompagne startups, indépendants et PME avec Next.js, React, NestJS et TypeScript, et je me spécialise en administration systèmes, réseaux et cybersécurité.",
     "ctaPrimary": "Me contacter",
     "ctaSecondary": "Voir les projets"
   },
   "about": {
-    "description": "Formé à l’école 42 à Bangkok, j’ai acquis des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. Mon bagage en administration systèmes me permet aussi de prendre en charge le déploiement et l’infrastructure (Docker, Nginx, Vercel). Deux années passées au Cambodge m’ont appris à m’adapter rapidement et à collaborer dans des contextes variés.\n\nEn parallèle de mes missions, je construis mes propres produits, comme Whoa UI, une bibliothèque de composants React, ou Whoa Stash, une app macOS : des outils utiles, pensés pour durer."
+    "languages": {
+      "title": "Langues",
+      "french": "Français",
+      "frenchLevel": "Natif",
+      "english": "Anglais",
+      "englishLevel": "C2",
+      "khmer": "Khmer",
+      "khmerLevel": "Notions"
+    },
+    "description": "Formé à l’école 42 à Bangkok, j’ai acquis des bases techniques solides, une vraie rigueur et une approche pragmatique des problèmes. J’intègre un bachelor Administrateur Systèmes, Réseaux & Cybersécurité à MyDigitalSchool Angers, ce qui me permet aussi de prendre en charge le déploiement, l’infrastructure et la sécurité (Linux, Docker, Nginx). Deux années passées au Cambodge m’ont appris à m’adapter rapidement et à collaborer dans des contextes variés.\n\nEn parallèle de mes missions, je construis mes propres produits, comme Whoa UI, une bibliothèque de composants React, ou Whoa Stash, une app macOS : des outils utiles, pensés pour durer."
   },
   "sections": {
     "about": "À propos",
@@ -55,7 +64,8 @@
       "whoa-stash": "Application MacOS pour gérer le son.",
       "neovim-config": "Configuration Neovim pour le développement web.",
       "42": "Projets réalisés à l'école 42, incluant des applications web et des outils internes.",
-      "whoa-jobs": "Application web pour la gestion des candidatures et des offres d'emploi."
+      "whoa-jobs": "Application web pour la gestion des candidatures et des offres d'emploi.",
+      "claude-kit": "CLI zéro dépendance qui configure et audite des projets Claude Code optimisés en tokens."
     }
   },
   "writings": {
@@ -69,13 +79,16 @@
     "noticeCta": "Écrivez-moi"
   },
   "stacks": {
+    "cybersecurity": "Cybersécurité",
+    "networking": "Réseaux",
     "title": "Mes compétences",
     "categories": {
       "languages": "Langages",
       "frameworks": "Frameworks",
-      "devops": "DevOps",
       "tools": "Outils",
-      "databases": "Bases de données"
+      "databases": "Bases de données",
+      "devops": "DevOps & Supervision",
+      "systems": "Systèmes, Réseaux & Sécurité"
     }
   },
   "resources": {

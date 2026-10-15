@@ -66,6 +66,8 @@ export function HeroSection() {
   );
 }
 
+const SPOKEN_LANGUAGES = ['french', 'english', 'khmer'] as const;
+
 /** The longer background story, moved out of the hero so the first screen stays focused. */
 export function AboutSection() {
   const { t } = useTranslation();
@@ -77,6 +79,22 @@ export function AboutSection() {
       <p className="max-w-[65ch] text-sm leading-relaxed text-pretty whitespace-pre-line text-zinc-600 dark:text-zinc-400">
         {t('about.description')}
       </p>
+
+      <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm">
+        <h3 className="font-medium text-zinc-950 dark:text-zinc-50">
+          {t('about.languages.title')}
+        </h3>
+        <ul className="flex flex-wrap gap-x-4 gap-y-1 text-zinc-600 dark:text-zinc-400">
+          {SPOKEN_LANGUAGES.map((language) => (
+            <li key={language}>
+              {t(`about.languages.${language}`)}{' '}
+              <span className="text-zinc-400 dark:text-zinc-500">
+                · {t(`about.languages.${language}Level`)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </motion.section>
   );
 }

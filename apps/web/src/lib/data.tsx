@@ -7,6 +7,7 @@ import {
   DiamondsFour as ComponentIcon,
   TerminalWindow as SquareTerminal,
 } from '@phosphor-icons/react/ssr';
+import { Bot } from 'lucide-react';
 
 import { LOGOS, TOOLS } from '~/components/icons';
 import type { Project, Resources, SocialLink, WorkExperience } from '~/types';
@@ -54,6 +55,28 @@ export const PROJECTS: Project[] = [
       </div>
     ),
     id: 'whoa-stash',
+  },
+  {
+    name: 'Claude Kit',
+    description:
+      'CLI zéro dépendance qui configure et audite des projets Claude Code optimisés en tokens.',
+    link: '/projects/claude-kit',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <Bot className="size-7" />
+        </div>
+      </div>
+    ),
+    id: 'claude-kit',
   },
   {
     name: 'Neovim Config',
@@ -132,9 +155,9 @@ export const SOCIAL_LINKS: SocialLink[] = [
       name: 'Ugolin Ollé',
       handle: '@ugolin-olle',
       avatar:
-        'https://media.licdn.com/dms/image/v2/D4E35AQHfN9OIs0vNcQ/profile-framedphoto-shrink_800_800/B4EZ_WrubXHkAY-/0/1786013214882?e=1787670000&v=beta&t=LDNTeVmDxiqV1pGarls1vdFWNKZv8kptRWEw_v-CCP8',
+        'https://www.npmjs.com/npm-avatar/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXJVUkwiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9kZDcxOWFkOWIwNTIzZGQzYTA0OTM1NzJlN2ZjNGE5Mj9zaXplPTQ5NiZkZWZhdWx0PXJldHJvIn0.mSd9mX2lhvKr3_0JCRsPoBiRI-ESygnrvT-IaRnQst4',
       role: 'Développeur Full Stack freelance',
-      bio: 'Expériences produit, sites vitrines et outils sur-mesure.',
+      bio: 'Building packages & projects.',
     },
   },
   {
@@ -174,6 +197,18 @@ export const SOCIAL_LINKS: SocialLink[] = [
     iconDark: LOGOS.XDark,
     preview: {
       kind: 'twitter',
+      name: 'Ugolin Ollé',
+      handle: '@ugolin_olle',
+      avatar: 'https://pbs.twimg.com/profile_images/1959181504485150721/7pyz6ZFZ_400x400.jpg',
+      bio: "Développeur, partage de builds et d'expérimentations frontend.",
+    },
+  },
+  {
+    label: 'NPM',
+    link: 'https://www.npmjs.com/~ugolin-olle',
+    icon: LOGOS.Npm,
+    preview: {
+      kind: 'npm',
       name: 'Ugolin Ollé',
       handle: '@ugolin_olle',
       avatar: 'https://pbs.twimg.com/profile_images/1959181504485150721/7pyz6ZFZ_400x400.jpg',

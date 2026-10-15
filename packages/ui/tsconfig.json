@@ -1,19 +1,8 @@
 {
-  "extends": "@portfolio-v0/config/react-lib.json",
+  "extends": "@portfolio-v0/config/registry-item.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
     "ignoreDeprecations": "6.0",
-    "types": ["node"],
-    "baseUrl": ".",
-    "paths": {
-      "@/lib/utils": ["../shadcn/lib/utils.ts"],
-      "@/components/ui/ugolin/*": ["../*"],
-      "@/components/blocks/*": ["../*"],
-      "@/components/ui/*": ["../shadcn/components/ui/*"],
-      "@portfolio-v0/shadcn/components/*": ["../shadcn/components/ui/*"],
-      "@portfolio-v0/shadcn/utils": ["../shadcn/lib/utils.ts"]
-    }
+    "types": ["node"]
   },
   "include": ["scripts/**/*.ts", "tsup.config.ts"],
   "exclude": ["node_modules", "dist"]

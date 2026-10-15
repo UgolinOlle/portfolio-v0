@@ -67,13 +67,13 @@
     "registry:generate": "bun scripts/registry.ts && oxfmt --write registry.json"
   },
   "dependencies": {
-    "@base-ui/react": "^1.6.0",
-    "@radix-ui/react-slot": "^1.2.4",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.27.0",
-    "motion": "^12.43.0",
-    "tailwind-merge": "^3.5.0"
+    "@base-ui/react": "catalog:",
+    "@radix-ui/react-slot": "catalog:",
+    "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
+    "lucide-react": "catalog:",
+    "motion": "catalog:",
+    "tailwind-merge": "catalog:"
   },
   "devDependencies": {
     "@portfolio-v0/activity": "workspace:*",
@@ -93,15 +93,15 @@
     "@portfolio-v0/shortcut": "workspace:*",
     "@portfolio-v0/status-card": "workspace:*",
     "@portfolio-v0/usage-card": "workspace:*",
-    "@types/node": "^25.6.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "shadcn": "^4.7.0",
-    "tailwindcss": "^4.2.4",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "shadcn": "catalog:",
+    "tailwindcss": "catalog:",
     "tsup": "^9.0.0",
-    "typescript": "^6.0.3"
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",

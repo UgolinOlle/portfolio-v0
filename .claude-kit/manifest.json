@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "cliVersion": "0.1.1",
+  "files": {
+    ".claude/context/conversation_memory.md": {
+      "templateId": "context/memory",
+      "templateVersion": 1,
+      "hash": "25b2c392814e5b3d57a9c8d2282bfbeb5c75ca6c742b95930668192af3aedf1f",
+      "owned": false
+    },
+    ".claude/context/task_context.md": {
+      "templateId": "context/task",
+      "templateVersion": 1,
+      "hash": "84b718d231125133bcb2881ff6bc7b30c7d5d9fcd964dbc6cb57d2aa2c99d975",
+      "owned": false
+    },
+    ".claude/hooks/context-guard.cjs": {
+      "templateId": "hooks/context-guard",
+      "templateVersion": 1,
+      "hash": "1ab0c8c967501d38e61099ffd17f0fc7a3d9812e6a0671516e979f4da91b7d13",
+      "owned": true
+    },
+    ".claude/hooks/context-snapshot.cjs": {
+      "templateId": "hooks/context-snapshot",
+      "templateVersion": 1,
+      "hash": "6f33165b674df5e655f84209c7dff82eef5ff9396e00d3ef0164e8f78dd80e61",
+      "owned": true
+    },
+    ".claude/hooks/pre-edit.cjs": {
+      "templateId": "hooks/pre-edit",
+      "templateVersion": 2,
+      "hash": "edc92b23523beee38698116442d7f9f55eb0967eb71cc159e19737ae1a49c044",
+      "owned": true
+    },
+    ".claude/settings.json": {
+      "templateId": "settings",
+      "templateVersion": 2,
+      "hash": "e4a4be1af2e6e3b01663bf066a9aec65ee284359dfaa07284531d0cb14471962",
+      "owned": false,
+      "lastGenerated": "{\n  \"$schema\": \"https://json.schemastore.org/claude-code-settings.json\",\n  \"permissions\": {\n    \"deny\": [\n      \"Read(**/node_modules/**)\",\n      \"Read(**/dist/**)\",\n      \"Read(**/build/**)\",\n      \"Read(**/out/**)\",\n      \"Read(**/.next/**)\",\n      \"Read(**/.nuxt/**)\",\n      \"Read(**/.svelte-kit/**)\",\n      \"Read(**/.turbo/**)\",\n      \"Read(**/.nx/**)\",\n      \"Read(**/.cache/**)\",\n      \"Read(**/.parcel-cache/**)\",\n      \"Read(**/coverage/**)\",\n      \"Read(**/storybook-static/**)\",\n      \"Read(*.min.js)\",\n      \"Read(*.map)\",\n      \"Read(*.tsbuildinfo)\",\n      \"Read(package-lock.json)\",\n      \"Read(pnpm-lock.yaml)\",\n      \"Read(yarn.lock)\",\n      \"Read(bun.lock)\",\n      \"Read(bun.lockb)\",\n      \"Read(**/.git/**)\",\n      \"Read(.DS_Store)\",\n      \"Read(**/.DS_Store/**)\",\n      \"Read(*.log)\",\n      \"Read(**/tmp/**)\",\n      \"Read(**/.idea/**)\",\n      \"Read(/.claude-kit/index/**)\",\n      \"Read(.env)\",\n      \"Read(**/.env/**)\",\n      \"Read(.env.*)\",\n      \"Read(!.env.example)\",\n      \"Read(*.pem)\",\n      \"Read(*.key)\",\n      \"Read(id_rsa*)\",\n      \"Read(node_modules)\",\n      \"Read(.pnp)\",\n      \"Read(**/.pnp/**)\",\n      \"Read(.pnp.js)\",\n      \"Read(dist)\",\n      \"Read(build)\",\n      \"Read(.env*.local)\",\n      \"Read(/.vscode/*)\",\n      \"Read(!/.vscode/settings.json)\",\n      \"Read(!/.vscode/tasks.json)\",\n      \"Read(!/.vscode/launch.json)\",\n      \"Read(!/.vscode/extensions.json)\",\n      \"Read(.idea)\",\n      \"Read(.claude)\",\n      \"Read(**/.claude/**)\",\n      \"Read(*.swp)\",\n      \"Read(*.swo)\",\n      \"Read(*~)\",\n      \"Read(logs)\",\n      \"Read(**/logs/**)\",\n      \"Read(npm-debug.log*)\",\n      \"Read(yarn-debug.log*)\",\n      \"Read(yarn-error.log*)\",\n      \"Read(lerna-debug.log*)\",\n      \"Read(.pnpm-debug.log*)\",\n      \"Read(.turbo)\",\n      \"Read(.nx)\",\n      \"Read(.alchemy)\",\n      \"Read(**/.alchemy/**)\",\n      \"Read(coverage)\",\n      \"Read(.nyc_output)\",\n      \"Read(**/.nyc_output/**)\",\n      \"Read(*.tgz)\",\n      \"Read(.cache)\",\n      \"Read(tmp)\",\n      \"Read(temp)\",\n      \"Read(**/temp/**)\"\n    ]\n  },\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Edit|Write|MultiEdit|NotebookEdit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"node \\\"${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-edit.cjs\\\"\"\n          }\n        ]\n      }\n    ],\n    \"PostCompact\": [\n      {\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"node \\\"${CLAUDE_PROJECT_DIR}/.claude/hooks/context-snapshot.cjs\\\"\"\n          }\n        ]\n      }\n    ],\n    \"SessionStart\": [\n      {\n        \"matcher\": \"compact\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"node \\\"${CLAUDE_PROJECT_DIR}/.claude/hooks/context-snapshot.cjs\\\"\"\n          }\n        ]\n      }\n    ],\n    \"UserPromptSubmit\": [\n      {\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"node \\\"${CLAUDE_PROJECT_DIR}/.claude/hooks/context-guard.cjs\\\"\"\n          }\n        ]\n      }\n    ]\n  },\n  \"model\": \"opusplan\"\n}\n"
+    },
+    ".claudeignore": {
+      "templateId": "claudeignore",
+      "templateVersion": 1,
+      "hash": "f8621961973acd4ac905864755681711d7c0222ebdb6f3934f238da3d51c3e1f",
+      "owned": true,
+      "lastGenerated": "# .claudeignore: paths Claude Code should not read (saves context, keeps secrets out).\n# Claude Code doesn't read this file directly: claude-kit compiles it into\n# permissions.deny Read(...) rules in .claude/settings.json. After editing, run: claude-kit sync\n# Syntax: gitignore. Remove a line to let Claude read that path again.\n\n# TypeScript on Bun\nnode_modules/\ndist/\nbuild/\nout/\n.next/\n.nuxt/\n.svelte-kit/\n.turbo/\n.nx/\n.cache/\n.parcel-cache/\ncoverage/\nstorybook-static/\n*.min.js\n*.map\n*.tsbuildinfo\npackage-lock.json\npnpm-lock.yaml\nyarn.lock\nbun.lock\nbun.lockb\n\n# secrets & editor noise\n.git/\n.DS_Store\n*.log\ntmp/\n.idea/\n.claude-kit/index/\n.env\n.env.*\n!.env.example\n*.pem\n*.key\nid_rsa*\n\n# from .gitignore\nnode_modules\n.pnp\n.pnp.js\ndist\nbuild\n.env*.local\n.vscode/*\n!.vscode/settings.json\n!.vscode/tasks.json\n!.vscode/launch.json\n!.vscode/extensions.json\n.idea\n.claude\n*.swp\n*.swo\n*~\nlogs\nnpm-debug.log*\nyarn-debug.log*\nyarn-error.log*\nlerna-debug.log*\n.pnpm-debug.log*\n.turbo\n.nx\n.alchemy\ncoverage\n.nyc_output\n*.tgz\n.cache\ntmp\ntemp\n"
+    },
+    "CLAUDE.md": {
+      "templateId": "claudemd",
+      "templateVersion": 1,
+      "hash": "1522ed360bdd03cbf2e12901df3a1228584f0dba4a7a0407e296db2e1af04988",
+      "owned": true,
+      "lastGenerated": "# portfolio-v0\n\n<!-- One or two sentences: what this project is, who uses it, what matters most. -->\n\n<!-- claude-kit:begin stack -->\n## Stack\n\n- TypeScript on Bun (package manager: bun)\n- Monorepo (workspaces + turbo), 19 packages: `apps/web`, `packages/activity`, `packages/avatars`, `packages/blog`, `packages/button`, `packages/button-apple`, `packages/button-gandi`, `packages/button-shopify`, `packages/calendar-sync`, `packages/config`, `packages/cta-simple`, `packages/headers`, … (+7 more)\n<!-- claude-kit:end stack -->\n\n<!-- claude-kit:begin commands -->\n## Commands\n\n```bash\nbun install     # install\nbun run dev     # dev\nbun run build   # build\nbun run test    # test\nbun run check   # check\nbun run format  # format\n```\n<!-- claude-kit:end commands -->\n\n## Conventions\n\n<!-- Project rules Claude can't infer from the code, one line each. E.g. \"Use the Result type for errors, never throw in services.\" -->\n\n<!-- claude-kit:begin workflow -->\n## Workflow\n\n- **Plan first.** For changes touching more than ~3 files, start in Plan Mode (Shift+Tab), agree on the plan, then edit.\n- **Decompose.** Split big tasks into steps that each end green (tests/typecheck pass) before starting the next.\n- **Search, then read.** Grep/glob for the symbol you need instead of opening whole directories or large files.\n- **Verify.** Run the relevant test/lint command before calling a task done.\n<!-- claude-kit:end workflow -->\n\n<!-- claude-kit:begin guardrails -->\n## Guardrails\n\n- Paths in `.claudeignore` are blocked from reading via `permissions.deny` in `.claude/settings.json`. Don't work around it with shell commands; ask if you need one of them.\n- Lockfiles, build output and `.env*` files are edit-protected by `.claude/hooks/pre-edit.cjs`. Change the source of truth instead (manifest, sources).\n<!-- claude-kit:end guardrails -->\n\n<!-- claude-kit:begin task-context -->\n## Task context\n\n- For multi-step work, keep `.claude/context/task_context.md` current (goal, status, next steps). Update it before a session ends or when context runs long; it's re-loaded after compaction.\n- When resuming a task, read it first.\n<!-- claude-kit:end task-context -->\n\n<!-- claude-kit:begin memory -->\n## Team memory\n\n- Past decisions, rejected approaches and lessons are in `.claude/context/conversation_memory.md`. Check it before revisiting a decision; append one line when a new one is made.\n<!-- claude-kit:end memory -->\n\n<!-- claude-kit:begin docs -->\n## Docs\n\n- Before changing an area, read the matching file in `docs/` (architecture, api-contracts, data-models, debugging) and update it in the same change.\n<!-- claude-kit:end docs -->\n\n<!-- claude-kit:begin models -->\n<!--\nModels (for humans; not loaded into Claude's context):\n- This project defaults to `opusplan` (.claude/settings.json): Opus in Plan Mode, Sonnet while executing.\n- /model sonnet: everyday coding · /model opus: hard debugging and design · /model haiku: quick mechanical edits\n- Personal override: /model <alias>, or set \"model\" in .claude/settings.local.json (not committed).\n-->\n<!-- claude-kit:end models -->\n\n## Gotchas\n\n<!-- Things that have bitten people before: flaky tests, env quirks, ordering constraints. -->\n"
+    },
+    "docs/api-contracts.md": {
+      "templateId": "docs/api-contracts",
+      "templateVersion": 1,
+      "hash": "b115b0cf80f43719f9378fb98e3d029d15f6a179e7b363ccd45045bc57dda43d",
+      "owned": true
+    },
+    "docs/architecture.md": {
+      "templateId": "docs/architecture",
+      "templateVersion": 1,
+      "hash": "868fcbb34036eef723a99c5c927e501fb5370e0bd8c660c005991449d48a9685",
+      "owned": true
+    },
+    "docs/data-models.md": {
+      "templateId": "docs/data-models",
+      "templateVersion": 1,
+      "hash": "62172f2b6468f5025eefd9b416f52acf81892321f270f023154b6b565d118a6a",
+      "owned": true
+    },
+    "docs/debugging.md": {
+      "templateId": "docs/debugging",
+      "templateVersion": 1,
+      "hash": "8ee74025097df416546d32dab414c7eacc4f475977f79be03687053bdd43a6d3",
+      "owned": true
+    },
+    "docs/README.md": {
+      "templateId": "docs/README",
+      "templateVersion": 1,
+      "hash": "b6598f725c18b3c8a3dfac339b7354c5e70015ab1e3b2b7e824a971b57764461",
+      "owned": true
+    }
+  },
+  "preset": "standard",
+  "features": ["claudeignore", "claudemd", "hooks", "snapshots", "memory", "docs", "models"]
+}

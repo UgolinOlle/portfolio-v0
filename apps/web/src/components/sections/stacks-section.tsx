@@ -2,12 +2,27 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
+import { Network, Radar, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { ReactNode } from 'react';
+import type { IconType } from 'react-icons';
+import {
+  SiGit,
+  SiGithubactions,
+  SiGrafana,
+  SiLaravel,
+  SiMysql,
+  SiPhp,
+  SiPrometheus,
+  SiPython,
+  SiWireshark,
+} from 'react-icons/si';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { DATABASES, FRAMEWORKS, LANGUAGES, TOOLS } from '~/components/icons';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
+
+import { SectionHeading } from './section-heading';
 
 type IconFactory = () => React.ComponentType<{ className?: string }>;
 
@@ -52,50 +67,90 @@ const themedLogo = (OnLight: LogoComponent, OnDark: LogoComponent): LogoComponen
   return ThemedLogo;
 };
 
+// Simple Icons are single-path glyphs, so paint them in the brand color to match the other logos.
+const brandLogo = (Icon: IconType, color: string): LogoComponent => {
+  const BrandLogo = ({ className }: { className?: string }) => (
+    <Icon className={className} color={color} />
+  );
+
+  return BrandLogo;
+};
+
 const BashLogo = themedLogo(LANGUAGES.BashDark, LANGUAGES.BashLight);
 const PrismaLogo = themedLogo(DATABASES.PrismaDark, DATABASES.PrismaLight);
+const PhpLogo = brandLogo(SiPhp, '#777BB4');
+const PythonLogo = brandLogo(SiPython, '#3776AB');
+const LaravelLogo = brandLogo(SiLaravel, '#FF2D20');
+// MySQL's brand blue disappears on the dark background, so dark mode gets a lighter tint.
+const MysqlLogo = themedLogo(brandLogo(SiMysql, '#4479A1'), brandLogo(SiMysql, '#5FA8D3'));
+const GitLogo = brandLogo(SiGit, '#F05032');
+const GithubActionsLogo = brandLogo(SiGithubactions, '#2088FF');
+const GrafanaLogo = brandLogo(SiGrafana, '#F46800');
+const PrometheusLogo = brandLogo(SiPrometheus, '#E6522C');
+const WiresharkLogo = brandLogo(SiWireshark, '#1679A7');
+// Simple Icons has no Nmap logo, so it uses the closest Lucide glyph in the brand color.
+const NmapLogo = brandLogo(Radar, '#4F9FD8');
+
+type Skill = { name: string; labelKey?: string; icon: SkillItemProps['icon'] };
+
+// Grouped to mirror the CV: dev stack first, then the systems & networks side of the profile.
+const SKILLS: Record<string, Skill[]> = {
+  languages: [
+    { name: 'TypeScript', icon: LANGUAGES.Typescript },
+    { name: 'JavaScript', icon: LANGUAGES.Javascript },
+    { name: 'PHP', icon: PhpLogo },
+    { name: 'Python', icon: PythonLogo },
+    { name: 'C', icon: LANGUAGES.C },
+    { name: 'Lua', icon: LANGUAGES.Lua },
+    { name: 'Bash', icon: BashLogo },
+    { name: 'HTML', icon: LANGUAGES.HTML },
+    { name: 'CSS', icon: LANGUAGES.CSS },
+  ],
+  frameworks: [
+    { name: 'React', icon: FRAMEWORKS.React },
+    { name: 'Next.js', icon: FRAMEWORKS.Nextjs },
+    { name: 'Node.js', icon: FRAMEWORKS.NodeJS },
+    { name: 'NestJS', icon: FRAMEWORKS.Nestjs },
+    { name: 'Hono', icon: FRAMEWORKS.Hono },
+    { name: 'Laravel', icon: LaravelLogo },
+    { name: 'Tailwind CSS', icon: FRAMEWORKS.Tailwind },
+    { name: 'Shadcn/ui', icon: FRAMEWORKS.Shadcnui },
+  ],
+  databases: [
+    { name: 'PostgreSQL', icon: DATABASES.Postgres },
+    { name: 'MySQL', icon: MysqlLogo },
+    { name: 'Prisma', icon: PrismaLogo },
+    { name: 'Redis', icon: DATABASES.Redis },
+  ],
+  devops: [
+    { name: 'Docker', icon: TOOLS.Docker },
+    { name: 'Nginx', icon: TOOLS.Nginx },
+    { name: 'Vercel', icon: TOOLS.Vercel },
+    { name: 'GitHub Actions', icon: GithubActionsLogo },
+    { name: 'Grafana', icon: GrafanaLogo },
+    { name: 'Prometheus', icon: PrometheusLogo },
+    { name: 'Loki', icon: TOOLS.Loki },
+  ],
+  systems: [
+    { name: 'Linux', icon: TOOLS.Linux },
+    { name: 'Networking', labelKey: 'stacks.networking', icon: Network },
+    { name: 'Cybersecurity', labelKey: 'stacks.cybersecurity', icon: ShieldCheck },
+    { name: 'Wireshark', icon: WiresharkLogo },
+    { name: 'Nmap', icon: NmapLogo },
+  ],
+  tools: [
+    { name: 'Git', icon: GitLogo },
+    { name: 'GitHub', icon: TOOLS.GitHub },
+    { name: 'Neovim', icon: TOOLS.Neovim },
+    { name: 'VSCode', icon: TOOLS.VSCode },
+    { name: 'Bun', icon: TOOLS.Bun },
+    { name: 'Figma', icon: TOOLS.Figma },
+    { name: 'Claude', icon: TOOLS.Anthropic },
+  ],
+};
 
 function StacksSection() {
   const { t } = useTranslation();
-
-  const skillsData = {
-    languages: [
-      { name: 'TypeScript', icon: LANGUAGES.Typescript },
-      { name: 'Javascript', icon: LANGUAGES.Javascript },
-      { name: 'HTML', icon: LANGUAGES.HTML },
-      { name: 'CSS', icon: LANGUAGES.CSS },
-      { name: 'C', icon: LANGUAGES.C },
-      { name: 'Lua', icon: LANGUAGES.Lua },
-      { name: 'Bash', icon: BashLogo },
-    ],
-    frameworks: [
-      { name: 'React', icon: FRAMEWORKS.React },
-      { name: 'Node.js', icon: FRAMEWORKS.NodeJS },
-      { name: 'Next.js', icon: FRAMEWORKS.Nextjs },
-      { name: 'Tailwind CSS', icon: FRAMEWORKS.Tailwind },
-      { name: 'Shadcn/ui', icon: FRAMEWORKS.Shadcnui },
-      { name: 'NestJS', icon: FRAMEWORKS.Nestjs },
-      { name: 'Hono', icon: FRAMEWORKS.Hono },
-    ],
-    tools: [
-      { name: 'GitHub', icon: TOOLS.GitHub },
-      { name: 'VSCode', icon: TOOLS.VSCode },
-      { name: 'Neovim', icon: TOOLS.Neovim },
-      { name: 'Figma', icon: TOOLS.Figma },
-      { name: 'Bun', icon: TOOLS.Bun },
-      { name: 'Anthropic', icon: TOOLS.Anthropic },
-    ],
-    devops: [
-      { name: 'Docker', icon: TOOLS.Docker },
-      { name: 'Vercel', icon: TOOLS.Vercel },
-      { name: 'Nginx', icon: TOOLS.Nginx },
-    ],
-    databases: [
-      { name: 'PostgreSQL', icon: DATABASES.Postgres },
-      { name: 'Prisma', icon: PrismaLogo },
-      { name: 'Redis', icon: DATABASES.Redis },
-    ],
-  };
 
   return (
     <motion.section
@@ -104,16 +159,19 @@ function StacksSection() {
       className="space-y-8"
       id="stacks"
     >
-      <h2 className="sr-only">{t('sections.stacks')}</h2>
+      <SectionHeading>{t('sections.stacks')}</SectionHeading>
 
-      {Object.entries(skillsData).map(([category, skills], categoryIndex) => (
-        <div key={categoryIndex}>
+      {Object.entries(SKILLS).map(([category, skills]) => (
+        <div key={category}>
           <h3 className="mb-4 text-lg font-medium">{t(`stacks.categories.${category}`)}</h3>
 
           <div className="flex flex-wrap gap-x-1 gap-y-2">
-            {skills.map((skill, skillIndex) => (
-              <div key={skillIndex}>
-                <SkillItem icon={skill.icon} name={skill.name} />
+            {skills.map((skill) => (
+              <div key={skill.name}>
+                <SkillItem
+                  icon={skill.icon}
+                  name={skill.labelKey ? t(skill.labelKey) : skill.name}
+                />
               </div>
             ))}
           </div>

@@ -7,15 +7,14 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@portfolio-v0/shadcn": "workspace:*",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "@portfolio-v0/shadcn": "workspace:*"
   },
   "devDependencies": {
     "@portfolio-v0/config": "workspace:*",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "typescript": "^6.0.3"
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
   },
   "registry": {
     "title": "Simple CTA",

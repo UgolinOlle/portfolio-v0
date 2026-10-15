@@ -30,6 +30,10 @@ const config = {
         protocol: 'https',
         hostname: 'dam.malt.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.shields.io',
+      },
     ],
   },
 

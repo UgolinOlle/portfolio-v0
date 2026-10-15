@@ -1,0 +1,188 @@
+---
+title: 'Claude Kit'
+seoTitle: 'Claude Kit — CLI pour optimiser le coût de Claude Code'
+description: 'CLI zéro dépendance qui configure et audite des projets Claude Code optimisés en tokens.'
+stack: ['Typescript', 'Claude', 'Python']
+links:
+  - label: 'GitHub'
+    href: 'https://github.com/UgolinOlle/claude-kit'
+---
+
+> CLI qui configure et audite des projets Claude Code optimisés pour le coût en tokens — `CLAUDE.md` épuré, `.claudeignore` intelligent, hooks de garde-fous et model tiering, prêts à l'emploi.
+
+<div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+  <a href="https://www.npmjs.com/package/@whoa-studio/claude-kit">
+    <img src="https://img.shields.io/npm/v/@whoa-studio/claude-kit" alt="npm" />
+  </a>
+  <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="node" />
+  <img src="https://img.shields.io/badge/runtime-Node%20%7C%20Bun-blue" alt="runtime" />
+  <img src="https://img.shields.io/badge/d%C3%A9pendances-0-success" alt="deps" />
+  <img
+    src="https://img.shields.io/badge/macOS%20%7C%20Linux%20%7C%20Windows-lightgrey"
+    alt="platforms"
+  />
+</div>
+
+**claude-kit** rend n'importe quel dépôt économique et sûr à travailler avec Claude Code. L'outil analyse votre projet, puis génère les fichiers qui réduisent le coût et les risques d'une session : un `CLAUDE.md` concis, des exclusions de lecture appliquées, des garde-fous d'édition, des snapshots de contexte, des sous-agents et une status line de budget de tokens. En option : une recherche de code classée (RAG sans embeddings) et des templates de serveurs MCP. Enfin, il audite la configuration (`doctor`) et mesure le coût réel des sessions (`usage`).
+
+```bash
+npx @whoa-studio/claude-kit init        # ou : bunx @whoa-studio/claude-kit init
+```
+
+---
+
+## 🎯 Le problème
+
+Chaque session Claude Code paie pour tout ce qu'elle charge : fichiers mémoire, définitions d'outils, chaque fichier lu, chaque tour d'historique. La majeure partie du coût vient de réglages par défaut que personne n'a choisis :
+
+- Claude lit les sorties de build et les lockfiles.
+- Les `CLAUDE.md` grossissent au-delà de leur taille utile.
+- Une édition du préfixe de prompt casse le cache en pleine session.
+- L'état de la tâche est perdu à la compaction.
+- Claude édite des fichiers qui ne devraient jamais l'être à la main.
+
+claude-kit fixe chacun de ces défauts **à partir du contenu réel du dépôt**. Comme les fichiers produits sont des fichiers Claude Code ordinaires, la configuration continue de fonctionner même sans claude-kit installé.
+
+---
+
+## ✨ Points clés
+
+- **Zéro dépendance** — JavaScript simple (~0,5 Mo), rien à installer, tourne sur Node 20+ ou Bun.
+- **Multi-plateforme** — macOS, Linux et Windows, testé en CI sur Node 20/22/24 et Bun.
+- **Non destructif** — un `manifest.json` suit ce qui a été généré ; les re-runs font un merge 3-way et ne touchent jamais vos éditions.
+- **Auto-suffisant** — tout ce qui est écrit est un fichier Claude Code standard : la config survit à la désinstallation de l'outil.
+- **Auditable** — `doctor` note la configuration sur 100 et liste des correctifs priorisés ; intégrable en CI.
+
+---
+
+## 🚀 Démarrage rapide
+
+```bash
+cd votre-projet
+npx @whoa-studio/claude-kit init                    # interactif : choix d'un preset
+npx @whoa-studio/claude-kit init --preset standard  # ou sans questions
+npx @whoa-studio/claude-kit doctor                  # vérifie le résultat : score + findings
+```
+
+Committez ensuite ce qui a été généré (y compris `.claude-kit/manifest.json`) et lancez Claude Code normalement. Les hooks et réglages sont pris en charge par Claude Code lui-même.
+
+### Choisir un preset
+
+| Preset             | Pour                        | Ajoute                                                                                                |
+| ------------------ | --------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `minimal` (défaut) | Tout dépôt, zéro surcharge  | `.claudeignore` + règles deny, `CLAUDE.md` épuré, hook de garde d'édition                             |
+| `standard`         | Usage d'équipe au quotidien | + contexte de tâche & snapshots à la compaction, context guard, mémoire d'équipe, `docs/`, `opusplan` |
+| `full`             | Gros dépôts, usage intensif | + sous-agents et boucle `/fix`, status line de budget, carte du dépôt, skill `compress-doc`           |
+
+Affinez avec `--with` / `--without`, ex. `init --preset standard --with agents --without docs`.
+
+---
+
+## 🔧 Ce qui est généré
+
+**`minimal`** pose les fondations : `.claudeignore` (chemins que Claude ne doit pas lire), `.claude/settings.json` (règles `permissions.deny` compilées depuis `.claudeignore`, car Claude Code ne lit pas ce fichier lui-même), un squelette `CLAUDE.md` rempli depuis vos manifestes, et le hook `pre-edit.cjs`.
+
+**`standard`** ajoute la persistance du contexte : `task_context.md` ré-injecté après compaction, un hook de snapshot, un `context-guard` qui alerte à 60 % puis 80 % de la fenêtre, une mémoire d'équipe `conversation_memory.md`, un dossier `docs/` pré-rempli et le modèle `opusplan` (Opus en Plan Mode, Sonnet à l'exécution).
+
+**`full`** ajoute les sous-agents (`explorer` en Haiku, `debugger`, `reviewer`, `test-writer`), la skill `/fix` (boucle find → diagnose → implement → test → review), une status line (% contexte, taux de cache, coût) et la skill `compress-doc`.
+
+**`--with search`** branche un serveur MCP de recherche de code classée (BM25 + graphe d'imports), sans Python ni base vectorielle.
+
+> Stacks supportés : Node/Bun, Python, Go et Rust, y compris en monorepo. D'autres stacks s'ajoutent via des _stack packs_.
+
+---
+
+## 🛡️ Garde-fous
+
+Claude Code exécute `pre-edit.cjs` avant chaque `Edit`, `Write`, `MultiEdit` et `NotebookEdit`. Quand une édition est bloquée, le hook sort en code 2 et explique pourquoi, pour que Claude corrige la bonne chose au lieu de réessayer. Il _fail open_ sur une entrée incomprise et ne bloque jamais hors du projet.
+
+1. **Chemins protégés (toujours actifs)** — lockfiles, sorties de build, `node_modules/`, `.venv/`, `.git/`, `.env*` (sauf `.env.example`).
+2. **Migrations committées (si détectées)** — les migrations déjà jouées ailleurs sont de l'historique : Django, Alembic, Prisma, Drizzle, Knex, Sequelize, Diesel, SQLx, goose, Rails, Flyway… Seuls les fichiers suivis par git sont bloqués.
+3. **Règles de contenu (opt-in)** — `no-console-log`, `no-debugger`, `no-print`, `requires-test`, etc. Seules les nouvelles occurrences comptent.
+
+---
+
+## 📟 Commandes principales
+
+```bash
+claude-kit init      # génère la configuration
+claude-kit sync      # recompile règles & hooks après édition de .claudeignore / config
+claude-kit doctor    # audit : score sur 100 + findings priorisés (--fix pour corriger)
+claude-kit context   # tokens chargés par une session à froid (--baseline pour comparer)
+claude-kit usage     # coût réel des sessions passées, depuis les transcripts locaux
+claude-kit search    # recherche de code classée (MCP)
+claude-kit compress  # --outline / --extract / --summarize sur de gros fichiers
+claude-kit add mcp   # scaffold d'un serveur MCP (templates basic | data | db | logs)
+claude-kit upgrade   # ré-applique les templates de cette version
+```
+
+Le score `doctor` part de 100 : −25 par erreur, −10 par avertissement. Intégrable en CI sur chaque PR :
+
+```yaml
+# .github/workflows/claude-kit.yml
+on: pull_request
+jobs:
+  claude-kit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx @whoa-studio/claude-kit doctor --check --format github
+```
+
+---
+
+## 🏗️ Comment ça marche
+
+```
+Detect ──▶ Packs ──▶ Generate ──▶ Write (merge 3-way) ──▶ Doctor
+manifests   données    FilePlans    seul module qui         audit +
++ scan      par stack   par feature  touche aux fichiers      mesure
+```
+
+1. **Detect** — lecture des manifestes et lockfiles, résolution des workspaces monorepo (npm/pnpm/yarn/bun, Turborepo, Nx, Lerna, Cargo, Go), mesure de la taille du dépôt.
+2. **Packs** — chaque stack pack décrit, en données, ce que Claude ne doit pas lire ni éditer, et quelles commandes importent.
+3. **Generate** — chaque feature a un générateur qui transforme le contexte en `FilePlan`s (chemin + contenu + stratégie de merge).
+4. **Write** — le writer est le seul module à écrire : fichiers non modifiés mis à jour, `CLAUDE.md` modifié seulement dans ses régions balisées, JSON et ignore files mergés en 3-way, `--dry-run` pour prévisualiser.
+5. **Serve / Audit** — le serveur de recherche _est_ claude-kit (`serve search`) ; `doctor`, `context` et `usage` mesurent le coût au démarrage et après.
+
+Le projet suit le guide _How to Hyper-Optimise Claude Code_ et réimplémente ses **16 techniques** avec les vrais mécanismes de Claude Code (settings, hooks, sous-agents, skills, MCP), sans les dépendances Python des exemples.
+
+---
+
+## 🧱 Stack technique
+
+- **Langage** — TypeScript, compilé en JavaScript sans dépendances runtime.
+- **Runtime** — Node 20+ / Bun ; le code de `src/` reste compatible Node (test de portabilité en CI).
+- **Outillage** — oxlint + oxfmt, tests via `bun test`.
+- **Distribution** — un seul package npm (`@whoa-studio/claude-kit`), bundlé via un script de build, publié avec provenance.
+
+```
+src/
+  cli.ts         parsing d'arguments, table de commandes
+  commands/      init, doctor, context, usage, search/serve, compress, add, upgrade
+  core/          contexte, config, writer, merge, manifest, usage, probe MCP…
+  search/        chunking, graphe d'imports, index incrémental, BM25
+  mcp/           serveur MCP stdio minimal (sans SDK)
+  detect/        stacks, monorepo, taille, migrations
+  packs/         stack packs intégrés + loader externe
+  generators/    un module par feature → FilePlans
+  templates/     templates de hooks, status line, agents, skills, docs, MCP
+  rules/         règles doctor
+```
+
+---
+
+## 🧪 Développement
+
+```bash
+bun install
+bun test
+bun run verify          # typecheck + lint + format + tests (ce que lance la CI)
+bun index.ts detect     # essayer une commande sur ce dépôt
+```
+
+---
+
+<p align="center">
+  Développé par <a href="https://github.com/UgolinOlle">Ugolin Ollé</a>
+</p>

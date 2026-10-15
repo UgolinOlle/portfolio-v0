@@ -55,7 +55,8 @@
       "whoa-stash": "MacOS application for managing sound.",
       "neovim-config": "Neovim configuration for web development.",
       "42": "Projects completed at 42 school, including web applications and internal tools.",
-      "whoa-jobs": "Web application for managing job applications and job offers."
+      "whoa-jobs": "Web application for managing job applications and job offers.",
+      "claude-kit": "Zero-dependency CLI that scaffolds and audits token-optimized Claude Code projects."
     }
   },
   "writings": {
@@ -69,13 +70,14 @@
     "noticeCta": "Let me know"
   },
   "stacks": {
+    "networking": "Networking",
     "title": "My Skills",
     "categories": {
       "languages": "Languages",
       "frameworks": "Frameworks",
       "tools": "Tools",
-      "devops": "DevOps",
-      "databases": "Databases"
+      "databases": "Databases",
+      "systems": "Systems & Networks"
     }
   },
   "resources": {

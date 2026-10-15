@@ -7,6 +7,7 @@ import {
   DiamondsFour as ComponentIcon,
   TerminalWindow as SquareTerminal,
 } from '@phosphor-icons/react/ssr';
+import { Bot } from 'lucide-react';
 
 import { LOGOS, TOOLS } from '~/components/icons';
 import type { Project, Resources, SocialLink, WorkExperience } from '~/types';
@@ -54,6 +55,28 @@ export const PROJECTS: Project[] = [
       </div>
     ),
     id: 'whoa-stash',
+  },
+  {
+    name: 'Claude Kit',
+    description:
+      'CLI zéro dépendance qui configure et audite des projets Claude Code optimisés en tokens.',
+    link: '/projects/claude-kit',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <Bot className="size-7" />
+        </div>
+      </div>
+    ),
+    id: 'claude-kit',
   },
   {
     name: 'Neovim Config',

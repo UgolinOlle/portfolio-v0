@@ -8,10 +8,14 @@ import { MotionConfig } from 'motion/react';
 import { ThemeProvider } from 'next-themes';
 
 import { I18nProvider } from '~/components/core/i18n-provider';
+import { fumadocsUiTranslations } from '~/lib/registry-translations';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <RootProvider theme={{ enabled: false }}>
+    <RootProvider
+      i18n={{ locale: 'fr', translations: fumadocsUiTranslations }}
+      theme={{ enabled: false }}
+    >
       <ThemeProvider
         enableSystem
         disableTransitionOnChange

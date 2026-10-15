@@ -334,7 +334,7 @@ export const CodeBlock = ({
     <CodeBlockContext.Provider value={{ value, onValueChange, data }}>
       <div
         className={cn(
-          'size-full overflow-hidden rounded-xl border bg-background shadow-xs',
+          'size-full overflow-hidden border border-foreground/10 bg-background',
           className,
         )}
         {...props}
@@ -347,7 +347,10 @@ export type CodeBlockHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 export const CodeBlockHeader = ({ className, ...props }: CodeBlockHeaderProps) => (
   <div
-    className={cn('flex flex-row items-center gap-2 border-b bg-muted/30 px-2 py-1.5', className)}
+    className={cn(
+      'flex h-9 flex-row items-center gap-2 border-b border-foreground/10 ps-2 pe-1',
+      className,
+    )}
     {...props}
   />
 );

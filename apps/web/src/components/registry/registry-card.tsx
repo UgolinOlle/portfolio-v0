@@ -6,7 +6,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { ArrowRightIcon } from '~/components/icons/ui';
+import { ArrowUpRightIcon } from '~/components/icons/ui';
 import type { RegistryItem } from '~/lib/registry';
 
 type RegistryCardProps = {
@@ -14,58 +14,63 @@ type RegistryCardProps = {
   preview?: ReactNode;
 };
 
+// A cell of the hairline grid (see RegistryGrid): square, borderless on top/left, with the
+// title link stretched over the whole cell so it's a single tab stop.
 export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
   const { t } = useTranslation();
 
   return (
-    <div
+    <article
       className={cn(
-        'group relative flex flex-col gap-3 [content-visibility:auto]',
+        'group relative flex flex-col border-e border-b border-foreground/5 transition-colors [content-visibility:auto]',
+        // Featured items span two columns.
         item.featured && 'sm:col-span-2',
+        'hover:bg-foreground/2 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:-outline-offset-2 has-[a:focus-visible]:outline-ring',
       )}
     >
       <div
         className={cn(
-          'relative overflow-hidden rounded-xl border bg-card transition-[border-color,box-shadow] duration-200',
-          'group-hover:border-foreground/20 group-hover:shadow-sm',
-          'group-has-[a:focus-visible]:ring-2 group-has-[a:focus-visible]:ring-ring group-has-[a:focus-visible]:ring-offset-2',
+          'relative aspect-[4/3] overflow-hidden',
+          // Same row height as its neighbours, twice as wide.
+          item.featured && 'sm:aspect-[8/3]',
+          'bg-[radial-gradient(color-mix(in_oklch,var(--color-foreground)_10%,transparent)_1px,transparent_1px)] bg-size-[16px_16px]',
         )}
       >
-        <div
+        {preview ? (
+          <div className="size-full transition-transform duration-300 group-hover:scale-[1.015]">
+            {preview}
+          </div>
+        ) : (
+          <div className="label-mono flex size-full items-center justify-center text-foreground/40">
+            {t('registry.card.previewComingSoon')}
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-3 border-t border-foreground/5 px-4 py-3">
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <h3 className="truncate text-sm font-medium">
+            <Link
+              className="after:absolute after:inset-0 focus-visible:outline-none"
+              href={item.href}
+            >
+              {item.title}
+            </Link>
+          </h3>
+          {item.description && (
+            <p className="line-clamp-1 text-xs text-foreground/50">{item.description}</p>
+          )}
+        </div>
+        <span
+          aria-hidden="true"
           className={cn(
-            'border-blur aspect-[4/3] min-h-40 shrink-0 sm:min-h-48',
-            // Same row height as its neighbours, twice as wide.
-            item.featured && 'sm:aspect-[8/3]',
-            preview && 'p-2',
+            'flex size-7 shrink-0 items-center justify-center border border-foreground/10 text-foreground/50 transition-colors',
+            'group-hover:border-foreground group-hover:bg-foreground group-hover:text-background',
           )}
         >
-          {preview ?? (
-            <div className="flex size-full items-center justify-center text-xs text-muted-foreground">
-              {t('registry.card.previewComingSoon')}
-            </div>
-          )}
-        </div>
+          <ArrowUpRightIcon className="size-3.5" />
+        </span>
       </div>
-
-      <div className="flex items-start justify-between gap-3 px-0.5">
-        <div className="min-w-0">
-          {/* Stretched link: the whole card is the hit area, the title stays the accessible name. */}
-          <Link
-            className="text-sm font-medium outline-none after:absolute after:inset-0 after:content-['']"
-            href={item.href}
-          >
-            {item.title}
-          </Link>
-          {item.description && (
-            <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{item.description}</p>
-          )}
-        </div>
-
-        <ArrowRightIcon
-          aria-hidden="true"
-          className="mt-0.5 size-3.5 shrink-0 text-muted-foreground transition-[transform,color] duration-200 group-hover:translate-x-0.5 group-hover:text-foreground"
-        />
-      </div>
-    </div>
+    </article>
   );
 };

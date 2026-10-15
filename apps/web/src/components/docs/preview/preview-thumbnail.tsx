@@ -1,13 +1,11 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import type { CSSProperties } from 'react';
+import { ScaledFrame } from './scaled-frame';
 
-// Largeur virtuelle par défaut : une mise en page "desktop" complète, réduite ensuite.
-const DEFAULT_VIRTUAL_WIDTH = 1280;
-// Largeur affichée de la miniature : la réduction est calculée depuis la largeur de conception.
-const THUMBNAIL_WIDTH = 358;
-// Largeur d'une miniature "featured" qui occupe deux colonnes (à partir de `sm`).
-const WIDE_THUMBNAIL_WIDTH = 732;
+// Largeurs virtuelles de rendu par défaut avant réduction : une page entière en "desktop", un
+// block à la largeur d'une colonne de contenu.
+const TEMPLATE_VIRTUAL_WIDTH = 1280;
+const BLOCK_VIRTUAL_WIDTH = 800;
 
 type PreviewThumbnailProps = {
   // Nom du fichier dans `apps/web/examples/` (sans extension), ex. "blog".
@@ -15,7 +13,8 @@ type PreviewThumbnailProps = {
   type?: 'component' | 'block' | 'template';
   // Largeur de conception du block (frontmatter `previewWidth`) : un widget compact est moins réduit.
   virtualWidth?: number;
-  // Miniature sur deux colonnes à partir de `sm` : l'échelle change avec le breakpoint.
+  // Card "featured" sur deux colonnes. Rien à calculer ici : `ScaledFrame` mesure la largeur
+  // réelle de la card, l'échelle suit donc automatiquement.
   wide?: boolean;
   className?: string;
 };
@@ -24,8 +23,7 @@ type PreviewThumbnailProps = {
 export const PreviewThumbnail = async ({
   path,
   type = 'component',
-  virtualWidth = DEFAULT_VIRTUAL_WIDTH,
-  wide = false,
+  virtualWidth,
   className,
 }: PreviewThumbnailProps) => {
   const Component = await (
@@ -40,33 +38,30 @@ export const PreviewThumbnail = async ({
     return null;
   }
 
-  const isFullPage = type !== 'component';
-
   return (
-    <div className={cn('relative size-full overflow-hidden bg-muted/20', className)}>
-      <div className="pointer-events-none absolute inset-0 flex min-w-0 items-center justify-center overflow-hidden">
-        {isFullPage ? (
-          <div
-            className={cn(
-              'shrink-0 scale-(--thumbnail-scale)',
-              wide && 'sm:scale-(--thumbnail-scale-wide)',
-            )}
-            style={
-              {
-                width: virtualWidth,
-                '--thumbnail-scale': THUMBNAIL_WIDTH / virtualWidth,
-                '--thumbnail-scale-wide': WIDE_THUMBNAIL_WIDTH / virtualWidth,
-              } as CSSProperties
-            }
-          >
-            <Component />
-          </div>
-        ) : (
+    <div
+      aria-hidden="true"
+      className={cn(
+        'pointer-events-none relative size-full overflow-hidden select-none',
+        className,
+      )}
+      inert
+    >
+      {type === 'template' ? (
+        <ScaledFrame virtualWidth={virtualWidth ?? TEMPLATE_VIRTUAL_WIDTH}>
+          <Component />
+        </ScaledFrame>
+      ) : type === 'block' ? (
+        <ScaledFrame fit="contain" virtualWidth={virtualWidth ?? BLOCK_VIRTUAL_WIDTH}>
+          <Component />
+        </ScaledFrame>
+      ) : (
+        <div className="absolute inset-0 flex min-w-0 items-center-safe justify-center overflow-hidden p-4">
           <div className="w-full max-w-full min-w-0 [zoom:0.7] max-sm:[zoom:0.5] [&>*]:w-full [&>*]:max-w-full [&>*]:min-w-0">
             <Component />
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

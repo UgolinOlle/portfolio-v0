@@ -119,6 +119,7 @@
     "card": {
       "previewComingSoon": "Aperçu à venir",
       "viewDetails": "Voir les détails"
-    }
+    },
+    "construction": "Whoa UI est en bêta : certains éléments peuvent encore changer. Un bug ? Écrivez-moi à"
   }
 }

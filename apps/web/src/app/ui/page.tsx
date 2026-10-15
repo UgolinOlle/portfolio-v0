@@ -1,11 +1,13 @@
+import { cn } from '@portfolio-v0/shadcn/utils';
+
 import type { Metadata } from 'next';
 
-import { Breadcrumbs } from '~/components/docs/breadcrumbs';
-import { CopyButton } from '~/components/docs/copy-button';
+import { MAIN_CONTENT_ID } from '~/components/core/skip-link';
+import { InstallCommand } from '~/components/docs/install/install-command';
 import { Navbar } from '~/components/docs/navbar';
 import { RegistrySection } from '~/components/registry';
 import { createMetadata } from '~/lib/metadata';
-import { getRegistryInstallCommand, getRegistrySections } from '~/lib/registry';
+import { getRegistryInstallCommands, getRegistrySections } from '~/lib/registry';
 
 export const metadata: Metadata = createMetadata({
   title: 'Whoa UI : composants React pour shadcn/ui',
@@ -14,58 +16,86 @@ export const metadata: Metadata = createMetadata({
   pathname: '/ui',
 });
 
+// Same shell as the docs pages: a left rail as wide as the docs sidebar (its border continues
+// the navbar's logo divider) and full-bleed, hairline-separated content on the right.
 const UiIndexPage = () => {
   const sections = getRegistrySections();
-  const counts = sections
-    .filter((section) => section.items.length > 0)
-    .map((section) => `${section.items.length} ${section.title.toLowerCase()}`)
-    .join(' · ');
-  // Real command for an existing item, so the snippet can be pasted as-is.
+  // Real command for an existing item, so the snippet can be pasted as-is. Prefer the showcased
+  // item, so it installs something worth trying.
   const allItems = sections.flatMap((section) => section.items);
-  // Prefer the showcased item, so the snippet installs something worth trying.
   const sampleItem =
     allItems.find((item) => item.featured && item.preview) ?? allItems.find((item) => item.preview);
-  const installCommand = sampleItem?.preview
-    ? getRegistryInstallCommand(sampleItem.preview)
-    : undefined;
 
   return (
     <>
-      <Navbar />
-      <Breadcrumbs className="pt-14" />
+      <Navbar variant="index" />
 
-      <main className="mx-auto w-full max-w-7xl px-4 pt-28 pb-20 sm:px-6 sm:pt-32 lg:px-8">
-        <header className="mb-16 flex max-w-2xl flex-col items-start gap-5">
-          <div className="flex items-center gap-3">
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Whoa UI</h1>
-            <span className="rounded-md border px-1.5 py-0.5 font-mono text-[11px] tracking-wide text-muted-foreground uppercase">
-              Bêta
-            </span>
+      <div className="grid min-h-dvh pt-(--nav-height) md:grid-cols-[var(--docs-sidebar-width)_minmax(0,1fr)]">
+        <aside className="border-b border-foreground/5 md:border-e md:border-b-0">
+          <div className="flex flex-col md:sticky md:top-(--nav-height)">
+            <header className="flex flex-col gap-3 border-b border-foreground/5 px-4 py-8">
+              <p className="label-mono text-foreground/45">Registre</p>
+              <div className="flex items-center gap-2.5">
+                <h1 className="text-[2rem] leading-tight font-semibold tracking-tight">Whoa UI</h1>
+                <span className="label-mono border border-foreground/15 px-1.5 py-0.5 text-foreground/60">
+                  Bêta
+                </span>
+              </div>
+              <p className="text-sm text-pretty text-foreground/60">
+                Des composants, blocks et templates construits avec shadcn/ui et Tailwind CSS. Ceux
+                que j’utilise sur ce portfolio et en mission, à installer en une commande.
+              </p>
+            </header>
+
+            <nav aria-label="Sections">
+              <ul>
+                {sections.map((section, index) => (
+                  <li key={section.category}>
+                    <a
+                      className={cn(
+                        'flex items-center gap-3 border-b border-foreground/5 px-4 py-2.5 text-sm font-medium tracking-wide text-foreground/70 transition-colors',
+                        'hover:bg-foreground/3 hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
+                      )}
+                      href={`#${section.category}`}
+                    >
+                      <span className="font-mono text-[0.6875rem] text-foreground/35 tabular-nums">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span className="flex-1">{section.title}</span>
+                      <span className="font-mono text-[0.6875rem] text-foreground/45 tabular-nums">
+                        {String(section.items.length).padStart(2, '0')}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
+        </aside>
 
-          <p className="text-lg leading-relaxed text-pretty text-muted-foreground">
-            Des composants, blocks et templates construits avec shadcn/ui et Tailwind CSS. Ceux que
-            j’utilise sur ce portfolio et en mission, à installer en une commande.
-          </p>
-
-          {counts && <p className="font-mono text-xs text-muted-foreground">{counts}</p>}
-
-          {installCommand && (
-            <div className="flex w-full max-w-full items-center gap-2 rounded-lg border bg-muted/40 py-1.5 pr-1.5 pl-3">
-              <code className="min-w-0 flex-1 truncate font-mono text-xs sm:text-sm">
-                {installCommand}
-              </code>
-              <CopyButton className="shrink-0" value={installCommand} />
-            </div>
+        <div className="min-w-0" id={MAIN_CONTENT_ID}>
+          {sampleItem?.preview && (
+            <section
+              aria-label="Installer un exemple"
+              className="flex flex-col gap-3 border-b border-foreground/5 px-6 py-8 lg:px-8"
+            >
+              <p className="label-mono text-foreground/45">
+                Essayer
+                <span aria-hidden="true" className="px-2 text-foreground/25">
+                  /
+                </span>
+                {sampleItem.title}
+              </p>
+              <div className="max-w-3xl">
+                <InstallCommand commands={getRegistryInstallCommands(sampleItem.preview)} />
+              </div>
+            </section>
           )}
-        </header>
-
-        <div className="flex flex-col gap-20">
-          {sections.map((section) => (
-            <RegistrySection key={section.category} section={section} />
+          {sections.map((section, index) => (
+            <RegistrySection index={index + 1} key={section.category} section={section} />
           ))}
         </div>
-      </main>
+      </div>
     </>
   );
 };

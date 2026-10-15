@@ -10,7 +10,13 @@ const MobileSearch = () => {
   const { setOpenSearch } = useSearchContext();
 
   return (
-    <Button className="h-8" onClick={() => setOpenSearch(true)} size="icon" variant="ghost">
+    <Button
+      aria-label="Rechercher"
+      className="h-full w-(--nav-height) rounded-none border-s border-foreground/5"
+      onClick={() => setOpenSearch(true)}
+      size="icon"
+      variant="ghost"
+    >
       <SearchIcon className="size-4" />
     </Button>
   );

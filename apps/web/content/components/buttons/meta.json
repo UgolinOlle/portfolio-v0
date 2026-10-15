@@ -1,4 +1,5 @@
 {
-  "title": "Buttons",
+  "title": "Boutons",
+  "icon": "CursorClick",
   "pages": ["button", "button-gandi", "button-apple", "button-shopify"]
 }

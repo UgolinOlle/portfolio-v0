@@ -19,17 +19,22 @@ const CARD_GAP = 12;
 const EDGE_PADDING = 8;
 const ARROW_PADDING = 16;
 
-function SocialLinkIcon({
-  link,
-  currentTheme,
-}: {
-  link: SocialLink;
-  currentTheme: string | undefined;
-}) {
-  const Icon = currentTheme === 'dark' && link.iconDark ? link.iconDark : link.icon;
+// Both variants are rendered and CSS picks one, so the markup doesn't depend on the theme
+// (resolving it in JS made the server and client render different icons).
+function SocialLinkIcon({ link }: { link: SocialLink }) {
+  if (link.icon && link.iconDark) {
+    const { icon: LightIcon, iconDark: DarkIcon } = link;
 
-  if (Icon) {
-    return <Icon className="h-4 w-4" />;
+    return (
+      <>
+        <LightIcon className="h-4 w-4 dark:hidden" />
+        <DarkIcon className="hidden h-4 w-4 dark:block" />
+      </>
+    );
+  }
+
+  if (link.icon) {
+    return <link.icon className="h-4 w-4" />;
   }
 
   if (link.favicon) {
@@ -51,13 +56,7 @@ type PreviewPosition = {
   arrowLeft: number;
 };
 
-function SocialLinksNav({
-  links,
-  currentTheme,
-}: {
-  links: SocialLink[];
-  currentTheme: string | undefined;
-}) {
+function SocialLinksNav({ links }: { links: SocialLink[] }) {
   const isDesktop = useMediaQuery(DESKTOP_QUERY);
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef(new Map<string, HTMLDivElement>());
@@ -145,7 +144,7 @@ function SocialLinksNav({
             target="_blank"
             href={link.link}
           >
-            <SocialLinkIcon currentTheme={currentTheme} link={link} />
+            <SocialLinkIcon link={link} />
             <TextHoverEnter className="text-sm">{link.label}</TextHoverEnter>
           </Link>
         </div>
@@ -156,7 +155,7 @@ function SocialLinksNav({
           {activeLink?.preview && position && (
             <SocialPreviewCard
               arrowLeft={position.arrowLeft}
-              icon={<SocialLinkIcon currentTheme={currentTheme} link={activeLink} />}
+              icon={<SocialLinkIcon link={activeLink} />}
               left={position.left}
               preview={activeLink.preview}
               top={position.top}

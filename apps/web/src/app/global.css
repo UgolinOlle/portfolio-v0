@@ -1,7 +1,14 @@
 @import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/shadcn.css';
 @import 'fumadocs-ui/css/preset.css';
 @import '@portfolio-v0/shadcn/styles';
+
+/* Layout tokens for the /ui registry shell (navbar, sidebar, TOC, content measure). */
+:root {
+  --nav-height: 3.5rem;
+  --rail-width: 16.75rem;
+  --docs-sidebar-width: 18.75rem;
+}
 
 html {
   scrollbar-gutter: stable;
@@ -30,18 +37,71 @@ html > body[data-scroll-locked] {
   }
 }
 
-@layer utilities {
-  .border-blur {
-    position: relative;
+/* Small uppercase mono label used across the /ui chrome (tabs, eyebrows, buttons). */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+/*
+  Content icons (frontmatter / meta.json) render a regular and a filled Phosphor glyph
+  (see `lib/source.ts`); the filled one only shows for the current page in the sidebar.
+*/
+svg[data-icon-weight='fill'] {
+  display: none;
+}
+
+[aria-current='page'] svg[data-icon-weight='regular'] {
+  display: none;
+}
+
+[aria-current='page'] svg[data-icon-weight='fill'] {
+  display: block;
+}
+
+/*
+  fumadocs' search dialog, aligned with the registry chrome: square, hairline borders, flat
+  selection, lighter overlay. `[data-empty]` only exists on its result list, which keeps these
+  rules away from every other dialog.
+*/
+[role='dialog']:has(> [data-empty]) {
+  border-radius: 0;
+  border-color: color-mix(in oklab, var(--foreground) 10%, transparent);
+  box-shadow: var(--shadow-2xl);
+
+  & > * {
+    border-color: color-mix(in oklab, var(--foreground) 8%, transparent);
   }
 
-  .border-blur::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: white;
-    filter: blur(4px);
-    z-index: -1;
+  & input {
+    font-size: 1rem;
   }
+
+  & button {
+    border-radius: 0;
+  }
+
+  & button[aria-selected] {
+    padding-block: 0.625rem;
+  }
+
+  & button[aria-selected='true'] {
+    background: color-mix(in oklab, var(--foreground) 6%, transparent);
+    color: var(--foreground);
+    box-shadow: inset 2px 0 var(--foreground);
+  }
+
+  /* "Esc" close button */
+  & > div:first-of-type > button {
+    border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+    font-family: var(--font-mono);
+    letter-spacing: var(--tracking-widest);
+  }
+}
+
+div:has(+ [role='dialog'] > [data-empty]) {
+  backdrop-filter: none;
+  background: color-mix(in oklab, var(--background) 70%, transparent);
 }

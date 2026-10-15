@@ -7,7 +7,7 @@ import { type BreadcrumbOptions, getBreadcrumbItemsFromPath } from 'fumadocs-cor
 import Link from 'fumadocs-core/link';
 import { type ComponentProps, useMemo, Fragment } from 'react';
 
-import { SlashIcon } from '~/components/icons/ui';
+import { ChevronRightIcon } from '~/components/icons/ui';
 
 export type BreadcrumbProps = BreadcrumbOptions & ComponentProps<'div'>;
 
@@ -39,7 +39,7 @@ export function Breadcrumb({
 
         return (
           <Fragment key={i}>
-            {i !== 0 && <SlashIcon className="size-3.5 shrink-0" />}
+            {i !== 0 && <ChevronRightIcon className="size-3.5 shrink-0" />}
             {item.url ? (
               <Link
                 href={item.url}

@@ -1,4 +1,5 @@
 {
-  "title": "Cards",
+  "title": "Cartes",
+  "icon": "SquaresFour",
   "pages": ["status-card", "activity", "calendar-sync", "usage-card"]
 }

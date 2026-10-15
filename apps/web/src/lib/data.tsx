@@ -2,11 +2,11 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import {
   BookOpenText,
-  BriefcaseBusiness,
+  Briefcase as BriefcaseBusiness,
   Command,
-  Component as ComponentIcon,
-  SquareTerminal,
-} from 'lucide-react';
+  DiamondsFour as ComponentIcon,
+  TerminalWindow as SquareTerminal,
+} from '@phosphor-icons/react/ssr';
 
 import { LOGOS, TOOLS } from '~/components/icons';
 import type { Project, Resources, SocialLink, WorkExperience } from '~/types';
@@ -29,7 +29,7 @@ export const PROJECTS: Project[] = [
         />
 
         <div className="relative flex size-full items-center justify-center">
-          <ComponentIcon className="size-7" />
+          <ComponentIcon className="size-7" weight="duotone" />
         </div>
       </div>
     ),
@@ -49,7 +49,7 @@ export const PROJECTS: Project[] = [
         />
 
         <div className="relative flex size-full items-center justify-center">
-          <Command className="size-7" />
+          <Command className="size-7" weight="duotone" />
         </div>
       </div>
     ),
@@ -70,7 +70,7 @@ export const PROJECTS: Project[] = [
         />
 
         <div className="relative flex size-full items-center justify-center">
-          <SquareTerminal className="size-7" />
+          <SquareTerminal className="size-7" weight="duotone" />
         </div>
       </div>
     ),
@@ -93,7 +93,7 @@ export const PROJECTS: Project[] = [
         />
 
         <div className="relative flex size-full items-center justify-center">
-          <BriefcaseBusiness className="size-7" />
+          <BriefcaseBusiness className="size-7" weight="duotone" />
         </div>
       </div>
     ),
@@ -114,7 +114,7 @@ export const PROJECTS: Project[] = [
         />
 
         <div className="relative flex size-full items-center justify-center">
-          <BookOpenText className="size-7" />
+          <BookOpenText className="size-7" weight="duotone" />
         </div>
       </div>
     ),

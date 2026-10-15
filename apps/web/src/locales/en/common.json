@@ -119,6 +119,7 @@
     "card": {
       "previewComingSoon": "Preview coming soon",
       "viewDetails": "View Details"
-    }
+    },
+    "construction": "Whoa UI is in beta: some parts may still change. Found a bug? Write to me at"
   }
 }

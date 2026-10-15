@@ -39,19 +39,26 @@ export function Footer({ items, children, className, ...props }: FooterProps) {
     };
   }, [footerList, items, pathname]);
 
+  if (!previous && !next) return children;
+
   return (
     <>
-      <div
+      <nav
+        aria-label="Pagination"
         className={cn(
-          '@container grid gap-4',
-          previous && next ? 'grid-cols-2' : 'grid-cols-1',
+          'not-prose @container grid border border-foreground/10',
+          'grid-cols-2',
           className,
         )}
         {...props}
       >
-        {previous && <FooterItem item={previous} index={0} />}
+        {previous ? (
+          <FooterItem item={previous} index={0} />
+        ) : (
+          <span aria-hidden="true" className="@max-lg:hidden" />
+        )}
         {next && <FooterItem item={next} index={1} />}
-      </div>
+      </nav>
       {children}
     </>
   );
@@ -65,22 +72,28 @@ function FooterItem({ item, index }: { item: Item; index: 0 | 1 }) {
     <Link
       href={item.url}
       className={cn(
-        'hover:bg-fd-accent/80 hover:text-fd-accent-foreground flex flex-col gap-2 rounded-lg border p-4 text-sm transition-colors @max-lg:col-span-full',
-        index === 1 && 'text-end',
+        'group flex flex-col gap-1.5 p-4 transition-colors @max-lg:col-span-full',
+        'hover:bg-foreground/3 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
+        index === 1 &&
+          'items-end border-s border-foreground/10 text-end @max-lg:border-s-0 @max-lg:border-t @lg:col-start-2',
       )}
     >
-      <div
+      <span
         className={cn(
-          'inline-flex items-center gap-1.5 font-medium',
+          'label-mono inline-flex items-center gap-1 text-foreground/45',
           index === 1 && 'flex-row-reverse',
         )}
       >
-        <Icon className="-mx-1 size-4 shrink-0 rtl:rotate-180" />
-        <p>{item.name}</p>
-      </div>
-      <p className="text-fd-muted-foreground truncate">
-        {item.description ?? (index === 0 ? t('Previous Page') : t('Next Page'))}
-      </p>
+        <Icon
+          aria-hidden="true"
+          className={cn(
+            'size-3.5 shrink-0 transition-transform rtl:rotate-180',
+            index === 0 ? 'group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5',
+          )}
+        />
+        {index === 0 ? t('Previous Page') : t('Next Page')}
+      </span>
+      <span className="text-sm font-medium">{item.name}</span>
     </Link>
   );
 }

@@ -3,7 +3,6 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { motion } from 'motion/react';
-import { useTheme } from 'next-themes';
 import type { ReactNode } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
@@ -38,10 +37,26 @@ function SkillItem({ name, icon }: SkillItemProps) {
   );
 }
 
+type LogoComponent = React.ComponentType<{ className?: string }>;
+
+// Renders both logo variants and lets CSS pick one, so the markup doesn't depend on the theme
+// (resolving it in JS made the server and client render different icons).
+const themedLogo = (OnLight: LogoComponent, OnDark: LogoComponent): LogoComponent => {
+  const ThemedLogo = ({ className }: { className?: string }) => (
+    <>
+      <OnLight className={cn(className, 'dark:hidden')} />
+      <OnDark className={cn(className, 'hidden dark:block')} />
+    </>
+  );
+
+  return ThemedLogo;
+};
+
+const BashLogo = themedLogo(LANGUAGES.BashDark, LANGUAGES.BashLight);
+const PrismaLogo = themedLogo(DATABASES.PrismaDark, DATABASES.PrismaLight);
+
 function StacksSection() {
   const { t } = useTranslation();
-  const { theme, resolvedTheme } = useTheme();
-  const currentTheme = resolvedTheme || theme;
 
   const skillsData = {
     languages: [
@@ -51,10 +66,7 @@ function StacksSection() {
       { name: 'CSS', icon: LANGUAGES.CSS },
       { name: 'C', icon: LANGUAGES.C },
       { name: 'Lua', icon: LANGUAGES.Lua },
-      {
-        name: 'Bash',
-        icon: () => (currentTheme === 'dark' ? LANGUAGES.BashLight : LANGUAGES.BashDark),
-      },
+      { name: 'Bash', icon: BashLogo },
     ],
     frameworks: [
       { name: 'React', icon: FRAMEWORKS.React },
@@ -80,10 +92,7 @@ function StacksSection() {
     ],
     databases: [
       { name: 'PostgreSQL', icon: DATABASES.Postgres },
-      {
-        name: 'Prisma',
-        icon: () => (currentTheme === 'dark' ? DATABASES.PrismaLight : DATABASES.PrismaDark),
-      },
+      { name: 'Prisma', icon: PrismaLogo },
       { name: 'Redis', icon: DATABASES.Redis },
     ],
   };

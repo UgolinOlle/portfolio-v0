@@ -2,95 +2,111 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { useMotionValueEvent, useScroll } from 'motion/react';
 import Link from 'next/link';
-import { type ReactNode, useState } from 'react';
 
-import { ArrowUpRightIcon } from '~/components/icons/ui';
+import { useTranslation } from '~/components/core/i18n-provider';
+import { MAIN_CONTENT_ID } from '~/components/core/skip-link';
+import { ArrowUpRightIcon, MenuIcon } from '~/components/icons/ui';
+import { SidebarTrigger } from '~/layouts/docs/slots/sidebar';
 import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
 
+import { GitHubLink } from './github-link';
 import { Links } from './links';
 import { Logo } from './logo';
-import { MobileMenu } from './mobile-menu';
+import { MobileMenu, type MobileMenuGroup } from './mobile-menu';
 import { MobileSearch } from './mobile-search';
 import { Search } from './search';
+
+export type NavbarVariant = 'docs' | 'index';
 
 type NavbarClientProps = {
   componentsCount: number;
   blocksCount: number;
   templatesCount: number;
-  github: ReactNode;
+  menuGroups: MobileMenuGroup[];
+  githubStars: number | null;
+  // On docs pages the sidebar already carries search and the theme switch.
+  variant: NavbarVariant;
 };
 
+// Better Auth–style top bar: full-height cells split by hairlines. The logo cell is exactly
+// as wide as the docs sidebar, so its divider continues the sidebar's border.
 export function NavbarClient({
   componentsCount,
   blocksCount,
   templatesCount,
-  github,
+  menuGroups,
+  githubStars,
+  variant,
 }: NavbarClientProps) {
-  const { scrollY } = useScroll();
-  const [scrolled, setScrolled] = useState(false);
-
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    setScrolled(latest > 8);
-  });
+  const { t } = useTranslation();
 
   return (
-    <div
-      className={cn(
-        'fixed inset-x-0 top-0 z-40 flex h-14 items-center justify-between px-4',
-        'bg-background/70 backdrop-blur-md transition-[background-color,border-color,box-shadow]',
-        scrolled && 'border-border bg-background/85 shadow-[0_1px_12px_-4px_rgba(0,0,0,0.08)]',
-        'border-b-fd-accent border-b duration-300',
-      )}
-    >
-      <div className="flex items-center gap-3">
-        <Link className="rounded-md py-1.5 pl-3" href="/ui">
+    <>
+      {/* First focusable element: lets keyboard users jump past the header and sidebar. */}
+      <a
+        className="label-mono sr-only bg-foreground px-3 py-2 text-background focus:not-sr-only focus:fixed focus:start-2 focus:top-2 focus:z-50"
+        href={variant === 'docs' ? '#nd-page' : `#${MAIN_CONTENT_ID}`}
+      >
+        {t('navigation.skipToContent')}
+      </a>
+      <header className="fixed inset-x-0 top-0 z-40 flex h-(--nav-height) items-stretch border-b border-foreground/5 bg-background">
+        <Link
+          aria-label="Whoa UI — accueil"
+          className={cn(
+            'flex shrink-0 items-center gap-2.5 border-e border-foreground/5 px-4 md:w-(--docs-sidebar-width)',
+            'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
+          )}
+          href="/ui"
+        >
           <Logo />
+          <span className="font-mono text-xs font-medium tracking-widest uppercase">Whoa UI</span>
         </Link>
 
-        <Links
-          blocksCount={blocksCount}
-          className="hidden md:flex"
-          componentsCount={componentsCount}
-          templatesCount={templatesCount}
-        />
-      </div>
+        <nav aria-label="Registre" className="hidden md:flex">
+          <Links
+            blocksCount={blocksCount}
+            componentsCount={componentsCount}
+            templatesCount={templatesCount}
+          />
+        </nav>
 
-      <div className="hidden items-center gap-2 md:flex">
-        <Search />
-        <div className="mx-1 h-5 w-px bg-border" />
-        <ThemeSwitch className="h-8" />
-        {github}
-
-        <Link
-          href="/"
-          className={cn(
-            'group inline-flex h-8 items-center rounded-full border px-3 text-sm',
-            'font-medium transition-colors hover:bg-accent/50',
+        <div className="ms-auto hidden items-stretch md:flex">
+          {variant === 'index' && (
+            <>
+              <Search />
+              <ThemeSwitch className="h-full rounded-none border-0 border-s border-foreground/5 px-3 transition-colors hover:bg-foreground/3" />
+            </>
           )}
-        >
-          Portfolio
-          <span
+          <GitHubLink stars={githubStars} />
+
+          <Link
+            href="/"
             className={cn(
-              'flex size-0 items-center justify-center overflow-hidden opacity-0 transition-all duration-300',
-              'group-hover:ml-1.5 group-hover:size-3.5 group-hover:opacity-100',
+              'label-mono group flex items-center gap-1.5 bg-foreground px-5 font-medium text-background',
+              'transition-colors hover:bg-foreground/85 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
             )}
           >
+            Portfolio
             <ArrowUpRightIcon
-              className={cn(
-                'size-3.5 shrink-0 leading-none transition-transform duration-300',
-                'group-hover:translate-x-0.5 group-hover:-translate-y-0.5',
-              )}
+              aria-hidden="true"
+              className="size-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
-          </span>
-        </Link>
-      </div>
+          </Link>
+        </div>
 
-      <div className="flex items-center gap-2 md:hidden">
-        <MobileSearch />
-        <MobileMenu />
-      </div>
-    </div>
+        <div className="ms-auto flex items-stretch md:hidden">
+          <MobileSearch />
+          {variant === 'docs' ? (
+            // Opens the same accordion sidebar as desktop, as a drawer.
+            <SidebarTrigger className="flex w-(--nav-height) items-center justify-center border-s border-foreground/5 text-foreground/70 hover:bg-foreground/3 hover:text-foreground">
+              <MenuIcon aria-hidden="true" className="size-4" />
+            </SidebarTrigger>
+          ) : (
+            <MobileMenu groups={menuGroups} />
+          )}
+        </div>
+      </header>
+    </>
   );
 }

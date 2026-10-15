@@ -1,5 +1,7 @@
 import { siteConfig } from '~/lib/metadata';
 
+export const GITHUB_REPO = 'ugolinolle/portfolio-v0';
+
 export const WEBSITE_URL = siteConfig.url;
 export const EMAIL = siteConfig.email;
 

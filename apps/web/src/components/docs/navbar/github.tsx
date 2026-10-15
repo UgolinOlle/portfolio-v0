@@ -1,18 +1,11 @@
-import { Button } from '@portfolio-v0/shadcn/components/button';
-import { cn } from '@portfolio-v0/shadcn/utils';
-
-import { SiGithub } from '@icons-pack/react-simple-icons';
+import { GITHUB_REPO } from '~/lib/constants';
 
 const DAY = 86_400;
-const REPO = 'ugolinolle/portfolio-v0';
 
-type GitHubProps = {
-  className?: string;
-};
-
-async function getStarCount() {
+// Server-only: cached for a day, `null` when the API is unreachable or rate-limited.
+export async function getStarCount() {
   try {
-    const res = await fetch(`https://api.github.com/repos/${REPO}`, {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}`, {
       next: { revalidate: DAY },
     });
     if (!res.ok) return null;
@@ -22,38 +15,3 @@ async function getStarCount() {
     return null;
   }
 }
-
-const GitHub = async ({ className }: GitHubProps) => {
-  const stars = await getStarCount();
-
-  return (
-    <Button
-      asChild
-      className={cn('h-8 rounded-full shadow-none transition-transform hover:scale-105', className)}
-      size="sm"
-      variant="outline"
-    >
-      <a
-        className="flex items-center gap-1.5"
-        href={`https://github.com/${REPO}`}
-        rel="noreferrer"
-        target="_blank"
-      >
-        <SiGithub className="size-3.5" />
-        {stars !== null && (
-          <span className="text-xs text-muted-foreground tabular-nums">
-            {new Intl.NumberFormat('en-US', {
-              notation: 'compact',
-            }).format(stars)}
-          </span>
-        )}
-      </a>
-    </Button>
-  );
-};
-
-const GitHubSkeleton = () => (
-  <div className="h-8 w-16 animate-pulse rounded-lg border bg-muted/50" />
-);
-
-export { GitHubSkeleton, GitHub };

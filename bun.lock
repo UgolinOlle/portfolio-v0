@@ -21,6 +21,7 @@
         "@fuma-translate/react": "^1.0.2",
         "@fumadocs/base-ui": "^16.13.0",
         "@icons-pack/react-simple-icons": "^13.13.0",
+        "@phosphor-icons/react": "^2.1.10",
         "@portfolio-v0/shadcn": "workspace:*",
         "@shikijs/transformers": "^4.3.1",
         "@vercel/analytics": "^2.0.1",
@@ -438,6 +439,8 @@
     "@oxlint/binding-win32-ia32-msvc": ["@oxlint/binding-win32-ia32-msvc@1.63.0", "", { "os": "win32", "cpu": "ia32" }, "sha512-BX5iq+ovdNlVYhSn5qPMUIT0uwAwt2lmEnCnzK+Gkhw4DovIvhGb96OFhV8yzQNUnQxn/xGkOR+X+BLrLDNm8w=="],
 
     "@oxlint/binding-win32-x64-msvc": ["@oxlint/binding-win32-x64-msvc@1.63.0", "", { "os": "win32", "cpu": "x64" }, "sha512-QeN/WELOfsXMeYwxvfgQrl6CbVftYUCZsGXHjXQd5Trccm8+i4gmtxaOui4xbJQaiDlviF8F3yLSBloQUeFsfA=="],
+
+    "@phosphor-icons/react": ["@phosphor-icons/react@2.1.10", "", { "peerDependencies": { "react": ">= 16.8", "react-dom": ">= 16.8" } }, "sha512-vt8Tvq8GLjheAZZYa+YG/pW7HDbov8El/MANW8pOAz4eGxrwhnbfrQZq0Cp4q8zBEu8NIhHdnr+r8thnfRSNYA=="],
 
     "@portfolio-v0/config": ["@portfolio-v0/config@workspace:packages/config"],
 

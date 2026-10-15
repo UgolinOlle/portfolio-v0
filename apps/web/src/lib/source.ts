@@ -1,3 +1,4 @@
+import * as PhosphorIcons from '@phosphor-icons/react/ssr';
 import { defineI18n } from 'fumadocs-core/i18n';
 import { loader } from 'fumadocs-core/source';
 import { toFumadocsSource } from 'fumadocs-mdx/runtime/server';
@@ -13,18 +14,30 @@ import {
   writingsDocs,
   writingsMeta,
 } from 'fumadocs-mdx:collections/server';
-import { icons } from 'lucide-react';
-import { createElement } from 'react';
+import { type ComponentType, Fragment, createElement } from 'react';
 
 import { DEFAULT_LOCALE, LOCALES, type Locale, resolveLocale } from '~/lib/metadata';
 
+// `icon` in frontmatter / meta.json is a Phosphor icon name (e.g. `BookOpen`, `CursorClick`).
+type PhosphorIcon = ComponentType<{ weight?: 'regular' | 'fill'; 'data-icon-weight'?: string }>;
+
+const phosphorIcons = PhosphorIcons as unknown as Record<string, PhosphorIcon | undefined>;
+
+// Both weights are rendered; `global.css` only shows the filled one for the current page.
 const icon = (name: string | undefined) => {
   if (!name) {
     return;
   }
 
-  if (name in icons) {
-    return createElement(icons[name as keyof typeof icons]);
+  const Icon = phosphorIcons[name];
+
+  if (Icon) {
+    return createElement(
+      Fragment,
+      null,
+      createElement(Icon, { 'data-icon-weight': 'regular' }),
+      createElement(Icon, { weight: 'fill', 'data-icon-weight': 'fill' }),
+    );
   }
 };
 

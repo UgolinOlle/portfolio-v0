@@ -155,9 +155,9 @@ export const SOCIAL_LINKS: SocialLink[] = [
       name: 'Ugolin Ollé',
       handle: '@ugolin-olle',
       avatar:
-        'https://www.npmjs.com/npm-avatar/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXJVUkwiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9kZDcxOWFkOWIwNTIzZGQzYTA0OTM1NzJlN2ZjNGE5Mj9zaXplPTQ5NiZkZWZhdWx0PXJldHJvIn0.mSd9mX2lhvKr3_0JCRsPoBiRI-ESygnrvT-IaRnQst4',
+        'https://media.licdn.com/dms/image/v2/D4E35AQHfN9OIs0vNcQ/profile-framedphoto-shrink_800_800/B4EZ_WrubXHkAY-/0/1786013214882?e=1787670000&v=beta&t=LDNTeVmDxiqV1pGarls1vdFWNKZv8kptRWEw_v-CCP8',
       role: 'Développeur Full Stack freelance',
-      bio: 'Building packages & projects.',
+      bio: 'Expériences produit, sites vitrines et outils sur-mesure.',
     },
   },
   {
@@ -210,9 +210,10 @@ export const SOCIAL_LINKS: SocialLink[] = [
     preview: {
       kind: 'npm',
       name: 'Ugolin Ollé',
-      handle: '@ugolin_olle',
-      avatar: 'https://pbs.twimg.com/profile_images/1959181504485150721/7pyz6ZFZ_400x400.jpg',
-      bio: "Développeur, partage de builds et d'expérimentations frontend.",
+      handle: '~ugolin-olle',
+      avatar:
+        'https://www.npmjs.com/npm-avatar/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXJVUkwiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9kZDcxOWFkOWIwNTIzZGQzYTA0OTM1NzJlN2ZjNGE5Mj9zaXplPTQ5NiZkZWZhdWx0PXJldHJvIn0.mSd9mX2lhvKr3_0JCRsPoBiRI-ESygnrvT-IaRnQst4',
+      bio: 'Building packages & projects.',
     },
   },
 ];

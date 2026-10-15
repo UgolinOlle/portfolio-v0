@@ -2,11 +2,21 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { Network } from 'lucide-react';
+import { Network, Radar, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { ReactNode } from 'react';
 import type { IconType } from 'react-icons';
-import { SiLaravel, SiMysql, SiPhp, SiPython } from 'react-icons/si';
+import {
+  SiGit,
+  SiGithubactions,
+  SiGrafana,
+  SiLaravel,
+  SiMysql,
+  SiPhp,
+  SiPrometheus,
+  SiPython,
+  SiWireshark,
+} from 'react-icons/si';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { DATABASES, FRAMEWORKS, LANGUAGES, TOOLS } from '~/components/icons';
@@ -71,54 +81,73 @@ const PrismaLogo = themedLogo(DATABASES.PrismaDark, DATABASES.PrismaLight);
 const PhpLogo = brandLogo(SiPhp, '#777BB4');
 const PythonLogo = brandLogo(SiPython, '#3776AB');
 const LaravelLogo = brandLogo(SiLaravel, '#FF2D20');
-const MysqlLogo = brandLogo(SiMysql, '#4479A1');
+// MySQL's brand blue disappears on the dark background, so dark mode gets a lighter tint.
+const MysqlLogo = themedLogo(brandLogo(SiMysql, '#4479A1'), brandLogo(SiMysql, '#5FA8D3'));
+const GitLogo = brandLogo(SiGit, '#F05032');
+const GithubActionsLogo = brandLogo(SiGithubactions, '#2088FF');
+const GrafanaLogo = brandLogo(SiGrafana, '#F46800');
+const PrometheusLogo = brandLogo(SiPrometheus, '#E6522C');
+const WiresharkLogo = brandLogo(SiWireshark, '#1679A7');
+// Simple Icons has no Nmap logo, so it uses the closest Lucide glyph in the brand color.
+const NmapLogo = brandLogo(Radar, '#4F9FD8');
+
+type Skill = { name: string; labelKey?: string; icon: SkillItemProps['icon'] };
 
 // Grouped to mirror the CV: dev stack first, then the systems & networks side of the profile.
-const SKILLS: Record<string, { name: string; labelKey?: string; icon: SkillItemProps['icon'] }[]> =
-  {
-    languages: [
-      { name: 'TypeScript', icon: LANGUAGES.Typescript },
-      { name: 'JavaScript', icon: LANGUAGES.Javascript },
-      { name: 'PHP', icon: PhpLogo },
-      { name: 'Python', icon: PythonLogo },
-      { name: 'C', icon: LANGUAGES.C },
-      { name: 'Lua', icon: LANGUAGES.Lua },
-      { name: 'Bash', icon: BashLogo },
-      { name: 'HTML', icon: LANGUAGES.HTML },
-      { name: 'CSS', icon: LANGUAGES.CSS },
-    ],
-    frameworks: [
-      { name: 'React', icon: FRAMEWORKS.React },
-      { name: 'Next.js', icon: FRAMEWORKS.Nextjs },
-      { name: 'Node.js', icon: FRAMEWORKS.NodeJS },
-      { name: 'NestJS', icon: FRAMEWORKS.Nestjs },
-      { name: 'Hono', icon: FRAMEWORKS.Hono },
-      { name: 'Laravel', icon: LaravelLogo },
-      { name: 'Tailwind CSS', icon: FRAMEWORKS.Tailwind },
-      { name: 'Shadcn/ui', icon: FRAMEWORKS.Shadcnui },
-    ],
-    databases: [
-      { name: 'PostgreSQL', icon: DATABASES.Postgres },
-      { name: 'MySQL', icon: MysqlLogo },
-      { name: 'Prisma', icon: PrismaLogo },
-      { name: 'Redis', icon: DATABASES.Redis },
-    ],
-    systems: [
-      { name: 'Linux', icon: TOOLS.Linux },
-      { name: 'Docker', icon: TOOLS.Docker },
-      { name: 'Nginx', icon: TOOLS.Nginx },
-      { name: 'Vercel', icon: TOOLS.Vercel },
-      { name: 'Networking', labelKey: 'stacks.networking', icon: Network },
-    ],
-    tools: [
-      { name: 'GitHub', icon: TOOLS.GitHub },
-      { name: 'Neovim', icon: TOOLS.Neovim },
-      { name: 'VSCode', icon: TOOLS.VSCode },
-      { name: 'Bun', icon: TOOLS.Bun },
-      { name: 'Figma', icon: TOOLS.Figma },
-      { name: 'Claude', icon: TOOLS.Anthropic },
-    ],
-  };
+const SKILLS: Record<string, Skill[]> = {
+  languages: [
+    { name: 'TypeScript', icon: LANGUAGES.Typescript },
+    { name: 'JavaScript', icon: LANGUAGES.Javascript },
+    { name: 'PHP', icon: PhpLogo },
+    { name: 'Python', icon: PythonLogo },
+    { name: 'C', icon: LANGUAGES.C },
+    { name: 'Lua', icon: LANGUAGES.Lua },
+    { name: 'Bash', icon: BashLogo },
+    { name: 'HTML', icon: LANGUAGES.HTML },
+    { name: 'CSS', icon: LANGUAGES.CSS },
+  ],
+  frameworks: [
+    { name: 'React', icon: FRAMEWORKS.React },
+    { name: 'Next.js', icon: FRAMEWORKS.Nextjs },
+    { name: 'Node.js', icon: FRAMEWORKS.NodeJS },
+    { name: 'NestJS', icon: FRAMEWORKS.Nestjs },
+    { name: 'Hono', icon: FRAMEWORKS.Hono },
+    { name: 'Laravel', icon: LaravelLogo },
+    { name: 'Tailwind CSS', icon: FRAMEWORKS.Tailwind },
+    { name: 'Shadcn/ui', icon: FRAMEWORKS.Shadcnui },
+  ],
+  databases: [
+    { name: 'PostgreSQL', icon: DATABASES.Postgres },
+    { name: 'MySQL', icon: MysqlLogo },
+    { name: 'Prisma', icon: PrismaLogo },
+    { name: 'Redis', icon: DATABASES.Redis },
+  ],
+  devops: [
+    { name: 'Docker', icon: TOOLS.Docker },
+    { name: 'Nginx', icon: TOOLS.Nginx },
+    { name: 'Vercel', icon: TOOLS.Vercel },
+    { name: 'GitHub Actions', icon: GithubActionsLogo },
+    { name: 'Grafana', icon: GrafanaLogo },
+    { name: 'Prometheus', icon: PrometheusLogo },
+    { name: 'Loki', icon: TOOLS.Loki },
+  ],
+  systems: [
+    { name: 'Linux', icon: TOOLS.Linux },
+    { name: 'Networking', labelKey: 'stacks.networking', icon: Network },
+    { name: 'Cybersecurity', labelKey: 'stacks.cybersecurity', icon: ShieldCheck },
+    { name: 'Wireshark', icon: WiresharkLogo },
+    { name: 'Nmap', icon: NmapLogo },
+  ],
+  tools: [
+    { name: 'Git', icon: GitLogo },
+    { name: 'GitHub', icon: TOOLS.GitHub },
+    { name: 'Neovim', icon: TOOLS.Neovim },
+    { name: 'VSCode', icon: TOOLS.VSCode },
+    { name: 'Bun', icon: TOOLS.Bun },
+    { name: 'Figma', icon: TOOLS.Figma },
+    { name: 'Claude', icon: TOOLS.Anthropic },
+  ],
+};
 
 function StacksSection() {
   const { t } = useTranslation();

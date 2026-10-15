@@ -342,7 +342,7 @@ export const TOOLS = {
   Vercel: ({ className }: IconProps) => (
     <svg className={className} preserveAspectRatio="xMidYMid" viewBox="0 0 256 222">
       <title>Logo Vercel</title>
-      <path d="m128 0 128 221.705H0z" />
+      <path fill="currentColor" d="m128 0 128 221.705H0z" />
     </svg>
   ),
   Anthropic: ({ className }: IconProps) => (
@@ -353,7 +353,10 @@ export const TOOLS = {
       viewBox="0 0 24 24"
     >
       <title>Anthropic</title>
-      <path d="M13.827 3.52h3.603L24 20h-3.603l-6.57-16.48zm-7.258 0h3.767L16.906 20h-3.674l-1.343-3.461H5.017l-1.344 3.46H0L6.57 3.522zm4.132 9.959L8.453 7.687 6.205 13.48H10.7z" />
+      <path
+        fill="currentColor"
+        d="M13.827 3.52h3.603L24 20h-3.603l-6.57-16.48zm-7.258 0h3.767L16.906 20h-3.674l-1.343-3.461H5.017l-1.344 3.46H0L6.57 3.522zm4.132 9.959L8.453 7.687 6.205 13.48H10.7z"
+      />
     </svg>
   ),
   Linux: ({ className }: IconProps) => (
@@ -697,6 +700,197 @@ export const TOOLS = {
           transform="translate(10)"
         />
       </g>
+    </svg>
+  ),
+  Loki: ({ className }: IconProps) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlSpace="preserve"
+      viewBox="0 0 512 512"
+      className={className}
+    >
+      <linearGradient
+        id="a"
+        x1="485.057"
+        x2="485.057"
+        y1="-705.376"
+        y2="-74.565"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m139.6 464.9-40.8 6.3 6.3 40.8 40.8-6.3z" style={{ fill: 'url(#a)' }} />
+      <linearGradient
+        id="b"
+        x1="749.438"
+        x2="749.438"
+        y1="-705.376"
+        y2="-74.565"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="M286.9 418.6 467 390.9l-6.3-40.8-180.1 27.7z" style={{ fill: 'url(#b)' }} />
+      <linearGradient
+        id="c"
+        x1="614.329"
+        x2="614.329"
+        y1="-705.376"
+        y2="-74.565"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m216.7 387.6 6.3 40.8 40.8-6.2-6.3-40.9z" style={{ fill: 'url(#c)' }} />
+      <linearGradient
+        id="d"
+        x1="549.698"
+        x2="549.698"
+        y1="-705.376"
+        y2="-74.565"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m209.8 495.9-6.3-40.8-40.8 6.3 6.2 40.8z" style={{ fill: 'url(#d)' }} />
+      <linearGradient
+        id="e"
+        x1="485.065"
+        x2="485.065"
+        y1="-705.376"
+        y2="-74.565"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m95.2 448.1 40.8-6.3-6.2-40.8-40.8 6.3z" style={{ fill: 'url(#e)' }} />
+      <linearGradient
+        id="f"
+        x1="749.433"
+        x2="749.433"
+        y1="-705.376"
+        y2="-74.565"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m470.6 414-180.2 27.7 6.3 40.8 180.1-27.7z" style={{ fill: 'url(#f)' }} />
+      <linearGradient
+        id="g"
+        x1="614.338"
+        x2="614.338"
+        y1="-705.376"
+        y2="-74.565"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m226.6 451.5 6.2 40.8 40.8-6.2-6.2-40.9z" style={{ fill: 'url(#g)' }} />
+      <linearGradient
+        id="h"
+        x1="549.702"
+        x2="549.702"
+        y1="-705.376"
+        y2="-74.565"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m159.1 438.3 40.8-6.3-6.2-40.8-40.9 6.3z" style={{ fill: 'url(#h)' }} />
+      <linearGradient
+        id="i"
+        x1="473.159"
+        x2="473.159"
+        y1="-693.123"
+        y2="-94.853"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m85.4 384.2 17.2-2.6L52.4 55l-17.2 2.7z" style={{ fill: 'url(#i)' }} />
+      <linearGradient
+        id="j"
+        x1="497.114"
+        x2="497.114"
+        y1="-709.717"
+        y2="-67.381"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m109.1 380.6 17.2-2.7L72.4 27.3 55.2 30z" style={{ fill: 'url(#j)' }} />
+      <linearGradient
+        id="k"
+        x1="538.062"
+        x2="538.062"
+        y1="-724.295"
+        y2="-43.24"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m149.6 374.3 17.2-2.6L109.6 0 92.4 2.7z" style={{ fill: 'url(#k)' }} />
+      <linearGradient
+        id="l"
+        x1="562.005"
+        x2="562.005"
+        y1="-701.646"
+        y2="-80.743"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m173.2 370.7 17.3-2.7-52.2-338.8-17.2 2.6z" style={{ fill: 'url(#l)' }} />
+      <linearGradient
+        id="m"
+        x1="602.42"
+        x2="602.42"
+        y1="-675.539"
+        y2="-123.976"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m213.2 364.6 17.2-2.7-46.3-301-17.2 2.6z" style={{ fill: 'url(#m)' }} />
+      <linearGradient
+        id="n"
+        x1="626.396"
+        x2="626.396"
+        y1="-683.496"
+        y2="-110.797"
+        gradientTransform="scale(1 -1)rotate(8.748 -271.56 -2903.464)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" style={{ stopColor: '#faed1e' }} />
+        <stop offset="1" style={{ stopColor: '#f15b2b' }} />
+      </linearGradient>
+      <path d="m236.9 360.9 17.2-2.6L206 45.7l-17.2 2.6z" style={{ fill: 'url(#n)' }} />
     </svg>
   ),
 };

@@ -8,18 +8,17 @@
   },
   "dependencies": {
     "@portfolio-v0/shadcn": "workspace:*",
-    "@radix-ui/react-slot": "^1.2.4",
-    "class-variance-authority": "^0.7.1",
-    "lucide-react": "^1.27.0",
-    "motion": "^12.43.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "@radix-ui/react-slot": "catalog:",
+    "class-variance-authority": "catalog:",
+    "lucide-react": "catalog:",
+    "motion": "catalog:"
   },
   "devDependencies": {
     "@portfolio-v0/config": "workspace:*",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "typescript": "^6.0.3"
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
   },
   "registry": {
     "title": "Apple Button",

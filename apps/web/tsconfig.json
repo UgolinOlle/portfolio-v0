@@ -8,9 +8,20 @@
       "@portfolio-v0/shadcn/components/*": ["../../packages/shadcn/components/ui/*"],
       "@portfolio-v0/shadcn/hooks": ["../../packages/shadcn/hooks/index.ts"],
       "@portfolio-v0/shadcn/utils": ["../../packages/shadcn/lib/utils.ts"],
+      "@/components/ui/ugolin/*": [
+        "../../packages/ui/registry/components/core/avatars/*",
+        "../../packages/ui/registry/components/core/button/*",
+        "../../packages/ui/registry/components/core/headers/*",
+        "../../packages/ui/registry/components/core/input/*"
+      ],
+      "@/components/blocks/*": [
+        "../../packages/ui/registry/blocks/*",
+        "../../packages/ui/registry/templates/*"
+      ],
       "@/components/ui/*": ["../../packages/shadcn/components/ui/*"],
       "@/lib/utils": ["../../packages/shadcn/lib/utils.ts"],
       "@/hooks/*": ["../../packages/shadcn/hooks/*"],
+      "registry/*": ["../../packages/ui/registry/*"],
       "fumadocs-mdx:collections/*": [".source/*"]
     }
   },

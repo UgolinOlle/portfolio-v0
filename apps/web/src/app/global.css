@@ -3,6 +3,10 @@
 @import 'fumadocs-ui/css/preset.css';
 @import '@portfolio-v0/shadcn/styles';
 
+/* Sources du registry (@ugolin-olle/ui) : hors de l'app, Tailwind ne les analyse pas tout seul. */
+@source '../../../../packages/ui/registry';
+@source '../../../../packages/ui/examples';
+
 /* Layout tokens for the /ui registry shell (navbar, sidebar, TOC, content measure). */
 :root {
   --nav-height: 3.5rem;

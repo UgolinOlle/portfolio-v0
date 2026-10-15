@@ -1,7 +1,7 @@
 import { WEBSITE_URL } from '~/lib/constants';
 import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
-import registryConfig from '../../registry.json';
+import registryConfig from '../../../../packages/ui/registry.json';
 
 export type RegistryCategory = 'component' | 'block' | 'template';
 
@@ -49,14 +49,14 @@ export type RegistryExample = {
   description?: string;
 };
 
-// `registry.json` est la source de vérité shadcn (cf. `pnpm registry:build`). Un item de doc ne
+// `registry.json` est la source de vérité shadcn (cf. `bun run registry:build`). Un item de doc ne
 // référence un item de registry que via son champ `preview` (même nom que dans registry.json) :
 // c'est ce qui permet d'exposer ses vraies dépendances, sans dupliquer l'info dans le frontmatter.
 const registryItemsByName = new Map<string, RegistryConfigItem>(
   (registryConfig.items as RegistryConfigItem[]).map((item) => [item.name, item]),
 );
 
-// Un composant peut avoir plusieurs exemples (`registry:example`) : chacun se rattache à son
+// Un composant peut avoir plusieurs exemples (items portant `meta.example`) : chacun se rattache à son
 // composant parent via `meta.example.of`, ordonnés par `meta.example.order`. Ajouter un exemple
 // se fait uniquement en éditant `registry.json` + son fichier dans `examples/` — aucune page ni
 // composant ne référence de nom de composant en dur.
@@ -64,7 +64,7 @@ export const getRegistryExamples = (componentName: string): RegistryExample[] =>
   (registryConfig.items as RegistryConfigItem[])
     .filter(
       (item): item is RegistryConfigItem & { meta: { example: { of: string; order?: number } } } =>
-        item.type === 'registry:example' && item.meta?.example?.of === componentName,
+        item.meta?.example?.of === componentName,
     )
     .sort((a, b) => (a.meta.example.order ?? 0) - (b.meta.example.order ?? 0))
     .map((item) => ({
@@ -181,6 +181,41 @@ export const getRegistryInstallCommands = (name: string): Record<PackageManager,
     ]),
   ) as Record<PackageManager, string>;
 
+// Second canal de distribution : le package npm compilé depuis les mêmes sources (packages/ui).
+export const NPM_PACKAGE_NAME = '@ugolin-olle/ui';
+
+const PACKAGE_INSTALLERS: Record<PackageManager, string> = {
+  pnpm: 'pnpm add',
+  npm: 'npm install',
+  bun: 'bun add',
+  yarn: 'yarn add',
+};
+
+export const getPackageInstallCommands = (): Record<PackageManager, string> =>
+  Object.fromEntries(
+    PACKAGE_MANAGERS.map((manager) => [
+      manager,
+      `${PACKAGE_INSTALLERS[manager]} ${NPM_PACKAGE_NAME}`,
+    ]),
+  ) as Record<PackageManager, string>;
+
+// Snippet d'import npm de l'item : les exports (hors types) sont lus dans son fichier d'entrée,
+// le premier du manifest — le même que le point d'entrée `@ugolin-olle/ui/<name>` (tsup.config.ts).
+export const getPackageUsageSnippet = (name: string, entrySource: string): string => {
+  const exports = [
+    ...entrySource.matchAll(/^export (?:async )?(?:function|const|class) (\w+)/gm),
+  ].map((match) => match[1]);
+
+  return [
+    '/* globals.css */',
+    "/* @import 'tailwindcss'; */",
+    `/* @import '${NPM_PACKAGE_NAME}/styles.css'; */`,
+    '',
+    `import { ${exports.join(', ')} } from '${NPM_PACKAGE_NAME}/${name}';`,
+    '',
+  ].join('\n');
+};
+
 // Une dépendance est soit un item de ce registry (lien vers sa page de doc, retrouvée via son
 // champ `preview`), soit un composant shadcn/ui (lien vers sa doc officielle).
 export const getRegistryDependencyHref = (name: string): { href: string; external: boolean } => {
@@ -194,7 +229,7 @@ export const getRegistryDependencyHref = (name: string): { href: string; externa
 };
 
 // Convention d'authoring du registry : tout item `<name>` destiné à une page de doc doit avoir un
-// item jumeau `<name>-demo` (type `registry:example`, cf. registry.json) qui contient le code
+// item jumeau `<name>-demo` (portant `meta.example`, cf. registry.json) qui contient le code
 // d'usage affiché sous la preview. C'est ce lien par convention qui rend la doc générique : ajouter
 // un nouvel item + son `-demo` suffit à lui faire bénéficier de la page de détail, sans code dédié.
 export const getRegistryDemoName = (name: string): string => `${name}-demo`;

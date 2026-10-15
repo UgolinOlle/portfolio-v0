@@ -1,4 +1,4 @@
-import { Button } from '@portfolio-v0/shadcn/components/button';
+import { Button } from '@/components/ui/button';
 
 function CtaSimple() {
   return (

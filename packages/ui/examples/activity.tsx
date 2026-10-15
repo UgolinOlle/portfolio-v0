@@ -1,7 +1,7 @@
 'use client';
 
-import { Activity } from 'registry/blocks/activity/activity';
-import type { ActivityDataPoint } from 'registry/blocks/activity/types';
+import { Activity } from '@/components/blocks/activity/activity';
+import type { ActivityDataPoint } from '@/components/blocks/activity/types';
 
 function mulberry32(seed: number) {
   return function random() {

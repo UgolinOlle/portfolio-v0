@@ -1,5 +1,6 @@
 import { Download, Plus } from 'lucide-react';
-import { Button } from 'registry/components/core/button/button';
+
+import { Button } from '@/components/ui/ugolin/button';
 
 function ButtonExample() {
   return (

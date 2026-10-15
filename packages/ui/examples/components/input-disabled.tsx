@@ -1,6 +1,6 @@
 'use client';
 
-import { Input } from 'registry/components/core/input/input';
+import { Input } from '@/components/ui/ugolin/input';
 
 export default function Demo() {
   return (

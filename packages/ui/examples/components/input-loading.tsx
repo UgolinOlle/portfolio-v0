@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Input } from 'registry/components/core/input/input';
+
+import { Input } from '@/components/ui/ugolin/input';
 
 export default function Demo() {
   const [value, setValue] = useState('Searching…');

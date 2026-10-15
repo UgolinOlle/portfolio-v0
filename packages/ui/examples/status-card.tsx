@@ -1,3 +1,5 @@
+'use client';
+
 import { Check, ChevronRight, LoaderCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
@@ -15,7 +17,7 @@ const files = [
   'lib/utils.ts',
 ];
 
-export function StatusCard() {
+export default function StatusCardExample() {
   const [status, setStatus] = useState<'building' | 'success'>('building');
   const [progress, setProgress] = useState(25);
   const [openFiles, setOpenFiles] = useState(false);

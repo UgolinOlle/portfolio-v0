@@ -33,7 +33,7 @@
     "check": "oxlint && oxfmt --write",
     "format": "oxfmt --write",
     "prepare": "husky",
-    "bump-deps": "bunx npm-check-updates --deep -u -x shiki,next,recharts,require-in-the-middle && bun install",
+    "bump-deps": "bunx npm-check-updates --deep -u -x shiki,next,recharts,require-in-the-middle && node scripts/bump-catalog.mjs && bun install",
     "bump-ui": "bunx shadcn@latest add --all --overwrite -c packages/shadcn && bunx shadcn@latest migrate base-ui -c packages/shadcn",
     "clean": "turbo clean && git clean -xdf node_modules .cache .turbo dist",
     "lint": "oxlint"

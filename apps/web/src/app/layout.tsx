@@ -8,6 +8,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
 
 import { Providers } from '~/components/core/providers';
+import { SmoothScroll } from '~/components/ui/smooth-scroll';
 import { defaultMetadata, defaultViewport } from '~/lib/metadata';
 
 export const metadata: Metadata = defaultMetadata;
@@ -31,7 +32,9 @@ export default function AppLayout({ children }: LayoutProps) {
   return (
     <html lang="fr" className={cn(geistSans.variable, geistMono.variable)} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
-        <Providers>{children}</Providers>
+        <SmoothScroll>
+          <Providers>{children}</Providers>
+        </SmoothScroll>
         <Analytics />
         <SpeedInsights />
       </body>

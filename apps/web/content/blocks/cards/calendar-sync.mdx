@@ -1,11 +1,17 @@
 ---
 title: Calendar Sync
 icon: Calendar
-description: Une action de synchronisation d'événement calendrier avec un cycle animé.
+description: Une carte d'événement avec tuile de date et action de synchronisation animée.
 preview: calendar-sync
-previewWidth: 260
+previewWidth: 520
 ---
 
-Un Block compact combinant une icône `Calendar` et un bouton animé via `motion/react`, qui
-enchaîne automatiquement les états idle, loading (barre de progression) et success (`Check`)
-avant de revenir à son état initial.
+Une carte d'événement autonome : une tuile de date, le titre de l'événement et un bouton de
+synchronisation. Le cycle `idle` → `loading` → `success` est géré en interne (ou piloté via `state`
+et `onStateChange`) : un filet de progression se remplit le long du bord pendant `syncDuration`,
+puis la carte passe au vert, la tuile reçoit un check dessiné et le bouton devient « Ajouté »
+avant de revenir à l'état initial.
+
+Le bouton garde une largeur fixe, donc rien ne bouge pendant les transitions. Un seul accent
+(émeraude) est réservé au succès. Avec `prefers-reduced-motion`, les glissements et pulsations sont
+retirés ; seuls les fondus et la progression restent.

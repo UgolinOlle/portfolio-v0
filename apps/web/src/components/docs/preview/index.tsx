@@ -30,7 +30,7 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
       fullPage={isFullPage}
       preview={
         isFullPage ? (
-          <div className="w-full p-6 sm:p-10">
+          <div className="flex w-full items-center-safe justify-center p-6 sm:p-10">
             <Component />
           </div>
         ) : (

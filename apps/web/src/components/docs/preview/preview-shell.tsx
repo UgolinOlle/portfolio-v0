@@ -136,7 +136,7 @@ export const PreviewShell = ({ preview, code, fullPage, className }: PreviewShel
         className={cn(
           'flex items-center-safe justify-center',
           fullPage ? 'max-h-192 min-h-80 overflow-auto' : 'h-128 overflow-hidden',
-          '[:fullscreen_&]:h-auto [:fullscreen_&]:flex-1',
+          'in-[:fullscreen]:h-auto in-[:fullscreen]:flex-1',
         )}
         hidden={tab !== 'preview'}
         id={`${id}-preview`}
@@ -150,7 +150,7 @@ export const PreviewShell = ({ preview, code, fullPage, className }: PreviewShel
 
       <div
         aria-labelledby={`${id}-code-tab`}
-        className="h-128 overflow-hidden [:fullscreen_&]:h-auto [:fullscreen_&]:flex-1"
+        className="h-128 overflow-hidden in-[:fullscreen]:h-auto in-[:fullscreen]:flex-1"
         hidden={tab !== 'code'}
         id={`${id}-code`}
         role="tabpanel"

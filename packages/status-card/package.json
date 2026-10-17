@@ -2,13 +2,11 @@
   "name": "@portfolio-v0/status-card",
   "version": "0.0.0",
   "private": true,
-  "description": "A compact card that pairs a status badge with a short message.",
+  "description": "A deploy status card with a big live counter, a segmented meter and a build log.",
   "scripts": {
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@portfolio-v0/shadcn": "workspace:*",
-    "lucide-react": "catalog:",
     "motion": "catalog:"
   },
   "devDependencies": {

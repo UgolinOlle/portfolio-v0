@@ -1,0 +1,21 @@
+---
+title: Command Search
+icon: MagnifyingGlass
+description: Une recherche de commande en ligne avec onglets, filtres en direct et navigation au clavier.
+preview: command-search
+previewWidth: 760
+---
+
+Un champ de recherche et son panneau de résultats, en une seule pièce : des onglets (Tout, Chats,
+Agents, Documents), des résultats groupés par type, des agents suggérés en grille et une colonne de
+filtres (dernière mise à jour, type, statut, propriétaire). La saisie filtre en direct, sans accent
+ni casse, et surligne les correspondances.
+
+Les flèches haut et bas parcourent les résultats dans l'ordre visuel, `Entrée` appelle `onSelect`,
+`Échap` vide le champ puis appelle `onQuit`. La pastille des onglets et celle de la période glissent
+d'un choix à l'autre, les lignes entrent en cascade au premier rendu, et la hauteur du panneau suit
+son contenu pour que la page ne saute jamais quand on filtre.
+
+Les données viennent de la prop `items` (type, icône, ton, ancienneté, statut) et tous les libellés
+sont personnalisables via `labels`. Avec `prefers-reduced-motion`, les glissements et les
+déplacements de mise en page sont retirés ; seuls les fondus restent.

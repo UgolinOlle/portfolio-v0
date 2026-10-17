@@ -1,10 +1,15 @@
 ---
 title: Status Card
 icon: Gauge
-description: Une carte compacte affichant un statut avec un badge.
+description: Une carte de statut de déploiement avec compteur, jauge segmentée et journal de build.
 preview: status-card
 previewWidth: 520
 ---
 
-Une carte minimale combinant `Card` et `Badge` de `@portfolio-v0/shadcn` pour afficher un état
-(déploiement, service, tâche...) avec un horodatage.
+Une carte autonome qui suit un déploiement : un grand compteur en chiffres tabulaires, une jauge
+segmentée qui s'allume cellule par cellule, et un journal des fichiers compilés. À la fin du build,
+la jauge passe au vert d'un balayage de gauche à droite et le journal laisse place à un résumé
+(fichiers, poids, erreurs). Un bouton permet de relancer la démo.
+
+Un seul accent (émeraude) est réservé au succès. Avec `prefers-reduced-motion`, les pulsations, le
+balayage et les glissements sont retirés ; seuls les fondus et la progression restent.

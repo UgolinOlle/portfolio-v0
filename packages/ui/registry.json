@@ -511,8 +511,8 @@
       "name": "calendar-sync",
       "type": "registry:block",
       "title": "Calendar Sync",
-      "description": "A compact calendar sync action with an animated idle, loading and success cycle.",
-      "dependencies": ["lucide-react", "motion"],
+      "description": "A calendar event card with a date tile and a sync action that cycles through idle, loading and success.",
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "../calendar-sync/index.tsx",
@@ -537,6 +537,62 @@
       "meta": {
         "example": {
           "of": "calendar-sync",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "command-search",
+      "type": "registry:block",
+      "title": "Command Search",
+      "description": "An inline command search with tabs, live filters, highlighted matches and keyboard navigation.",
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["checkbox", "kbd"],
+      "files": [
+        {
+          "path": "../command-search/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/command-search/index.tsx"
+        },
+        {
+          "path": "../command-search/search-filters.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/command-search/search-filters.tsx"
+        },
+        {
+          "path": "../command-search/search-row.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/command-search/search-row.tsx"
+        },
+        {
+          "path": "../command-search/types.ts",
+          "type": "registry:component",
+          "target": "components/blocks/command-search/types.ts"
+        },
+        {
+          "path": "../command-search/utils.ts",
+          "type": "registry:component",
+          "target": "components/blocks/command-search/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "command-search-demo",
+      "type": "registry:item",
+      "title": "Command Search Demo",
+      "description": "Usage example for the Command Search block.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["https://ugolin-olle.com/r/command-search.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/command-search.tsx",
+          "type": "registry:component",
+          "target": "components/examples/command-search.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "command-search",
           "order": 0
         }
       }
@@ -579,9 +635,8 @@
       "name": "status-card",
       "type": "registry:block",
       "title": "Status Card",
-      "description": "A compact card that pairs a status badge with a short message.",
-      "dependencies": ["lucide-react", "motion"],
-      "registryDependencies": ["badge", "card"],
+      "description": "A deploy status card with a big live counter, a segmented meter and a build log.",
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "../status-card/index.tsx",
@@ -595,8 +650,8 @@
       "type": "registry:item",
       "title": "Status Card Demo",
       "description": "Usage example for the Status Card block.",
-      "dependencies": ["lucide-react", "motion"],
-      "registryDependencies": ["badge", "card", "https://ugolin-olle.com/r/status-card.json"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://ugolin-olle.com/r/status-card.json"],
       "files": [
         {
           "path": "../../apps/web/examples/status-card.tsx",

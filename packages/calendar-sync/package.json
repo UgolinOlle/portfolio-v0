@@ -2,13 +2,11 @@
   "name": "@portfolio-v0/calendar-sync",
   "version": "0.0.0",
   "private": true,
-  "description": "A compact calendar sync action with an animated idle, loading and success cycle.",
+  "description": "A calendar event card with a date tile and a sync action that cycles through idle, loading and success.",
   "scripts": {
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@portfolio-v0/shadcn": "workspace:*",
-    "lucide-react": "catalog:",
     "motion": "catalog:"
   },
   "devDependencies": {

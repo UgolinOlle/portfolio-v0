@@ -1,0 +1,25 @@
+{
+  "name": "@portfolio-v0/command-search",
+  "version": "0.0.0",
+  "private": true,
+  "description": "An inline command search with tabs, live filters, highlighted matches and keyboard navigation.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "lucide-react": "catalog:",
+    "motion": "catalog:"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "registry": {
+    "title": "Command Search",
+    "type": "block"
+  }
+}

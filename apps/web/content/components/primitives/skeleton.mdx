@@ -1,0 +1,29 @@
+---
+title: Skeleton
+icon: Placeholder
+description: Des blocs de remplacement pendant un chargement, et un spinner.
+---
+
+<PrimitivePreview name="skeleton" />
+
+## Animation
+
+La pulsation (opacité) et le spinner (0,8 s) passent à un état statique ou plus doux sous `prefers-reduced-motion`.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add skeleton
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Skeleton } from '@whoa-studio/ui/skeleton';
+```
+
+Exports : `Skeleton, Spinner`.

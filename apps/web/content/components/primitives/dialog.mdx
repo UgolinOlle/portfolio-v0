@@ -1,0 +1,29 @@
+---
+title: Dialog
+icon: Browser
+description: Une modale pour un formulaire ou un contenu ciblé.
+---
+
+<PrimitivePreview name="dialog" />
+
+## Animation
+
+Le fond s'estompe en 180 ms ; la modale reste centrée, part de `scale(0.96)` et dure 240 ms (180 ms en sortie). C'est une transition CSS : ouvrir puis fermer rapidement repart de la valeur courante au lieu de revenir à zéro.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add dialog
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Dialog } from '@whoa-studio/ui/dialog';
+```
+
+Exports : `Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription`.

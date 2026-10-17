@@ -22,6 +22,7 @@ import type { blocksSource, componentsSource, templatesSource } from '~/lib/sour
 
 import { RegistryInstall } from './install';
 import { Preview } from './preview';
+import { PrimitivePreview } from './preview/primitive-preview';
 
 type RegistrySource = typeof componentsSource | typeof blocksSource | typeof templatesSource;
 
@@ -173,6 +174,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
           components={{
             ...defaultMdxComponents,
             Preview,
+            PrimitivePreview,
           }}
         />
       </DocsBody>

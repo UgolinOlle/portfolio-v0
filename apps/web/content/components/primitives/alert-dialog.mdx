@@ -1,0 +1,29 @@
+---
+title: Alert Dialog
+icon: WarningOctagon
+description: Une modale qui demande une confirmation avant une action destructive.
+---
+
+<PrimitivePreview name="alert-dialog" />
+
+## Animation
+
+Le fond s'estompe en 180 ms ; la modale reste centrée, part de `scale(0.96)` et dure 240 ms (180 ms en sortie).
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add alert-dialog
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { AlertDialog } from '@whoa-studio/ui/alert-dialog';
+```
+
+Exports : `AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel`.

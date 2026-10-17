@@ -1,0 +1,33 @@
+{
+  "title": "Primitives",
+  "icon": "Cube",
+  "pages": [
+    "accordion",
+    "alert",
+    "alert-dialog",
+    "avatar",
+    "button",
+    "checkbox",
+    "collapsible",
+    "combobox",
+    "context-menu",
+    "dialog",
+    "dropdown-menu",
+    "empty",
+    "field",
+    "hover-card",
+    "input-otp",
+    "menubar",
+    "navigation-menu",
+    "popover",
+    "progress",
+    "radio-group",
+    "select",
+    "sheet",
+    "skeleton",
+    "switch",
+    "tabs",
+    "toggle",
+    "tooltip"
+  ]
+}

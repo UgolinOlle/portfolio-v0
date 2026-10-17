@@ -1,0 +1,29 @@
+---
+title: Dropdown Menu
+icon: DotsThree
+description: Un menu d’actions ouvert depuis un bouton.
+---
+
+<PrimitivePreview name="dropdown-menu" />
+
+## Animation
+
+Le menu grandit depuis son déclencheur en 180 ms (120 ms en sortie). La navigation au clavier entre les items est instantanée.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add dropdown-menu
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { DropdownMenu } from '@whoa-studio/ui/dropdown-menu';
+```
+
+Exports : `DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator`.

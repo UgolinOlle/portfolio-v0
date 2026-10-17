@@ -47,6 +47,10 @@ Registry item packages today: `activity`, `avatars`, `blog`, `button`, `button-a
 
 `apps/web` runs `registry:build` before `dev` and `build` (`predev` / `prebuild`).
 
+**Primitive docs pages**
+
+The shadcn primitives (`packages/shadcn/components/ui`) are not registry items, so their pages in `apps/web/content/components/primitives/<name>.mdx` have no `preview` frontmatter. They embed `<PrimitivePreview name="<name>" />`, which imports `apps/web/examples/primitives/<name>.tsx` and shows that file as the code tab. Demos import from `@/components/ui/<name>`. Add a page to the folder's `meta.json` to list it.
+
 **Content → pages**
 
 `source.config.ts` defines five Fumadocs collections; `src/lib/source.ts` turns each into a `loader` (`/ui/components`, `/ui/blocks`, `/ui/templates`, `/projects`, `/writings`). Projects and writings are i18n'd: `<name>.mdx` is French (default), `<name>.en.mdx` is English, served on the same path with `?lang=en` (see `getPageLocales` / `resolvePageLocale`).

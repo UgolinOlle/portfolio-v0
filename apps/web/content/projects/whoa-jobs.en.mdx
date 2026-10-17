@@ -9,20 +9,13 @@ links:
 
 {/* 🖼️ PLACEHOLDER — Project logo (~96px) */}
 
-<img src="/assets/projects/whoa-jobs/logo.png" width="96" alt="Whoa Jobs" />
+<img src="/assets/projects/whoa-jobs.png" width="96" alt="Whoa Jobs" />
 
 <h3 align="center">Every job offer, one dashboard.</h3>
 
 A full-stack platform that collects work-study and full-time job postings from several job boards, deduplicates them and lets you track and apply from a single place.
 
-<a href="https://github.com/WhoaStudio/whoa-jobs">GitHub</a>·<a href="#features">Features</a>·
-<a href="#architecture">Architecture</a>
-
-<br />
-
-{/* 🖼️ PLACEHOLDER — Hero image: dashboard "Jobs" page, wide (~1800px) */}
-
-<img src="/assets/projects/whoa-jobs/hero.png" width="900" alt="Whoa Jobs preview" />
+<a href="#features">Features</a> · <a href="#architecture">Architecture</a>
 
 ---
 
@@ -38,13 +31,6 @@ A Python ingestion engine collects postings in the background, an API normalizes
 
 {/* 🎬 PLACEHOLDER — Main demo video (30–90 s): sign in → job list → filters → auto-apply */}
 
-<video
-  src="/assets/projects/whoa-jobs/demo.mp4"
-  poster="/assets/projects/whoa-jobs/demo-thumbnail.png"
-  controls
-  className="w-full rounded-lg border"
-/>
-
 ---
 
 ## ✨ Features
@@ -55,9 +41,16 @@ Every source in a single list, with search and filters by source, location, cont
 
 When the same offer appears on several sites, it is **grouped across sources** instead of showing up three times.
 
-{/* 🖼️ PLACEHOLDER — Screenshot: job list with filters */}
-
-<img src="/assets/projects/whoa-jobs/jobs.png" width="700" alt="Job list" />
+<Screenshots
+  items={[
+    {
+      light: '/assets/projects/whoa-jobs/app-light/04-jobs.png',
+      dark: '/assets/projects/whoa-jobs/app-dark/04-jobs.png',
+      alt: 'Job list',
+      caption: 'Unified feed · search & filters',
+    },
+  ]}
+/>
 
 ---
 
@@ -65,9 +58,16 @@ When the same offer appears on several sites, it is **grouped across sources** i
 
 Upload your CV and cover letter once. They are stored in a private bucket and previewed directly in the sidebar (PDF and DOCX).
 
-{/* 🖼️ PLACEHOLDER — Screenshot: Documents sidebar with CV preview */}
-
-<img src="/assets/projects/whoa-jobs/documents.png" width="700" alt="Documents" />
+<Screenshots
+  items={[
+    {
+      light: '/assets/projects/whoa-jobs/app-light/05-documents.png',
+      dark: '/assets/projects/whoa-jobs/app-dark/05-documents.png',
+      alt: 'Documents',
+      caption: 'Documents · CV & cover letter',
+    },
+  ]}
+/>
 
 ---
 
@@ -76,8 +76,6 @@ Upload your CV and cover letter once. They are stored in a private bucket and pr
 One click resolves where the offer takes applications, checks your documents and sends them — with an atomic guard so the same application can never be sent twice, and retry on failure.
 
 {/* 🎬 PLACEHOLDER — Short GIF (≤ 15 s): click on "Auto-apply" and the status changing */}
-
-<img src="/assets/projects/whoa-jobs/auto-apply.gif" width="700" alt="Auto-apply" />
 
 ---
 
@@ -102,53 +100,85 @@ Super admins get a full control room for the ingestion engine:
 - **Cron jobs & logs** — schedules and events backed by real engine data
 - **Audit, impersonation & broadcast** — every sensitive action traced, "view as" a user, notify everyone
 
-{/* 🖼️ PLACEHOLDER — Screenshot: Admin → Engine → Overview (Live ops) */}
-
-<img src="/assets/projects/whoa-jobs/engine-overview.png" width="700" alt="Engine live ops" />
+<Screenshots
+  items={[
+    {
+      light: '/assets/projects/whoa-jobs/app-light/02-system-status.png',
+      dark: '/assets/projects/whoa-jobs/app-dark/02-system-status.png',
+      alt: 'System status',
+      caption: 'Control room · system status',
+    },
+  ]}
+/>
 
 {/* 🎬 PLACEHOLDER — Short GIF: enable a driver, "Run now", queues filling up in Live ops */}
 
-<img
-  src="/assets/projects/whoa-jobs/engine-run-now.gif"
-  width="700"
-  alt="Run now from the dashboard"
+<Screenshots
+  items={[
+    {
+      light: '/assets/projects/whoa-jobs/engine-run-now.gif',
+      dark: '/assets/projects/whoa-jobs/engine-run-now.gif',
+      alt: 'Run now from the dashboard',
+      caption: 'Run now from the dashboard',
+    },
+  ]}
 />
 
 ---
 
 ## 🧱 Architecture
 
-```text
- Job boards ── polite HTTP ──►  Engine (Python)
- LinkedIn · Indeed · HelloWork    ├── Orchestrator : scheduler + autoscaling
-                                  └── Workers × N : fetch → parse → upsert
-                                          │
-                              Redis (BullMQ queues)
-                                          │
-                                          ▼
-                        Postgres (Supabase) ◄──── NOTIFY engine_control
-                                 ▲                       │
-                                 │                       │
-                   API — NestJS + tRPC ──────────────────┘
-                                 ▲
-                                 │ tRPC / SSE
-                    Dashboard — TanStack Start
+```mermaid
+flowchart TD
+    Boards["Job boards<br/>LinkedIn · Indeed · HelloWork"]
+    subgraph Engine["Engine (Python)"]
+        Orch["Orchestrator<br/>scheduler + autoscaling"]
+        Workers["Workers × N<br/>fetch → parse → upsert"]
+        Orch --> Workers
+    end
+    Redis[("Redis<br/>BullMQ queues")]
+    DB[("Postgres (Supabase)")]
+    API["API — NestJS + tRPC"]
+    Dash["Dashboard — TanStack Start"]
+
+    Engine -- "polite HTTP" --> Boards
+    Workers --> Redis
+    Workers --> DB
+    API -- "NOTIFY engine_control" --> DB
+    DB -. "NOTIFY engine_control" .-> Orch
+    Dash -- "tRPC / SSE" --> API
+    API --> DB
 ```
 
 The project is an **Nx monorepo** mixing TypeScript (Bun) and Python (uv):
 
-```text
-apps/
-  dashboard/   TanStack Start front end
-  server/      NestJS API
-  engine/      Python ingestion engine
-  fumadocs/    User documentation
-packages/
-  api/         tRPC routers, middlewares, business logic
-  auth/        Better Auth configuration
-  db/          Prisma schema & migrations
-  ui/          Shared shadcn/ui components
-```
+<Files>
+  <Folder name="whoa-jobs" defaultOpen>
+    <Folder name="apps" defaultOpen>
+      <File name="dashboard/ — TanStack Start front end (port 3001)" />
+      <File name="server/ — NestJS API serving packages/api (port 3000)" />
+      <File name="cockpit/ — Separate platform-operations UI (port 3003 in dev)" />
+      <File name="cockpit-api/ — Cockpit auth and operations API (port 3002 in dev)" />
+      <File name="engine/ — Python ingestion engine (BullMQ + Redis)" />
+      <File name="fumadocs/ — Product docs, releases and content APIs (port 4000)" />
+    </Folder>
+    <Folder name="packages" defaultOpen>
+      <File name="api/ — tRPC routers, middlewares, Zod schemas, business logic" />
+      <File name="auth/ — Better Auth configuration" />
+      <File name="db/ — Prisma schema, migrations, seeds, Supabase config" />
+      <File name="shared/ — Shared contracts and server utilities" />
+      <File name="ui/ — Shared shadcn/ui components + global styles" />
+      <File name="config/ — Shared base tsconfig" />
+    </Folder>
+    <Folder name="deploy/cockpit/">
+      <File name="Cockpit proxy, Redis ACL and verification" />
+    </Folder>
+    <File name="docker-compose.yml — User-facing app, Redis and engine" />
+    <File name="docker-compose.cockpit.yml — Hardened Cockpit, engine and tunnel stack" />
+    <File name="docker-compose.local.yml — Optional Caddy proxy (HTTPS on *.whoa-jobs.localtest.me)" />
+    <File name="Caddyfile" />
+  </Folder>
+</Files>
 
 ---
 
@@ -163,22 +193,70 @@ The most interesting part of the project. It is a **horizontally scalable** coll
 - **Raw pages kept** — parsers can be re-run on everything already downloaded without a single network request.
 - **Live configuration** — runtime settings validated against a single JSON spec on both sides (API and engine), reloaded through Postgres `NOTIFY`.
 
-{/* 🖼️ PLACEHOLDER — Terminal screenshot: `uv run engine status` */}
-
-<img src="/assets/projects/whoa-jobs/engine-cli.png" width="700" alt="Engine CLI" />
-
 ---
 
 ## 🛠️ Tech stack
 
-| Layer     | Technologies                                                          |
-| --------- | --------------------------------------------------------------------- |
-| Front end | TanStack Start, React 19, Tailwind CSS 4, shadcn/ui, Motion, Recharts |
-| API       | NestJS 11, tRPC 11, Zod 4                                             |
-| Auth      | Better Auth (organizations, teams, admin, impersonation)              |
-| Data      | PostgreSQL (Supabase), Prisma, Supabase Storage                       |
-| Engine    | Python 3.12, BullMQ, Redis, httpx, SQLAlchemy, BeautifulSoup, Typer   |
-| Tooling   | Nx, Bun, uv, Varlock, Oxlint, Oxfmt, pytest, mypy, Docker             |
+<TechStack
+  groups={[
+    { layer: 'Monorepo', items: ['Nx 23', 'Bun 1.4 (workspaces + catalog)', 'uv (Python)'] },
+    {
+      layer: 'Dashboard',
+      items: [
+        'TanStack Start',
+        'TanStack Router',
+        'TanStack Query',
+        'TanStack Form',
+        'TanStack Table',
+        'React 19',
+        'Tailwind CSS 4',
+        'shadcn/ui',
+        'Motion',
+        'Recharts',
+      ],
+    },
+    { layer: 'API', items: ['NestJS 11', 'tRPC 11 (nestjs-trpc)', 'Zod 4', 'evlog'] },
+    {
+      layer: 'Cockpit',
+      items: ['TanStack Start (front end)', 'NestJS + tRPC API', 'Platform operations'],
+    },
+    {
+      layer: 'Auth',
+      items: ['Better Auth', 'Organizations', 'Teams', 'Admin', 'Impersonation'],
+    },
+    {
+      layer: 'Database',
+      items: ['PostgreSQL (Supabase)', 'Prisma (multi-file schema)', 'public & engine schemas'],
+    },
+    { layer: 'Storage', items: ['Supabase Storage', 'Private user-documents bucket'] },
+    {
+      layer: 'Ingestion engine',
+      items: [
+        'Python 3.12',
+        'BullMQ',
+        'Redis',
+        'httpx',
+        'SQLAlchemy (async)',
+        'BeautifulSoup / lxml',
+        'Typer',
+        'Pydantic',
+      ],
+    },
+    { layer: 'Documentation', items: ['Fumadocs (Next.js)'] },
+    {
+      layer: 'Quality',
+      items: [
+        'Oxlint + Oxfmt',
+        'Husky + lint-staged',
+        'Jest / bun test',
+        'pytest',
+        'Ruff',
+        'mypy (strict)',
+      ],
+    },
+    { layer: 'Config', items: ['Varlock', 'Typed .env.schema → src/env.ts'] },
+  ]}
+/>
 
 ---
 
@@ -193,13 +271,34 @@ The most interesting part of the project. It is a **horizontally scalable** coll
 
 ## 📸 Screenshots
 
-{/* 🖼️ PLACEHOLDER — 4 extra screenshots (settings, workspace, logs, notifications…) */}
-
-<img src="/assets/projects/whoa-jobs/screenshot-01.png" width="48%" alt="Whoa Jobs screenshot" />
-<img src="/assets/projects/whoa-jobs/screenshot-02.png" width="48%" alt="Whoa Jobs screenshot" />
-
-<img src="/assets/projects/whoa-jobs/screenshot-03.png" width="48%" alt="Whoa Jobs screenshot" />
-<img src="/assets/projects/whoa-jobs/screenshot-04.png" width="48%" alt="Whoa Jobs screenshot" />
+<Screenshots
+  items={[
+    {
+      light: '/assets/projects/whoa-jobs/app-light/07-workspace-branding.png',
+      dark: '/assets/projects/whoa-jobs/app-dark/07-workspace-branding.png',
+      alt: 'Workspace branding',
+      caption: 'Workspace · branding',
+    },
+    {
+      light: '/assets/projects/whoa-jobs/app-light/08-workspace-team.png',
+      dark: '/assets/projects/whoa-jobs/app-dark/08-workspace-team.png',
+      alt: 'Workspace team',
+      caption: 'Teams & roles',
+    },
+    {
+      light: '/assets/projects/whoa-jobs/app-light/13-settings-pipeline.png',
+      dark: '/assets/projects/whoa-jobs/app-dark/13-settings-pipeline.png',
+      alt: 'Collection pipeline settings',
+      caption: 'Pipeline settings',
+    },
+    {
+      light: '/assets/projects/whoa-jobs/app-light/14-notifications.png',
+      dark: '/assets/projects/whoa-jobs/app-dark/14-notifications.png',
+      alt: 'Real-time notifications',
+      caption: 'Notifications',
+    },
+  ]}
+/>
 
 ---
 
@@ -214,9 +313,3 @@ The most interesting part of the project. It is a **horizontally scalable** coll
 - [ ] Email sync to track replies
 - [ ] More job boards
 - [ ] Kubernetes autoscaling (KEDA)
-
----
-
-## 🌐 Links
-
-- **Source code:** https://github.com/WhoaStudio/whoa-jobs

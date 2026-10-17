@@ -181,41 +181,6 @@ export const getRegistryInstallCommands = (name: string): Record<PackageManager,
     ]),
   ) as Record<PackageManager, string>;
 
-// Second canal de distribution : le package npm compilé depuis les mêmes sources (packages/ui).
-export const NPM_PACKAGE_NAME = '@ugolin-olle/ui';
-
-const PACKAGE_INSTALLERS: Record<PackageManager, string> = {
-  pnpm: 'pnpm add',
-  npm: 'npm install',
-  bun: 'bun add',
-  yarn: 'yarn add',
-};
-
-export const getPackageInstallCommands = (): Record<PackageManager, string> =>
-  Object.fromEntries(
-    PACKAGE_MANAGERS.map((manager) => [
-      manager,
-      `${PACKAGE_INSTALLERS[manager]} ${NPM_PACKAGE_NAME}`,
-    ]),
-  ) as Record<PackageManager, string>;
-
-// Snippet d'import npm de l'item : les exports (hors types) sont lus dans son fichier d'entrée,
-// le premier du manifest — le même que le point d'entrée `@ugolin-olle/ui/<name>` (tsup.config.ts).
-export const getPackageUsageSnippet = (name: string, entrySource: string): string => {
-  const exports = [
-    ...entrySource.matchAll(/^export (?:async )?(?:function|const|class) (\w+)/gm),
-  ].map((match) => match[1]);
-
-  return [
-    '/* globals.css */',
-    "/* @import 'tailwindcss'; */",
-    `/* @import '${NPM_PACKAGE_NAME}/styles.css'; */`,
-    '',
-    `import { ${exports.join(', ')} } from '${NPM_PACKAGE_NAME}/${name}';`,
-    '',
-  ].join('\n');
-};
-
 // Une dépendance est soit un item de ce registry (lien vers sa page de doc, retrouvée via son
 // champ `preview`), soit un composant shadcn/ui (lien vers sa doc officielle).
 // Les dépendances entre items du registry sont des URLs (`…/r/<name>.json`, cf. scripts/registry.ts).

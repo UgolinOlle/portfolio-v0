@@ -1,6 +1,6 @@
 # portfolio-v0
 
-Portfolio of Ugolin Ollé (French default, English via `?lang=en`) and a shadcn-style UI registry (`@ugolin-olle/ui`), both served by one Next.js 16 / Fumadocs site in `apps/web`. Each registry item is its own `packages/<name>/` workspace package.
+Portfolio of Ugolin Ollé (French default, English via `?lang=en`) and a shadcn-style UI registry (`@whoa-studio/ui`), both served by one Next.js 16 / Fumadocs site in `apps/web`. Each registry item is its own `packages/<name>/` workspace package.
 
 <!-- claude-kit:begin stack -->
 

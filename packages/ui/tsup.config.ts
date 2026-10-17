@@ -1,57 +1,56 @@
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 
 import { defineConfig, type Options } from 'tsup';
 
 /*
-  `registry.json` (généré depuis `packages/<name>/` par `scripts/registry.ts`) alimente les deux
-  canaux de distribution :
-  - le registry shadcn (`shadcn build`) copie les fichiers source tels quels ;
-  - ce build npm compile les mêmes fichiers, un point d'entrée par item (`@ugolin-olle/ui/<name>`).
-  Ajouter un package d'item suffit donc à l'exposer aussi dans le package npm.
+  `@whoa-studio/ui` : les primitives shadcn (style `base-nova`, Base UI uniquement) vendorisées dans
+  `packages/shadcn/components/ui`, compilées en un point d'entrée par composant
+  (`@whoa-studio/ui/<name>`) plus un barrel racine. Les items du registry shadcn (`registry.json`)
+  restent distribués par `shadcn build` et ne passent pas par ce build.
 */
 
-type RegistryItem = { name: string; type: string; files: { path: string }[] };
-
 const root = import.meta.dirname;
-const packagesRoot = resolve(root, '..');
-const shadcnRoot = join(packagesRoot, 'shadcn');
+const shadcnRoot = join(resolve(root, '..'), 'shadcn');
+const componentsDir = join(shadcnRoot, 'components/ui');
 const outDir = join(root, 'dist');
 
-const registry = JSON.parse(readFileSync(join(root, 'registry.json'), 'utf-8')) as {
-  items: RegistryItem[];
-};
+const entries = readdirSync(componentsDir)
+  .filter((file) => file.endsWith('.tsx'))
+  .map((file) => ({ name: file.replace(/\.tsx$/, ''), file: join(componentsDir, file) }))
+  .sort((a, b) => a.name.localeCompare(b.name));
 
-// Le premier fichier d'un item est son point d'entrée (les autres sont ses modules internes).
-const entries = registry.items
-  .filter((item) => item.type === 'registry:ui' || item.type === 'registry:block')
-  .map((item) => ({ name: item.name, file: join(root, item.files[0].path) }));
-
-// Les alias `@/` des sources pointent vers les primitives shadcn vendorisées ou vers les autres
-// packages d'items, compilés dans le package (même résolution que `tsconfig.json`).
-const aliases: [prefix: string, target: string][] = [
-  ['@/components/ui/ugolin/', packagesRoot],
-  ['@/components/blocks/', packagesRoot],
-  ['@/components/ui/', join(shadcnRoot, 'components/ui')],
-];
-
+// Les sources importent leurs voisines via `@portfolio-v0/shadcn/...` ou `~/...` (voir `tsconfig.json`).
 const resolveImport = (from: string, specifier: string): string | undefined => {
-  const alias = aliases.find(([prefix]) => specifier.startsWith(prefix));
   const base = specifier.startsWith('.')
     ? resolve(dirname(from), specifier)
-    : specifier === '@/lib/utils'
-      ? join(shadcnRoot, 'lib/utils')
-      : alias
-        ? join(alias[1], specifier.slice(alias[0].length))
+    : specifier.startsWith('@portfolio-v0/shadcn/')
+      ? join(shadcnRoot, specifier.slice('@portfolio-v0/shadcn/'.length))
+      : specifier.startsWith('~/')
+        ? join(shadcnRoot, specifier.slice(2))
         : undefined;
 
   if (!base) return undefined;
   return ['.tsx', '.ts', '/index.tsx', '/index.ts', ''].map((ext) => base + ext).find(existsSync);
 };
 
-// Un point d'entrée est client dès qu'un module de son graphe local l'est : sans `splitting`,
-// tout ce graphe finit dans le même fichier, qui doit donc porter la directive. Les primitives
-// `@base-ui/react` reposent sur des hooks, elles comptent aussi comme client.
+// Bibliothèques tierces qui reposent sur des hooks ou du contexte React : toute entrée qui les
+// importe est un composant client.
+const CLIENT_PACKAGES = [
+  '@base-ui/react',
+  'cmdk',
+  'embla-carousel-react',
+  'input-otp',
+  'next-themes',
+  'react-day-picker',
+  'react-resizable-panels',
+  'recharts',
+  'sonner',
+  'vaul',
+];
+
+// Sans `splitting`, tout le graphe local d'un point d'entrée finit dans le même fichier : il porte
+// la directive dès qu'un module de ce graphe est client.
 const isClientGraph = (file: string, seen = new Set<string>()): boolean => {
   if (seen.has(file)) return false;
   seen.add(file);
@@ -60,7 +59,9 @@ const isClientGraph = (file: string, seen = new Set<string>()): boolean => {
   if (/^\s*['"]use client['"]/.test(source)) return true;
 
   const specifiers = [...source.matchAll(/from\s+['"]([^'"]+)['"]/g)].map((match) => match[1]);
-  if (specifiers.some((specifier) => specifier.startsWith('@base-ui/react'))) return true;
+  if (specifiers.some((s) => CLIENT_PACKAGES.some((pkg) => s === pkg || s.startsWith(`${pkg}/`)))) {
+    return true;
+  }
 
   return specifiers.some((specifier) => {
     const resolved = resolveImport(file, specifier);
@@ -68,8 +69,7 @@ const isClientGraph = (file: string, seen = new Set<string>()): boolean => {
   });
 };
 
-// Barrel racine : de simples ré-exports vers chaque sous-chemin, pour que chaque module garde
-// sa propre directive `"use client"` (un bundle unique la poserait sur tout le package).
+// Barrel racine : de simples ré-exports, pour que chaque module garde sa propre directive.
 const writeRootBarrel = () => {
   const names = entries.map((entry) => entry.name);
   const esm = names.map((name) => `export * from './${name}.js';`).join('\n');
@@ -90,9 +90,9 @@ const writeRootBarrel = () => {
   writeFileSync(join(outDir, 'index.d.cts'), `${cjsTypes}\n`);
 };
 
-// `@ugolin-olle/ui/styles.css` : uniquement les tokens de thème des primitives shadcn
-// (`:root`, `.dark`, `@theme inline`, variante `dark`), extraits de `globals.css` qui contient
-// aussi les styles propres au site. `@source` fait scanner `dist/` par le Tailwind du consommateur.
+// `@whoa-studio/ui/styles.css` : uniquement les tokens de thème des primitives (`:root`, `.dark`,
+// `@theme inline`, variante `dark`), extraits de `globals.css` qui contient aussi les styles du
+// site. `@source` fait scanner `dist/` par le Tailwind du consommateur.
 const writeStyles = () => {
   const css = readFileSync(join(shadcnRoot, 'styles/globals.css'), 'utf-8');
   const blocks: string[] = [];
@@ -105,7 +105,6 @@ const writeStyles = () => {
       if (css[end] === '{') depth++;
       if (css[end] === '}' && --depth === 0) break;
     }
-    // Les commentaires de `globals.css` décrivent le site, pas le package.
     blocks.push(
       css
         .slice(match.index, end + 1)
@@ -115,7 +114,9 @@ const writeStyles = () => {
   }
 
   const header = [
-    '/* @ugolin-olle/ui — import after `@import "tailwindcss";` */',
+    '/* @whoa-studio/ui — import after `@import "tailwindcss";` */',
+    "@import 'tw-animate-css';",
+    "@import 'shadcn/tailwind.css';",
     "@source './';",
     '',
     '@custom-variant dark (&:where(.dark, .dark *));',
@@ -138,7 +139,8 @@ const shared: Options = {
   target: 'es2022',
   tsconfig: join(root, 'tsconfig.json'),
   outDir,
-  // `react/jsx-runtime` n'est pas couvert par les peerDependencies déclarées.
+  // Les dépendances et peerDependencies du package sont externalisées par tsup ; `react/jsx-runtime`
+  // n'est couvert par aucune des deux.
   external: ['react', 'react-dom', 'react/jsx-runtime'],
   outExtension: ({ format }) => ({ js: format === 'cjs' ? '.cjs' : '.js' }),
   esbuildOptions: (options) => {

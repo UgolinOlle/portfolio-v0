@@ -2,7 +2,7 @@
 
 ## Overview
 
-Personal portfolio of Ugolin Ollé (freelance full-stack developer) **and** a shadcn-style UI registry, served from one Next.js site (`apps/web`, <https://ugolin-olle.com>). The registry's components are distributed through two channels built from the same sources: the shadcn registry (`/r/<name>.json`) and an npm package (`@ugolin-olle/ui`).
+Personal portfolio of Ugolin Ollé (freelance full-stack developer) **and** a shadcn-style UI registry, served from one Next.js site (`apps/web`, <https://ugolin-olle.com>). The registry's components are distributed through two channels built from the same sources: the shadcn registry (`/r/<name>.json`) and an npm package (`@whoa-studio/ui`).
 
 Rendering and SEO details live in [seo-audit.md](seo-audit.md). Contributor steps for adding an item are in [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 
@@ -29,7 +29,7 @@ apps/web/                 the site (Next.js)
 packages/
   <item>/                 one workspace package per registry item (index.tsx + modules)
   shadcn/                 shadcn primitives (`bun run bump-ui` refreshes them)
-  ui/                     @ugolin-olle/ui: registry.json generator, tsup build, npm package
+  ui/                     @whoa-studio/ui: registry.json generator, tsup build, npm package
   config/                 shared tsconfig presets (base, nextjs, react-lib, registry-item)
 docs/                     this folder
 ```

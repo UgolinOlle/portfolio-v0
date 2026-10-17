@@ -5,12 +5,7 @@ import { Fragment } from 'react';
 
 import { RegistryCodeBlock } from '~/components/docs/code-block/registry-code-block';
 import { ArrowUpRightIcon, ChevronRightIcon } from '~/components/icons/ui';
-import {
-  getPackageInstallCommands,
-  getPackageUsageSnippet,
-  getRegistryDependencyHref,
-  getRegistryInstallCommands,
-} from '~/lib/registry';
+import { getRegistryDependencyHref, getRegistryInstallCommands } from '~/lib/registry';
 import { getRegistryItemManifest } from '~/lib/registry-item';
 
 import { InstallCommand } from './install-command';
@@ -26,11 +21,6 @@ const labelClassName = 'label-mono text-foreground/45';
 export const RegistryInstall = async ({ path, className }: RegistryInstallProps) => {
   const manifest = await getRegistryItemManifest(path);
   const dependencies = manifest.registryDependencies ?? [];
-  const usageFile = {
-    path: 'usage.tsx',
-    type: 'registry:component',
-    content: getPackageUsageSnippet(manifest.name, manifest.files[0]?.content ?? ''),
-  };
 
   return (
     <div className={cn('flex flex-col gap-4', className)}>
@@ -63,10 +53,6 @@ export const RegistryInstall = async ({ path, className }: RegistryInstallProps)
           })}
         </p>
       )}
-
-      <p className={cn(labelClassName, 'mt-2')}>Via npm — importe le composant compilé</p>
-      <InstallCommand commands={getPackageInstallCommands()} />
-      <RegistryCodeBlock files={[usageFile]} />
 
       {/* Code complet de l'item (tous les fichiers), directement depuis le registry — pas
       d'exemple d'usage ici, cf. `RegistryDemo` pour le code de la preview. */}

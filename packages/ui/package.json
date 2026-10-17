@@ -1,8 +1,9 @@
 {
-  "name": "@ugolin-olle/ui",
-  "version": "0.1.0",
-  "description": "React components and blocks for shadcn/ui, by Ugolin Ollé. Install via npm or copy the source with the shadcn CLI.",
+  "name": "@whoa-studio/ui",
+  "version": "0.0.0",
+  "description": "Base UI components styled with Tailwind v4, the shadcn/ui set as a versioned npm package.",
   "keywords": [
+    "base-ui",
     "components",
     "react",
     "shadcn",
@@ -10,7 +11,7 @@
     "tailwindcss",
     "ui"
   ],
-  "homepage": "https://ugolin-olle.com/ui",
+  "homepage": "https://github.com/UgolinOlle/portfolio-v0/tree/stable/packages/ui#readme",
   "bugs": "https://github.com/UgolinOlle/portfolio-v0/issues",
   "license": "MIT",
   "author": "Ugolin Ollé",
@@ -56,26 +57,39 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
-    "build": "bun run registry:generate && tsup",
+    "build": "tsup",
     "check-types": "tsc --noEmit",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "lint:package": "publint && attw --pack . --profile node16 --exclude-entrypoints ./styles.css",
     "prepublishOnly": "bun run build",
     "registry:build": "bun run registry:generate && shadcn build --output ../../apps/web/public/r",
-    "registry:generate": "bun scripts/registry.ts && oxfmt --write registry.json"
+    "registry:generate": "bun scripts/registry.ts && oxfmt --write registry.json",
+    "test:smoke": "bun run build && bun test smoke"
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
-    "@radix-ui/react-slot": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
+    "cmdk": "^1.1.1",
+    "embla-carousel-react": "^8.6.0",
+    "input-otp": "^1.4.2",
     "lucide-react": "catalog:",
-    "motion": "catalog:",
-    "tailwind-merge": "catalog:"
+    "next-themes": "catalog:",
+    "react-day-picker": "^9.14.0",
+    "react-resizable-panels": "^4.11.0",
+    "recharts": "3.8.0",
+    "shadcn": "catalog:",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "catalog:",
+    "tw-animate-css": "^1.4.0",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.0",
     "@portfolio-v0/activity": "workspace:*",
     "@portfolio-v0/avatars": "workspace:*",
     "@portfolio-v0/blog": "workspace:*",
@@ -84,6 +98,7 @@
     "@portfolio-v0/button-gandi": "workspace:*",
     "@portfolio-v0/button-shopify": "workspace:*",
     "@portfolio-v0/calendar-sync": "workspace:*",
+    "@portfolio-v0/command-search": "workspace:*",
     "@portfolio-v0/config": "workspace:*",
     "@portfolio-v0/cta-simple": "workspace:*",
     "@portfolio-v0/headers": "workspace:*",
@@ -96,9 +111,9 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "publint": "^0.3.0",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "shadcn": "catalog:",
     "tailwindcss": "catalog:",
     "tsup": "^9.0.0",
     "typescript": "catalog:"
@@ -107,5 +122,8 @@
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0",
     "tailwindcss": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

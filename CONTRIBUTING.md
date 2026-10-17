@@ -2,7 +2,7 @@
 
 ## Adding a component or block
 
-Every item is its own workspace package, kibo-ui style. `packages/ui/registry.json` is **generated** from those packages by `packages/ui/scripts/registry.ts`, and it feeds both channels: the shadcn registry (`/r/<name>.json`) and the npm package (`@ugolin-olle/ui/<name>`). Never edit it by hand.
+Every item is its own workspace package, kibo-ui style. `packages/ui/registry.json` is **generated** from those packages by `packages/ui/scripts/registry.ts`, and it feeds the shadcn registry (`/r/<name>.json`). The npm package (`@whoa-studio/ui`) is built separately from the shadcn primitives in `packages/shadcn`. Never edit it by hand.
 
 1. **Create the package** `packages/<name>/`:
 

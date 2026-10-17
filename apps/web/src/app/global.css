@@ -3,7 +3,7 @@
 @import 'fumadocs-ui/css/preset.css';
 @import '@portfolio-v0/shadcn/styles';
 
-/* Packages d'items du registry (@ugolin-olle/ui) : hors de l'app, Tailwind ne les analyse pas tout seul. */
+/* Packages d'items du registry (@whoa-studio/ui) : hors de l'app, Tailwind ne les analyse pas tout seul. */
 @source '../../../../packages/*/*.{ts,tsx}';
 
 /* Layout tokens for the /ui registry shell (navbar, sidebar, TOC, content measure). */

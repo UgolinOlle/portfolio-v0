@@ -35,7 +35,7 @@ portfolio-v0/
 ├── apps/
 │   └── web/          # Next.js + Fumadocs site (http://localhost:4000)
 └── packages/
-    ├── ui/           # @ugolin-olle/ui: component source, registry.json, npm build
+    ├── ui/           # @whoa-studio/ui: component source, registry.json, npm build
     ├── shadcn/       # vendored shadcn/ui primitives, cn helper, theme tokens
     └── config/       # shared TypeScript configs
 ```
@@ -68,24 +68,23 @@ npx shadcn@latest add @ugolin/button
 
 Components land in `components/ui/ugolin/`, so they never overwrite your own shadcn `button`, `input`, etc. Blocks land in `components/blocks/<name>/`. npm dependencies and the shadcn primitives a block needs (`card`, `badge`, …) are installed automatically.
 
-### 2. npm package: import a compiled dependency
+### 2. npm package: the shadcn/ui primitives, prebuilt
 
 ```bash
-npm install @ugolin-olle/ui
+npm install @whoa-studio/ui
 ```
 
 ```css
 /* globals.css */
 @import 'tailwindcss';
-@import '@ugolin-olle/ui/styles.css';
+@import '@whoa-studio/ui/styles.css';
 ```
 
 ```tsx
-import { Button } from '@ugolin-olle/ui/button';
-import { UsageCard } from '@ugolin-olle/ui/usage-card';
+import { Button } from '@whoa-studio/ui/button';
 ```
 
-Requires React 18.2+ or 19, and Tailwind CSS v4. `styles.css` ships the theme tokens and registers the package's classes with Tailwind. Each item is also re-exported from the root (`@ugolin-olle/ui`), but subpath imports keep bundles smallest.
+The npm package ships the Base UI shadcn primitives (one subpath per component), not the portfolio's own registry items. See [packages/ui/README.md](packages/ui/README.md) for usage and the Changesets release flow.
 
 Adding a component: see [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -95,5 +94,5 @@ Adding a component: see [CONTRIBUTING.md](CONTRIBUTING.md).
 - `bun run build`: Build all applications
 - `bun run check-types`: Check TypeScript types across all apps
 - `bun run check`: Run Oxlint and Oxfmt
-- `bun run --cwd packages/ui build`: Build the `@ugolin-olle/ui` npm package
+- `bun run --cwd packages/ui build`: Build the `@whoa-studio/ui` npm package
 - `bun run --cwd apps/web registry:build`: Build the shadcn registry JSON into `apps/web/public/r`

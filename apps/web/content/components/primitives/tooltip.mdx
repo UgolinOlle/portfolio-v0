@@ -1,0 +1,29 @@
+---
+title: Tooltip
+icon: ChatTeardropText
+description: Une info-bulle affichée au survol ou au focus.
+---
+
+<PrimitivePreview name="tooltip" />
+
+## Animation
+
+125 ms, depuis le déclencheur. Une fois une info-bulle ouverte, la suivante s'affiche instantanément (`data-instant`) : la barre d'outils paraît plus rapide.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add tooltip
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Tooltip } from '@whoa-studio/ui/tooltip';
+```
+
+Exports : `Tooltip, TooltipProvider, TooltipTrigger, TooltipContent`.

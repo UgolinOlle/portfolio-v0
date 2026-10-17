@@ -1,0 +1,29 @@
+---
+title: Popover
+icon: ChatCircle
+description: Un panneau flottant ancré à son déclencheur.
+---
+
+<PrimitivePreview name="popover" />
+
+## Animation
+
+Le panneau grandit depuis son déclencheur (`--transform-origin`) en 180 ms.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add popover
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Popover } from '@whoa-studio/ui/popover';
+```
+
+Exports : `Popover, PopoverTrigger, PopoverContent`.

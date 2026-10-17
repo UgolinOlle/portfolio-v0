@@ -5,6 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
+      "@portfolio-v0/shadcn/components/ui/*": ["../../packages/shadcn/components/ui/*"],
       "@portfolio-v0/shadcn/components/*": ["../../packages/shadcn/components/ui/*"],
       "@portfolio-v0/shadcn/hooks": ["../../packages/shadcn/hooks/index.ts"],
       "@portfolio-v0/shadcn/utils": ["../../packages/shadcn/lib/utils.ts"],

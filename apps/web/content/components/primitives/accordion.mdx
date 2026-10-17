@@ -1,0 +1,29 @@
+---
+title: Accordion
+icon: CaretDown
+description: Sections repliables, une ou plusieurs ouvertes à la fois.
+---
+
+<PrimitivePreview name="accordion" />
+
+## Animation
+
+Le panneau anime sa hauteur et son opacité (240 ms à l'ouverture, 180 ms à la fermeture) ; inverser le geste en cours de route repart de la valeur courante.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add accordion
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Accordion } from '@whoa-studio/ui/accordion';
+```
+
+Exports : `Accordion, AccordionItem, AccordionTrigger, AccordionContent`.

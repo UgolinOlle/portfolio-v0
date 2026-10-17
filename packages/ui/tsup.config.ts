@@ -41,6 +41,7 @@ const CLIENT_PACKAGES = [
   'cmdk',
   'embla-carousel-react',
   'input-otp',
+  'motion',
   'next-themes',
   'react-day-picker',
   'react-resizable-panels',

@@ -1,0 +1,29 @@
+---
+title: Avatar
+icon: UserCircle
+description: Une image de profil avec un repli sur les initiales.
+---
+
+<PrimitivePreview name="avatar" />
+
+## Animation
+
+L'image apparaît en fondu (180 ms) une fois chargée, au lieu de surgir.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add avatar
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Avatar } from '@whoa-studio/ui/avatar';
+```
+
+Exports : `Avatar, AvatarImage, AvatarFallback`.

@@ -19,16 +19,22 @@ const alertVariants = cva(
   },
 );
 
+// `animated`: rises in when it mounts (CSS `@starting-style`, no JS). Off by default: an alert
+// rendered with the page should not move.
+const alertEntrance =
+  'starting:translate-y-[calc(6px*var(--motion-offset))] starting:opacity-0 transition-[opacity,translate] duration-(--duration-slow) ease-out-strong';
+
 function Alert({
   className,
   variant,
+  animated = false,
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants>) {
+}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants> & { animated?: boolean }) {
   return (
     <div
       data-slot="alert"
       role="alert"
-      className={cn(alertVariants({ variant }), className)}
+      className={cn(alertVariants({ variant }), animated && alertEntrance, className)}
       {...props}
     />
   );

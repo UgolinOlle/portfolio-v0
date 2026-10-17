@@ -1,0 +1,29 @@
+---
+title: Input OTP
+icon: Password
+description: Un champ pour saisir un code à usage unique.
+---
+
+<PrimitivePreview name="input-otp" />
+
+## Animation
+
+Les cases suivent la couleur et l'anneau de focus en 120 ms ; le caret clignote, et s'arrête sous `prefers-reduced-motion`.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add input-otp
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { InputOTP } from '@whoa-studio/ui/input-otp';
+```
+
+Exports : `InputOTP, InputOTPGroup, InputOTPSlot`.

@@ -1,0 +1,29 @@
+---
+title: Button
+icon: CursorClick
+description: Le bouton de base, en plusieurs variantes.
+---
+
+<PrimitivePreview name="button" />
+
+## Animation
+
+L'appui réduit le bouton à `scale(0.97)` en 120 ms ; seules les propriétés utiles sont animées (jamais `transition-all`). Sous `prefers-reduced-motion`, la mise à l'échelle est supprimée.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add button
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Button } from '@whoa-studio/ui/button';
+```
+
+Exports : `Button, buttonVariants`.

@@ -1,0 +1,29 @@
+---
+title: Field
+icon: TextT
+description: Un champ de formulaire avec libellé, aide et erreur.
+---
+
+<PrimitivePreview name="field" />
+
+## Animation
+
+`FieldError` est le seul composant qui utilise Motion : le message se déplie (hauteur et opacité) et se replie au lieu de pousser le formulaire. Sous `prefers-reduced-motion`, seul le fondu reste.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add field
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Field } from '@whoa-studio/ui/field';
+```
+
+Exports : `Field, FieldLabel, FieldDescription, FieldError`.

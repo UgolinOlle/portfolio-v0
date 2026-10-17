@@ -1,0 +1,29 @@
+---
+title: Progress
+icon: CircleNotch
+description: Une barre de progression.
+---
+
+<PrimitivePreview name="progress" />
+
+## Animation
+
+La largeur transite en 240 ms (`ease-in-out-strong`). C'est la seule propriété de mise en page animée avec l'accordéon : Base UI l'applique en ligne.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add progress
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Progress } from '@whoa-studio/ui/progress';
+```
+
+Exports : `Progress, ProgressTrack, ProgressIndicator`.

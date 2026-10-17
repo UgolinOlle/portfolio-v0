@@ -47,6 +47,10 @@ Registry item packages today: `activity`, `avatars`, `blog`, `button`, `button-a
 
 `apps/web` runs `registry:build` before `dev` and `build` (`predev` / `prebuild`).
 
+**Primitive docs pages**
+
+The shadcn primitives (`packages/shadcn/components/ui`) are not registry items, so their pages in `apps/web/content/components/primitives/<name>.mdx` have no `preview` frontmatter. They embed `<PrimitivePreview name="<name>" />`, which imports `apps/web/examples/primitives/<name>.tsx` and shows that file as the code tab. Demos import from `@/components/ui/<name>`. Add a page to the folder's `meta.json` to list it.
+
 **Content → pages**
 
 `source.config.ts` defines five Fumadocs collections; `src/lib/source.ts` turns each into a `loader` (`/ui/components`, `/ui/blocks`, `/ui/templates`, `/projects`, `/writings`). Projects and writings are i18n'd: `<name>.mdx` is French (default), `<name>.en.mdx` is English, served on the same path with `?lang=en` (see `getPageLocales` / `resolvePageLocale`).
@@ -54,6 +58,10 @@ Registry item packages today: `activity`, `avatars`, `blog`, `button`, `button-a
 **Machine-readable output**
 
 `/llms.txt`, `/llms-full.txt`, `/llms.mdx/{components,blocks,templates}/…` expose registry docs as text; `/api/search` merges the three registry search indexes. See [api-contracts.md](api-contracts.md).
+
+**Motion**
+
+The primitives in `packages/shadcn/components/ui` animate with CSS transitions driven by tokens in `packages/shadcn/styles/globals.css` (`--duration-*`, `--ease-*`, `--motion-offset`, `--motion-pop-scale`, the `can-hover` variant). Base UI overlays use the class recipes in `packages/shadcn/lib/motion/overlay.ts` (`data-starting-style` / `data-ending-style`); Motion (`motion/react`, via `LazyMotion` in `lib/motion/provider.tsx`) is used only for `FieldError`. `lib/motion/tokens.ts` mirrors the CSS tokens in seconds: change both together. `motion` is in the root catalog, a dependency of `@whoa-studio/ui` and listed in `tsup.config.ts`'s `CLIENT_PACKAGES`. Rules and per-component decisions: [ui-animation-plan.md](ui-animation-plan.md) and the Motion page in `apps/web/content/components/core/motion.mdx`.
 
 ## Boundaries and rules
 

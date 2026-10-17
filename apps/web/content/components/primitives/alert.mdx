@@ -1,0 +1,29 @@
+---
+title: Alert
+icon: WarningCircle
+description: Un message en ligne, avec une icône, un titre et une description.
+---
+
+<PrimitivePreview name="alert" />
+
+## Animation
+
+Avec `animated`, l'alerte monte de 6 px en fondu à son apparition (CSS `@starting-style`, sans JavaScript). Désactivé par défaut : une alerte rendue avec la page ne bouge pas.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add alert
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Alert } from '@whoa-studio/ui/alert';
+```
+
+Exports : `Alert, AlertTitle, AlertDescription, AlertAction`.

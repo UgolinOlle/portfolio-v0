@@ -19,7 +19,7 @@ export function CollapsibleContent({
       {...props}
       className={(s) =>
         cn(
-          "h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0 [&[hidden]:not([hidden='until-found'])]:hidden",
+          "h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-(--duration-slow) ease-out-strong data-ending-style:h-0 data-ending-style:opacity-0 data-ending-style:duration-(--duration-base) data-starting-style:h-0 data-starting-style:opacity-0 [&[hidden]:not([hidden='until-found'])]:hidden",
           typeof className === 'function' ? className(s) : className,
         )
       }

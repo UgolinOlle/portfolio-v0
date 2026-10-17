@@ -22,6 +22,10 @@ export const popupCentered =
 export const popupAnchored =
   'origin-(--transform-origin) transition-[opacity,scale] duration-(--duration-base) ease-out-strong data-starting-style:scale-(--motion-pop-scale) data-starting-style:opacity-0 data-ending-style:scale-(--motion-pop-scale) data-ending-style:opacity-0 data-ending-style:duration-(--duration-fast)';
 
+// Combobox, command palette: opened constantly while typing, so opacity only, no movement.
+export const popupFade =
+  'transition-opacity duration-(--duration-fast) ease-out-strong data-starting-style:opacity-0 data-ending-style:opacity-0';
+
 // Tooltip: shorter, and skipped entirely when another tooltip was just open (`data-instant`).
 export const popupTooltip =
   'origin-(--transform-origin) transition-[opacity,scale] duration-(--duration-fast) ease-out-strong data-starting-style:scale-(--motion-pop-scale) data-starting-style:opacity-0 data-ending-style:scale-(--motion-pop-scale) data-ending-style:opacity-0 data-instant:transition-none';

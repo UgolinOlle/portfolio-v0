@@ -1,0 +1,6 @@
+# Everything, by default
+*               @UgolinOlle
+
+# Specific areas (these override the default for matching files)
+/apps/web/src/app/(home)/ @UgolinOlle
+/apps/web/public/assets/ @UgolinOlle

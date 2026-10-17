@@ -2,6 +2,7 @@
 import { Popover as Primitive } from '@base-ui/react/popover';
 import * as React from 'react';
 
+import { popupAnchored } from '../../lib/motion/overlay';
 import { cn } from '../../lib/utils';
 
 export const Popover = Primitive.Root;
@@ -21,9 +22,10 @@ export function PopoverContent({
         <Primitive.Popup
           className={(s) =>
             cn(
-              'bg-fd-popover/60 text-fd-popover-foreground data-closed:animate-fd-popover-out',
-              'data-open:animate-fd-popover-in z-50 max-h-(--available-height) w-(--anchor-width) max-w-[98vw]',
-              'min-w-60 origin-(--transform-origin) overflow-y-auto rounded-xl border p-2 text-sm shadow-lg',
+              'bg-fd-popover/60 text-fd-popover-foreground',
+              popupAnchored,
+              'z-50 max-h-(--available-height) w-(--anchor-width) max-w-[98vw]',
+              'min-w-60 overflow-y-auto rounded-xl border p-2 text-sm shadow-lg',
               'backdrop-blur-lg focus-visible:outline-none',
               typeof className === 'function' ? className(s) : className,
             )

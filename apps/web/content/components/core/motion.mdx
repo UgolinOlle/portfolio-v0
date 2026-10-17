@@ -1,0 +1,68 @@
+---
+title: Motion
+icon: Sparkle
+description: Les jetons, les règles et les primitives d'animation partagés par tous les composants de `@whoa-studio/ui`.
+---
+
+Les composants animent leurs états avec des **transitions CSS** pilotées par des jetons communs.
+Motion n'est utilisé que là où le CSS ne suffit pas (par exemple les messages d'erreur d'un champ qui
+apparaissent et disparaissent). Les overlays Base UI (dialogue, popover, menu, tooltip, sheet…)
+restent montés jusqu'à la fin de leur transition de sortie : `data-starting-style` et
+`data-ending-style` suffisent, sans JavaScript, et une ouverture interrompue repart de la valeur
+courante au lieu de revenir à zéro.
+
+## Jetons
+
+Définis dans `styles/globals.css`, utilisables comme utilitaires Tailwind.
+
+| Jeton                | Valeur                            | Usage                                           |
+| -------------------- | --------------------------------- | ----------------------------------------------- |
+| `--duration-fast`    | 120 ms                            | appui, survol, couleur, tooltip                 |
+| `--duration-base`    | 180 ms                            | popover, menu, select, sorties de modales       |
+| `--duration-slow`    | 240 ms                            | dialogue, accordéon, sheet, indicateur d'onglet |
+| `--duration-slower`  | 320 ms                            | navigation-menu                                 |
+| `ease-out-strong`    | `cubic-bezier(0.23, 1, 0.32, 1)`  | toute entrée ou sortie                          |
+| `ease-in-out-strong` | `cubic-bezier(0.77, 0, 0.175, 1)` | mouvement qui reste à l'écran                   |
+| `ease-drawer`        | `cubic-bezier(0.32, 0.72, 0, 1)`  | sheet                                           |
+
+```tsx
+<div className="transition-[opacity,scale] duration-(--duration-base) ease-out-strong" />
+```
+
+Règles : on liste toujours les propriétés (jamais `transition-all`), on anime `transform` et
+`opacity`, on ne part jamais de `scale(0)` (`--motion-pop-scale` vaut 0,96), et un popover grandit
+depuis son déclencheur (`origin-(--transform-origin)`). La sortie dure environ 60 % de l'entrée.
+
+## Ce qui n'est pas animé
+
+Les actions répétées toute la journée restent instantanées : l'ouverture de `Command`, la
+navigation au clavier dans les menus, et le raccourci clavier de la barre latérale. Les
+valeurs lues (curseur, graphiques) ne bougent pas pour le style.
+
+## Mouvement réduit
+
+`prefers-reduced-motion: reduce` remet `--motion-offset` à 0 et `--motion-pop-scale` à 1 : les
+translations et les zooms disparaissent, les fondus restent. Les composants Motion sont enveloppés
+dans `MotionConfig reducedMotion="user"`. Les boucles (spinner, skeleton, caret) passent à une
+version statique ou plus douce. Les animations au survol sont à protéger avec la variante
+`can-hover:` (`@media (hover: hover) and (pointer: fine)`).
+
+Recharts anime en JavaScript : étalez `useChartAnimation()` sur les séries.
+
+```tsx
+import { useChartAnimation } from '@whoa-studio/ui/chart';
+
+<Line dataKey="visits" {...useChartAnimation()} />;
+```
+
+## Primitives
+
+`packages/shadcn/lib/motion/` : `tokens.ts` et `transitions.ts` (miroir des jetons CSS, en secondes),
+`variants.ts` (`fade`, `rise`, `pop`, `collapse`, `slideX`), `overlay.ts` (recettes de classes pour
+les overlays Base UI), `Motion` (`LazyMotion` + `MotionConfig`, environ 4,6 Ko) et
+`useMotionSafe()`.
+
+## Opt-in
+
+- `Alert` et `Empty` : prop `animated` (entrée en CSS `@starting-style`).
+- `TabsIndicator` : surbrillance qui glisse entre les onglets, à placer en premier dans `TabsList`.

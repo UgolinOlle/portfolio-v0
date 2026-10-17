@@ -1,6 +1,15 @@
 # `@whoa-studio/ui` animation system — Stage 2 plan
 
-Status: **proposal, nothing implemented.** Branch: `feats/ui-animations`.
+Status: **implemented** on `feats/ui-animations` (batches 1–6), with the deviations listed below. The sections that follow are the original plan.
+
+## Implementation notes (what differs from the plan)
+
+- **Motion is used in one component only (`FieldError`).** `TabsIndicator` uses Base UI's `--active-tab-*` variables, and `Alert` / `Empty` use CSS `@starting-style` (`animated` prop, opt-in): cheaper than Motion and still interruptible.
+- **Not done:** `calendar` month slide (react-day-picker's `animate` needs its own keyframe classes, untestable without visual checks), `toggle-group` sliding background (no pressed-state hook without restructuring), `drawer` (vaul runs its own animation), `lib/motion` as a separate registry item (the registry generator only accepts single-file items; the code ships bundled through tsup).
+- **`progress`** still transitions `width`: Base UI sets it inline, so a transform needs a rewrite.
+- **`Alert` / `Empty`** are opt-in rather than on by default, so existing pages do not start moving.
+- **Chart:** Recharts animates in JS, so consumers spread `useChartAnimation()` on each series.
+- **Not verified visually:** frame timing, interruption and reduced-motion behaviour were not measured in a browser (the preview pane throttles frames). Check them in a real browser before release.
 
 ## 0. What the inventory showed (changes the brief)
 

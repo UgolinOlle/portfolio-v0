@@ -46,7 +46,8 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
   }, [sections]);
 
   return (
-    <nav aria-label="Sections">
+    // The sticky chip bar covers navigation on small screens.
+    <nav aria-label="Sections" className="max-md:hidden">
       <ul>
         {sections.map((section, index) => {
           const current = active === section.category;

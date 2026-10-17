@@ -3,7 +3,15 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { AnimatePresence, motion } from 'motion/react';
-import { createContext, type ReactNode, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import { EASE_OUT } from './reveal';
 
@@ -21,11 +29,37 @@ const RegistryFilterContext = createContext<RegistryFilterContextValue>({
 
 export const useRegistryFilter = () => useContext(RegistryFilterContext);
 
-// Holds the selected category for the rail nav, the chips and the sections. Renders no DOM, so
-// the server-rendered sections can be passed through as children.
-export const RegistryFilterProvider = ({ children }: { children: ReactNode }) => {
-  const [filter, setFilter] = useState<RegistryFilterValue>('all');
-  const value = useMemo(() => ({ filter, setFilter }), [filter]);
+type RegistryFilterProviderProps = {
+  // Valid `?cat=` values; anything else falls back to "all".
+  categories: string[];
+  children: ReactNode;
+};
+
+// Holds the selected category for the rail nav, the chips and the sections, mirrored in
+// `?cat=` so a filtered view can be shared and survives a reload. Renders no DOM, so the
+// server-rendered sections can be passed through as children.
+export const RegistryFilterProvider = ({ categories, children }: RegistryFilterProviderProps) => {
+  const [filter, setFilterState] = useState<RegistryFilterValue>('all');
+
+  // Read after hydration so the server-rendered "all" never mismatches.
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get('cat');
+    if (cat && categories.includes(cat)) setFilterState(cat);
+  }, [categories]);
+
+  const setFilter = useCallback((next: RegistryFilterValue) => {
+    setFilterState(next);
+    // Written once the new state has rendered (and a frame has passed), so Next's patched
+    // `history` doesn't land in the middle of the exit animation.
+    requestAnimationFrame(() => {
+      const url = new URL(window.location.href);
+      if (next === 'all') url.searchParams.delete('cat');
+      else url.searchParams.set('cat', next);
+      window.history.replaceState(null, '', url);
+    });
+  }, []);
+
+  const value = useMemo(() => ({ filter, setFilter }), [filter, setFilter]);
 
   return <RegistryFilterContext.Provider value={value}>{children}</RegistryFilterContext.Provider>;
 };

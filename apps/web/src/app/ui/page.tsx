@@ -33,7 +33,7 @@ const UiIndexPage = () => {
     allItems.find((item) => item.featured && item.preview) ?? allItems.find((item) => item.preview);
 
   return (
-    <RegistryFilterProvider>
+    <RegistryFilterProvider categories={sections.map((section) => section.category)}>
       <Navbar variant="index" />
       <ScrollProgress />
 

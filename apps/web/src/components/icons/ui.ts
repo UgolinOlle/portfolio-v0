@@ -10,6 +10,7 @@
  * components alike.
  */
 export {
+  Star as StarIcon,
   ArrowRight as ArrowRightIcon,
   ArrowUpRight as ArrowUpRightIcon,
   Check as CheckIcon,

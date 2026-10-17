@@ -2,12 +2,22 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../../lib/utils';
 
-function Empty({ className, ...props }: React.ComponentProps<'div'>) {
+// `animated`: rises in when it mounts (CSS `@starting-style`, no JS), for empty states reached by
+// an action such as a search or a cleared list.
+const emptyEntrance =
+  'starting:translate-y-[calc(8px*var(--motion-offset))] starting:opacity-0 transition-[opacity,translate] duration-(--duration-slower) ease-out-strong';
+
+function Empty({
+  className,
+  animated = false,
+  ...props
+}: React.ComponentProps<'div'> & { animated?: boolean }) {
   return (
     <div
       data-slot="empty"
       className={cn(
         'flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-xl border-dashed p-6 text-center text-balance',
+        animated && emptyEntrance,
         className,
       )}
       {...props}

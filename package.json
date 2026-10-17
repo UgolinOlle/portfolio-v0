@@ -30,6 +30,7 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "check-types": "turbo check-types",
+    "check:motion": "node scripts/check-motion.mjs",
     "check": "oxlint && oxfmt --write",
     "format": "oxfmt --write",
     "prepare": "husky",

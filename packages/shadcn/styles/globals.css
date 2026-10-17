@@ -20,11 +20,13 @@
   properties (no `transition-all`).
 */
 :root {
+  /* Set --motion-scale to 3 to review every transition in slow motion (1 = normal, 0 = instant). */
+  --motion-scale: 1;
   --duration-instant: 0ms;
-  --duration-fast: 120ms;
-  --duration-base: 180ms;
-  --duration-slow: 240ms;
-  --duration-slower: 320ms;
+  --duration-fast: calc(120ms * var(--motion-scale));
+  --duration-base: calc(180ms * var(--motion-scale));
+  --duration-slow: calc(240ms * var(--motion-scale));
+  --duration-slower: calc(320ms * var(--motion-scale));
 
   /* Multipliers read by entrances: `scale-(--motion-pop-scale)`, `translate-y-[calc(var(--motion-offset)*8px)]`. */
   --motion-pop-scale: 0.96;

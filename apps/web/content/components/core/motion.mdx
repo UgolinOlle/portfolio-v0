@@ -33,6 +33,13 @@ Règles : on liste toujours les propriétés (jamais `transition-all`), on anime
 `opacity`, on ne part jamais de `scale(0)` (`--motion-pop-scale` vaut 0,96), et un popover grandit
 depuis son déclencheur (`origin-(--transform-origin)`). La sortie dure environ 60 % de l'entrée.
 
+## Revoir au ralenti
+
+Les durées se multiplient par `--motion-scale` (1 par défaut). Pour examiner toutes les
+transitions de la page, ajoutez `style="--motion-scale: 3"` sur `<html>` dans les DevTools.
+`bun run check:motion` (lancé en CI) refuse `transition-all`, `ease-in`, `scale-0` et les
+classes `animate-in` / `animate-out` de `tw-animate-css` dans les primitives.
+
 ## Ce qui n'est pas animé
 
 Les actions répétées toute la journée restent instantanées : l'ouverture de `Command`, la

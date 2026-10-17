@@ -11,6 +11,40 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Touch devices fire :hover on tap; gate hover motion with `can-hover:`. */
+@custom-variant can-hover (@media (hover: hover) and (pointer: fine));
+
+/*
+  Motion tokens. Mirrored in `lib/motion/tokens.ts` (seconds there, milliseconds here): change
+  both together. Use `duration-(--duration-base) ease-out-strong` on transitions, and list the
+  properties (no `transition-all`).
+*/
+:root {
+  --duration-instant: 0ms;
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 240ms;
+  --duration-slower: 320ms;
+
+  /* Multipliers read by entrances: `scale-(--motion-pop-scale)`, `translate-y-[calc(var(--motion-offset)*8px)]`. */
+  --motion-pop-scale: 0.96;
+  --motion-offset: 1;
+}
+
+/* Less motion, not none: positions and scales settle immediately, opacity and colour still fade. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-pop-scale: 1;
+    --motion-offset: 0;
+  }
+}
+
+@theme {
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
 /*
 	---break---
 */

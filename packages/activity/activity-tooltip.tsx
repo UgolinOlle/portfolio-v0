@@ -50,13 +50,20 @@ export function ActivityTooltip({
       <AnimatePresence>
         {day && (
           <motion.div
-            key={day.date}
-            initial={{ opacity: 0, scale: 0.9, y: flip ? -4 : 4, filter: 'blur(4px)' }}
-            animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, scale: 0.9, y: flip ? -4 : 4, filter: 'blur(4px)' }}
+            key="tooltip"
+            initial={{
+              opacity: 0,
+              transform: `translateY(${flip ? -4 : 4}px) scale(0.9)`,
+            }}
+            animate={{ opacity: 1, transform: 'translateY(0px) scale(1)' }}
+            exit={{
+              opacity: 0,
+              transform: `translateY(${flip ? -4 : 4}px) scale(0.9)`,
+            }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformOrigin: flip ? 'top center' : 'bottom center' }}
             className={cn(
-              'w-max rounded-xl border border-border/50 bg-card/80 px-3 py-2 text-xs whitespace-nowrap shadow-lg backdrop-blur-md',
+              'w-max rounded-xl border border-border/50 bg-card/95 px-3 py-2 text-xs whitespace-nowrap shadow-lg',
               className,
             )}
           >

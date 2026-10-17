@@ -11,6 +11,21 @@
   --nav-height: 3.5rem;
   --rail-width: 16.75rem;
   --docs-sidebar-width: 18.75rem;
+  /* Strong curves: the built-in CSS easings are too weak for deliberate UI motion. */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Thumbnails stream in after the page: fade them in instead of popping. Opacity only, blur
+   repaints every frame on low-end phones. */
+@keyframes thumbnail-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.thumbnail-in {
+  animation: thumbnail-in 400ms var(--ease-out-strong) both;
 }
 
 html {

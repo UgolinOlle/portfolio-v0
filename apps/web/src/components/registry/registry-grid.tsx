@@ -16,14 +16,16 @@ type RegistryGridProps = {
 export const RegistryGrid = ({ items, className }: RegistryGridProps) => {
   return (
     <div className={cn('grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4', className)}>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <RegistryCard
+          index={index}
           item={item}
           key={item.href}
           preview={
             item.preview ? (
               <Suspense fallback={<div className="size-full animate-pulse bg-foreground/3" />}>
                 <PreviewThumbnail
+                  className="thumbnail-in"
                   path={item.preview}
                   type={item.category}
                   virtualWidth={item.previewWidth}

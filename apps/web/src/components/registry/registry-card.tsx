@@ -2,31 +2,70 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'motion/react';
 import Link from 'next/link';
-import type { ReactNode } from 'react';
+import { type PointerEvent, type ReactNode, useRef } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { ArrowUpRightIcon } from '~/components/icons/ui';
 import type { RegistryItem } from '~/lib/registry';
 
+import { EASE_OUT } from './reveal';
+
 type RegistryCardProps = {
   item: RegistryItem;
+  // Position in its grid: staggers the entrance (capped, so late cards never wait).
+  index?: number;
   preview?: ReactNode;
 };
 
 // A cell of the hairline grid (see RegistryGrid): square, borderless on top/left, with the
 // title link stretched over the whole cell so it's a single tab stop.
-export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
+export const RegistryCard = ({ item, index = 0, preview }: RegistryCardProps) => {
   const { t } = useTranslation();
+  const reduce = useReducedMotion();
+  const cardRef = useRef<HTMLElement>(null);
+
+  // Cursor spotlight: decorative, springed so it trails the pointer. Mouse only.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const spotX = useSpring(pointerX, { stiffness: 120, damping: 20 });
+  const spotY = useSpring(pointerY, { stiffness: 120, damping: 20 });
+  const spotlight = useMotionTemplate`radial-gradient(220px circle at ${spotX}px ${spotY}px, color-mix(in oklch, var(--color-foreground) 7%, transparent), transparent 70%)`;
+
+  const onPointerMove = (event: PointerEvent<HTMLElement>) => {
+    if (event.pointerType !== 'mouse' || reduce) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    pointerX.set(event.clientX - rect.left);
+    pointerY.set(event.clientY - rect.top);
+  };
+
+  // Featured thumbnail drifts a few pixels against the scroll.
+  const { scrollYProgress } = useScroll({ target: cardRef, offset: ['start end', 'end start'] });
+  const drift = useTransform(scrollYProgress, [0, 1], [6, -6]);
 
   return (
-    <article
+    <motion.article
+      onPointerMove={onPointerMove}
+      ref={cardRef}
       className={cn(
         'group relative flex flex-col border-e border-b border-foreground/5 transition-colors [content-visibility:auto]',
         // Featured items span two columns.
         item.featured && 'sm:col-span-2',
         'hover:bg-foreground/2 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:-outline-offset-2 has-[a:focus-visible]:outline-ring',
       )}
+      initial={{ opacity: 0, transform: 'translateY(12px)' }}
+      transition={{ delay: (index % 6) * 0.05, duration: 0.45, ease: EASE_OUT }}
+      viewport={{ once: true, margin: '0px 0px -60px 0px' }}
+      whileInView={{ opacity: 1, transform: 'translateY(0px)' }}
     >
       <div
         className={cn(
@@ -37,15 +76,28 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
         )}
       >
         {preview ? (
-          <div className="size-full transition-transform duration-300 group-hover:scale-[1.015]">
-            {preview}
-          </div>
+          <motion.div
+            className="size-full"
+            style={item.featured && !reduce ? { y: drift } : undefined}
+          >
+            <div className="size-full transition-transform duration-250 ease-(--ease-out-strong) group-hover:scale-[1.03] group-active:scale-[0.985]">
+              {preview}
+            </div>
+          </motion.div>
         ) : (
           <div className="label-mono flex size-full items-center justify-center text-foreground/40">
             {t('registry.card.previewComingSoon')}
           </div>
         )}
       </div>
+
+      {!reduce && (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 not-[@media(hover:hover)]:hidden group-hover:opacity-100"
+          style={{ background: spotlight }}
+        />
+      )}
 
       <div className="flex items-center gap-3 border-t border-foreground/5 px-4 py-3">
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -64,13 +116,13 @@ export const RegistryCard = ({ item, preview }: RegistryCardProps) => {
         <span
           aria-hidden="true"
           className={cn(
-            'flex size-7 shrink-0 items-center justify-center border border-foreground/10 text-foreground/50 transition-colors',
+            'flex size-7 shrink-0 items-center justify-center overflow-hidden border border-foreground/10 text-foreground/50 transition-colors',
             'group-hover:border-foreground group-hover:bg-foreground group-hover:text-background',
           )}
         >
-          <ArrowUpRightIcon className="size-3.5" />
+          <ArrowUpRightIcon className="size-3.5 transition-transform duration-200 ease-(--ease-out-strong) group-hover:translate-x-px group-hover:-translate-y-px" />
         </span>
       </div>
-    </article>
+    </motion.article>
   );
 };

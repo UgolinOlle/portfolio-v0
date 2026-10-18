@@ -1,6 +1,6 @@
 {
   "name": "@whoa-studio/ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Base UI components styled with Tailwind v4, the shadcn/ui set as a versioned npm package.",
   "keywords": [
     "base-ui",

@@ -18,7 +18,7 @@ No database. Data is MDX frontmatter, JSON locale files, generated registry JSON
 ### Registry docs page (`content/{components,blocks,templates}/**/*.mdx`)
 
 - Purpose: documentation page for one registry item.
-- Frontmatter: `title`, `description`, `preview` (name of the registry item), `previewWidth?` (px the block is designed at; scales its grid thumbnail), `featured?` (shown first, twice as wide in `/ui`).
+- Frontmatter: `title`, `description`, `preview` (name of the registry item), `previewWidth?` (px the block is designed at; scales its grid thumbnail), `previewFit?` (`frame` default, or `fill` to cover the whole preview panel), `featured?` (shown first, twice as wide in `/ui`).
 - Invariants: `preview` must match an item `name` in `registry.json`; sidebar order comes from the `meta.json` next to the pages; `index.mdx` pages describe the category and are not items.
 
 ### Project (`content/projects/<slug>.mdx` + `<slug>.en.mdx`)

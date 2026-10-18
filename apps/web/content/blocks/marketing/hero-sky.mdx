@@ -1,0 +1,29 @@
+---
+title: Hero Sky
+icon: Cloud
+description: Une section d'accueil plein cadre sur le fond Dream Sky, avec navigation, badge, titre, texte et bouton.
+preview: hero-sky
+previewFit: fill
+---
+
+Une section d'accueil prête à l'emploi : le ciel animé de [Dream Sky](/ui/components/core/dream-sky)
+en fond, une barre de navigation, un badge, un titre sur plusieurs lignes, un texte et un bouton
+en verre dépoli. Elle remplit son conteneur.
+
+## Props
+
+| Prop          | Rôle                                                                      |
+| ------------- | ------------------------------------------------------------------------- |
+| `brand`       | Marque en haut à gauche                                                   |
+| `links`       | Liens en haut à droite (`{ label, href }[]`)                              |
+| `badge`       | Pastille au-dessus du titre                                               |
+| `title`       | Titre, une entrée par ligne ; `HeroSkyCloud` place un nuage dans le texte |
+| `description` | Texte sous le titre                                                       |
+| `action`      | Bouton d'appel à l'action (`{ label, href }`)                             |
+| `sky`         | Props transmises à `DreamSky` (couleurs, vitesse, nuages, traînées)       |
+
+## Animation
+
+Une seule entrée orchestrée : le badge, chaque ligne du titre, le texte puis le bouton montent à
+la suite (opacité et `transform` uniquement, 600 ms, courbe `ease-out` forte). Avec
+`prefers-reduced-motion`, le mouvement disparaît et seul le fondu reste.

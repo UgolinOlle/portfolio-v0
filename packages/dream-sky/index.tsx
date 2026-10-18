@@ -118,15 +118,14 @@ void main() {
     vec2 dd = p - c;
     float along = dot(dd, dir);
     float perp = dot(dd, vec2(-dir.y, dir.x));
-    float len = 0.18 + 0.07 * mod(fi, 3.0);
-    float wid = 0.02 + 0.006 * mod(fi, 2.0);
+    float len = 0.22 + 0.08 * mod(fi, 3.0);
+    float wid = 0.026 + 0.008 * mod(fi, 2.0);
     float s = exp(-pow(along / len, 2.0) - pow(perp / wid, 2.0));
     float h = fract(0.55 + fi * 0.17 + t * 0.012 + along * 1.2);
     vec3 rgb = 0.5 + 0.5 * cos(6.2832 * (h + vec3(0.0, 0.33, 0.67)));
-    rgb = mix(vec3(1.0), rgb, 0.65);
+    rgb = mix(vec3(1.0), rgb, 0.85);
     flare += rgb * s * (0.55 + 0.45 * sin(t * 0.2 + fi * 1.9));
   }
-  col += flare * 0.35 * uFlare;
 
   // Clouds: domain-warped fbm, pushed towards the bottom and side edges so the centre stays clear.
   vec2 q = vec2(p.x * 1.4 + t * 0.03, p.y * 1.8 - t * 0.004);
@@ -143,6 +142,9 @@ void main() {
   float lit = clamp((n - nUp) * 6.0 + 0.5, 0.0, 1.0);
   vec3 cloudCol = mix(uCloud * vec3(0.8, 0.88, 0.97), uCloud, lit);
   col = mix(col, cloudCol, cloud * 0.92);
+
+  // Streaks sit over the clouds, like light catching the lens.
+  col += flare * 0.6 * uFlare;
 
   // Dither to hide banding on the smooth gradients.
   col += (hash(gl_FragCoord.xy + fract(t)) - 0.5) / 255.0;

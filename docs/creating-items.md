@@ -49,7 +49,7 @@ Multi-file: `index.tsx` is the entry, the rest are internal modules imported **r
 
 - `"registry": { "title": "…", "type": "block" }`; installed under `components/blocks/<name>/`.
 - Split by responsibility: `index.tsx` (composition + `LazyMotion` / `MotionConfig` provider), `motion.ts` (variants), `data.ts` (sample data), one file per sub-part. Keep sample data replaceable via props.
-- Docs page in `apps/web/content/blocks/<folder>/<name>.mdx`; add `previewWidth` in the frontmatter when the block is designed at a fixed width so the grid thumbnail scales.
+- Docs page in `apps/web/content/blocks/<folder>/<name>.mdx`; add `previewWidth` in the frontmatter when the block is designed at a fixed width so the grid thumbnail scales. Add `previewFit: fill` for backgrounds and heroes that should cover the whole preview panel (no padding, no dot grid); the demo then needs `size-full` on its root.
 - Other registry items are reached through `@/components/ui/ugolin/<x>` / `@/components/blocks/<x>`, never relative paths across packages.
 
 ## Creating a template

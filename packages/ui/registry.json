@@ -665,6 +665,46 @@
       }
     },
     {
+      "name": "hero-sky",
+      "type": "registry:block",
+      "title": "Hero Sky",
+      "description": "A full-bleed hero on the animated Dream Sky background: nav, badge, headline, text and a glass call to action.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["https://ugolin-olle.com/r/dream-sky.json"],
+      "files": [
+        {
+          "path": "../hero-sky/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/hero-sky/index.tsx"
+        },
+        {
+          "path": "../hero-sky/motion.ts",
+          "type": "registry:component",
+          "target": "components/blocks/hero-sky/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "hero-sky-demo",
+      "type": "registry:item",
+      "title": "Hero Sky Demo",
+      "description": "Usage example for the Hero Sky block.",
+      "registryDependencies": ["https://ugolin-olle.com/r/hero-sky.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/hero-sky.tsx",
+          "type": "registry:component",
+          "target": "components/examples/hero-sky.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "hero-sky",
+          "order": 0
+        }
+      }
+    },
+    {
       "name": "kanban",
       "type": "registry:block",
       "title": "Kanban",

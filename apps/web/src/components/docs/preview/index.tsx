@@ -10,9 +10,16 @@ type PreviewProps = {
   path: string;
   className?: string;
   type?: 'component' | 'block' | 'template';
+  // `fill`: the demo covers the whole panel, edge to edge (backgrounds, heroes).
+  fit?: 'frame' | 'fill';
 };
 
-export const Preview = async ({ path, className, type = 'component' }: PreviewProps) => {
+export const Preview = async ({
+  path,
+  className,
+  type = 'component',
+  fit = 'frame',
+}: PreviewProps) => {
   const isFullPage = type !== 'component';
   const isTemplate = type === 'template';
   const [Component, demoManifest, templateManifest] = await Promise.all([
@@ -44,6 +51,10 @@ export const Preview = async ({ path, className, type = 'component' }: PreviewPr
             className="size-full overflow-hidden rounded-lg border border-foreground/10 bg-background"
             data-lenis-prevent
           >
+            <Component />
+          </div>
+        ) : fit === 'fill' ? (
+          <div className="size-full">
             <Component />
           </div>
         ) : isFullPage ? (

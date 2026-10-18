@@ -6,6 +6,8 @@ const registrySchema = frontmatterSchema.extend({
   preview: z.string().optional(),
   /** Width (px) the block is designed at; its grid thumbnail is scaled from it. Defaults to a full page. */
   previewWidth: z.number().int().positive().optional(),
+  /** `fill`: the demo covers the whole preview panel, edge to edge, without padding or dot grid. */
+  previewFit: z.enum(['frame', 'fill']).optional(),
   /** Shown first and twice as wide in the /ui grid: the showcase item of its category. */
   featured: z.boolean().optional(),
 });

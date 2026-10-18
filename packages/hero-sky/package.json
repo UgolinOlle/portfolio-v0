@@ -1,0 +1,24 @@
+{
+  "name": "@portfolio-v0/hero-sky",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A full-bleed hero on the animated Dream Sky background: nav, badge, headline, text and a glass call to action.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*",
+    "motion": "catalog:"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "registry": {
+    "title": "Hero Sky",
+    "type": "block"
+  }
+}

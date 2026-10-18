@@ -106,6 +106,7 @@
     "@portfolio-v0/cta-simple": "workspace:*",
     "@portfolio-v0/dream-sky": "workspace:*",
     "@portfolio-v0/headers": "workspace:*",
+    "@portfolio-v0/hero-sky": "workspace:*",
     "@portfolio-v0/input": "workspace:*",
     "@portfolio-v0/kanban": "workspace:*",
     "@portfolio-v0/landing-saas": "workspace:*",

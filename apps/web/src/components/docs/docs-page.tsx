@@ -164,7 +164,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
                   )}
                 </div>
               )}
-              <Preview path={example.slug} type={type} />
+              <Preview fit={page.data.previewFit} path={example.slug} type={type} />
             </section>
           ))}
           <section className={cn('flex flex-col gap-4', gutter)}>

@@ -262,6 +262,21 @@
         "react": "catalog:",
       },
     },
+    "packages/hero-sky": {
+      "name": "@portfolio-v0/hero-sky",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+        "motion": "catalog:",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "typescript": "catalog:",
+      },
+      "peerDependencies": {
+        "react": "catalog:",
+      },
+    },
     "packages/input": {
       "name": "@portfolio-v0/input",
       "version": "0.0.0",
@@ -431,6 +446,7 @@
         "@portfolio-v0/cta-simple": "workspace:*",
         "@portfolio-v0/dream-sky": "workspace:*",
         "@portfolio-v0/headers": "workspace:*",
+        "@portfolio-v0/hero-sky": "workspace:*",
         "@portfolio-v0/input": "workspace:*",
         "@portfolio-v0/kanban": "workspace:*",
         "@portfolio-v0/landing-saas": "workspace:*",
@@ -934,6 +950,8 @@
     "@portfolio-v0/dream-sky": ["@portfolio-v0/dream-sky@workspace:packages/dream-sky"],
 
     "@portfolio-v0/headers": ["@portfolio-v0/headers@workspace:packages/headers"],
+
+    "@portfolio-v0/hero-sky": ["@portfolio-v0/hero-sky@workspace:packages/hero-sky"],
 
     "@portfolio-v0/input": ["@portfolio-v0/input@workspace:packages/input"],
 

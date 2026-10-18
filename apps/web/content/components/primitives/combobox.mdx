@@ -1,0 +1,29 @@
+---
+title: Combobox
+icon: MagnifyingGlass
+description: Un champ avec suggestions filtrées pendant la frappe.
+---
+
+<PrimitivePreview name="combobox" />
+
+## Animation
+
+La liste s'ouvre en fondu seul (120 ms), sans mouvement : elle apparaît à chaque frappe. Aucun item n'est animé.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add combobox
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Combobox } from '@whoa-studio/ui/combobox';
+```
+
+Exports : `Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxEmpty`.

@@ -37,6 +37,22 @@ function useChart() {
   return context;
 }
 
+// Recharts animates in JS, so CSS cannot honour `prefers-reduced-motion`: spread the result on
+// the series (`<Line {...useChartAnimation()} />`).
+function useChartAnimation() {
+  const reduce = React.useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+      query.addEventListener('change', onChange);
+      return () => query.removeEventListener('change', onChange);
+    },
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    () => false,
+  );
+
+  return { isAnimationActive: !reduce };
+}
+
 function ChartContainer({
   id,
   className,
@@ -329,6 +345,7 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
 
 export {
   ChartContainer,
+  useChartAnimation,
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,

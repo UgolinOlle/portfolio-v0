@@ -1,0 +1,29 @@
+---
+title: Empty
+icon: Tray
+description: Un état vide avec icône, titre et description.
+---
+
+<PrimitivePreview name="empty" />
+
+## Animation
+
+Avec `animated`, il monte de 8 px en fondu à son apparition (320 ms, CSS `@starting-style`).
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add empty
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Empty } from '@whoa-studio/ui/empty';
+```
+
+Exports : `Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription`.

@@ -1,0 +1,29 @@
+---
+title: Tabs
+icon: Tabs
+description: Des onglets pour basculer entre des vues.
+---
+
+<PrimitivePreview name="tabs" />
+
+## Animation
+
+`TabsIndicator` (optionnel) fait glisser la surbrillance entre les onglets avec les variables `--active-tab-*` de Base UI, en CSS pur.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add tabs
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Tabs } from '@whoa-studio/ui/tabs';
+```
+
+Exports : `Tabs, TabsList, TabsTrigger, TabsContent, TabsIndicator`.

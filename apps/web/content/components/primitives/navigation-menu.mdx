@@ -1,0 +1,29 @@
+---
+title: Navigation Menu
+icon: Compass
+description: Une navigation principale avec panneaux déroulants.
+---
+
+<PrimitivePreview name="navigation-menu" />
+
+## Animation
+
+Le panneau se redimensionne et se déplace vers la bonne position en 320 ms (`ease-out-strong`), avec un glissement directionnel du contenu.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add navigation-menu
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { NavigationMenu } from '@whoa-studio/ui/navigation-menu';
+```
+
+Exports : `NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink`.

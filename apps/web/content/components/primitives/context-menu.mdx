@@ -1,0 +1,29 @@
+---
+title: Context Menu
+icon: Cursor
+description: Un menu ouvert par clic droit.
+---
+
+<PrimitivePreview name="context-menu" />
+
+## Animation
+
+Le menu grandit depuis le point de clic (`--transform-origin`) en 180 ms ; les items ne bougent pas.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add context-menu
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { ContextMenu } from '@whoa-studio/ui/context-menu';
+```
+
+Exports : `ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem`.

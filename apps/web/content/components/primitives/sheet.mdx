@@ -1,0 +1,29 @@
+---
+title: Sheet
+icon: SidebarSimple
+description: Un panneau qui glisse depuis un bord de l’écran.
+---
+
+<PrimitivePreview name="sheet" />
+
+## Animation
+
+Le panneau glisse de sa propre taille (`translate 100%`) avec `ease-drawer` en 240 ms (180 ms en sortie). Sous `prefers-reduced-motion`, il s'estompe seulement.
+
+Les jetons et les règles communes sont décrits sur la page [Motion](/ui/components/core/motion).
+
+## Installation
+
+Le composant fait partie des primitives shadcn/ui sur Base UI.
+
+```bash
+bunx --bun shadcn@latest add sheet
+```
+
+Ou depuis le paquet npm :
+
+```tsx
+import { Sheet } from '@whoa-studio/ui/sheet';
+```
+
+Exports : `Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription`.

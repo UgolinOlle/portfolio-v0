@@ -1,9 +1,15 @@
+'use client';
+
 import { Label } from '@portfolio-v0/shadcn/components/ui/label';
 import { Separator } from '@portfolio-v0/shadcn/components/ui/separator';
 
 import { cva, type VariantProps } from 'class-variance-authority';
+import { AnimatePresence, m } from 'motion/react';
 import { useMemo } from 'react';
 
+import { Motion } from '../../lib/motion/provider';
+import { useMotionSafe } from '../../lib/motion/use-motion-safe';
+import { collapse, fade } from '../../lib/motion/variants';
 import { cn } from '../../lib/utils';
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
@@ -193,19 +199,34 @@ function FieldError({
     );
   }, [children, errors]);
 
-  if (!content) {
-    return null;
-  }
+  const { reduce } = useMotionSafe();
 
+  // The error grows in (and out, when `errors` empties) instead of pushing the form down. The
+  // motion wrapper only carries animation props; the semantic element keeps the DOM props.
   return (
-    <div
-      role="alert"
-      data-slot="field-error"
-      className={cn('text-sm font-normal text-destructive', className)}
-      {...props}
-    >
-      {content}
-    </div>
+    <Motion>
+      <AnimatePresence initial={false}>
+        {content ? (
+          <m.div
+            key="field-error"
+            className="overflow-hidden"
+            variants={reduce ? fade : collapse}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <div
+              role="alert"
+              data-slot="field-error"
+              className={cn('text-sm font-normal text-destructive', className)}
+              {...props}
+            >
+              {content}
+            </div>
+          </m.div>
+        ) : null}
+      </AnimatePresence>
+    </Motion>
   );
 }
 

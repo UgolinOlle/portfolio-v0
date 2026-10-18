@@ -195,6 +195,39 @@
       }
     },
     {
+      "name": "dream-sky",
+      "type": "registry:ui",
+      "title": "Dream Sky",
+      "description": "A dreamy WebGL sky background with drifting clouds, concentric rings and prismatic light streaks.",
+      "files": [
+        {
+          "path": "../dream-sky/index.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/dream-sky.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dream-sky-demo",
+      "type": "registry:item",
+      "title": "Dream Sky Demo",
+      "description": "Usage example for the Dream Sky component.",
+      "registryDependencies": ["https://ugolin-olle.com/r/dream-sky.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/dream-sky.tsx",
+          "type": "registry:component",
+          "target": "components/examples/dream-sky.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "dream-sky",
+          "order": 0
+        }
+      }
+    },
+    {
       "name": "headers",
       "type": "registry:ui",
       "title": "Headers",
@@ -627,6 +660,101 @@
       "meta": {
         "example": {
           "of": "cta-simple",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "kanban",
+      "type": "registry:block",
+      "title": "Kanban",
+      "description": "A Kanban board with drag-and-drop, WIP limits, a card drawer, search tokens and undo/redo.",
+      "dependencies": ["@dnd-kit/core", "@dnd-kit/sortable", "lucide-react", "motion"],
+      "registryDependencies": ["button", "input", "kbd", "popover", "sheet", "textarea"],
+      "files": [
+        {
+          "path": "../kanban/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/index.tsx"
+        },
+        {
+          "path": "../kanban/card-sheet.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/card-sheet.tsx"
+        },
+        {
+          "path": "../kanban/card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/card.tsx"
+        },
+        {
+          "path": "../kanban/column-settings.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/column-settings.tsx"
+        },
+        {
+          "path": "../kanban/column.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/column.tsx"
+        },
+        {
+          "path": "../kanban/context.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/context.ts"
+        },
+        {
+          "path": "../kanban/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/data.ts"
+        },
+        {
+          "path": "../kanban/empty-art.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/empty-art.tsx"
+        },
+        {
+          "path": "../kanban/motion.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/motion.ts"
+        },
+        {
+          "path": "../kanban/store.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/store.ts"
+        },
+        {
+          "path": "../kanban/toolbar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/toolbar.tsx"
+        },
+        {
+          "path": "../kanban/types.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/types.ts"
+        },
+        {
+          "path": "../kanban/utils.ts",
+          "type": "registry:component",
+          "target": "components/blocks/kanban/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "kanban-demo",
+      "type": "registry:item",
+      "title": "Kanban Demo",
+      "description": "Usage example for the Kanban block.",
+      "registryDependencies": ["https://ugolin-olle.com/r/kanban.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/kanban.tsx",
+          "type": "registry:component",
+          "target": "components/examples/kanban.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "kanban",
           "order": 0
         }
       }

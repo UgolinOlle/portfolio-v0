@@ -1,0 +1,23 @@
+{
+  "name": "@portfolio-v0/dream-sky",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A dreamy WebGL sky background with drifting clouds, concentric rings and prismatic light streaks.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "registry": {
+    "title": "Dream Sky",
+    "type": "ui"
+  }
+}

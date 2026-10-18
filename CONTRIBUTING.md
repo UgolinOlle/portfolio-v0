@@ -2,6 +2,8 @@
 
 ## Adding a component or block
 
+> Full recipe, including templates and the mandatory **design + animate + motion** workflow (`frontend-design`, `animate`, `motion` skills): [docs/creating-items.md](docs/creating-items.md).
+
 Every item is its own workspace package, kibo-ui style. `packages/ui/registry.json` is **generated** from those packages by `packages/ui/scripts/registry.ts`, and it feeds the shadcn registry (`/r/<name>.json`). The npm package (`@whoa-studio/ui`) is built separately from the shadcn primitives in `packages/shadcn`. Never edit it by hand.
 
 1. **Create the package** `packages/<name>/`:

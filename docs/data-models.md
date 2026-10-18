@@ -35,6 +35,7 @@ No database. Data is MDX frontmatter, JSON locale files, generated registry JSON
 ### Registry item (`registry.json`, generated)
 
 - Fields: `name`, `type` (`registry:ui` | `registry:block`), `title`, `description`, `dependencies`, `registryDependencies`, `files[{ path, type, target }]`, `meta?` (`category: "template"`, or `example: { of, order }` for demos).
+- Templates are not in this file: `packages/templates/registry.json` is hand-written (`registry:block`, explicit `dependencies` / `registryDependencies`, `files[].target` under `components/blocks/<name>/`).
 - Relations: each item has one or more `<name>-demo` items (`meta.example.of = name`); `registryDependencies` are shadcn primitive names or `https://ugolin-olle.com/r/<item>.json` URLs, derived from `@/components/...` imports.
 
 ## Migrations

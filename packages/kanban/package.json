@@ -1,0 +1,27 @@
+{
+  "name": "@portfolio-v0/kanban",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A Kanban board with drag-and-drop, WIP limits, a card drawer, search tokens and undo/redo.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@portfolio-v0/shadcn": "workspace:*",
+    "lucide-react": "catalog:",
+    "motion": "catalog:"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "registry": {
+    "title": "Kanban",
+    "type": "block"
+  }
+}

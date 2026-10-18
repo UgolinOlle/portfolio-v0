@@ -9,6 +9,7 @@ CLAUDE.md only points at it. Keep each file focused and under a few hundred line
 | [api-contracts.md](api-contracts.md)         | touching a route handler, the registry/npm output or a frontmatter field |
 | [data-models.md](data-models.md)             | changing MDX schemas, the registry item shape or site constants          |
 | [debugging.md](debugging.md)                 | something is broken and the cause isn't obvious                          |
+| [creating-items.md](creating-items.md)       | creating a component, block or template (design + animate + motion)      |
 | [ui-animation-plan.md](ui-animation-plan.md) | adding or changing animation in `packages/shadcn`                        |
 
-Adding a registry item: see [`CONTRIBUTING.md`](../CONTRIBUTING.md).
+Adding a registry item: [`creating-items.md`](creating-items.md) (full recipe) and [`CONTRIBUTING.md`](../CONTRIBUTING.md) (checklist).

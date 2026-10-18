@@ -57,6 +57,9 @@ const SECTIONS = {
   template: { label: 'Templates', segment: 'templates' },
 } as const;
 
+// Templates run edge to edge: the page container drops its x padding, so text blocks get it back.
+const TEMPLATE_GUTTER = 'px-4 md:px-6 xl:px-8';
+
 const pageActionClassName =
   'label-mono h-7 rounded-none border border-foreground/10 bg-transparent px-2.5 font-normal text-foreground/60 shadow-none hover:bg-foreground/3 hover:text-foreground';
 
@@ -76,6 +79,8 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
   const MDX = page.data.body;
   const isRootIndex = !slug || slug.length === 0;
   // Introduction pages of blocks / templates list their items as a card grid, like /ui.
+  const isTemplate = type === 'template';
+  const gutter = isTemplate ? TEMPLATE_GUTTER : undefined;
   const galleryItems = isRootIndex && type !== 'component' ? getRegistryItems(type) : [];
   const examples = page.data.preview ? getRegistryExamples(page.data.preview) : [];
 
@@ -100,12 +105,13 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
   return (
     <DocsPage
       breadcrumb={{ enabled: false }}
+      className={isTemplate ? 'max-w-none px-0 md:px-0 xl:px-0' : undefined}
       full={type !== 'component'}
       tableOfContent={{ enabled: showToc }}
       tableOfContentPopover={{ enabled: showToc }}
       toc={showToc ? toc : []}
     >
-      <header className="flex flex-col gap-3 border-b border-foreground/5 pb-8">
+      <header className={cn('flex flex-col gap-3 border-b border-foreground/5 pb-8', gutter)}>
         <div className="flex min-h-7 flex-wrap items-center justify-between gap-3">
           <p className="label-mono text-foreground/45">
             <Link
@@ -144,12 +150,12 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
         </DocsDescription>
       </header>
 
-      <ConstructionBanner className="my-2" />
+      <ConstructionBanner className={cn('my-2', gutter)} />
 
       {page.data.preview && (
         <div className="flex flex-col gap-12">
           {examples.map((example) => (
-            <section className="flex flex-col gap-4" key={example.name}>
+            <section className={cn('flex flex-col gap-4', gutter)} key={example.name}>
               {examples.length > 1 && (
                 <div className="flex flex-col gap-1">
                   <SectionHeading id={example.name} title={example.title} />
@@ -161,15 +167,32 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
               <Preview path={example.slug} type={type} />
             </section>
           ))}
-          <section className="flex flex-col gap-4">
+          <section className={cn('flex flex-col gap-4', gutter)}>
             <SectionHeading id="installation" title="Installation" />
-            <RegistryInstall path={page.data.preview} />
+            <RegistryInstall explorer={isTemplate} path={page.data.preview} />
           </section>
         </div>
       )}
 
+      {/* Templates are the point of their index: show them before any prose. */}
+      {isTemplate && galleryItems.length > 0 && (
+        <section aria-labelledby="templates-gallery" className="flex flex-col">
+          <h2 className="sr-only" id="templates-gallery">
+            Templates disponibles
+          </h2>
+          <p className={cn('label-mono pb-3 text-foreground/45', gutter)}>
+            {galleryItems.length} templates
+          </p>
+          <RegistryGrid
+            className="border-s border-t border-foreground/5 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2"
+            items={galleryItems}
+            variant="wide"
+          />
+        </section>
+      )}
+
       {/* Text measure capped at ~68 characters; wider content (previews, tables) is untouched. */}
-      <DocsBody className="[&>:is(p,ul,ol,blockquote,h2,h3,h4)]:max-w-[68ch]">
+      <DocsBody className={cn('[&>:is(p,ul,ol,blockquote,h2,h3,h4)]:max-w-[68ch]', gutter)}>
         <MDX
           components={{
             ...defaultMdxComponents,
@@ -179,7 +202,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
         />
       </DocsBody>
 
-      {galleryItems.length > 0 && (
+      {!isTemplate && galleryItems.length > 0 && (
         <RegistryGrid
           className="border-s border-t border-foreground/5 xl:grid-cols-2 2xl:grid-cols-3"
           items={galleryItems}

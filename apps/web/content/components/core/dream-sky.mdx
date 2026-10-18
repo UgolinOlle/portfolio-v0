@@ -1,0 +1,29 @@
+---
+title: Dream Sky
+icon: Cloud
+description: Fond WebGL onirique, avec ciel dégradé, nuages, cercles concentriques et traînées prismatiques.
+preview: dream-sky
+---
+
+Un fond animé en un seul fragment shader WebGL, sans Three.js ni dépendance : `react` suffit.
+Il remplit son conteneur et affiche ses `children` par-dessus.
+
+## Props
+
+| Prop             | Défaut    | Rôle                                         |
+| ---------------- | --------- | -------------------------------------------- |
+| `skyTop`         | `#0a78ff` | Couleur du haut du ciel                      |
+| `skyBottom`      | `#5ec0ff` | Couleur de l'horizon                         |
+| `cloudColor`     | `#ffffff` | Couleur des nuages éclairés                  |
+| `speed`          | `1`       | Multiplicateur de vitesse (`0` fige le ciel) |
+| `flareIntensity` | `1`       | Force des traînées prismatiques (`0` à `2`)  |
+| `cloudDensity`   | `0.55`    | Couverture nuageuse (`0` à `1`)              |
+| `ringIntensity`  | `1`       | Force des cercles concentriques (`0` à `2`)  |
+| `maxPixelRatio`  | `1.5`     | Plafond du pixel ratio du canvas             |
+| `paused`         | `false`   | Arrête la boucle de rendu                    |
+
+## Comportement
+
+- La boucle est en pause quand le composant est hors écran ou l'onglet masqué.
+- Avec `prefers-reduced-motion`, le ciel est rendu une fois, sans animation.
+- Sans WebGL, un dégradé CSS prend le relais.

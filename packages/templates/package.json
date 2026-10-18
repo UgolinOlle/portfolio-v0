@@ -1,0 +1,66 @@
+{
+  "name": "@whoa-studio/templates",
+  "version": "0.1.0",
+  "description": "Install Whoa Studio UI templates into a shadcn project: npx @whoa-studio/templates add app-shell-1.",
+  "keywords": [
+    "cli",
+    "react",
+    "shadcn",
+    "shadcn-ui",
+    "tailwindcss",
+    "templates",
+    "ui"
+  ],
+  "homepage": "https://github.com/UgolinOlle/portfolio-v0/tree/stable/packages/templates#readme",
+  "bugs": "https://github.com/UgolinOlle/portfolio-v0/issues",
+  "license": "MIT",
+  "author": "Ugolin Ollé",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UgolinOlle/portfolio-v0.git",
+    "directory": "packages/templates"
+  },
+  "bin": {
+    "templates": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "bun build ./src/index.ts --target node --outdir dist",
+    "dev": "bun run src/index.ts",
+    "check-types": "tsc --noEmit",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "prepublishOnly": "bun run build",
+    "registry:build": "shadcn build ./registry.json --output ../../apps/web/public/r && cp registry.json ../../apps/web/public/r/templates.json"
+  },
+  "dependencies": {
+    "cac": "^6.7.14",
+    "nanospinner": "^1.2.2",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "@portfolio-v0/shadcn": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "lucide-react": "catalog:",
+    "motion": "catalog:",
+    "next-themes": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "shadcn": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

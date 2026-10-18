@@ -1,0 +1,316 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "whoa-studio-templates",
+  "homepage": "https://ugolin-olle.com",
+  "items": [
+    {
+      "name": "app-shell-1",
+      "type": "registry:block",
+      "title": "App Shell 1",
+      "description": "A responsive application shell: collapsible sidebar with workspace switcher, grouped nav with submenus and user menu, sticky header with breadcrumbs and search, and a content region.",
+      "dependencies": ["lucide-react", "motion", "next-themes"],
+      "registryDependencies": [
+        "avatar",
+        "breadcrumb",
+        "button",
+        "collapsible",
+        "dropdown-menu",
+        "input",
+        "kbd",
+        "separator",
+        "sidebar",
+        "skeleton"
+      ],
+      "files": [
+        {
+          "path": "registry/app-shell-1/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/index.tsx"
+        },
+        {
+          "path": "registry/app-shell-1/app-sidebar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/app-sidebar.tsx"
+        },
+        {
+          "path": "registry/app-shell-1/content-skeleton.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/content-skeleton.tsx"
+        },
+        {
+          "path": "registry/app-shell-1/motion.ts",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/motion.ts"
+        },
+        {
+          "path": "registry/app-shell-1/nav-main.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/nav-main.tsx"
+        },
+        {
+          "path": "registry/app-shell-1/nav-user.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/nav-user.tsx"
+        },
+        {
+          "path": "registry/app-shell-1/nav.ts",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/nav.ts"
+        },
+        {
+          "path": "registry/app-shell-1/site-header.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/site-header.tsx"
+        },
+        {
+          "path": "registry/app-shell-1/team-switcher.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/team-switcher.tsx"
+        },
+        {
+          "path": "registry/app-shell-1/theme-toggle.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/app-shell-1/theme-toggle.tsx"
+        }
+      ]
+    },
+    {
+      "name": "app-shell-1-demo",
+      "type": "registry:item",
+      "title": "App Shell 1 Demo",
+      "description": "Usage example for the App Shell 1 template.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["https://ugolin-olle.com/r/app-shell-1.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/app-shell-1.tsx",
+          "type": "registry:component",
+          "target": "components/examples/app-shell-1.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "app-shell-1",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "dashboard-1",
+      "type": "registry:block",
+      "title": "Dashboard 1",
+      "description": "An approval inbox dashboard: top navigation, stats header, filterable approval list and a detail pane with workflow timeline, budget bar, evidence and decision actions.",
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/dashboard-1/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/index.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/action-bar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/action-bar.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/approval-card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/approval-card.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/approval-detail.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/approval-detail.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/approval-list.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/approval-list.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/budget-bar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/budget-bar.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/data.ts"
+        },
+        {
+          "path": "registry/dashboard-1/evidence-list.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/evidence-list.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/initials-avatar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/initials-avatar.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/sub-header.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/sub-header.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/top-nav.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/top-nav.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/workflow-timeline.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/workflow-timeline.tsx"
+        },
+        {
+          "path": "registry/dashboard-1/motion.ts",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-1/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-1-demo",
+      "type": "registry:item",
+      "title": "Dashboard 1 Demo",
+      "description": "Usage example for the Dashboard 1 template.",
+      "dependencies": [],
+      "registryDependencies": ["https://ugolin-olle.com/r/dashboard-1.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/dashboard-1.tsx",
+          "type": "registry:component",
+          "target": "components/examples/dashboard-1.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "dashboard-1",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "dashboard-2",
+      "type": "registry:block",
+      "title": "Dashboard 2",
+      "description": "A dark CRM dashboard: collapsible sidebar, ⌘K command search, notifications, KPI sparklines, a spring-physics revenue chart, pipeline and source charts, deals table, activity feed and task rail.",
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["https://ugolin-olle.com/r/command-search.json"],
+      "files": [
+        {
+          "path": "registry/dashboard-2/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/index.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/activity-feed.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/activity-feed.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/animated-number.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/animated-number.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/command-palette.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/command-palette.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/data.ts"
+        },
+        {
+          "path": "registry/dashboard-2/deals-table.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/deals-table.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/evil-chart.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/evil-chart.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/header.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/header.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/kpi-card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/kpi-card.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/motion.ts",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/motion.ts"
+        },
+        {
+          "path": "registry/dashboard-2/notifications.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/notifications.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/revenue-card.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/revenue-card.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/sidebar.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/sidebar.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/source-donut.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/source-donut.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/sparkline.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/sparkline.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/stage-chart.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/stage-chart.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/task-rail.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/task-rail.tsx"
+        },
+        {
+          "path": "registry/dashboard-2/toast.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/dashboard-2/toast.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dashboard-2-demo",
+      "type": "registry:item",
+      "title": "Dashboard 2 Demo",
+      "description": "Usage example for the Dashboard 2 template.",
+      "dependencies": [],
+      "registryDependencies": ["https://ugolin-olle.com/r/dashboard-2.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/dashboard-2.tsx",
+          "type": "registry:component",
+          "target": "components/examples/dashboard-2.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "dashboard-2",
+          "order": 0
+        }
+      }
+    }
+  ]
+}

@@ -3,9 +3,14 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
+import { FileTreeCodeBlock } from '~/components/docs/code-block/file-tree-code-block';
 import { RegistryCodeBlock } from '~/components/docs/code-block/registry-code-block';
 import { ArrowUpRightIcon, ChevronRightIcon } from '~/components/icons/ui';
-import { getRegistryDependencyHref, getRegistryInstallCommands } from '~/lib/registry';
+import {
+  getRegistryDemoName,
+  getRegistryDependencyHref,
+  getRegistryInstallCommands,
+} from '~/lib/registry';
 import { getRegistryItemManifest } from '~/lib/registry-item';
 
 import { InstallCommand } from './install-command';
@@ -13,13 +18,22 @@ import { InstallCommand } from './install-command';
 type RegistryInstallProps = {
   // Nom de l'item dans `registry.json`, identique au `path` passé à `Preview`.
   path: string;
+  // Templates : explorateur de fichiers (fichiers du template + démo) au lieu du code seul.
+  explorer?: boolean;
   className?: string;
 };
 
 const labelClassName = 'label-mono text-foreground/45';
 
-export const RegistryInstall = async ({ path, className }: RegistryInstallProps) => {
+export const RegistryInstall = async ({
+  path,
+  explorer = false,
+  className,
+}: RegistryInstallProps) => {
   const manifest = await getRegistryItemManifest(path);
+  const demoManifest = explorer
+    ? await getRegistryItemManifest(getRegistryDemoName(path))
+    : undefined;
   const dependencies = manifest.registryDependencies ?? [];
 
   return (
@@ -71,7 +85,13 @@ export const RegistryInstall = async ({ path, className }: RegistryInstallProps)
           />
           Installation manuelle
         </summary>
-        <RegistryCodeBlock className="border-0" files={manifest.files} />
+        {demoManifest ? (
+          <div className="h-128">
+            <FileTreeCodeBlock files={[...manifest.files, ...demoManifest.files]} />
+          </div>
+        ) : (
+          <RegistryCodeBlock className="border-0" files={manifest.files} />
+        )}
       </details>
     </div>
   );

@@ -1,0 +1,16 @@
+{
+  "extends": "@portfolio-v0/config/registry-item.json",
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "types": ["node"],
+    "paths": {
+      "@/lib/*": ["../shadcn/lib/*"],
+      "@portfolio-v0/shadcn/components/*": ["../shadcn/components/ui/*"],
+      "@portfolio-v0/shadcn/utils": ["../shadcn/lib/utils.ts"],
+      "@/components/ui/*": ["../shadcn/components/ui/*"],
+      "@/components/blocks/command-search": ["../command-search/index.tsx"]
+    }
+  },
+  "include": ["src/**/*.ts", "registry/**/*.ts", "registry/**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
+}

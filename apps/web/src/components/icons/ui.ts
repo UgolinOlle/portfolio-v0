@@ -28,4 +28,12 @@ export {
   PencilSimple as EditIcon,
   SidebarSimple as SidebarIcon,
   TextAlignLeft as TextIcon,
+  File as FileIcon,
+  FileCode as FileCodeIcon,
+  FileCss as FileCssIcon,
+  FileJs as FileJsIcon,
+  FileTs as FileTsIcon,
+  FileTsx as FileTsxIcon,
+  Folder as FolderIcon,
+  FolderOpen as FolderOpenIcon,
 } from '@phosphor-icons/react/ssr';

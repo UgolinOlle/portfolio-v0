@@ -15,8 +15,8 @@ export function Container(props: ComponentProps<'article'>) {
       data-full={full}
       {...props}
       className={cn(
-        'mx-auto flex w-full max-w-225 flex-col gap-4 px-4 pt-[calc(var(--fd-banner-height,0px)+1.5rem)] pb-6 [grid-area:main] md:px-6 md:pb-8 xl:px-8 xl:pb-14',
-        full && 'max-w-292',
+        'mx-auto flex w-full max-w-225 flex-col gap-4 px-4 pt-[calc(var(--fd-banner-height,0)+1.5rem)] pb-6 [grid-area:main] md:px-6 md:pb-8 xl:px-8 xl:pb-14',
+        full && 'max-w-292 px-8',
         props.className,
       )}
     >

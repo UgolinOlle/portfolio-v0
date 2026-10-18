@@ -45,7 +45,7 @@ export function NavbarClient({
     <>
       {/* First focusable element: lets keyboard users jump past the header and sidebar. */}
       <a
-        className="label-mono sr-only bg-foreground px-3 py-2 text-background focus:not-sr-only focus:fixed focus:start-2 focus:top-2 focus:z-50"
+        className="label-mono sr-only bg-foreground px-3 py-2 text-background focus:not-sr-only focus:fixed focus:inset-s-2 focus:top-2 focus:z-50"
         href={variant === 'docs' ? '#nd-page' : `#${MAIN_CONTENT_ID}`}
       >
         {t('navigation.skipToContent')}

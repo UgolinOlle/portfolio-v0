@@ -5,6 +5,7 @@
 
 /* Packages d'items du registry (@whoa-studio/ui) : hors de l'app, Tailwind ne les analyse pas tout seul. */
 @source '../../../../packages/*/*.{ts,tsx}';
+@source '../../../../packages/templates/registry/**/*.{ts,tsx}';
 
 /* Layout tokens for the /ui registry shell (navbar, sidebar, TOC, content measure). */
 :root {

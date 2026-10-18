@@ -13,6 +13,8 @@ type PreviewShellProps = {
   code: ReactNode;
   // Blocks and templates are page-sized: taller panel, scrollable.
   fullPage: boolean;
+  // Templates are whole apps: edge to edge, fixed height, and they scroll internally.
+  fill?: boolean;
   className?: string;
 };
 
@@ -24,7 +26,13 @@ const toolButtonClassName = cn(
 
 // Square, hairline preview frame matching the docs chrome: mono tabs on the left, replay and
 // fullscreen on the right. The preview and code are rendered on the server and passed in.
-export const PreviewShell = ({ preview, code, fullPage, className }: PreviewShellProps) => {
+export const PreviewShell = ({
+  preview,
+  code,
+  fullPage,
+  fill = false,
+  className,
+}: PreviewShellProps) => {
   const id = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState<Tab>('preview');
@@ -135,8 +143,14 @@ export const PreviewShell = ({ preview, code, fullPage, className }: PreviewShel
         aria-labelledby={`${id}-preview-tab`}
         className={cn(
           'flex items-center-safe justify-center',
-          fullPage ? 'max-h-192 min-h-80 overflow-auto' : 'h-128 overflow-hidden',
+          fill
+            ? 'h-192 items-stretch overflow-hidden p-4 md:p-8'
+            : fullPage
+              ? 'max-h-192 min-h-80 overflow-auto'
+              : 'h-128 overflow-hidden',
           'in-[:fullscreen]:h-auto in-[:fullscreen]:flex-1',
+          'bg-[radial-gradient(color-mix(in_oklch,var(--color-foreground)_10%,transparent)_1px,transparent_1px)]',
+          'bg-size-[16px_16px]',
         )}
         hidden={tab !== 'preview'}
         id={`${id}-preview`}
@@ -150,7 +164,12 @@ export const PreviewShell = ({ preview, code, fullPage, className }: PreviewShel
 
       <div
         aria-labelledby={`${id}-code-tab`}
-        className="h-128 overflow-hidden in-[:fullscreen]:h-auto in-[:fullscreen]:flex-1"
+        className={cn(
+          'overflow-hidden in-[:fullscreen]:h-auto in-[:fullscreen]:flex-1',
+          fill ? 'h-192' : 'h-128',
+        )}
+        // The docs page uses Lenis smooth scroll: opt the code panel out so it gets the wheel.
+        data-lenis-prevent={fill ? '' : undefined}
         hidden={tab !== 'code'}
         id={`${id}-code`}
         role="tabpanel"

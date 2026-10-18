@@ -92,6 +92,7 @@ const UiIndexPage = () => {
               </Reveal>
             </section>
           )}
+
           <FilterBar
             options={sections.map((section) => ({
               category: section.category,
@@ -99,6 +100,7 @@ const UiIndexPage = () => {
               count: section.items.length,
             }))}
           />
+
           {sections.map((section, index) => (
             <FilterableSection category={section.category} key={section.category}>
               <RegistrySection index={index + 1} section={section} />

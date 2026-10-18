@@ -4,7 +4,7 @@
 
 Personal portfolio of Ugolin Ollé (freelance full-stack developer) **and** a shadcn-style UI registry, served from one Next.js site (`apps/web`, <https://ugolin-olle.com>). The registry's components are distributed through two channels built from the same sources: the shadcn registry (`/r/<name>.json`) and an npm package (`@whoa-studio/ui`).
 
-Rendering and SEO details live in [seo-audit.md](seo-audit.md). Contributor steps for adding an item are in [`CONTRIBUTING.md`](../CONTRIBUTING.md).
+Rendering and SEO details live in [seo-audit.md](seo-audit.md). Contributor steps for adding an item are in [`CONTRIBUTING.md`](../CONTRIBUTING.md); the full recipe for components, blocks and templates, with the mandatory design + animate + motion workflow, is [creating-items.md](creating-items.md).
 
 ## Stack
 
@@ -30,6 +30,7 @@ packages/
   <item>/                 one workspace package per registry item (index.tsx + modules)
   shadcn/                 shadcn primitives (`bun run bump-ui` refreshes them)
   ui/                     @whoa-studio/ui: registry.json generator, tsup build, npm package
+  templates/              @whoa-studio/templates: CLI (`add`, `list`) + its own registry (registry.json, registry/<template>/)
   config/                 shared tsconfig presets (base, nextjs, react-lib, registry-item)
 docs/                     this folder
 ```
@@ -44,6 +45,11 @@ Registry item packages today: `activity`, `avatars`, `blog`, `button`, `button-a
 2. `packages/ui/scripts/registry.ts` (`registry:generate`) walks `packages/*`, validates them (name, description, `index.tsx` entry, declared vs imported npm deps, example files exist) and writes `packages/ui/registry.json`. It also emits a `<name>-demo` item per example from `apps/web/examples/`.
 3. `shadcn build` turns `registry.json` into `apps/web/public/r/*.json` (shadcn channel). `tsup` builds `dist/<name>.{js,cjs,d.ts}` (npm channel).
 4. A docs page in `apps/web/content/{components,blocks,templates}/` links to the item with `preview: <name>` in its frontmatter; `src/lib/registry.ts` joins page and registry entry (dependencies, examples, install commands).
+   Template pages (`/ui/templates`) render edge to edge and their Code tab is a file explorer (`FileTreeCodeBlock`) listing the template's own files plus the demo; the tree and the code scroll independently in a bounded panel.
+
+### Templates CLI (`packages/templates`)
+
+`registry.json` there is hand-written (official schema; `registryDependencies` are explicit) and lists templates whose sources live in `registry/<template>/`. `registry:build` runs `shadcn build` into `apps/web/public/r/` (next to the `packages/ui` items) and copies `registry.json` to `/r/templates.json`, the index read by `templates list`. The CLI (`src/`, built with `bun build --target node`) checks that `${WHOA_REGISTRY_URL}/r/<name>.json` exists, then spawns `shadcn add <url>`; it copies no files itself. Default `WHOA_REGISTRY_URL` is `https://ugolin-olle.com`.
 
 `apps/web` runs `registry:build` before `dev` and `build` (`predev` / `prebuild`).
 

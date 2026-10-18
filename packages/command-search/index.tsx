@@ -111,6 +111,25 @@ export function CommandSearch({
     return () => document.removeEventListener('pointerdown', onPointerDown);
   }, [open]);
 
+  // Wheel events over the panel never reach the page: they scroll the results list, or nothing.
+  const panelRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    const panel = panelRef.current;
+    if (!open || !panel) return;
+    const onWheel = (event: WheelEvent) => {
+      for (let el = event.target as HTMLElement | null; el && el !== panel; el = el.parentElement) {
+        if (el.scrollHeight <= el.clientHeight) continue;
+        if (!/(auto|scroll)/.test(getComputedStyle(el).overflowY)) continue;
+        const atTop = el.scrollTop <= 0;
+        const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+        if ((event.deltaY < 0 && !atTop) || (event.deltaY > 0 && !atBottom)) return;
+      }
+      event.preventDefault();
+    };
+    panel.addEventListener('wheel', onWheel, { passive: false });
+    return () => panel.removeEventListener('wheel', onWheel);
+  }, [open]);
+
   const results = React.useMemo(
     () => filterItems(items, { query, tab, filters }),
     [items, query, tab, filters],
@@ -257,6 +276,7 @@ export function CommandSearch({
           {open && (
             <motion.div
               key="panel"
+              ref={panelRef}
               initial={{ opacity: 0, transform: 'translateY(-10px) scale(0.985)' }}
               animate={{ opacity: 1, transform: 'translateY(0px) scale(1)' }}
               exit={{
@@ -318,7 +338,11 @@ export function CommandSearch({
 
                   <div className="grid gap-x-6 p-4 pt-3 md:grid-cols-[minmax(0,1fr)_14rem]">
                     {/* Results */}
-                    <div className="-mx-2 max-h-[27rem] min-w-0 overflow-x-hidden overflow-y-auto overscroll-contain px-2 pb-1">
+                    {/* data-lenis-prevent: the docs site uses Lenis smooth scroll, which would otherwise take the wheel. */}
+                    <div
+                      data-lenis-prevent
+                      className="-mx-2 max-h-[27rem] min-w-0 touch-pan-y overflow-x-hidden overflow-y-auto overscroll-contain px-2 pb-1"
+                    >
                       <p className="sr-only" aria-live="polite">
                         {labels.results(results.length)}
                       </p>

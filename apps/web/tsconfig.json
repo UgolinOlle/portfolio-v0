@@ -10,7 +10,7 @@
       "@portfolio-v0/shadcn/hooks": ["../../packages/shadcn/hooks/index.ts"],
       "@portfolio-v0/shadcn/utils": ["../../packages/shadcn/lib/utils.ts"],
       "@/components/ui/ugolin/*": ["../../packages/*"],
-      "@/components/blocks/*": ["../../packages/*"],
+      "@/components/blocks/*": ["../../packages/*", "../../packages/templates/registry/*"],
       "@/components/ui/*": ["../../packages/shadcn/components/ui/*"],
       "@/lib/utils": ["../../packages/shadcn/lib/utils.ts"],
       "@/hooks/*": ["../../packages/shadcn/hooks/*"],

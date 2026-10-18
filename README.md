@@ -88,6 +88,27 @@ The npm package ships the Base UI shadcn primitives (one subpath per component),
 
 Adding a component: see [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Templates CLI (`@whoa-studio/templates`)
+
+Install a template into any shadcn-initialized project (run `npx shadcn@latest init` first):
+
+```bash
+npx @whoa-studio/templates add app-shell-1
+npx @whoa-studio/templates list
+```
+
+It resolves each name to `${WHOA_REGISTRY_URL}/r/<name>.json` (default `https://ugolin-olle.com`) and delegates to `shadcn add`, so `registryDependencies` and your `components.json` are honoured. See [packages/templates](packages/templates/README.md).
+
+**Add a template**
+
+1. Put the sources in `packages/templates/registry/<template>/` (import shared code through `@/lib/utils` and `@/components/ui/<x>` only; add `'use client';` where needed).
+2. Add an item to `packages/templates/registry.json` (`type: registry:block`, explicit `dependencies` and `registryDependencies`, one `files` entry per source with `target: components/blocks/<template>/<file>`).
+3. `bun run --cwd packages/templates registry:build`, then check `apps/web/public/r/<template>.json`.
+
+**Run / deploy the registry.** `bun run dev` builds both registries and serves `/r/*.json` on http://localhost:4000. Deploying `apps/web` (Vercel) publishes them; point your own domain at it and use `WHOA_REGISTRY_URL` to override the CLI default.
+
+**Release the CLI.** `bun run --cwd packages/templates build`, then `cd packages/templates && npm publish --access public` (`prepublishOnly` rebuilds). The Changesets release workflow also publishes it when a changeset is merged.
+
 ## Available Scripts
 
 - `bun run dev`: Start all applications in development mode

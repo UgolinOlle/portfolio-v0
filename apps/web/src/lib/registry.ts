@@ -1,7 +1,11 @@
 import { WEBSITE_URL } from '~/lib/constants';
 import { blocksSource, componentsSource, templatesSource } from '~/lib/source';
 
-import registryConfig from '../../../../packages/ui/registry.json';
+import templatesRegistry from '../../../../packages/templates/registry.json';
+import uiRegistry from '../../../../packages/ui/registry.json';
+
+// The docs read both registries: `packages/ui` and the `@whoa-studio/templates` one.
+const registryConfig = { items: [...uiRegistry.items, ...templatesRegistry.items] };
 
 export type RegistryCategory = 'component' | 'block' | 'template';
 

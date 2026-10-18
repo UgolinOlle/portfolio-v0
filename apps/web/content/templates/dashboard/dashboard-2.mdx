@@ -1,0 +1,36 @@
+---
+title: Dashboard 2
+icon: ChartBar
+description: Un dashboard CRM sombre avec un graphique de prévisions animé par des ressorts.
+preview: dashboard-2
+---
+
+Le template `Dashboard 2` est un tableau de bord CRM en mode sombre : barre latérale qui se replie en
+rail d'icônes sur tablette, cartes KPI avec compteurs animés, graphique de prévisions de revenus et
+rail de tâches du jour.
+
+Le graphique est volontairement poussé : barres animées par ressorts (prévision et signé indépendants),
+axe et grilles qui se déplacent avec les valeurs au changement de période (3M, 6M, 12M), infobulle qui
+suit le curseur, survol avec lueur et atténuation des autres barres, ligne d'objectif et progression
+animées. Il reste accessible : colonnes focalisables, flèches du clavier, tableau de données pour les
+lecteurs d'écran et `prefers-reduced-motion` respecté.
+
+Il embarque aussi la recherche `command-search` (⌘K / Ctrl+K), des notifications, un fil d'activité,
+des graphiques de pipeline par étape et de répartition des sources, un tableau de deals et des
+onglets Overview, Pipeline, Activity et Forecast qui changent réellement de contenu.
+
+## Installation en CLI
+
+```bash
+npx @whoa-studio/templates add dashboard-2
+```
+
+## Utilisation
+
+Passez vos `kpis`, `tasks`, `stages`, `sources`, `deals`, `activity`, `notices` et `searchItems` (avec `onSearchSelect`). Sans props, le composant affiche des données de démonstration.
+Les mois du graphique vivent dans `data.ts`.
+
+## Inspirations
+
+- [csakani](https://x.com/samosemudiamhe/status/2111189557886517683?s=20)
+- [SakaniUI](https://www.sakaniui.com/)

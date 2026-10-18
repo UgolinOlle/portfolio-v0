@@ -1,3 +1,4 @@
+import { FileTreeCodeBlock } from '~/components/docs/code-block/file-tree-code-block';
 import { RegistryCodeBlock } from '~/components/docs/code-block/registry-code-block';
 import { getRegistryDemoName } from '~/lib/registry';
 import { getRegistryItemManifest } from '~/lib/registry-item';
@@ -12,24 +13,40 @@ type PreviewProps = {
 };
 
 export const Preview = async ({ path, className, type = 'component' }: PreviewProps) => {
-  const [Component, demoManifest] = await Promise.all([
+  const isFullPage = type !== 'component';
+  const isTemplate = type === 'template';
+  const [Component, demoManifest, templateManifest] = await Promise.all([
     import(`../../../../examples/${path}.tsx`).then((module) => module.default),
     getRegistryItemManifest(getRegistryDemoName(path)),
+    // Templates list their own source files in the explorer, next to the demo.
+    isTemplate ? getRegistryItemManifest(path) : undefined,
   ]);
-  const isFullPage = type !== 'component';
 
   return (
     <PreviewShell
       className={className}
       code={
-        <RegistryCodeBlock
-          className="size-full max-h-none rounded-none border-none shadow-none"
-          files={demoManifest.files}
-        />
+        templateManifest ? (
+          <FileTreeCodeBlock files={[...templateManifest.files, ...demoManifest.files]} />
+        ) : (
+          <RegistryCodeBlock
+            className="size-full max-h-none rounded-none border-none shadow-none"
+            files={demoManifest.files}
+          />
+        )
       }
+      fill={isTemplate}
       fullPage={isFullPage}
       preview={
-        isFullPage ? (
+        isTemplate ? (
+          // The docs page uses Lenis smooth scroll: opt the template out so its own scrollers get the wheel.
+          <div
+            className="size-full overflow-hidden rounded-lg border border-foreground/10 bg-background"
+            data-lenis-prevent
+          >
+            <Component />
+          </div>
+        ) : isFullPage ? (
           <div className="flex w-full items-center-safe justify-center p-6 sm:p-10">
             <Component />
           </div>

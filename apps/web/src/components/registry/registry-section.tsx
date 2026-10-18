@@ -36,9 +36,12 @@ export const RegistrySection = ({ index, section }: RegistrySectionProps) => {
         <Reveal className="self-start sm:self-auto" delay={0.1}>
           <Link
             className={cn(
-              'label-mono group relative inline-flex h-8 shrink-0 items-center gap-2 self-start overflow-hidden border border-foreground/10 px-3 text-foreground/70 transition-colors delay-50 duration-200 sm:self-auto',
-              // Background wipes in from the left instead of fading.
-              'before:absolute before:inset-0 before:origin-left before:scale-x-0 before:bg-foreground before:transition-transform before:duration-250 before:ease-(--ease-out-strong) hover:text-background hover:before:scale-x-100',
+              'label-mono group relative inline-flex h-8 shrink-0 items-center gap-2 self-start',
+              'overflow-hidden border border-foreground/10 px-3 text-foreground/70',
+              'transition-colors delay-50 duration-200 sm:self-auto',
+              'before:absolute before:inset-0 before:origin-left before:scale-x-0',
+              'before:bg-foreground before:transition-transform before:duration-250',
+              'before:ease-out-strong hover:text-background hover:before:scale-x-100',
               'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
             )}
             href={section.href}
@@ -46,7 +49,7 @@ export const RegistrySection = ({ index, section }: RegistrySectionProps) => {
             <span className="relative">Tout voir</span>
             <ArrowRightIcon
               aria-hidden="true"
-              className="relative size-3.5 transition-transform duration-200 ease-(--ease-out-strong) group-hover:translate-x-0.5"
+              className="relative size-3.5 transition-transform duration-200 ease-out-strong group-hover:translate-x-0.5"
             />
           </Link>
         </Reveal>

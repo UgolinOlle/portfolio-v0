@@ -1,0 +1,39 @@
+---
+title: Kanban
+icon: Kanban
+description: Un tableau Kanban avec glisser-déposer, limites WIP, tiroir de détail, filtres et annuler/rétablir.
+preview: kanban
+previewWidth: 1080
+---
+
+Un tableau de suivi de tâches complet, en une seule pièce : colonnes réordonnables et repliables,
+cartes déplaçables à la souris, au doigt ou au clavier, limite de travail en cours (WIP) par
+colonne avec une alerte visuelle au dépassement, et un tiroir de détail pour la description, le
+libellé, la priorité, l'échéance, l'assigné et une checklist.
+
+- **Glisser-déposer** : `@dnd-kit` gère les capteurs, la détection et l'accessibilité ; les cartes
+  voisines se réorganisent avec les animations de layout de `motion/react`, et une carte glisse de
+  colonne en colonne comme un seul élément. `Espace` soulève une carte, les flèches la déplacent,
+  `Espace` la dépose, `Échap` annule.
+- **Annuler / rétablir** : `⌘Z` et `⇧⌘Z`. Un glisser-déposer complet compte pour une seule étape.
+- **Filtre** : texte libre, plus `#libellé`, `!priorité` et `@nom`.
+- **Raccourcis** (limités au tableau) : `N` nouvelle carte, `/` filtre, `Entrée` ouvre la carte
+  focalisée, `Suppr` la supprime.
+- **Mouvement réduit** : le conteneur est enveloppé dans `LazyMotion` et
+  `MotionConfig reducedMotion="user"` ; les transformations sont supprimées, les fondus restent.
+
+## Utilisation
+
+```tsx
+import { Kanban, createSampleBoard } from '@/components/blocks/kanban';
+
+<Kanban
+  defaultValue={createSampleBoard()}
+  storageKey="my-board"
+  onValueChange={(board) => save(board)}
+/>;
+```
+
+Les libellés (`labels`) et les membres (`members`) sont personnalisables, et le tableau se
+persiste dans `localStorage` si `storageKey` est fourni. Les données (`KanbanData`) sont un objet
+plat : `cards`, `columns` et `columnOrder`.

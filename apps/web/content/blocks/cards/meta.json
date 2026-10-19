@@ -1,5 +1,12 @@
 {
   "title": "Cartes",
   "icon": "SquaresFour",
-  "pages": ["status-card", "activity", "calendar-sync", "usage-card", "command-search"]
+  "pages": [
+    "status-card",
+    "activity",
+    "calendar-sync",
+    "usage-card",
+    "command-search",
+    "world-clock"
+  ]
 }

@@ -2,11 +2,11 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { ArrowRightIcon } from '~/components/icons/ui';
-import { VARIANTS_SECTION, TRANSITION_SECTION, EMAIL } from '~/lib/constants';
+import { EMAIL, SECTION_REVEAL } from '~/lib/constants';
 
 import { SectionHeading } from './section-heading';
 
@@ -14,14 +14,8 @@ export function HeroSection() {
   const { t } = useTranslation();
 
   return (
-    <motion.section
-      variants={VARIANTS_SECTION}
-      transition={TRANSITION_SECTION}
-      // Above the fold and the LCP element: render visible from the server HTML, no entrance.
-      initial={false}
-      id="about"
-      className="flex flex-col items-start gap-6"
-    >
+    // Above the fold and the LCP element: visible from the server HTML, no entrance.
+    <section className="flex flex-col items-start gap-6" id="about">
       <span className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
         <span className="relative flex size-2">
           <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500/60 motion-reduce:hidden" />
@@ -62,7 +56,7 @@ export function HeroSection() {
           />
         </a>
       </div>
-    </motion.section>
+    </section>
   );
 }
 
@@ -73,7 +67,7 @@ export function AboutSection() {
   const { t } = useTranslation();
 
   return (
-    <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION}>
+    <m.section {...SECTION_REVEAL}>
       <SectionHeading>{t('sections.about')}</SectionHeading>
 
       <p className="max-w-[65ch] text-sm leading-relaxed text-pretty whitespace-pre-line text-zinc-600 dark:text-zinc-400">
@@ -95,6 +89,6 @@ export function AboutSection() {
           ))}
         </ul>
       </div>
-    </motion.section>
+    </m.section>
   );
 }

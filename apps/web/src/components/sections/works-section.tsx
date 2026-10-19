@@ -2,10 +2,10 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
-import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
+import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { WORKS_EXPERIENCES } from '~/lib/data';
 
 import { useTranslation } from '../core/i18n-provider';
@@ -67,12 +67,14 @@ function WorksSection() {
   const { t } = useTranslation();
 
   return (
-    <motion.section variants={VARIANTS_SECTION} transition={TRANSITION_SECTION} id="works">
+    <m.section {...SECTION_REVEAL_LIST} id="works">
       <SectionHeading>{t('sections.works')}</SectionHeading>
 
       <ul className="flex flex-col">
         {WORKS_EXPERIENCES.map((job) => (
-          <li
+          <m.li
+            transition={TRANSITION_SECTION}
+            variants={VARIANTS_SECTION}
             className="-mx-3 flex items-start justify-between gap-4 rounded-xl px-3 py-3 text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-900/60"
             key={job.id}
           >
@@ -88,10 +90,10 @@ function WorksSection() {
             <p className="shrink-0 text-zinc-500 tabular-nums dark:text-zinc-400">
               {job.start} {job.end && `– ${job.end}`}
             </p>
-          </li>
+          </m.li>
         ))}
       </ul>
-    </motion.section>
+    </m.section>
   );
 }
 

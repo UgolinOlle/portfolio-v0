@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import { HeroSky, HeroSkyCloud } from '@/components/blocks/hero-sky';
 
 export default function HeroSkyExample() {
@@ -12,9 +14,9 @@ export default function HeroSkyExample() {
         { label: 'Book a call', href: '#contact' },
       ]}
       title={[
-        <>
+        <Fragment key="line-1">
           Where your <HeroSkyCloud /> dream
-        </>,
+        </Fragment>,
         'designs come true',
       ]}
     />

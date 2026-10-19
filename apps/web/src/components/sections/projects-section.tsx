@@ -2,12 +2,12 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { ArrowRightIcon } from '~/components/icons/ui';
-import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
+import { SECTION_REVEAL } from '~/lib/constants';
 import { PROJECTS } from '~/lib/data';
 import type { Project } from '~/types';
 
@@ -26,6 +26,7 @@ function ProjectCard({ project, featured = false }: ProjectCardProps) {
     <Link
       className={cn(
         'group flex flex-col gap-3 rounded-2xl outline-none',
+        `transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.99]`,
         'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4',
         featured && 'sm:col-span-2',
       )}
@@ -43,7 +44,7 @@ function ProjectCard({ project, featured = false }: ProjectCardProps) {
         {/* Decorative: the project name is the link text right below. */}
         <img
           alt=""
-          className="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          className="absolute inset-0 size-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
           decoding="async"
           loading={featured ? 'eager' : 'lazy'}
           src={project.image ?? '/assets/background.svg'}
@@ -94,7 +95,7 @@ export function ProjectsSection() {
   const [featured, ...rest] = PROJECTS;
 
   return (
-    <motion.section transition={TRANSITION_SECTION} variants={VARIANTS_SECTION} id="projects">
+    <m.section {...SECTION_REVEAL} id="projects">
       <SectionHeading>{t('projects.title')}</SectionHeading>
 
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2">
@@ -103,6 +104,6 @@ export function ProjectsSection() {
           <ProjectCard key={project.id} project={project} />
         ))}
       </div>
-    </motion.section>
+    </m.section>
   );
 }

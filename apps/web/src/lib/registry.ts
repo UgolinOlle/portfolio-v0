@@ -15,7 +15,12 @@ export type RegistryItem = {
   description?: string;
   href: string;
   preview?: string;
+  // Example file in `examples/` used for the grid thumbnail: the registry item's demo, or the
+  // `examples/primitives/<name>` demo of a shadcn primitive (which has no `preview`).
+  thumbnail?: string;
   previewWidth?: number;
+  previewFit?: 'frame' | 'fill';
+  previewFluid?: boolean;
   featured?: boolean;
   dependencies?: string[];
   category: RegistryCategory;
@@ -87,7 +92,12 @@ const toRegistryItem = (page: RegistrySourcePage, category: RegistryCategory): R
     description: page.data.description,
     href: page.url,
     preview: page.data.preview,
+    thumbnail:
+      page.data.preview ??
+      (page.slugs[0] === 'primitives' && page.slugs[1] ? `primitives/${page.slugs[1]}` : undefined),
     previewWidth: page.data.previewWidth,
+    previewFit: page.data.previewFit,
+    previewFluid: page.data.previewFluid,
     featured: page.data.featured,
     dependencies: registryItem?.registryDependencies,
     category,

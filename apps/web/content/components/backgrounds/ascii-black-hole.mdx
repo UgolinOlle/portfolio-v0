@@ -1,0 +1,44 @@
+---
+title: ASCII Black Hole
+icon: Orbit
+description: Fond plein cadre de glyphes ASCII qui tournent en spirale vers un trou noir, dessiné sur un seul canvas.
+preview: ascii-black-hole
+previewFit: fill
+---
+
+Un tourbillon de caractères monospace, dense au centre et clairsemé sur les bords. La rotation est différentielle : les anneaux intérieurs tournent plus vite que les extérieurs, les bras s'étirent et s'enroulent.
+Le composant remplit son conteneur (`width: 100%`, `height: 100%`) et la grille se recalcule à chaque redimensionnement. Aucune dépendance : `react` suffit.
+
+## Utilisation
+
+```tsx
+import { AsciiBlackHole } from '@/components/ui/ugolin/ascii-black-hole';
+
+export default function Page() {
+  return (
+    <main className="relative h-screen">
+      <AsciiBlackHole color="#ff7ad9" className="absolute inset-0" />
+      <h1 className="relative">Hello</h1>
+    </main>
+  );
+}
+```
+
+## Props
+
+| Prop              | Défaut         | Rôle                                                     |
+| ----------------- | -------------- | -------------------------------------------------------- |
+| `color`           | `#4db2ff`      | Couleur des glyphes (toute couleur CSS)                  |
+| `backgroundColor` | `#000000`      | Couleur du fond                                          |
+| `speed`           | `1`            | Multiplicateur de vitesse (`0` fige le tourbillon)       |
+| `charSet`         | `' .:-=+*#%@'` | Glyphes du vide au plus dense                            |
+| `scale`           | `1`            | Serrage de la spirale (plus haut = bras plus enroulés)   |
+| `arms`            | `3`            | Nombre de bras                                           |
+| `fontSize`        | `10`           | Taille des glyphes en px (plus petit = grille plus fine) |
+| `paused`          | `false`        | Arrête la boucle de rendu                                |
+
+## Comportement
+
+- Un seul `<canvas>`, une chaîne de texte par ligne : pas de nœuds DOM par caractère.
+- La boucle est en pause quand le composant est hors écran ou l'onglet masqué.
+- Avec `prefers-reduced-motion`, le tourbillon est rendu une fois, sans animation.

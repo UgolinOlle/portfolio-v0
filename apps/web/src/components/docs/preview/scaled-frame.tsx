@@ -8,7 +8,12 @@ type ScaledFrameProps = {
   // `width` : remplit la largeur, ancré en haut à gauche (pages entières : on voit le hero).
   // `contain` : tient entièrement dans le cadre, centré (blocks : une card, une section) ;
   // `virtualWidth` est alors une largeur maximale.
-  fit?: 'width' | 'contain';
+  // `cover` : pour les démos plein cadre (`previewFit: fill`) ; rendu à `virtualWidth`, puis
+  // réduit pour remplir toute la largeur, la hauteur du cadre étant restituée au contenu.
+  fit?: 'width' | 'contain' | 'cover';
+  // `contain` seulement : rend le contenu à `virtualWidth` exactement, au lieu de l'épouser. Pour les
+  // blocks fluides (`w-full`, container queries) qui s'effondreraient à leur largeur minimale.
+  fluid?: boolean;
   // Échelle utilisée avant la première mesure (SSR).
   initialScale?: number;
   children: ReactNode;
@@ -22,12 +27,15 @@ const CONTAIN_MAX_SCALE = 1.5;
 export const ScaledFrame = ({
   virtualWidth,
   fit = 'width',
-  initialScale = fit === 'width' ? 0.26 : 0.4,
+  fluid = false,
+  initialScale = fit === 'contain' ? 0.4 : 0.26,
   children,
 }: ScaledFrameProps) => {
   const frameRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(initialScale);
+  // Hauteur du cadre ramenée à l'échelle du contenu (mode `cover`).
+  const [coverHeight, setCoverHeight] = useState<number>();
 
   useLayoutEffect(() => {
     const frame = frameRef.current;
@@ -37,6 +45,13 @@ export const ScaledFrame = ({
     const update = () => {
       if (fit === 'width') {
         setScale(frame.clientWidth / virtualWidth);
+        return;
+      }
+
+      if (fit === 'cover') {
+        const next = frame.clientWidth / virtualWidth;
+        setScale(next);
+        setCoverHeight(frame.clientHeight / next);
         return;
       }
 
@@ -54,7 +69,7 @@ export const ScaledFrame = ({
 
     const observer = new ResizeObserver(update);
     observer.observe(frame);
-    observer.observe(content);
+    if (fit === 'contain') observer.observe(content);
 
     return () => observer.disconnect();
   }, [fit, virtualWidth]);
@@ -71,7 +86,11 @@ export const ScaledFrame = ({
           className="shrink-0"
           ref={contentRef}
           // Shrink-wraps narrow blocks (a single card) so they aren't lost in a wide canvas.
-          style={{ width: 'max-content', maxWidth: virtualWidth, transform: `scale(${scale})` }}
+          style={{
+            width: fluid ? virtualWidth : 'max-content',
+            maxWidth: virtualWidth,
+            transform: `scale(${scale})`,
+          }}
         >
           {children}
         </div>
@@ -83,7 +102,12 @@ export const ScaledFrame = ({
     <div className="absolute inset-0 overflow-hidden" ref={frameRef}>
       <div
         ref={contentRef}
-        style={{ width: virtualWidth, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+        style={{
+          width: virtualWidth,
+          height: fit === 'cover' ? coverHeight : undefined,
+          transform: `scale(${scale})`,
+          transformOrigin: 'top left',
+        }}
       >
         {children}
       </div>

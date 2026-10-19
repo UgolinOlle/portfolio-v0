@@ -1,4 +1,4 @@
 {
   "title": "Composants",
-  "pages": ["index", "core", "buttons", "primitives"]
+  "pages": ["index", "motion", "core", "buttons", "primitives", "backgrounds"]
 }

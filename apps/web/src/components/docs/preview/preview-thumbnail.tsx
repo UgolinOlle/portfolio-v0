@@ -13,6 +13,10 @@ type PreviewThumbnailProps = {
   type?: 'component' | 'block' | 'template';
   // Largeur de conception du block (frontmatter `previewWidth`) : un widget compact est moins réduit.
   virtualWidth?: number;
+  // `fill` (frontmatter `previewFit`) : la démo remplit tout le cadre ; `fluid` : le block se dimensionne
+  // sur son parent et doit être rendu à `virtualWidth`.
+  fit?: 'frame' | 'fill';
+  fluid?: boolean;
   // Card "featured" sur deux colonnes. Rien à calculer ici : `ScaledFrame` mesure la largeur
   // réelle de la card, l'échelle suit donc automatiquement.
   wide?: boolean;
@@ -24,6 +28,8 @@ export const PreviewThumbnail = async ({
   path,
   type = 'component',
   virtualWidth,
+  fit,
+  fluid,
   className,
 }: PreviewThumbnailProps) => {
   const Component = await import(`../../../../examples/${path}.tsx`)
@@ -43,12 +49,16 @@ export const PreviewThumbnail = async ({
       )}
       inert
     >
-      {type === 'template' ? (
+      {fit === 'fill' ? (
+        <ScaledFrame fit="cover" virtualWidth={virtualWidth ?? TEMPLATE_VIRTUAL_WIDTH}>
+          <Component />
+        </ScaledFrame>
+      ) : type === 'template' ? (
         <ScaledFrame virtualWidth={virtualWidth ?? TEMPLATE_VIRTUAL_WIDTH}>
           <Component />
         </ScaledFrame>
       ) : type === 'block' ? (
-        <ScaledFrame fit="contain" virtualWidth={virtualWidth ?? BLOCK_VIRTUAL_WIDTH}>
+        <ScaledFrame fit="contain" fluid={fluid} virtualWidth={virtualWidth ?? BLOCK_VIRTUAL_WIDTH}>
           <Component />
         </ScaledFrame>
       ) : (

@@ -4,6 +4,39 @@
   "homepage": "https://ugolin-olle.com/ui",
   "items": [
     {
+      "name": "ascii-black-hole",
+      "type": "registry:ui",
+      "title": "ASCII Black Hole",
+      "description": "A full-bleed background of ASCII glyphs spiralling into a black hole, with differential rotation, drawn on a single canvas.",
+      "files": [
+        {
+          "path": "../ascii-black-hole/index.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/ugolin/ascii-black-hole.tsx"
+        }
+      ]
+    },
+    {
+      "name": "ascii-black-hole-demo",
+      "type": "registry:item",
+      "title": "ASCII Black Hole Demo",
+      "description": "Usage example for the ASCII Black Hole component.",
+      "registryDependencies": ["https://ugolin-olle.com/r/ascii-black-hole.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/ascii-black-hole.tsx",
+          "type": "registry:component",
+          "target": "components/examples/ascii-black-hole.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "ascii-black-hole",
+          "order": 0
+        }
+      }
+    },
+    {
       "name": "avatars",
       "type": "registry:ui",
       "title": "Avatars",
@@ -894,6 +927,75 @@
       "meta": {
         "example": {
           "of": "usage-card",
+          "order": 0
+        }
+      }
+    },
+    {
+      "name": "world-clock",
+      "type": "registry:block",
+      "title": "World Clock",
+      "description": "A world clock with a radial 24-hour dial, a city list and a rolling-digit time display.",
+      "dependencies": ["lucide-react", "motion"],
+      "files": [
+        {
+          "path": "../world-clock/index.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/world-clock/index.tsx"
+        },
+        {
+          "path": "../world-clock/city-list.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/world-clock/city-list.tsx"
+        },
+        {
+          "path": "../world-clock/data.ts",
+          "type": "registry:component",
+          "target": "components/blocks/world-clock/data.ts"
+        },
+        {
+          "path": "../world-clock/dial.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/world-clock/dial.tsx"
+        },
+        {
+          "path": "../world-clock/motion.ts",
+          "type": "registry:component",
+          "target": "components/blocks/world-clock/motion.ts"
+        },
+        {
+          "path": "../world-clock/odometer.tsx",
+          "type": "registry:component",
+          "target": "components/blocks/world-clock/odometer.tsx"
+        },
+        {
+          "path": "../world-clock/sound.ts",
+          "type": "registry:component",
+          "target": "components/blocks/world-clock/sound.ts"
+        },
+        {
+          "path": "../world-clock/time.ts",
+          "type": "registry:component",
+          "target": "components/blocks/world-clock/time.ts"
+        }
+      ]
+    },
+    {
+      "name": "world-clock-demo",
+      "type": "registry:item",
+      "title": "World Clock Demo",
+      "description": "Usage example for the World Clock block.",
+      "registryDependencies": ["https://ugolin-olle.com/r/world-clock.json"],
+      "files": [
+        {
+          "path": "../../apps/web/examples/world-clock.tsx",
+          "type": "registry:component",
+          "target": "components/examples/world-clock.tsx"
+        }
+      ],
+      "meta": {
+        "example": {
+          "of": "world-clock",
           "order": 0
         }
       }

@@ -1,0 +1,24 @@
+{
+  "name": "@portfolio-v0/world-clock",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A world clock with a radial 24-hour dial, a city list and a rolling-digit time display.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "lucide-react": "catalog:",
+    "motion": "catalog:"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "registry": {
+    "title": "World Clock",
+    "type": "block"
+  }
+}

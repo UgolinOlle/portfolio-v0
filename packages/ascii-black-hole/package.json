@@ -1,0 +1,23 @@
+{
+  "name": "@portfolio-v0/ascii-black-hole",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A full-bleed background of ASCII glyphs spiralling into a black hole, with differential rotation, drawn on a single canvas.",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio-v0/shadcn": "workspace:*"
+  },
+  "devDependencies": {
+    "@portfolio-v0/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "registry": {
+    "title": "ASCII Black Hole",
+    "type": "ui"
+  }
+}

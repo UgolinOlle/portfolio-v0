@@ -4,7 +4,7 @@ import { Toaster } from '@portfolio-v0/shadcn/components/sonner';
 import { TooltipProvider } from '@portfolio-v0/shadcn/components/tooltip';
 
 import { RootProvider } from 'fumadocs-ui/provider/next';
-import { MotionConfig } from 'motion/react';
+import { domAnimation, LazyMotion, MotionConfig } from 'motion/react';
 import { ThemeProvider } from 'next-themes';
 
 import { I18nProvider } from '~/components/core/i18n-provider';
@@ -39,7 +39,9 @@ export function Providers({
         >
           <I18nProvider>
             <MotionConfig reducedMotion="user">
-              <TooltipProvider>{children}</TooltipProvider>
+              <LazyMotion features={domAnimation}>
+                <TooltipProvider>{children}</TooltipProvider>
+              </LazyMotion>
             </MotionConfig>
             <Toaster />
           </I18nProvider>

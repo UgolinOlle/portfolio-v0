@@ -14,7 +14,8 @@ export function MagneticSocialLink({
       <a
         className={cn(
           'group relative inline-flex shrink-0 items-center gap-px rounded-full bg-zinc-100',
-          'px-2.5 py-1 text-sm text-black transition-colors duration-200 hover:bg-zinc-950',
+          'px-2.5 py-1 text-sm text-black transition-[background-color,color,transform] duration-200 hover:bg-zinc-950',
+          'active:scale-95',
           'hover:text-zinc-50 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700',
         )}
         href={link}

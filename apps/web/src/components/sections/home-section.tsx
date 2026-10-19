@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'motion/react';
 import type { ReactNode } from 'react';
 
 import {
@@ -11,7 +10,6 @@ import {
   StacksSection,
   WorksSection,
 } from '~/components/sections';
-import { VARIANTS_CONTAINER } from '~/lib/constants';
 
 type HomeContentProps = {
   recentWritings: ReactNode;
@@ -19,12 +17,7 @@ type HomeContentProps = {
 
 export function HomeContent({ recentWritings }: HomeContentProps) {
   return (
-    <motion.div
-      className="space-y-24"
-      variants={VARIANTS_CONTAINER}
-      initial="hidden"
-      animate="visible"
-    >
+    <div className="space-y-24">
       <HeroSection />
       <ProjectsSection />
       <WorksSection />
@@ -32,6 +25,6 @@ export function HomeContent({ recentWritings }: HomeContentProps) {
       {recentWritings}
       <StacksSection />
       <ContactSection />
-    </motion.div>
+    </div>
   );
 }

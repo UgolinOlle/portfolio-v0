@@ -27,6 +27,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: bun install --frozen-lockfile
       - run: bun run --cwd packages/ui build
+      - run: bun run --cwd packages/templates build
       - uses: changesets/action@v1
         with:
           version: bun run version

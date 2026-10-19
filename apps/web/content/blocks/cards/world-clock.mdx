@@ -1,0 +1,46 @@
+---
+title: World Clock
+icon: Clock
+description: Une horloge mondiale avec cadran radial de 24 heures, liste de villes et chiffres qui défilent.
+preview: world-clock
+previewWidth: 860
+previewFluid: true
+---
+
+Un cadran de 24 heures (midi en haut, minuit en bas) et une liste de villes. Sélectionner une ville,
+dans la liste ou sur le cadran, fait pivoter l'aiguille jusqu'à son heure locale par le chemin le
+plus court, fait défiler les chiffres du centre comme un compteur kilométrique et fond le nom, le
+décalage, l'arc de jour et l'icône soleil/lune. L'horloge est vivante : l'heure est relue à chaque
+minute pile, l'aiguille et les repères avancent d'un cran.
+
+- **Arc de jour et bande de nuit** : calculés depuis la latitude et la longitude de la ville (modèle
+  solaire simplifié, à quelques minutes près), donc le soleil se couche plus tôt à Londres en hiver.
+- **Fuseaux** : les noms IANA passent par `Intl`, l'heure d'été est gérée. Le badge `+1 day` apparaît
+  quand le jour calendaire diffère de la ville d'origine.
+- **Clavier** : chaque ville est un bouton ; les flèches du cadran passent à la ville suivante ou
+  précédente. L'heure est annoncée par une région `aria-live`.
+- **Mouvement réduit** : `LazyMotion` + `MotionConfig reducedMotion="user"` ; l'aiguille saute, les
+  chiffres changent sans défiler, les fondus restent.
+
+## Utilisation
+
+```tsx
+import { WorldClock } from '@/components/blocks/world-clock';
+
+<WorldClock homeId="nyc" />;
+```
+
+## Props
+
+| Prop                | Défaut       | Rôle                                                          |
+| ------------------- | ------------ | ------------------------------------------------------------- |
+| `cities`            | 4 villes     | `{ id, name, short, timeZone, lat, lon }[]`                   |
+| `homeId`            | `nyc`        | Ville d'origine : tous les décalages sont mesurés depuis elle |
+| `defaultSelectedId` | `homeId`     | Ville affichée à l'ouverture                                  |
+| `now`               | heure réelle | Fige l'horloge sur un instant (captures, tests)               |
+| `onSelectedChange`  |              | Appelé avec l'`id` de la ville choisie                        |
+
+## Inspirations
+
+- [eliakuratli](https://x.com/eliakuratli/status/2111745121641550134?s=20)
+- [UI Arc](https://uiarc.dev/)

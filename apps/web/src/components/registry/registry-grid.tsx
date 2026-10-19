@@ -24,12 +24,14 @@ export const RegistryGrid = ({ items, variant, className }: RegistryGridProps) =
           key={item.href}
           variant={variant}
           preview={
-            item.preview ? (
+            item.thumbnail ? (
               <Suspense fallback={<div className="size-full animate-pulse bg-foreground/3" />}>
                 <PreviewThumbnail
                   className="thumbnail-in"
-                  path={item.preview}
+                  path={item.thumbnail}
                   type={item.category}
+                  fit={item.previewFit}
+                  fluid={item.previewFluid}
                   virtualWidth={item.previewWidth}
                   wide={item.featured}
                 />

@@ -2,28 +2,26 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { MagneticSocialLink } from '~/components/ui';
-import { EMAIL, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
+import {
+  EMAIL,
+  SECTION_REVEAL_LIST,
+  TRANSITION_SECTION,
+  VARIANTS_LIST,
+  VARIANTS_SECTION,
+} from '~/lib/constants';
 import { SOCIAL_LINKS } from '~/lib/data';
 
 import { SectionHeading } from './section-heading';
-
-const SOCIAL_LINK_BASE_DELAY = 0.5;
-const SOCIAL_LINK_STAGGER_MULTIPLIER = 0.1;
 
 function ContactSection() {
   const { t } = useTranslation();
 
   return (
-    <motion.section
-      className="space-y-6"
-      transition={TRANSITION_SECTION}
-      variants={VARIANTS_SECTION}
-      id="contact"
-    >
+    <m.section {...SECTION_REVEAL_LIST} className="space-y-6" id="contact">
       <SectionHeading>{t('contact.title')}</SectionHeading>
 
       <p className="mb-5 text-sm text-zinc-600 dark:text-zinc-300">
@@ -39,30 +37,17 @@ function ContactSection() {
         </a>
       </p>
 
-      <motion.div
-        className="flex flex-wrap items-center justify-start  gap-x-3 gap-y-2"
-        initial={{ opacity: 0, y: 20 }}
-        transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
-        viewport={{ once: true, margin: '-100px' }}
-        whileInView={{ opacity: 1, y: 0 }}
+      <m.div
+        className="flex flex-wrap items-center justify-start gap-x-3 gap-y-2"
+        variants={VARIANTS_LIST}
       >
-        {SOCIAL_LINKS.map((link, index) => (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            key={link.label}
-            transition={{
-              duration: 0.4,
-              delay: SOCIAL_LINK_BASE_DELAY + index * SOCIAL_LINK_STAGGER_MULTIPLIER,
-              ease: 'easeOut',
-            }}
-            viewport={{ once: true, margin: '-50px' }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          >
+        {SOCIAL_LINKS.map((link) => (
+          <m.div key={link.label} transition={TRANSITION_SECTION} variants={VARIANTS_SECTION}>
             <MagneticSocialLink link={link.link}>{link.label}</MagneticSocialLink>
-          </motion.div>
+          </m.div>
         ))}
-      </motion.div>
-    </motion.section>
+      </m.div>
+    </m.section>
   );
 }
 

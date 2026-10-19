@@ -94,6 +94,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.0",
     "@portfolio-v0/activity": "workspace:*",
+    "@portfolio-v0/ascii-black-hole": "workspace:*",
     "@portfolio-v0/avatars": "workspace:*",
     "@portfolio-v0/blog": "workspace:*",
     "@portfolio-v0/button": "workspace:*",
@@ -114,6 +115,7 @@
     "@portfolio-v0/shortcut": "workspace:*",
     "@portfolio-v0/status-card": "workspace:*",
     "@portfolio-v0/usage-card": "workspace:*",
+    "@portfolio-v0/world-clock": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

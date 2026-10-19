@@ -85,6 +85,20 @@
         "react": "catalog:",
       },
     },
+    "packages/ascii-black-hole": {
+      "name": "@portfolio-v0/ascii-black-hole",
+      "version": "0.0.0",
+      "dependencies": {
+        "@portfolio-v0/shadcn": "workspace:*",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "typescript": "catalog:",
+      },
+      "peerDependencies": {
+        "react": "catalog:",
+      },
+    },
     "packages/avatars": {
       "name": "@portfolio-v0/avatars",
       "version": "0.0.0",
@@ -434,6 +448,7 @@
       "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.0",
         "@portfolio-v0/activity": "workspace:*",
+        "@portfolio-v0/ascii-black-hole": "workspace:*",
         "@portfolio-v0/avatars": "workspace:*",
         "@portfolio-v0/blog": "workspace:*",
         "@portfolio-v0/button": "workspace:*",
@@ -454,6 +469,7 @@
         "@portfolio-v0/shortcut": "workspace:*",
         "@portfolio-v0/status-card": "workspace:*",
         "@portfolio-v0/usage-card": "workspace:*",
+        "@portfolio-v0/world-clock": "workspace:*",
         "@types/node": "catalog:",
         "@types/react": "catalog:",
         "@types/react-dom": "catalog:",
@@ -475,6 +491,21 @@
       "version": "0.0.0",
       "dependencies": {
         "@portfolio-v0/shadcn": "workspace:*",
+        "motion": "catalog:",
+      },
+      "devDependencies": {
+        "@portfolio-v0/config": "workspace:*",
+        "typescript": "catalog:",
+      },
+      "peerDependencies": {
+        "react": "catalog:",
+      },
+    },
+    "packages/world-clock": {
+      "name": "@portfolio-v0/world-clock",
+      "version": "0.0.0",
+      "dependencies": {
+        "lucide-react": "catalog:",
         "motion": "catalog:",
       },
       "devDependencies": {
@@ -927,6 +958,8 @@
 
     "@portfolio-v0/activity": ["@portfolio-v0/activity@workspace:packages/activity"],
 
+    "@portfolio-v0/ascii-black-hole": ["@portfolio-v0/ascii-black-hole@workspace:packages/ascii-black-hole"],
+
     "@portfolio-v0/avatars": ["@portfolio-v0/avatars@workspace:packages/avatars"],
 
     "@portfolio-v0/blog": ["@portfolio-v0/blog@workspace:packages/blog"],
@@ -966,6 +999,8 @@
     "@portfolio-v0/status-card": ["@portfolio-v0/status-card@workspace:packages/status-card"],
 
     "@portfolio-v0/usage-card": ["@portfolio-v0/usage-card@workspace:packages/usage-card"],
+
+    "@portfolio-v0/world-clock": ["@portfolio-v0/world-clock@workspace:packages/world-clock"],
 
     "@publint/pack": ["@publint/pack@0.1.7", "", { "dependencies": { "tinyexec": "^1.3.0" } }, "sha512-4EDEmvxWtgsCnnVeBvtFIFZtUhPPt1+bA9JrSwU4Sa//6oKtzCSlGGXYJr44OD9aGISymbieJ4mCKHUygUDU+g=="],
 

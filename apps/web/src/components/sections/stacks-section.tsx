@@ -3,7 +3,7 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { Network, Radar, ShieldCheck } from 'lucide-react';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import type { ReactNode } from 'react';
 import type { IconType } from 'react-icons';
 import {
@@ -20,7 +20,7 @@ import {
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { DATABASES, FRAMEWORKS, LANGUAGES, TOOLS } from '~/components/icons';
-import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
+import { SECTION_REVEAL } from '~/lib/constants';
 
 import { SectionHeading } from './section-heading';
 
@@ -38,17 +38,17 @@ function SkillItem({ name, icon }: SkillItemProps) {
       : (icon as React.ComponentType<{ className?: string }>);
 
   return (
-    <motion.div
+    <m.div
       className={cn(
         'group flex w-fit items-center gap-2 rounded-sm px-2 py-0.5 text-foreground/80',
-        'border border-primary/20 transition-all duration-200 hover:bg-primary-foreground',
+        'border border-primary/20 transition-colors duration-200 hover:bg-primary-foreground',
       )}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.98 }}
     >
-      <IconComponent className="h-4 w-4 transform transition-all duration-200 ease-in-out group-hover:-rotate-15" />
+      <IconComponent className="h-4 w-4 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-rotate-15" />
       <span className="text-sm">{name}</span>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -153,12 +153,7 @@ function StacksSection() {
   const { t } = useTranslation();
 
   return (
-    <motion.section
-      transition={TRANSITION_SECTION}
-      variants={VARIANTS_SECTION}
-      className="space-y-8"
-      id="stacks"
-    >
+    <m.section {...SECTION_REVEAL} className="space-y-8" id="stacks">
       <SectionHeading>{t('sections.stacks')}</SectionHeading>
 
       {Object.entries(SKILLS).map(([category, skills]) => (
@@ -177,7 +172,7 @@ function StacksSection() {
           </div>
         </div>
       ))}
-    </motion.section>
+    </m.section>
   );
 }
 

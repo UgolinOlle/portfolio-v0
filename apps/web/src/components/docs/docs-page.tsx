@@ -78,10 +78,10 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
 
   const MDX = page.data.body;
   const isRootIndex = !slug || slug.length === 0;
-  // Introduction pages of blocks / templates list their items as a card grid, like /ui.
+  // Introduction pages of components / blocks / templates list their items as a card grid, like /ui.
   const isTemplate = type === 'template';
   const gutter = isTemplate ? TEMPLATE_GUTTER : undefined;
-  const galleryItems = isRootIndex && type !== 'component' ? getRegistryItems(type) : [];
+  const galleryItems = isRootIndex ? getRegistryItems(type) : [];
   const examples = page.data.preview ? getRegistryExamples(page.data.preview) : [];
 
   const section = SECTIONS[type];

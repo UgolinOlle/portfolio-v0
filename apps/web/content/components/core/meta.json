@@ -1,5 +1,5 @@
 {
   "title": "Composants de base",
   "icon": "Cube",
-  "pages": ["dream-sky", "headers", "input", "motion", "shortcut"]
+  "pages": ["headers", "input", "shortcut"]
 }

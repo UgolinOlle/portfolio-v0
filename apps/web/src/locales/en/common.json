@@ -60,6 +60,8 @@
     "pageSubtitle": "A selection of projects I've built and contributed to",
     "pageNoProjects": "No projects available in English",
     "descriptions": {
+      "calyx": "AI-powered nutrition app that analyzes your meals from photos.",
+      "whoa-bar": "A minimalist macOS application: personalize your menu bar.",
       "whoa-ui": "Animated UI components designed for React and Next.js. (Project under construction)",
       "whoa-stash": "MacOS application for managing sound.",
       "neovim-config": "Neovim configuration for web development.",

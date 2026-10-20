@@ -4,6 +4,7 @@ import {
   BookOpenText,
   Command,
   DiamondsFour as ComponentIcon,
+  DotsThreeIcon,
   TerminalWindow as SquareTerminal,
 } from '@phosphor-icons/react/ssr';
 import { Bot } from 'lucide-react';
@@ -35,6 +36,28 @@ export const PROJECTS: Project[] = [
     ),
   },
   {
+    name: 'Whoa Bar',
+    description:
+      "Composants d'interface animés conçus pour React et Next.js. (Projet en construction)",
+    link: '/projects/whoa-bar',
+    id: 'whoa-bar',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <div className="relative flex size-full items-center justify-center">
+          <DotsThreeIcon className="size-7" weight="duotone" />
+        </div>
+      </div>
+    ),
+  },
+  {
     name: 'Whoa Stash',
     description: 'Application MacOS pour gérer le son.',
     link: '/projects/whoa-stash',
@@ -54,6 +77,38 @@ export const PROJECTS: Project[] = [
       </div>
     ),
     id: 'whoa-stash',
+  },
+  {
+    name: 'Calyx',
+    description: 'Application de nutrition IA qui analyse vos repas en photo',
+    link: '/projects/calyx',
+    id: 'calyx',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 shadow',
+            'bg-[radial-gradient(circle_at_50%_38%,rgb(255_255_255/0.55),transparent_55%),linear-gradient(145deg,#F6FCF8,#BFE6D1)]',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700',
+            'dark:bg-[radial-gradient(circle_at_50%_38%,rgb(45_184_116/0.55),transparent_55%),linear-gradient(145deg,#16382A,#07120C)]',
+          )}
+        />
+
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt="Calyx"
+          className="relative size-full dark:hidden"
+          src="/assets/projects/calyx/mark-light.svg"
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt="Calyx"
+          className="relative hidden size-full dark:block"
+          src="/assets/projects/calyx/mark-dark.svg"
+        />
+      </div>
+    ),
   },
   {
     name: 'Claude Kit',
@@ -108,9 +163,8 @@ export const PROJECTS: Project[] = [
       <div className="relative size-12">
         <div
           className={cn(
-            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'absolute inset-0 rounded-xl bg-[#F2541B] shadow',
             'transition-transform duration-300 group-hover:rotate-45',
-            'dark:border-zinc-700 dark:bg-zinc-950/40',
           )}
         />
 
@@ -132,8 +186,9 @@ export const PROJECTS: Project[] = [
       <div className="relative size-12">
         <div
           className={cn(
-            'absolute inset-0 rounded-xl bg-[#F2541B] shadow',
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
             'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
           )}
         />
 

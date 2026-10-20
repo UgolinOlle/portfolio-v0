@@ -1,11 +1,6 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import {
-  BookOpenText,
-  Command,
-  DotsThreeIcon,
-  TerminalWindow as SquareTerminal,
-} from '@phosphor-icons/react/ssr';
+import { Command, TerminalWindow as SquareTerminal } from '@phosphor-icons/react/ssr';
 import { Bot } from 'lucide-react';
 
 import { LOGOS, TOOLS } from '~/components/icons';
@@ -40,17 +35,15 @@ export const PROJECTS: Project[] = [
     id: 'whoa-bar',
     content: (
       <div className="relative size-12">
-        <div
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt="Whoa Bar"
           className={cn(
-            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'absolute inset-0 size-full scale-[1.24]',
             'transition-transform duration-300 group-hover:rotate-45',
-            'dark:border-zinc-700 dark:bg-zinc-950/40',
           )}
+          src="/assets/projects/whoa-bar/whoa-bar-logo.svg"
         />
-
-        <div className="relative flex size-full items-center justify-center">
-          <DotsThreeIcon className="size-7" weight="duotone" />
-        </div>
       </div>
     ),
   },
@@ -189,9 +182,12 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        <div className="relative flex size-full items-center justify-center">
-          <BookOpenText className="size-7" weight="duotone" />
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt="42"
+          className="relative size-full p-[22%] dark:invert"
+          src="/assets/logos/42.svg"
+        />
       </div>
     ),
     id: '42',

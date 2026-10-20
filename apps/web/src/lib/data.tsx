@@ -2,7 +2,6 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import {
   BookOpenText,
-  Briefcase as BriefcaseBusiness,
   Command,
   DiamondsFour as ComponentIcon,
   TerminalWindow as SquareTerminal,
@@ -115,9 +114,12 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        <div className="relative flex size-full items-center justify-center">
-          <BriefcaseBusiness className="size-7" weight="duotone" />
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt="Whoa Jobs"
+          className="relative size-full p-[13%]"
+          src="/assets/projects/whoa-jobs/logo/whoa-jobs-symbol-white.png"
+        />
       </div>
     ),
   },
@@ -130,9 +132,8 @@ export const PROJECTS: Project[] = [
       <div className="relative size-12">
         <div
           className={cn(
-            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'absolute inset-0 rounded-xl bg-[#F2541B] shadow',
             'transition-transform duration-300 group-hover:rotate-45',
-            'dark:border-zinc-700 dark:bg-zinc-950/40',
           )}
         />
 

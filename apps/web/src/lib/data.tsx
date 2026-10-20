@@ -3,7 +3,6 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import {
   BookOpenText,
   Command,
-  DiamondsFour as ComponentIcon,
   DotsThreeIcon,
   TerminalWindow as SquareTerminal,
 } from '@phosphor-icons/react/ssr';
@@ -21,17 +20,15 @@ export const PROJECTS: Project[] = [
     id: 'whoa-ui',
     content: (
       <div className="relative size-12">
-        <div
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt="Whoa UI"
           className={cn(
-            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'absolute inset-0 size-full rounded-xl shadow',
             'transition-transform duration-300 group-hover:rotate-45',
-            'dark:border-zinc-700 dark:bg-zinc-950/40',
           )}
+          src="/favicon.ico"
         />
-
-        <div className="relative flex size-full items-center justify-center">
-          <ComponentIcon className="size-7" weight="duotone" />
-        </div>
       </div>
     ),
   },

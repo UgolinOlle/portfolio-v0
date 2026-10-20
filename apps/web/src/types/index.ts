@@ -8,6 +8,7 @@ import type { ComponentType, ReactNode } from 'react';
  * @property {string} link - The link to the project
  * @property {string} url - The URL of the project
  * @property {string} id - The unique identifier for the project
+ * @property {boolean} done - Whether the project is shipped; `false` shows a "work in progress" badge
  */
 export type Project = {
   name: string;
@@ -17,6 +18,8 @@ export type Project = {
   /** Screenshot shown on the home card; falls back to `content` over the default texture. */
   image?: string;
   id: string;
+  /** Defaults to shipped; set to `false` to flag the project as still in progress. */
+  done?: boolean;
 };
 
 /**

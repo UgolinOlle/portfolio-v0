@@ -60,6 +60,20 @@ function ProjectCard({ project, featured = false }: ProjectCardProps) {
             {project.content}
           </div>
         )}
+
+        {project.done === false && (
+          <span
+            className={cn(
+              'absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full py-1 pr-2.5 pl-2',
+              'bg-white/80 text-[11px] leading-none font-medium text-zinc-600 backdrop-blur-sm',
+              'ring-1 ring-zinc-200/70 ring-inset',
+              'dark:bg-zinc-950/60 dark:text-zinc-300 dark:ring-zinc-700/70',
+            )}
+          >
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-amber-500" />
+            {t('projects.wip')}
+          </span>
+        )}
       </div>
 
       <div className="flex items-start justify-between gap-4 px-1">

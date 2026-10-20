@@ -9,8 +9,7 @@ import type { Project, Resources, SocialLink, WorkExperience } from '~/types';
 export const PROJECTS: Project[] = [
   {
     name: 'Whoa UI Components',
-    description:
-      "Composants d'interface animés conçus pour React et Next.js. (Projet en construction)",
+    description: "Composants d'interface animés conçus pour React et Next.js.",
     link: '/ui',
     id: 'whoa-ui',
     content: (
@@ -29,10 +28,10 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'Whoa Bar',
-    description:
-      "Composants d'interface animés conçus pour React et Next.js. (Projet en construction)",
+    description: 'Application macOS pour gérer la barre de menu.',
     link: '/projects/whoa-bar',
     id: 'whoa-bar',
+    done: false,
     content: (
       <div className="relative size-12">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -51,6 +50,7 @@ export const PROJECTS: Project[] = [
     name: 'Whoa Stash',
     description: 'Application MacOS pour gérer le son.',
     link: '/projects/whoa-stash',
+    done: false,
     content: (
       <div className="relative size-12">
         <div
@@ -73,6 +73,7 @@ export const PROJECTS: Project[] = [
     description: 'Application de nutrition IA qui analyse vos repas en photo',
     link: '/projects/calyx',
     id: 'calyx',
+    done: false,
     content: (
       <div className="relative size-12">
         <div
@@ -149,6 +150,7 @@ export const PROJECTS: Project[] = [
       'Collect, centralize and track job offers (work-study & full-time) from multiple job boards — in a single dashboard.',
     link: '/projects/whoa-jobs',
     id: 'whoa-jobs',
+    done: false,
     content: (
       <div className="relative size-12">
         <div

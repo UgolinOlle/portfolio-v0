@@ -45,7 +45,7 @@ export function CityList({
               aria-label={`${view.name}, ${formatTime(view)}, ${view.isHome ? 'home' : describeOffset(view)}${view.dayShift ? (view.dayShift > 0 ? ', next day' : ', previous day') : ''}`}
               aria-pressed={active}
               className={cn(
-                'relative flex w-full items-center gap-4 rounded-2xl px-4 py-3.5 text-left outline-none',
+                'relative flex w-full items-center gap-2.5 rounded-2xl px-3 py-3.5 text-left outline-none @xs:gap-4 @xs:px-4',
                 'transition-transform duration-150 ease-out focus-visible:ring-2 focus-visible:ring-[color:var(--wc-focus)] active:scale-[0.99]',
               )}
               onClick={() => onSelect(view.id)}
@@ -61,16 +61,16 @@ export function CityList({
               <Icon
                 aria-hidden
                 className={cn(
-                  'relative size-[1.125rem] shrink-0 transition-colors duration-300',
+                  'relative size-[1.125rem] shrink-0 transition-colors duration-300 @max-xs:hidden',
                   view.isDay ? 'text-[color:var(--wc-day)]' : 'text-[color:var(--wc-muted)]',
                 )}
                 strokeWidth={1.75}
               />
               <span className="relative min-w-0 flex-1">
-                <span className="block truncate text-[0.9375rem] font-medium text-[color:var(--wc-text)]">
+                <span className="block text-[0.9375rem] font-medium wrap-break-word text-[color:var(--wc-text)] @xs:truncate">
                   {view.name}
                 </span>
-                <span className="block truncate text-[0.8125rem] text-[color:var(--wc-muted)]">
+                <span className="block text-[0.8125rem] wrap-break-word text-[color:var(--wc-muted)] @xs:truncate">
                   {view.isHome
                     ? `Home · ${formatUtc(view.offsetMin)}`
                     : `${formatUtc(view.offsetMin)} · ${describeOffset(view)}`}
@@ -83,7 +83,7 @@ export function CityList({
               )}
               <span
                 aria-hidden
-                className="relative shrink-0 text-right text-xl font-medium tracking-tight text-[color:var(--wc-text)] tabular-nums"
+                className="relative shrink-0 text-right text-lg font-medium tracking-tight text-[color:var(--wc-text)] tabular-nums @xs:text-xl"
               >
                 {hour12}:{String(view.minute).padStart(2, '0')}
                 <span className="ml-1 text-sm font-normal text-[color:var(--wc-muted)]">

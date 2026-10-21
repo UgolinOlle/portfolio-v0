@@ -107,7 +107,7 @@ export function Blog({
                   href={post.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-muted-foreground hover:underline"
+                  className="relative text-muted-foreground after:absolute after:inset-x-0 after:-inset-y-3 hover:underline"
                 >
                   Read more
                 </a>

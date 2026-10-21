@@ -38,7 +38,7 @@ export function UsageMeters({ meters, locale, ofLabel = 'of', className }: Usage
             </dt>
 
             <dd className="space-y-2">
-              <p className="truncate text-sm tabular-nums">
+              <p className="text-sm tabular-nums">
                 <span className="font-medium">{formatNumber(meter.value, locale, 1)}</span>{' '}
                 <span className="text-muted-foreground">
                   {ofLabel} {limitLabel}

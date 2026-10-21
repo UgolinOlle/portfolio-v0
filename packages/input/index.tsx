@@ -275,7 +275,7 @@ text-green-500
                   scale: 0.7,
                 }}
                 onClick={handleClear}
-                className="text-muted-foreground transition hover:text-foreground"
+                className="relative text-muted-foreground transition after:absolute after:-inset-2 hover:text-foreground"
               >
                 <X className="size-4" />
               </motion.button>

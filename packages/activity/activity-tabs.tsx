@@ -19,7 +19,7 @@ export function ActivityTabs({ tabs, activeTab, onChange, className }: ActivityT
     <div
       role="tablist"
       className={cn(
-        'flex items-center gap-1 overflow-x-auto rounded-full bg-foreground/5 p-1',
+        '@container flex items-center gap-1 overflow-x-auto rounded-full bg-foreground/5 p-1',
         className,
       )}
     >
@@ -33,7 +33,7 @@ export function ActivityTabs({ tabs, activeTab, onChange, className }: ActivityT
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(tab.id)}
-            className="relative flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors"
+            className="relative flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full px-2 py-2 text-xs font-medium whitespace-nowrap transition-colors @xs:px-4 @xs:text-sm"
           >
             {isActive && (
               <motion.span
@@ -45,7 +45,7 @@ export function ActivityTabs({ tabs, activeTab, onChange, className }: ActivityT
 
             <span
               className={cn(
-                'relative z-10 flex items-center gap-2',
+                'relative z-10 flex items-center gap-1.5 @xs:gap-2',
                 !isActive && 'text-muted-foreground',
               )}
               style={isActive ? { color: tab.color } : undefined}

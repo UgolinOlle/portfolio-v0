@@ -78,7 +78,7 @@ function HeroSky({
           <div className="relative flex size-full min-h-[inherit] flex-col">
             <m.header
               animate="visible"
-              className="flex items-center justify-between gap-6 px-5 py-5 sm:px-10 sm:py-7"
+              className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-5 sm:px-10 sm:py-7"
               initial="hidden"
               variants={fade}
             >
@@ -92,7 +92,7 @@ function HeroSky({
                 {links.map((link) => (
                   <a
                     key={link.href + link.label}
-                    className="rounded-sm text-white/90 transition-colors duration-150 ease-out [text-shadow:0_1px_10px_rgb(0_70_180/0.3)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white can-hover:hover:text-white"
+                    className="relative rounded-sm text-white/90 transition-colors duration-150 ease-out [text-shadow:0_1px_10px_rgb(0_70_180/0.3)] after:absolute after:inset-x-0 after:-inset-y-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white can-hover:hover:text-white"
                     href={link.href}
                   >
                     {link.label}

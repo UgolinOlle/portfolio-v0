@@ -154,7 +154,7 @@ export function CalendarSync({
   return (
     <div
       className={cn(
-        'relative flex w-[22rem] max-w-full items-center gap-3 overflow-hidden rounded-2xl bg-card p-3 text-card-foreground',
+        'relative flex w-[22rem] max-w-full flex-wrap items-center gap-3 overflow-hidden rounded-2xl bg-card p-3 text-card-foreground',
         'shadow-[0_1px_0_0_rgb(255_255_255/0.6)_inset,0_0_0_1px_rgb(24_24_27/0.08),0_12px_32px_-12px_rgb(24_24_27/0.18)]',
         'dark:shadow-[0_1px_0_0_rgb(255_255_255/0.06)_inset,0_0_0_1px_rgb(255_255_255/0.08),0_12px_32px_-12px_rgb(0_0_0/0.6)]',
         className,
@@ -210,7 +210,7 @@ export function CalendarSync({
       </div>
 
       {/* Event */}
-      <div className="relative min-w-0 flex-1">
+      <div className="relative min-w-28 flex-1">
         <p className="truncate text-sm font-semibold tracking-tight">{title}</p>
         <div className="relative h-4 overflow-hidden text-xs text-muted-foreground">
           <AnimatePresence initial={false}>
@@ -237,7 +237,7 @@ export function CalendarSync({
         aria-label={label}
         aria-busy={state === 'loading'}
         className={cn(
-          'relative grid h-8 w-[6.5rem] shrink-0 place-items-center overflow-hidden rounded-lg text-xs font-medium',
+          'relative ml-auto grid h-8 w-[6.5rem] shrink-0 place-items-center overflow-hidden rounded-lg text-xs font-medium',
           'transition-[background-color,color,transform] duration-200 ease-out outline-none',
           'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card',
           'active:scale-[0.97] disabled:active:scale-100',

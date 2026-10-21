@@ -18,7 +18,7 @@ export default function Demo() {
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
-          className="text-muted-foreground transition hover:text-foreground"
+          className="relative text-muted-foreground transition after:absolute after:-inset-2 hover:text-foreground"
         >
           {visible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
         </button>

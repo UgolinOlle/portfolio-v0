@@ -27,7 +27,10 @@ export function UsagePeriodTabs({
     <div
       role="tablist"
       aria-label="Period"
-      className={cn('flex shrink-0 items-center rounded-lg bg-muted p-0.5', className)}
+      className={cn(
+        'flex max-w-full items-center overflow-x-auto rounded-lg bg-muted p-0.5',
+        className,
+      )}
     >
       {periods.map((period) => {
         const isActive = period.id === activePeriod;

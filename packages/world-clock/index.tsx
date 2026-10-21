@@ -119,7 +119,7 @@ export function WorldClock({
           {...props}
         >
           {selected ? (
-            <div className="grid items-center gap-8 @2xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] @2xl:gap-12">
+            <div className="grid grid-cols-1 items-center gap-8 @2xl:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] @2xl:gap-12">
               <div className="mx-auto w-full max-w-[26rem]">
                 <Dial
                   onScrub={(delta) => setShift((value) => value + delta)}

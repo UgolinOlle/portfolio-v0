@@ -82,7 +82,7 @@ export function UsageCard({
       )}
     >
       <div className="space-y-5 rounded-[20px] border border-border/40 bg-card p-4 shadow-sm">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
           <div className="min-w-0">
             <h3 className="truncate text-sm font-semibold">{title}</h3>
             {subtitle && <p className="text-xs text-pretty text-muted-foreground">{subtitle}</p>}
@@ -97,8 +97,8 @@ export function UsageCard({
           )}
         </div>
 
-        <div className="flex items-end justify-between gap-3">
-          <p className="flex items-baseline gap-1.5 tabular-nums">
+        <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
+          <p className="flex flex-wrap items-baseline gap-x-1.5 tabular-nums">
             <AnimatePresence initial={false} mode="popLayout">
               <motion.span
                 key={period.id}

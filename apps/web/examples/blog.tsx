@@ -116,7 +116,7 @@ const Blog7 = ({
                 <a
                   href={post.url}
                   target="_blank"
-                  className="flex items-center text-muted-foreground hover:underline"
+                  className="relative flex items-center text-muted-foreground after:absolute after:inset-x-0 after:-inset-y-3 hover:underline"
                 >
                   Read more
                   <ArrowRight className="ml-1 size-4" />

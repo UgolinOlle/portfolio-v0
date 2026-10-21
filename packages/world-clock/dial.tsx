@@ -107,7 +107,7 @@ function Marker({
       <button
         aria-label={`${city.name}, ${formatTime(city)}. Show on the dial`}
         className={cn(
-          'pointer-events-auto absolute flex size-[7.5%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full outline-none',
+          'pointer-events-auto absolute flex size-[7.5%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full outline-none after:absolute after:top-1/2 after:left-1/2 after:size-[max(100%,1.5rem)] after:-translate-1/2',
           'transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:ring-2 focus-visible:ring-[color:var(--wc-focus)]',
           selected && 'pointer-events-none scale-50 opacity-0',
           MARKER_MOVE,

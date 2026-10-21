@@ -26,5 +26,5 @@
     "functions": ["clsx", "cn"],
     "preserveWhitespace": true
   },
-  "ignorePatterns": []
+  "ignorePatterns": ["apps/web/src/lib/hairline/**"]
 }

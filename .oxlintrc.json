@@ -1,4 +1,5 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "extends": ["./packages/config/oxlint.json"]
+  "extends": ["./packages/config/oxlint.json"],
+  "ignorePatterns": ["apps/web/src/lib/hairline/**"]
 }

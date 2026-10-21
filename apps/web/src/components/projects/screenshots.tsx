@@ -2,8 +2,10 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useCallback, useEffect, useState } from 'react';
+import { AnimatePresence, m, useReducedMotion } from 'motion/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { EASE_OUT } from '~/lib/constants';
 
 export type Screenshot = {
   /** Image shown in light mode. */
@@ -18,14 +20,16 @@ type ScreenshotsProps = {
   items: Screenshot[];
 };
 
-// Expo-out: fast start, long soft landing. Reads as "settling into place".
-const EASE = [0.22, 1, 0.36, 1] as const;
-
 /** Light/dark screenshot grid with a staggered reveal, hover lift and a keyboard-closable lightbox. */
 export function Screenshots({ items }: ScreenshotsProps) {
   const reduceMotion = useReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const close = useCallback(() => setOpenIndex(null), []);
+  const lastTrigger = useRef<HTMLElement | null>(null);
+  const close = useCallback(() => {
+    setOpenIndex(null);
+    // Give focus back to the thumbnail that opened the lightbox.
+    lastTrigger.current?.focus();
+  }, []);
 
   // The first item is the showcase: it spans the full row alone or when it leads a grid of 3+.
   // Two items stay side by side.
@@ -36,21 +40,24 @@ export function Screenshots({ items }: ScreenshotsProps) {
     <>
       <ul className="my-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
         {items.map((item, index) => (
-          <motion.li
+          <m.li
             key={item.light}
             className={cn(featuredFirst && index === 0 && 'sm:col-span-2')}
-            initial={reduceMotion ? false : { opacity: 0, y: 28, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={reduceMotion ? false : { opacity: 0, transform: 'translateY(12px)' }}
+            whileInView={{ opacity: 1, transform: 'translateY(0px)' }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{
-              duration: 0.9,
-              ease: EASE,
-              delay: reduceMotion ? 0 : (index % 2) * 0.1,
+              duration: 0.4,
+              ease: EASE_OUT,
+              delay: reduceMotion ? 0 : (index % 2) * 0.05,
             }}
           >
-            <motion.button
+            <m.button
               type="button"
-              onClick={() => setOpenIndex(index)}
+              onClick={(event) => {
+                lastTrigger.current = event.currentTarget;
+                setOpenIndex(index);
+              }}
               aria-label={`${item.alt}, agrandir`}
               whileHover={reduceMotion ? undefined : { y: -4 }}
               transition={{ type: 'spring', stiffness: 320, damping: 28 }}
@@ -61,14 +68,14 @@ export function Screenshots({ items }: ScreenshotsProps) {
                 className="transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 loading="lazy"
               />
-            </motion.button>
+            </m.button>
 
             {item.caption && (
               <p className="mt-3 px-1 font-mono text-xs tracking-wide text-zinc-500 dark:text-zinc-400">
                 {item.caption}
               </p>
             )}
-          </motion.li>
+          </m.li>
         ))}
       </ul>
 
@@ -127,7 +134,7 @@ function Lightbox({ item, onClose, reduceMotion }: LightboxProps) {
   }, [onClose]);
 
   return (
-    <motion.div
+    <m.div
       role="dialog"
       aria-modal="true"
       aria-label={item.alt}
@@ -136,28 +143,29 @@ function Lightbox({ item, onClose, reduceMotion }: LightboxProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-zinc-950/80 p-4 backdrop-blur-sm sm:p-10"
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-zinc-950/85 p-4 sm:p-10"
     >
-      <motion.figure
+      <m.figure
         initial={reduceMotion ? false : { opacity: 0, scale: 0.96, y: 16 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.98 }}
-        transition={{ duration: 0.45, ease: EASE }}
+        transition={{ duration: 0.3, ease: EASE_OUT }}
         onClick={(event) => event.stopPropagation()}
         className="m-0 max-h-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
       >
         <ScreenshotImage item={item} className="max-h-[85vh] w-auto max-w-full" />
-      </motion.figure>
+      </m.figure>
 
       <button
         type="button"
+        autoFocus
         onClick={onClose}
         aria-label="Fermer"
         className="absolute top-4 right-4 rounded-full bg-white/10 px-3 py-1.5 font-mono text-xs text-zinc-100 backdrop-blur transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
       >
         Esc
       </button>
-    </motion.div>
+    </m.div>
   );
 }

@@ -7,7 +7,7 @@ export const EMAIL = siteConfig.email;
 
 export const VARIANTS_SECTION = {
   // No `filter: blur()`: animating it repaints every frame and stutters on low-end phones.
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 8 },
   visible: { opacity: 1, y: 0 },
 };
 

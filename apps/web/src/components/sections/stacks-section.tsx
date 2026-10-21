@@ -20,7 +20,7 @@ import {
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { DATABASES, FRAMEWORKS, LANGUAGES, TOOLS } from '~/components/icons';
-import { SECTION_REVEAL } from '~/lib/constants';
+import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 
 import { SectionHeading } from './section-heading';
 
@@ -38,17 +38,16 @@ function SkillItem({ name, icon }: SkillItemProps) {
       : (icon as React.ComponentType<{ className?: string }>);
 
   return (
-    <m.div
+    // Not interactive: hover only tints the pill, it must not suggest a click.
+    <div
       className={cn(
-        'group flex w-fit items-center gap-2 rounded-sm px-2 py-0.5 text-foreground/80',
-        'border border-primary/20 transition-colors duration-200 hover:bg-primary-foreground',
+        'group flex w-fit items-center gap-2 rounded-full px-2.5 py-0.5 text-foreground/80',
+        'border border-primary/20 transition-colors duration-150 hover:border-primary/40 hover:bg-primary-foreground',
       )}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.98 }}
     >
       <IconComponent className="h-4 w-4 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-rotate-15" />
       <span className="text-sm">{name}</span>
-    </m.div>
+    </div>
   );
 }
 
@@ -153,24 +152,25 @@ function StacksSection() {
   const { t } = useTranslation();
 
   return (
-    <m.section {...SECTION_REVEAL} className="space-y-8" id="stacks">
+    <m.section {...SECTION_REVEAL_LIST} className="space-y-8" id="stacks">
       <SectionHeading>{t('sections.stacks')}</SectionHeading>
 
       {Object.entries(SKILLS).map(([category, skills]) => (
-        <div key={category}>
-          <h3 className="mb-4 text-lg font-medium">{t(`stacks.categories.${category}`)}</h3>
+        <m.div key={category} transition={TRANSITION_SECTION} variants={VARIANTS_SECTION}>
+          <h3 className="mb-3 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            {t(`stacks.categories.${category}`)}
+          </h3>
 
-          <div className="flex flex-wrap gap-x-1 gap-y-2">
+          <div className="flex flex-wrap gap-x-1.5 gap-y-2">
             {skills.map((skill) => (
-              <div key={skill.name}>
-                <SkillItem
-                  icon={skill.icon}
-                  name={skill.labelKey ? t(skill.labelKey) : skill.name}
-                />
-              </div>
+              <SkillItem
+                icon={skill.icon}
+                key={skill.name}
+                name={skill.labelKey ? t(skill.labelKey) : skill.name}
+              />
             ))}
           </div>
-        </div>
+        </m.div>
       ))}
     </m.section>
   );

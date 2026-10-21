@@ -32,7 +32,7 @@ export function HeroSection() {
         {t('hero.lead')}
       </p>
 
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
+      <div className="hero-in flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
         <a
           className={cn(
             'inline-flex items-center rounded-lg bg-zinc-950 px-4 py-2 text-sm font-medium text-white',

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/core/i18n-provider';
@@ -19,10 +19,10 @@ function BackButton({ to = 'home' }: BackButtonProps) {
   const { href, labelKey } = DESTINATIONS[to];
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 0.1, duration: 0.4 }}
+      transition={{ duration: 0.2 }}
       className="mb-6 flex items-center gap-2 text-sm font-medium text-muted-foreground"
     >
       <Link
@@ -34,7 +34,7 @@ function BackButton({ to = 'home' }: BackButtonProps) {
         </span>
         {t(labelKey)}
       </Link>
-    </motion.div>
+    </m.div>
   );
 }
 

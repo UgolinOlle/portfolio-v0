@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import { JsonLd } from '~/components/core/json-ld';
 import { PortfolioShell } from '~/components/core/portfolio-shell';
 import { BackButton } from '~/components/projects/back-button';
-import { WritingsBanner } from '~/components/writings/banner';
 import { WritingMDX } from '~/components/writings/writing-mdx';
 import { createMetadata, resolveLocale } from '~/lib/metadata';
 import { writingsSource, resolvePageLocale } from '~/lib/source';
@@ -37,7 +36,6 @@ const Page = async ({ params, searchParams }: PageProps) => {
         })}
       />
       <BackButton to="writings" />
-      <WritingsBanner />
       <WritingMDX page={page} />
     </PortfolioShell>
   );

@@ -2,12 +2,11 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { AnimatePresence, motion } from 'motion/react';
+import { m } from 'motion/react';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { TextHoverEnter } from '~/components/ui/text-hover';
 import { formatDate } from '~/lib/format-date';
 
 export type WritingSummary = {
@@ -22,7 +21,11 @@ type WritingsListProps = {
   pages: WritingSummary[];
 };
 
-const SLIDE_ANIMATION_DISTANCE = 20;
+const FILTER_BUTTON =
+  'rounded-full border px-3 py-1 text-sm transition-[background-color,color,border-color,transform] duration-150 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none';
+const FILTER_ACTIVE = 'border-transparent bg-primary text-primary-foreground';
+const FILTER_IDLE =
+  'border-zinc-300 text-primary/60 hover:bg-primary-foreground hover:text-primary dark:border-zinc-700';
 
 export function WritingsList({ pages }: WritingsListProps) {
   const { t, i18n } = useTranslation();
@@ -49,72 +52,63 @@ export function WritingsList({ pages }: WritingsListProps) {
   return (
     <div className="space-y-6">
       {categories.length > 1 && (
-        <div className="flex flex-wrap gap-2">
+        <div aria-label={t('writings.filterLabel')} className="flex flex-wrap gap-2" role="group">
           <button
-            className={cn(
-              'px-3 py-1 text-sm transition-colors',
-              selectedCategory === null
-                ? 'bg-primary-foreground text-primary'
-                : 'border-zinc-300 text-primary/50 hover:bg-primary-foreground dark:border-zinc-700',
-            )}
+            aria-pressed={selectedCategory === null}
+            className={cn(FILTER_BUTTON, selectedCategory === null ? FILTER_ACTIVE : FILTER_IDLE)}
             onClick={() => setSelectedCategory(null)}
             type="button"
           >
-            <TextHoverEnter>{t('writings.filterAll')}</TextHoverEnter>
+            {t('writings.filterAll')}
           </button>
 
           {categories.map((category) => (
             <button
+              aria-pressed={selectedCategory === category}
               className={cn(
-                'px-3 py-1 text-sm transition-colors',
-                selectedCategory === category
-                  ? 'bg-primary-foreground text-primary'
-                  : 'border-zinc-300 text-primary/50 hover:bg-primary-foreground dark:border-zinc-700',
+                FILTER_BUTTON,
+                selectedCategory === category ? FILTER_ACTIVE : FILTER_IDLE,
               )}
               key={category}
               onClick={() => setSelectedCategory(category)}
               type="button"
             >
-              <TextHoverEnter>{category}</TextHoverEnter>
+              {category}
             </button>
           ))}
         </div>
       )}
 
-      <div className="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
-        <AnimatePresence initial={false} mode="popLayout">
-          {filteredPages.map((page) => (
-            <motion.div
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -SLIDE_ANIMATION_DISTANCE }}
-              initial={{ opacity: 0, y: SLIDE_ANIMATION_DISTANCE }}
-              key={page.url}
-              layout
-              transition={{ duration: 0.2 }}
-            >
-              <Link className="group flex flex-col gap-1 py-4" href={page.url}>
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-[450] text-zinc-900 transition-opacity group-hover:opacity-60 dark:text-zinc-50">
-                    {page.title}
-                  </span>
+      {/* Remounted per filter: a short crossfade, no layout or slide animation. */}
+      <m.div
+        animate={{ opacity: 1 }}
+        className="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800"
+        initial={{ opacity: 0 }}
+        key={selectedCategory ?? 'all'}
+        transition={{ duration: 0.15 }}
+      >
+        {filteredPages.map((page) => (
+          <Link className="group flex flex-col gap-1 py-4" href={page.url} key={page.url}>
+            <div className="flex items-center justify-between gap-4">
+              <span className="font-[450] text-zinc-900 transition-opacity group-hover:opacity-60 dark:text-zinc-50">
+                {page.title}
+              </span>
 
-                  <span className="shrink-0 rounded-full border border-zinc-300 px-2 py-0.5 font-mono text-xs text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
-                    {page.category}
-                  </span>
-                </div>
+              <span className="shrink-0 rounded-full border border-zinc-300 px-2 py-0.5 font-mono text-xs text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+                {page.category}
+              </span>
+            </div>
 
-                {page.description && (
-                  <p className="text-sm text-zinc-600 dark:text-zinc-300">{page.description}</p>
-                )}
+            {page.description && (
+              <p className="text-sm text-zinc-600 dark:text-zinc-300">{page.description}</p>
+            )}
 
-                <time className="text-xs text-zinc-500 dark:text-zinc-400" dateTime={page.date}>
-                  {formatDate(page.date, i18n.language)}
-                </time>
-              </Link>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+            <time className="text-xs text-zinc-500 dark:text-zinc-400" dateTime={page.date}>
+              {formatDate(page.date, i18n.language)}
+            </time>
+          </Link>
+        ))}
+      </m.div>
     </div>
   );
 }

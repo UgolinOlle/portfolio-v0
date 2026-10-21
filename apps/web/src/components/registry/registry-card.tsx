@@ -16,9 +16,8 @@ import { type PointerEvent, type ReactNode, useRef } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { ArrowUpRightIcon } from '~/components/icons/ui';
+import { EASE_OUT } from '~/lib/constants';
 import type { RegistryItem } from '~/lib/registry';
-
-import { EASE_OUT } from './reveal';
 
 type RegistryCardProps = {
   item: RegistryItem;

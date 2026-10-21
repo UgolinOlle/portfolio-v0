@@ -20,8 +20,11 @@ export function HomeContent({ recentWritings }: HomeContentProps) {
     <div className="space-y-24">
       <HeroSection />
       <ProjectsSection />
-      <WorksSection />
-      <AboutSection />
+      {/* Works and About read as one story: keep them closer than the other sections. */}
+      <div className="space-y-16">
+        <WorksSection />
+        <AboutSection />
+      </div>
       {recentWritings}
       <StacksSection />
       <ContactSection />

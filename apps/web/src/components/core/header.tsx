@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { LanguageSwitcher, TextEffect } from '~/components/ui';
+import { LanguageSwitcher } from '~/components/ui';
 import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
 import { SOCIAL_LINKS } from '~/lib/data';
 
@@ -24,15 +24,7 @@ function Header() {
               Ugolin Ollé
             </Link>
 
-            <TextEffect
-              as="p"
-              className="font-sans font-normal text-primary"
-              delay={0}
-              per="char"
-              preset="fade"
-            >
-              {t('header.title')}
-            </TextEffect>
+            <p className="font-sans font-normal text-primary">{t('header.title')}</p>
           </div>
 
           <div className="flex items-center gap-2">

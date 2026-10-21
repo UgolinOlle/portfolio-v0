@@ -29,6 +29,25 @@
   animation: thumbnail-in 400ms var(--ease-out-strong) both;
 }
 
+/* Hero call to action: the only load-time entrance on the home page. The h1 and lead stay
+   static because they are LCP candidates. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.hero-in {
+  animation: rise-in 350ms var(--ease-out-strong) 120ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-in {
+    animation: none;
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }

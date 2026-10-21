@@ -1,4 +1,6 @@
 import { getMDXComponents } from '~/components/core/mdx';
+import { WritingsBanner } from '~/components/writings/banner';
+import { ReadingProgress } from '~/components/writings/reading-progress';
 import { DocsBody, DocsDescription, DocsTitle } from '~/layouts/docs/page';
 import type { writingsSource } from '~/lib/source';
 
@@ -13,8 +15,10 @@ export const WritingMDX = ({ page }: WritingMDXProps) => {
 
   return (
     <article>
+      <ReadingProgress />
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
+      <WritingsBanner />
 
       <DocsBody>
         <MDX components={getMDXComponents()} />

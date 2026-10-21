@@ -2,12 +2,10 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { m, useReducedMotion } from 'motion/react';
 import type { ReactNode } from 'react';
 
-// Strong ease-out (see `--ease-out-strong` in global.css): a plain `ease-out` is too timid for
-// an entrance the visitor is watching.
-export const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+import { EASE_OUT } from '~/lib/constants';
 
 type RevealProps = {
   children: ReactNode;
@@ -33,7 +31,7 @@ export const Reveal = ({
   const wipe = variant === 'wipe' && !reduce;
 
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={
         wipe
@@ -49,7 +47,7 @@ export const Reveal = ({
       }
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -60,7 +58,7 @@ type DrawLineProps = {
 
 // A hairline that draws itself from the left edge. Meant to replace a `border-b`.
 export const DrawLine = ({ className, delay = 0 }: DrawLineProps) => (
-  <motion.span
+  <m.span
     aria-hidden="true"
     className={cn('pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left', className)}
     initial={{ transform: 'scaleX(0)' }}

@@ -1,7 +1,7 @@
 'use client';
 
 import type { SpringOptions } from 'motion/react';
-import { motion, useMotionValue, useSpring } from 'motion/react';
+import { m, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -22,6 +22,7 @@ export function Magnetic({
   actionArea = 'self',
   springOptions = SPRING_CONFIG,
 }: MagneticProps) {
+  const reduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -31,34 +32,44 @@ export function Magnetic({
   const springX = useSpring(x, springOptions);
   const springY = useSpring(y, springOptions);
 
+  // Only listen while the pointer is in the action area, and measure the element once on
+  // entry instead of on every move (a layout read per event, per instance).
   useEffect(() => {
-    const calculateDistance = (e: MouseEvent) => {
-      if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const distanceX = e.clientX - centerX;
-        const distanceY = e.clientY - centerY;
+    if (!isHovered || reduceMotion || !ref.current) {
+      return;
+    }
 
-        const absoluteDistance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
 
-        if (isHovered && absoluteDistance <= range) {
-          const scale = 1 - absoluteDistance / range;
-          x.set(distanceX * intensity * scale);
-          y.set(distanceY * intensity * scale);
-        } else {
-          x.set(0);
-          y.set(0);
-        }
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== 'mouse') {
+        return;
+      }
+
+      const distanceX = event.clientX - centerX;
+      const distanceY = event.clientY - centerY;
+      const absoluteDistance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
+
+      if (absoluteDistance <= range) {
+        const scale = 1 - absoluteDistance / range;
+        x.set(distanceX * intensity * scale);
+        y.set(distanceY * intensity * scale);
+      } else {
+        x.set(0);
+        y.set(0);
       }
     };
 
-    document.addEventListener('mousemove', calculateDistance);
+    document.addEventListener('pointermove', onPointerMove);
 
     return () => {
-      document.removeEventListener('mousemove', calculateDistance);
+      document.removeEventListener('pointermove', onPointerMove);
+      x.set(0);
+      y.set(0);
     };
-  }, [isHovered, intensity, range, x, y]);
+  }, [isHovered, reduceMotion, intensity, range, x, y]);
 
   useEffect(() => {
     if (actionArea === 'parent' && ref.current?.parentElement) {
@@ -89,13 +100,11 @@ export function Magnetic({
   const handleMouseLeave = () => {
     if (actionArea === 'self') {
       setIsHovered(false);
-      x.set(0);
-      y.set(0);
     }
   };
 
   return (
-    <motion.div
+    <m.div
       onMouseEnter={actionArea === 'self' ? handleMouseEnter : undefined}
       onMouseLeave={actionArea === 'self' ? handleMouseLeave : undefined}
       ref={ref}
@@ -105,6 +114,6 @@ export function Magnetic({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

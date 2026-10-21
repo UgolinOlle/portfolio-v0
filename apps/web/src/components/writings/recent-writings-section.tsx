@@ -7,10 +7,10 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
+import { ArrowRightIcon } from '~/components/icons/ui';
 import { SectionHeading } from '~/components/sections/section-heading';
-import { TextHoverEnter } from '~/components/ui/text-hover';
 import type { WritingSummary } from '~/components/writings/writings-list';
-import { SECTION_REVEAL } from '~/lib/constants';
+import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { formatDate } from '~/lib/format-date';
 
 const RECENT_WRITINGS_COUNT = 5;
@@ -36,14 +36,18 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
   }
 
   return (
-    <m.section {...SECTION_REVEAL} className="space-y-4">
+    <m.section {...SECTION_REVEAL_LIST} className="space-y-4">
       <SectionHeading
         action={
           <Link
-            className="text-sm text-zinc-500 transition-opacity hover:opacity-60 dark:text-zinc-400"
+            className="group inline-flex items-center gap-1 rounded text-sm text-zinc-500 transition-colors hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50"
             href="/writings"
           >
-            <TextHoverEnter>{t('writings.seeAll')}</TextHoverEnter>
+            {t('writings.seeAll')}
+            <ArrowRightIcon
+              aria-hidden="true"
+              className="size-3.5 transition-transform group-hover:translate-x-0.5"
+            />
           </Link>
         }
       >
@@ -52,9 +56,11 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
 
       <div className="flex flex-col space-y-2">
         {recentPages.map((page) => (
-          <div
+          <m.div
             className="relative overflow-hidden bg-zinc-300/30 p-px dark:bg-zinc-600/30"
             key={page.url}
+            transition={TRANSITION_SECTION}
+            variants={VARIANTS_SECTION}
           >
             <Link
               className={cn(
@@ -78,7 +84,7 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
                 {formatDate(page.date, i18n.language)}
               </time>
             </Link>
-          </div>
+          </m.div>
         ))}
       </div>
     </m.section>

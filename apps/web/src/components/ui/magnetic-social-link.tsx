@@ -16,6 +16,7 @@ export function MagneticSocialLink({
           'group relative inline-flex shrink-0 items-center gap-px rounded-full bg-zinc-100',
           'px-2.5 py-1 text-sm text-black transition-[background-color,color,transform] duration-200 hover:bg-zinc-950',
           'active:scale-95',
+          'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none',
           'hover:text-zinc-50 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700',
         )}
         href={link}
@@ -25,7 +26,7 @@ export function MagneticSocialLink({
         {children}
         <svg
           aria-hidden="true"
-          className="h-3 w-3"
+          className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px"
           fill="none"
           height="15"
           viewBox="0 0 15 15"

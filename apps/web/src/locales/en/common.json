@@ -75,6 +75,7 @@
     "pageTitle": "Writings",
     "pageSubtitle": "Notes and articles about web development, my projects and what I'm learning.",
     "filterAll": "All",
+    "filterLabel": "Filter by category",
     "noWritings": "No writings available in English",
     "recentTitle": "Recent writings",
     "seeAll": "See all writings",
@@ -107,7 +108,11 @@
   },
   "contact": {
     "title": "Contact",
-    "description": "Feel free to contact me at"
+    "description": "Feel free to contact me at",
+    "copy": "Copy email address",
+    "copied": "Address copied",
+    "copyFailed": "Couldn't copy, use the email link",
+    "write": "Send an email"
   },
   "components": {
     "title": "Component Library",

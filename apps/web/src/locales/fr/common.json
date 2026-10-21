@@ -75,6 +75,7 @@
     "pageTitle": "Articles",
     "pageSubtitle": "Notes et articles sur le développement web, mes projets et ce que j'apprends.",
     "filterAll": "Tous",
+    "filterLabel": "Filtrer par catégorie",
     "noWritings": "Aucun article disponible en français",
     "recentTitle": "Derniers articles",
     "seeAll": "Voir tous les articles",
@@ -107,7 +108,11 @@
   },
   "contact": {
     "title": "Contact",
-    "description": "N'hésitez pas à me contacter à"
+    "description": "N'hésitez pas à me contacter à",
+    "copy": "Copier l'adresse e-mail",
+    "copied": "Adresse copiée",
+    "copyFailed": "Copie impossible, utilisez le lien e-mail",
+    "write": "Écrire un e-mail"
   },
   "components": {
     "title": "Bibliothèque de Composants",

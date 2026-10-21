@@ -13,7 +13,7 @@ import {
   useState,
 } from 'react';
 
-import { EASE_OUT } from './reveal';
+import { EASE_OUT } from '~/lib/constants';
 
 export type RegistryFilterValue = 'all' | string;
 

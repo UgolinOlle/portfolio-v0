@@ -5,9 +5,10 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
+import { EASE_OUT } from '~/lib/constants';
+
 import { CountUp } from './count-up';
 import { useRegistryFilter } from './registry-filter';
-import { EASE_OUT } from './reveal';
 
 type SectionNavItem = {
   category: string;

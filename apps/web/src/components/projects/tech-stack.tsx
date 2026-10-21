@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type Variants, useReducedMotion } from 'motion/react';
+import { m, type Variants, useReducedMotion } from 'motion/react';
 
 export type StackGroup = {
   /** Layer name shown in the left column, e.g. "Dashboard". */
@@ -41,7 +41,7 @@ export function TechStack({ groups }: TechStackProps) {
   const reduceMotion = useReducedMotion();
 
   return (
-    <motion.ol
+    <m.ol
       className="my-10 flex flex-col"
       variants={listVariants}
       initial={reduceMotion ? false : 'hidden'}
@@ -49,25 +49,25 @@ export function TechStack({ groups }: TechStackProps) {
       viewport={{ once: true, amount: 0.2 }}
     >
       {groups.map((group) => (
-        <motion.li
+        <m.li
           key={group.layer}
           variants={rowVariants}
           className="group relative grid gap-2 py-5 sm:grid-cols-[11rem_1fr] sm:gap-8"
         >
-          <motion.span
+          <m.span
             aria-hidden="true"
             variants={ruleVariants}
             className="absolute inset-x-0 top-0 h-px origin-left bg-zinc-300 dark:bg-zinc-700"
           />
 
-          <motion.h3
+          <m.h3
             variants={textVariants}
             className="pt-1 font-mono text-xs tracking-wider text-zinc-500 uppercase transition-colors duration-300 group-hover:text-zinc-950 dark:text-zinc-400 dark:group-hover:text-zinc-50"
           >
             {group.layer}
-          </motion.h3>
+          </m.h3>
 
-          <motion.ul
+          <m.ul
             variants={textVariants}
             className="flex flex-wrap gap-x-1 gap-y-1.5 text-[15px] leading-relaxed text-zinc-700 dark:text-zinc-300"
           >
@@ -81,9 +81,9 @@ export function TechStack({ groups }: TechStackProps) {
                 )}
               </li>
             ))}
-          </motion.ul>
-        </motion.li>
+          </m.ul>
+        </m.li>
       ))}
-    </motion.ol>
+    </m.ol>
   );
 }

@@ -4,13 +4,12 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { useEffect, useRef, useState } from 'react';
 
-const WIDE = '(min-width: 768px)';
 const REDUCED = '(prefers-reduced-motion: reduce)';
 
 /**
  * The Hairline "pipeline" figure (maquette → code → conteneur → production).
  *
- * Decorative and below the LCP: the kernel and the figure load only on md+ screens, once the
+ * Decorative and below the LCP: the kernel and the figure load once the
  * browser is idle and the box is in view. The box reserves its 5:4 ratio so nothing shifts.
  * Theme follows the site's `.dark` class (the kernel restyles itself under it). With reduced
  * motion the figure stays at rest and ignores the pointer.
@@ -55,7 +54,7 @@ export function HeroFigure({ className }: { className?: string }) {
     }
 
     const arm = () => {
-      if (!wide.matches || io || handle) return;
+      if (io || handle) return;
       io = new IntersectionObserver(([entry]) => {
         if (!entry?.isIntersecting) return;
         io?.disconnect();
@@ -67,9 +66,7 @@ export function HeroFigure({ className }: { className?: string }) {
       });
       io.observe(el);
     };
-    const wide = matchMedia(WIDE);
     arm();
-    wide.addEventListener('change', arm);
 
     return () => {
       cancelled = true;
@@ -78,7 +75,6 @@ export function HeroFigure({ className }: { className?: string }) {
         if (typeof cancelIdleCallback === 'function') cancelIdleCallback(idle);
         else clearTimeout(idle);
       }
-      wide.removeEventListener('change', arm);
       reduced.removeEventListener('change', syncStill);
       handle?.destroy();
     };
@@ -86,7 +82,7 @@ export function HeroFigure({ className }: { className?: string }) {
   }, []);
 
   return (
-    <div className={cn('hidden md:block', className)} aria-hidden="true">
+    <div className={cn('w-64 max-w-full md:w-full', className)} aria-hidden="true">
       <div className={cn('aspect-[5/4] w-full', still && 'pointer-events-none')} ref={stageRef} />
       <p className="h-4 text-right font-mono text-xs text-zinc-500">{stage}</p>
     </div>

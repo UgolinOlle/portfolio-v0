@@ -37,7 +37,7 @@ docs/                     this folder
 
 ### Hero figure
 
-`src/components/sections/hero-figure.tsx` mounts a vendored Hairline figure (`src/lib/hairline/`: `kernel.js` is the unmodified engine, `pipeline.js` the maquette → code → conteneur → production figure; both are excluded from oxlint/oxfmt so the kernel stays byte-identical). It is `hidden md:block`, loaded with dynamic `import()` only on md+ screens, when the browser is idle and the box is in view; the 5:4 box is reserved so nothing shifts. Theme follows the `.dark` class set by next-themes. With `prefers-reduced-motion` it gets `pointer-events-none` and stays at rest. To swap the figure, replace `pipeline.js` (it must export `mount`, `means`, `range`).
+`src/components/sections/hero-figure.tsx` mounts a vendored Hairline figure (`src/lib/hairline/`: `kernel.js` is the unmodified engine, `pipeline.js` the maquette → code → conteneur → production figure; both are excluded from oxlint/oxfmt so the kernel stays byte-identical). It is 16rem wide on mobile (below the text) and 20rem beside the headline from md, loaded with dynamic `import()` when the browser is idle and the box is in view; the 5:4 box is reserved so nothing shifts. Theme follows the `.dark` class set by next-themes. With `prefers-reduced-motion` it gets `pointer-events-none` and stays at rest. To swap the figure, replace `pipeline.js` (it must export `mount`, `means`, `range`).
 
 Registry item packages today: `activity`, `avatars`, `blog`, `button`, `button-apple`, `button-gandi`, `button-shopify`, `calendar-sync`, `cta-simple`, `headers`, `input`, `landing-saas`, `shortcut`, `status-card`, `usage-card`.
 

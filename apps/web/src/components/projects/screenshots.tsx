@@ -3,6 +3,7 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { AnimatePresence, m, useReducedMotion } from 'motion/react';
+import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { EASE_OUT } from '~/lib/constants';
@@ -14,7 +15,16 @@ export type Screenshot = {
   dark: string;
   alt: string;
   caption?: string;
+  /** Intrinsic size, filled in on the server by `ScreenshotsWithSize`. */
+  width?: number;
+  height?: number;
 };
+
+// Fallback ratio when a file's size can't be read: the layout is then only approximate.
+const FALLBACK_SIZE = { width: 1600, height: 1000 };
+// Content column is `max-w-3xl`; the lightbox caps at `max-w-5xl`.
+const THUMBNAIL_SIZES = '(min-width: 768px) 768px, 100vw';
+const LIGHTBOX_SIZES = '(min-width: 1024px) 1024px, 100vw';
 
 type ScreenshotsProps = {
   items: Screenshot[];
@@ -67,6 +77,7 @@ export function Screenshots({ items }: ScreenshotsProps) {
                 item={item}
                 className="transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 loading="lazy"
+                sizes={THUMBNAIL_SIZES}
               />
             </m.button>
 
@@ -93,23 +104,34 @@ type ScreenshotImageProps = {
   item: Screenshot;
   className?: string;
   loading?: 'lazy' | 'eager';
+  sizes: string;
 };
 
-function ScreenshotImage({ item, className, loading }: ScreenshotImageProps) {
+function ScreenshotImage({ item, className, loading, sizes }: ScreenshotImageProps) {
+  const { width, height } = { ...FALLBACK_SIZE, ...item };
+  // Animated GIFs would lose their animation when re-encoded.
+  const isGif = (src: string) => src.endsWith('.gif');
+
   return (
     <>
-      <img
+      <Image
         src={item.light}
         alt={item.alt}
+        width={width}
+        height={height}
+        sizes={sizes}
         loading={loading}
-        decoding="async"
+        unoptimized={isGif(item.light)}
         className={cn('block h-auto w-full dark:hidden', className)}
       />
-      <img
+      <Image
         src={item.dark}
         alt={item.alt}
+        width={width}
+        height={height}
+        sizes={sizes}
         loading={loading}
-        decoding="async"
+        unoptimized={isGif(item.dark)}
         aria-hidden="true"
         className={cn('hidden h-auto w-full dark:block', className)}
       />
@@ -154,7 +176,12 @@ function Lightbox({ item, onClose, reduceMotion }: LightboxProps) {
         onClick={(event) => event.stopPropagation()}
         className="m-0 max-h-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
       >
-        <ScreenshotImage item={item} className="max-h-[85vh] w-auto max-w-full" />
+        <ScreenshotImage
+          item={item}
+          className="max-h-[85vh] w-auto max-w-full"
+          loading="eager"
+          sizes={LIGHTBOX_SIZES}
+        />
       </m.figure>
 
       <button

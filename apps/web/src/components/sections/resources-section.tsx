@@ -3,6 +3,7 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { AnimatePresence, m } from 'motion/react';
+import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
@@ -59,11 +60,9 @@ function ResourceItem({
 
     if (resource.url) {
       return (
-        <img
+        <Image
           alt=""
           className="h-6 w-6 rounded object-cover"
-          decoding="async"
-          loading="lazy"
           height={24}
           src={resource.url}
           width={24}

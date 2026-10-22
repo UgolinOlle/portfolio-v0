@@ -3,6 +3,7 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { m } from 'motion/react';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 import { WORKS_EXPERIENCES } from '~/data/works';
@@ -30,7 +31,7 @@ function CompanyLogo({ company, logo }: CompanyLogoProps) {
     }
   }, []);
 
-  const showLogo = Boolean(logo) && !failed;
+  const showLogo = logo !== undefined && logo !== '' && !failed;
 
   return (
     <div
@@ -41,12 +42,11 @@ function CompanyLogo({ company, logo }: CompanyLogoProps) {
           : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400',
       )}
     >
-      {showLogo ? (
+      {showLogo && logo ? (
         // Decorative: the company name is the heading right next to it.
-        <img
+        <Image
           alt=""
           className="size-5 rounded object-contain"
-          decoding="async"
           height={20}
           loading="lazy"
           onError={() => setFailed(true)}

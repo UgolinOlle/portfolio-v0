@@ -3,6 +3,7 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { m } from 'motion/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -24,6 +25,7 @@ function ProjectCard({ project, featured = false, index = 0 }: ProjectCardProps)
   const { t } = useTranslation();
   const [loaded, setLoaded] = useState(false);
   const isExternal = project.link.startsWith('http');
+  const cover = project.image ?? '/assets/background.svg';
 
   return (
     <m.div
@@ -49,24 +51,27 @@ function ProjectCard({ project, featured = false, index = 0 }: ProjectCardProps)
           )}
         >
           {/* Decorative: the project name is the link text right below. */}
-          <img
+          <Image
             alt=""
             className={cn(
               'absolute inset-0 size-full object-cover transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]',
               // The featured image is the LCP candidate: never hide it before hydration.
               !featured && !loaded && 'opacity-0',
             )}
-            decoding="async"
-            loading={featured ? 'eager' : 'lazy'}
+            fill
             onError={() => setLoaded(true)}
             onLoad={() => setLoaded(true)}
+            // The featured cover is the LCP candidate: preload it instead of lazy-loading.
+            priority={featured}
             // An image already cached before hydration never fires onLoad.
             ref={(image) => {
               if (image?.complete) {
                 setLoaded(true);
               }
             }}
-            src={project.image ?? '/assets/background.svg'}
+            sizes={featured ? '(min-width: 768px) 768px, 100vw' : '(min-width: 640px) 372px, 100vw'}
+            src={cover}
+            unoptimized={cover.endsWith('.svg')}
           />
 
           {!project.image && project.content && (

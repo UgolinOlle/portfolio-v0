@@ -19,10 +19,16 @@ function getInitials(name: string) {
 function SocialPreviewAvatar({ preview }: { preview: SocialPreview }) {
   if (preview.avatar) {
     return (
+      // Remote avatars (github.com, twimg.com...) aren't in `images.remotePatterns`: a plain <img>
+      // with an explicit size keeps the layout stable without widening the allow-list.
       <img
         alt={preview.name}
         className="h-9 w-9 shrink-0 rounded-full border border-primary/10 object-cover"
+        decoding="async"
+        height={36}
+        loading="lazy"
         src={preview.avatar}
+        width={36}
       />
     );
   }

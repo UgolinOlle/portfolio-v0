@@ -2,6 +2,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { Command, TerminalWindow as SquareTerminal } from '@phosphor-icons/react/ssr';
 import { Bot } from 'lucide-react';
+import Image from 'next/image';
 
 import type { Project } from '~/types';
 
@@ -13,12 +14,15 @@ export const PROJECTS: Project[] = [
     id: 'whoa-ui',
     content: (
       <div className="relative size-12">
-        <img
+        <Image
+          fill
+          sizes="48px"
           alt="Whoa UI"
           className={cn(
             'absolute inset-0 size-full rounded-xl shadow',
             'transition-transform duration-300 group-hover:rotate-45',
           )}
+          unoptimized
           src="/favicon.ico"
         />
       </div>
@@ -32,12 +36,15 @@ export const PROJECTS: Project[] = [
     done: false,
     content: (
       <div className="relative size-12">
-        <img
+        <Image
+          fill
+          sizes="48px"
           alt="Whoa Bar"
           className={cn(
             'absolute inset-0 size-full scale-[1.24]',
             'transition-transform duration-300 group-hover:rotate-45',
           )}
+          unoptimized
           src="/assets/projects/whoa-bar/whoa-bar-logo.svg"
         />
       </div>
@@ -83,14 +90,20 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        <img
+        <Image
+          fill
+          sizes="48px"
           alt="Calyx"
           className="relative size-full dark:hidden"
+          unoptimized
           src="/assets/projects/calyx/mark-light.svg"
         />
-        <img
+        <Image
+          fill
+          sizes="48px"
           alt="Calyx"
           className="relative hidden size-full dark:block"
+          unoptimized
           src="/assets/projects/calyx/mark-dark.svg"
         />
       </div>
@@ -155,7 +168,9 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        <img
+        <Image
+          fill
+          sizes="48px"
           alt="Whoa Jobs"
           className="relative size-full p-[13%]"
           src="/assets/projects/whoa-jobs/logo/whoa-jobs-symbol-white.png"
@@ -178,9 +193,12 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        <img
+        <Image
+          fill
+          sizes="48px"
           alt="42"
           className="relative size-full p-[22%] dark:invert"
+          unoptimized
           src="/assets/logos/42.svg"
         />
       </div>

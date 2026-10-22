@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { TextLoop } from '~/components/ui/text-loop';
+import { TextLoop } from '~/components/effects/text-loop';
 
 const FOOTER_LINKS = [
   { href: '/writings', labelKey: 'navigation.writings' },

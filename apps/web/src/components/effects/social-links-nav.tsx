@@ -7,8 +7,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 
-import { SocialPreviewCard } from '~/components/ui/social-preview-card';
-import { TextHoverEnter } from '~/components/ui/text-hover';
+import { SocialPreviewCard } from '~/components/effects/social-preview-card';
+import { TextHoverEnter } from '~/components/effects/text-hover';
 import { useMediaQuery } from '~/hooks/use-media-query';
 import type { SocialLink } from '~/types';
 

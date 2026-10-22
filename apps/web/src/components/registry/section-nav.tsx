@@ -2,7 +2,7 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 import { EASE_OUT } from '~/lib/constants';
@@ -54,7 +54,7 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
           const current = active === section.category;
 
           return (
-            <motion.li
+            <m.li
               animate={{ opacity: 1, transform: 'translateX(0px)' }}
               initial={{ opacity: 0, transform: 'translateX(-8px)' }}
               key={section.category}
@@ -73,7 +73,7 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
                 }}
               >
                 {current && (
-                  <motion.span
+                  <m.span
                     aria-hidden="true"
                     className="absolute inset-y-0 start-0 w-0.5 bg-foreground"
                     layoutId="ui-nav-marker"
@@ -88,7 +88,7 @@ export const SectionNav = ({ sections }: SectionNavProps) => {
                   <CountUp delay={0.4 + index * 0.05} value={section.count} />
                 </span>
               </a>
-            </motion.li>
+            </m.li>
           );
         })}
       </ul>

@@ -2,7 +2,7 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m } from 'motion/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
@@ -75,7 +75,7 @@ function ResourceItem({
   };
 
   return (
-    <motion.div
+    <m.div
       animate={{ opacity: 1, x: 0 }}
       className={cn(
         'relative overflow-hidden rounded-xl bg-zinc-300/30 p-px dark:bg-zinc-600/30',
@@ -122,12 +122,12 @@ function ResourceItem({
       <div className="relative h-full w-full bg-white p-4 dark:bg-zinc-950">
         <div className="flex justify-between">
           <div className="flex w-full items-center justify-between">
-            <motion.div
+            <m.div
               className="flex items-center gap-3"
               layout
               transition={{ duration: 0.2, ease: 'easeInOut' }}
             >
-              <motion.div
+              <m.div
                 animate={{
                   width:
                     hoveredResource === resource.name && (resource.icon || resource.url) ? 24 : 0,
@@ -141,15 +141,15 @@ function ResourceItem({
                 {(resource.icon || resource.url) && (
                   <div className="h-6 w-6 shrink-0">{renderIcon()}</div>
                 )}
-              </motion.div>
-              <motion.h3
+              </m.div>
+              <m.h3
                 className="font-sans font-normal dark:text-zinc-100"
                 layout
                 transition={{ duration: 0.2, ease: 'easeInOut' }}
               >
                 {resource.name}
-              </motion.h3>
-            </motion.div>
+              </m.h3>
+            </m.div>
             <p
               className="rounded-md px-2 font-mono text-sm text-zinc-500 dark:text-zinc-400"
               style={{
@@ -162,7 +162,7 @@ function ResourceItem({
           </div>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -215,16 +215,12 @@ export function ResourcesSection() {
     : filteredResources.slice(0, DEFAULT_VISIBLE_RESOURCES);
 
   return (
-    <motion.section
-      transition={TRANSITION_SECTION}
-      variants={VARIANTS_SECTION}
-      className="space-y-6"
-    >
+    <m.section transition={TRANSITION_SECTION} variants={VARIANTS_SECTION} className="space-y-6">
       <SectionHeading className="mb-0">{t('resources.title')}</SectionHeading>
 
       <div className="mb-4 flex flex-wrap gap-2">
         {types.map((type, index) => (
-          <motion.button
+          <m.button
             className={cn(
               'group rounded-full border px-3 py-1 transition-colors',
               selectedType === type
@@ -250,7 +246,7 @@ export function ResourcesSection() {
             whileTap={{ scale: 0.98 }}
           >
             <TextHoverEnter className="text-sm">{type}</TextHoverEnter>
-          </motion.button>
+          </m.button>
         ))}
       </div>
 
@@ -281,16 +277,16 @@ export function ResourcesSection() {
         </AnimatePresence>
 
         {filteredResources.length > DEFAULT_VISIBLE_RESOURCES && (
-          <motion.button
+          <m.button
             className="mt-1 self-start text-sm text-zinc-600 hover:underline dark:text-zinc-400"
             layout
             onClick={() => setShowAll(!showAll)}
             transition={{ duration: 0.2, type: 'spring', bounce: 0.1 }}
           >
             {showAll ? t('resources.showLess') : t('resources.showMore')}
-          </motion.button>
+          </m.button>
         )}
       </div>
-    </motion.section>
+    </m.section>
   );
 }

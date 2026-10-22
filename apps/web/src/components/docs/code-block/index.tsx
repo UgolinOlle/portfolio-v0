@@ -18,7 +18,7 @@ import {
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from '@shikijs/transformers';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m } from 'motion/react';
 import type { ComponentProps, HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { cloneElement, createContext, useContext, useEffect, useState } from 'react';
 import type { IconType } from 'react-icons';
@@ -501,7 +501,7 @@ export const CodeBlockCopyButton = ({
       {children ?? (
         <AnimatePresence initial={false} mode="wait">
           {isCopied ? (
-            <motion.span
+            <m.span
               key="check"
               initial={{ opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -510,9 +510,9 @@ export const CodeBlockCopyButton = ({
               className="inline-flex"
             >
               <CheckIcon className="text-muted-foreground" size={14} />
-            </motion.span>
+            </m.span>
           ) : (
-            <motion.span
+            <m.span
               key="copy"
               initial={{ opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -521,7 +521,7 @@ export const CodeBlockCopyButton = ({
               className="inline-flex"
             >
               <CopyIcon className="text-muted-foreground" size={14} />
-            </motion.span>
+            </m.span>
           )}
         </AnimatePresence>
       )}

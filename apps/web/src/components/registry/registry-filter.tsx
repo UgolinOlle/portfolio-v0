@@ -2,7 +2,7 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m } from 'motion/react';
 import {
   createContext,
   type ReactNode,
@@ -102,7 +102,7 @@ export const FilterBar = ({ options }: FilterBarProps) => {
               {String(item.count).padStart(2, '0')}
             </span>
             {selected && (
-              <motion.span
+              <m.span
                 aria-hidden="true"
                 className="absolute inset-x-0 -bottom-px h-px bg-foreground"
                 layoutId="ui-filter-marker"
@@ -129,7 +129,7 @@ export const FilterableSection = ({ category, children }: FilterableSectionProps
   return (
     <AnimatePresence initial={false}>
       {visible && (
-        <motion.div
+        <m.div
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.15 } }}
           initial={{ opacity: 0 }}
@@ -138,7 +138,7 @@ export const FilterableSection = ({ category, children }: FilterableSectionProps
           transition={{ duration: 0.3, ease: EASE_OUT }}
         >
           {children}
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

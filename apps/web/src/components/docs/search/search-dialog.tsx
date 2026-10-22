@@ -6,7 +6,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { Dialog } from '@base-ui/react/dialog';
 import type { SharedProps } from 'fumadocs-ui/components/dialog/search';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type KeyboardEvent, useEffect, useId, useMemo, useRef, useState } from 'react';
@@ -265,7 +265,7 @@ export default function RegistrySearchDialog({ open, onOpenChange }: SharedProps
                         type="button"
                       >
                         {current && (
-                          <motion.span
+                          <m.span
                             aria-hidden="true"
                             className="absolute inset-0 rounded-lg bg-background shadow-sm ring-1 ring-foreground/5"
                             layoutId="search-tab"

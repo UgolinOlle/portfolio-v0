@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import Link from 'next/link';
 
 import { BackButton } from '~/components/projects/back-button';
@@ -11,7 +11,7 @@ export function InspirationsContent() {
     <section className="flex flex-col">
       <BackButton />
 
-      <motion.header
+      <m.header
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}
@@ -22,11 +22,11 @@ export function InspirationsContent() {
           Ce projet est construit grâce à de nombreuses <strong>inspirations</strong>, qu'elles
           soient visuelles, techniques ou liées aux interactions.
         </p>
-      </motion.header>
+      </m.header>
 
       <div className="mt-16 space-y-10">
         {INSPIRATIONS.map((item, index) => (
-          <motion.article
+          <m.article
             key={item.name}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -45,11 +45,11 @@ export function InspirationsContent() {
             </Link>
 
             <p className="mt-2 text-muted-foreground">{item.description}</p>
-          </motion.article>
+          </m.article>
         ))}
       </div>
 
-      <motion.p
+      <m.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7 }}
@@ -57,7 +57,7 @@ export function InspirationsContent() {
       >
         Si une inspiration n'est pas mentionnée ici alors qu'elle devrait l'être,{' '}
         <strong>n'hésitez pas à me contacter</strong>.
-      </motion.p>
+      </m.p>
     </section>
   );
 }

@@ -3,7 +3,7 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import {
-  motion,
+  m,
   useMotionTemplate,
   useMotionValue,
   useReducedMotion,
@@ -60,7 +60,7 @@ export const RegistryCard = ({
   const drift = useTransform(scrollYProgress, [0, 1], [6, -6]);
 
   return (
-    <motion.article
+    <m.article
       onPointerMove={onPointerMove}
       ref={cardRef}
       className={cn(
@@ -84,10 +84,7 @@ export const RegistryCard = ({
         )}
       >
         {preview ? (
-          <motion.div
-            className="size-full"
-            style={item.featured && !reduce ? { y: drift } : undefined}
-          >
+          <m.div className="size-full" style={item.featured && !reduce ? { y: drift } : undefined}>
             <div
               className={cn(
                 'size-full transition-transform duration-250 ease-out-strong',
@@ -96,7 +93,7 @@ export const RegistryCard = ({
             >
               {preview}
             </div>
-          </motion.div>
+          </m.div>
         ) : (
           <div className="label-mono flex size-full items-center justify-center text-foreground/40">
             {t('registry.card.previewComingSoon')}
@@ -105,7 +102,7 @@ export const RegistryCard = ({
       </div>
 
       {!reduce && (
-        <motion.div
+        <m.div
           aria-hidden="true"
           className={cn(
             'pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300',
@@ -153,6 +150,6 @@ export const RegistryCard = ({
           />
         </span>
       </div>
-    </motion.article>
+    </m.article>
   );
 };

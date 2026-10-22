@@ -2,7 +2,7 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { motion, useSpring, useTransform, type SpringOptions } from 'motion/react';
+import { m, useSpring, useTransform, type SpringOptions } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type SpotlightProps = {
@@ -69,7 +69,7 @@ export function Spotlight({
   }, [parentElement, handleMouseMove]);
 
   return (
-    <motion.div
+    <m.div
       className={cn(
         'pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] blur-xl transition-opacity duration-200',
         'from-zinc-50 via-zinc-100 to-zinc-200',

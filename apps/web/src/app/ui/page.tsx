@@ -7,11 +7,11 @@ import {
   FilterableSection,
   FilterBar,
   RegistryFilterProvider,
-  RegistrySection,
-  Reveal,
-  ScrollProgress,
-  SectionNav,
-} from '~/components/registry';
+} from '~/components/registry/registry-filter';
+import { RegistrySection } from '~/components/registry/registry-section';
+import { Reveal } from '~/components/registry/reveal';
+import { ScrollProgress } from '~/components/registry/scroll-progress';
+import { SectionNav } from '~/components/registry/section-nav';
 import { createMetadata } from '~/lib/metadata';
 import { getRegistryInstallCommands, getRegistrySections } from '~/lib/registry';
 

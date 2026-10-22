@@ -5,8 +5,8 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { m } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { WORKS_EXPERIENCES } from '~/data/works';
 import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
-import { WORKS_EXPERIENCES } from '~/lib/data';
 
 import { useTranslation } from '../core/i18n-provider';
 

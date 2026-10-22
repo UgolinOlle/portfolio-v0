@@ -4,9 +4,6 @@
   "workspaces": {
     "": {
       "name": "portfolio-v0",
-      "dependencies": {
-        "lenis": "^1.3.27",
-      },
       "devDependencies": {
         "@changesets/changelog-github": "^0.5.1",
         "@changesets/cli": "^2.29.0",
@@ -43,6 +40,7 @@
         "fumadocs-mdx": "15.0.0",
         "fumadocs-ui": "16.8.8",
         "i18next": "^26.0.10",
+        "lenis": "^1.3.27",
         "lucide-react": "catalog:",
         "mermaid": "^12.2.0",
         "motion": "catalog:",

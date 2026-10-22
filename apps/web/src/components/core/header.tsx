@@ -3,11 +3,11 @@
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { LanguageSwitcher } from '~/components/ui';
+import { LanguageSwitcher } from '~/components/effects/language-switcher';
+import { SOCIAL_LINKS } from '~/data/social-links';
 import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
-import { SOCIAL_LINKS } from '~/lib/data';
 
-import { SocialLinksNav } from '../ui/social-links-nav';
+import { SocialLinksNav } from '../effects/social-links-nav';
 
 import { SiteNav } from './site-nav';
 

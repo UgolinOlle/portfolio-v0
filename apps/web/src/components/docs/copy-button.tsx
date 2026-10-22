@@ -3,7 +3,7 @@
 import { Button } from '@portfolio-v0/shadcn/components/button';
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m } from 'motion/react';
 import type { ComponentProps } from 'react';
 import { useState } from 'react';
 
@@ -51,7 +51,7 @@ export const CopyButton = ({
     >
       <AnimatePresence initial={false} mode="wait">
         {isCopied ? (
-          <motion.span
+          <m.span
             key="check"
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -60,9 +60,9 @@ export const CopyButton = ({
             className="inline-flex"
           >
             <CheckIcon size={14} />
-          </motion.span>
+          </m.span>
         ) : (
-          <motion.span
+          <m.span
             key="copy"
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -71,7 +71,7 @@ export const CopyButton = ({
             className="inline-flex"
           >
             <CopyIcon size={14} />
-          </motion.span>
+          </m.span>
         )}
       </AnimatePresence>
       {isCopied ? copiedLabel : label}

@@ -18,7 +18,4 @@ jobs:
         with:
           bun-version-file: package.json
       - run: bun install --frozen-lockfile
-      - run: bun run lint
-      - run: bunx oxfmt --check
-      - run: bun run check-types
-      - run: bun run check:motion
+      - run: bun run check

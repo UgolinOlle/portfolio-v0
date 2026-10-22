@@ -2,7 +2,7 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m } from 'motion/react';
 import type { ReactNode } from 'react';
 
 import type { SocialPreview } from '~/types';
@@ -44,7 +44,7 @@ function SocialPreviewContent({ preview, icon }: { preview: SocialPreview; icon?
   const showBioSeparately = Boolean(preview.role && preview.bio);
 
   return (
-    <motion.div
+    <m.div
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       initial={{ opacity: 0 }}
@@ -75,7 +75,7 @@ function SocialPreviewContent({ preview, icon }: { preview: SocialPreview; icon?
           ))}
         </div>
       )}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -99,7 +99,7 @@ function SocialPreviewCard({
   className,
 }: SocialPreviewCardProps) {
   return (
-    <motion.div
+    <m.div
       animate={{ opacity: 1, scale: 1 }}
       className={cn('absolute z-50 w-64', className)}
       exit={{ opacity: 0, scale: 0.96 }}
@@ -136,7 +136,7 @@ function SocialPreviewCard({
           />
         </AnimatePresence>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 

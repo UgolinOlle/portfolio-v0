@@ -37,6 +37,11 @@ const config = {
     ],
   },
 
+  experimental: {
+    // Not in Next's built-in list; both ship large barrel entry files.
+    optimizePackageImports: ['@phosphor-icons/react', '@icons-pack/react-simple-icons'],
+  },
+
   async headers() {
     return [
       {

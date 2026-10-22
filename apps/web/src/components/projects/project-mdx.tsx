@@ -1,5 +1,5 @@
-import { getMDXComponents } from '~/components/core/mdx';
 import { ArrowRightIcon } from '~/components/icons/ui';
+import { getMDXComponents } from '~/components/mdx/mdx';
 import { DocsBody } from '~/layouts/docs/page';
 import type { projectsSource } from '~/lib/source';
 

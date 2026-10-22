@@ -7,8 +7,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 
-import { SocialPreviewCard } from '~/components/ui/social-preview-card';
-import { TextHoverEnter } from '~/components/ui/text-hover';
+import { SocialPreviewCard } from '~/components/effects/social-preview-card';
+import { TextHoverEnter } from '~/components/effects/text-hover';
 import { useMediaQuery } from '~/hooks/use-media-query';
 import type { SocialLink } from '~/types';
 
@@ -137,7 +137,7 @@ function SocialLinksNav({ links }: { links: SocialLink[] }) {
           <Link
             className={cn(
               'group flex w-fit items-center gap-2 rounded-sm px-2 py-1 text-primary/80',
-              'border border-primary/20 transition-all duration-300 hover:bg-primary-foreground',
+              'border border-primary/20 transition-[color,background-color,border-color,transform] duration-300 hover:bg-primary-foreground',
               'active:scale-[0.95]',
             )}
             rel="noopener noreferrer"

@@ -4,7 +4,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 
 import {
   AnimatePresence,
-  motion,
+  m,
   type TargetAndTransition,
   type Transition,
   type Variant,
@@ -121,30 +121,30 @@ const AnimationComponent: React.FC<{
 
   if (per === 'line') {
     content = (
-      <motion.span className="block" variants={variants}>
+      <m.span className="block" variants={variants}>
         {segment}
-      </motion.span>
+      </m.span>
     );
   } else if (per === 'word') {
     content = (
-      <motion.span aria-hidden="true" className="inline-block whitespace-pre" variants={variants}>
+      <m.span aria-hidden="true" className="inline-block whitespace-pre" variants={variants}>
         {segment}
-      </motion.span>
+      </m.span>
     );
   } else {
     content = (
-      <motion.span className="inline-block whitespace-pre">
+      <m.span className="inline-block whitespace-pre">
         {segment.split('').map((char, charIndex) => (
-          <motion.span
+          <m.span
             aria-hidden="true"
             className="inline-block whitespace-pre"
             key={`char-${charIndex}`}
             variants={variants}
           >
             {char}
-          </motion.span>
+          </m.span>
         ))}
-      </motion.span>
+      </m.span>
     );
   }
 
@@ -226,7 +226,7 @@ export function TextEffect({
   style,
 }: TextEffectProps) {
   const segments = splitText(children, per);
-  const MotionTag = motion[as as keyof typeof motion] as typeof motion.div;
+  const MotionTag = m[as as keyof typeof m] as typeof m.div;
 
   const baseVariants = preset
     ? presetVariants[preset]

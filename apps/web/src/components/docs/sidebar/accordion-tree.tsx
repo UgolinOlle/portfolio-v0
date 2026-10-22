@@ -6,7 +6,7 @@ import { useTreeContext, useTreePath } from '@fumadocs/base-ui/contexts/tree';
 import { usePathname } from 'fumadocs-core/framework';
 import Link from 'fumadocs-core/link';
 import type * as PageTree from 'fumadocs-core/page-tree';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m } from 'motion/react';
 import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
@@ -146,7 +146,7 @@ function AccordionGroup({ folder, open, containsActive, onToggle, pathname }: Ac
 
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div
+          <m.div
             animate={{ height: 'auto', opacity: 1 }}
             className="overflow-hidden border-b border-foreground/6"
             exit={{ height: 0, opacity: 0 }}
@@ -165,7 +165,7 @@ function AccordionGroup({ folder, open, containsActive, onToggle, pathname }: Ac
                 />
               ))}
             </ul>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

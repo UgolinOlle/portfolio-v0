@@ -8,7 +8,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
 
 import { Providers } from '~/components/core/providers';
-import { SmoothScroll } from '~/components/ui/smooth-scroll';
+import { SmoothScroll } from '~/components/effects/smooth-scroll';
 import { defaultMetadata, defaultViewport } from '~/lib/metadata';
 import { getRegistrySections } from '~/lib/registry';
 

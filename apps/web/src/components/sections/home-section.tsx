@@ -1,15 +1,10 @@
-'use client';
-
 import type { ReactNode } from 'react';
 
-import {
-  AboutSection,
-  ContactSection,
-  HeroSection,
-  ProjectsSection,
-  StacksSection,
-  WorksSection,
-} from '~/components/sections';
+import { AboutSection, HeroSection } from './about-section';
+import { ContactSection } from './contact-section';
+import { ProjectsSection } from './projects-section';
+import { StacksSection } from './stacks-section';
+import { WorksSection } from './works-section';
 
 type HomeContentProps = {
   recentWritings: ReactNode;

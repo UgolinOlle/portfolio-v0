@@ -9,7 +9,7 @@ No database. Data is MDX frontmatter, JSON locale files, generated registry JSON
 | MDX frontmatter schemas                               | `apps/web/source.config.ts` (zod, extends Fumadocs `frontmatterSchema`)            |
 | Registry (shadcn + npm)                               | `packages/*/package.json` → `registry`; generated into `packages/ui/registry.json` |
 | Site identity, SEO defaults, locales                  | `apps/web/src/lib/metadata.ts` (`siteConfig`, `LOCALES`, `DEFAULT_LOCALE`)         |
-| Home page content (experience, projects, stack, gear) | `apps/web/src/lib/data.tsx`                                                        |
+| Home page content (experience, projects, stack, gear) | `apps/web/src/data/*.tsx`                                                          |
 | Home page UI strings                                  | `apps/web/src/locales/{en,fr}/common.json`                                         |
 | Shared types                                          | `apps/web/src/types/index.ts`                                                      |
 

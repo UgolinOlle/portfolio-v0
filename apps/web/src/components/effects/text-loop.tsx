@@ -3,7 +3,7 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import type { AnimatePresenceProps, Transition, Variants } from 'motion/react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m } from 'motion/react';
 import { Children, useEffect, useState } from 'react';
 
 const MILLISECONDS_PER_SECOND = 1000;
@@ -59,7 +59,7 @@ export function TextLoop({
   return (
     <div className={cn('relative inline-block whitespace-nowrap', className)}>
       <AnimatePresence initial={false} mode={mode}>
-        <motion.div
+        <m.div
           animate="animate"
           exit="exit"
           initial="initial"
@@ -68,7 +68,7 @@ export function TextLoop({
           variants={variants || motionVariants}
         >
           {items[currentIndex]}
-        </motion.div>
+        </m.div>
       </AnimatePresence>
     </div>
   );

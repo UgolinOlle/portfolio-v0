@@ -1,8 +1,6 @@
 {
   "extends": "@portfolio-v0/config/nextjs.json",
   "compilerOptions": {
-    "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
       "@portfolio-v0/shadcn/components/ui/*": ["../../packages/shadcn/components/ui/*"],
@@ -14,7 +12,7 @@
       "@/components/ui/*": ["../../packages/shadcn/components/ui/*"],
       "@/lib/utils": ["../../packages/shadcn/lib/utils.ts"],
       "@/hooks/*": ["../../packages/shadcn/hooks/*"],
-      "fumadocs-mdx:collections/*": [".source/*"]
+      "fumadocs-mdx:collections/*": ["./.source/*"]
     }
   },
   "include": [

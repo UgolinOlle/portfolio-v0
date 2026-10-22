@@ -21,11 +21,12 @@ import {
 } from 'react';
 
 import { ChevronDownIcon, TextIcon } from '~/components/icons/ui';
-import * as Base from '~/components/toc';
-import * as TocClerk from '~/components/toc/clerk';
-import * as TocDefault from '~/components/toc/default';
 
 import { useDocsLayout } from '../..';
+
+import * as Base from './toc-variants';
+import * as TocClerk from './toc-variants/clerk';
+import * as TocDefault from './toc-variants/default';
 
 export type TOCProviderProps = Base.TOCProviderProps;
 
@@ -311,7 +312,7 @@ function ProgressCircle({
         strokeDashoffset={circumference - progress}
         strokeLinecap="round"
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        className="transition-all"
+        className="transition-[stroke-dashoffset]"
       />
     </svg>
   );

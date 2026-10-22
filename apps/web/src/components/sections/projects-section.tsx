@@ -8,8 +8,8 @@ import { useState } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { ArrowRightIcon } from '~/components/icons/ui';
+import { PROJECTS } from '~/data/projects';
 import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
-import { PROJECTS } from '~/lib/data';
 import type { Project } from '~/types';
 
 import { SectionHeading } from './section-heading';

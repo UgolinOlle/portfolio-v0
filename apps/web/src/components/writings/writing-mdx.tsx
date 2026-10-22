@@ -1,4 +1,4 @@
-import { getMDXComponents } from '~/components/core/mdx';
+import { getMDXComponents } from '~/components/mdx/mdx';
 import { WritingsBanner } from '~/components/writings/banner';
 import { ReadingProgress } from '~/components/writings/reading-progress';
 import { DocsBody, DocsDescription, DocsTitle } from '~/layouts/docs/page';

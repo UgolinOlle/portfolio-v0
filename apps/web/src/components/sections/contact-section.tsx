@@ -6,6 +6,7 @@ import { m } from 'motion/react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { MagneticSocialLink } from '~/components/effects/magnetic-social-link';
+import { SOCIAL_LINKS } from '~/data/social-links';
 import {
   EMAIL,
   SECTION_REVEAL_LIST,
@@ -13,7 +14,6 @@ import {
   VARIANTS_LIST,
   VARIANTS_SECTION,
 } from '~/lib/constants';
-import { SOCIAL_LINKS } from '~/lib/data';
 
 import { SectionHeading } from './section-heading';
 

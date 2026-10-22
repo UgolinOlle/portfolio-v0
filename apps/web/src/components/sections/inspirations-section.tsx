@@ -4,7 +4,7 @@ import { m } from 'motion/react';
 import Link from 'next/link';
 
 import { BackButton } from '~/components/projects/back-button';
-import { INSPIRATIONS } from '~/lib/data';
+import { INSPIRATIONS } from '~/data/inspirations';
 
 export function InspirationsContent() {
   return (

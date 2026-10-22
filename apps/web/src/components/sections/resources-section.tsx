@@ -8,8 +8,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from '~/components/core/i18n-provider';
 import { Spotlight } from '~/components/effects/spotlight';
 import { TextHoverEnter } from '~/components/effects/text-hover';
+import { RESOURCES } from '~/data/resources';
 import { TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
-import { RESOURCES } from '~/lib/data';
 import type { Resources } from '~/types';
 
 import { SectionHeading } from './section-heading';

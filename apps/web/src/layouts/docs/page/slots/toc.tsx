@@ -311,7 +311,7 @@ function ProgressCircle({
         strokeDashoffset={circumference - progress}
         strokeLinecap="round"
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        className="transition-all"
+        className="transition-[stroke-dashoffset]"
       />
     </svg>
   );

@@ -26,7 +26,7 @@ bun run dev
 ## Git Hooks and Formatting
 
 - Initialize hooks: `bun run prepare`
-- Format and lint fix: `bun run check`
+- Format and lint fix: `bun run lint:fix` and `bun run format`
 
 ## Project Structure
 
@@ -114,6 +114,6 @@ It resolves each name to `${WHOA_REGISTRY_URL}/r/<name>.json` (default `https://
 - `bun run dev`: Start all applications in development mode
 - `bun run build`: Build all applications
 - `bun run check-types`: Check TypeScript types across all apps
-- `bun run check`: Run Oxlint and Oxfmt
+- `bun run check`: Read-only lint, format check, types and motion rules (what CI runs)
 - `bun run --cwd packages/ui build`: Build the `@whoa-studio/ui` npm package
 - `bun run --cwd apps/web registry:build`: Build the shadcn registry JSON into `apps/web/public/r`

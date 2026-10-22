@@ -36,17 +36,27 @@ const files = dirs.flatMap((dir) =>
     .map((file) => join(root, dir, file)),
 );
 
-const problems = files.flatMap((file) =>
-  readFileSync(file, 'utf-8')
-    .split('\n')
-    .flatMap((line, index) =>
-      line.includes('motion-ok')
-        ? []
-        : rules
-            .filter(([pattern]) => pattern.test(line))
-            .map(([, message]) => `${file.replace(`${root}/`, '')}:${index + 1}  ${message}`),
-    ),
-);
+// The portfolio app is held to the cheap, unambiguous rule only: it has its own motion style.
+const webRoot = join(import.meta.dirname, '..', 'apps', 'web', 'src');
+const webFiles = readdirSync(webRoot, { recursive: true })
+  .filter((file) => /\.tsx?$/.test(file))
+  .map((file) => join(webRoot, file));
+const webRules = rules.slice(0, 1);
+
+const scan = (list, ruleSet, base) =>
+  list.flatMap((file) =>
+    readFileSync(file, 'utf-8')
+      .split('\n')
+      .flatMap((line, index) =>
+        line.includes('motion-ok')
+          ? []
+          : ruleSet
+              .filter(([pattern]) => pattern.test(line))
+              .map(([, message]) => `${file.replace(`${base}/`, '')}:${index + 1}  ${message}`),
+      ),
+  );
+
+const problems = [...scan(files, rules, root), ...scan(webFiles, webRules, webRoot)];
 
 if (problems.length > 0) {
   console.error(problems.join('\n'));

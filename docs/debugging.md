@@ -7,11 +7,11 @@ bun install
 bun run dev            # turbo dev; apps/web on http://localhost:4000
 bun run build          # turbo build (apps/web runs registry:build first)
 bun run check-types    # fumadocs-mdx + next typegen + tsc, plus per-package tsc
-bun run check          # oxlint && oxfmt --write (this rewrites files)
+bun run check          # lint + format check + types + motion rules (read-only)
 bun run format         # oxfmt --write
 ```
 
-There is no `test` script; `bun run check-types` (turbo, all workspaces) and `bun run lint` are what CI runs.
+There is no `test` script; `bun run check` is what CI runs.
 
 Useful single-package commands:
 
@@ -38,5 +38,5 @@ bun run analyze                               # turbo analyze
 | `?lang=en` shows French                           | No `<name>.en.mdx` for that page (Fumadocs falls back to the default language)                                                            | Add the English file                                                   |
 | Shields.io badge images fail in MDX               | Host not in `images.remotePatterns`                                                                                                       | Allowed in `next.config.mjs` (`img.shields.io`); add other hosts there |
 | Stale registry in dev                             | `predev` only runs at startup                                                                                                             | Restart `bun run dev` or run `registry:build`                          |
-| `bun run check` modifies many files               | `oxfmt --write` formats in place                                                                                                          | Review `git diff`; use `bun run format` deliberately                   |
+| `bun run format` modifies many files              | `oxfmt --write` formats in place                                                                                                          | Review `git diff`; use `bun run format` deliberately                   |
 | Edit blocked on lockfile / build output / `.env*` | `.claude/hooks/pre-edit.cjs` guardrail                                                                                                    | Change the manifest or source instead                                  |

@@ -3,7 +3,9 @@
 @import 'fumadocs-ui/css/preset.css';
 @import '@portfolio-v0/shadcn/styles';
 
-/* Packages d'items du registry (@whoa-studio/ui) : hors de l'app, Tailwind ne les analyse pas tout seul. */
+/* Keep the first `tailwindcss` import: it fixes the cascade layer order ahead of the fumadocs CSS
+   (dropping it re-orders theme/base). Registry item packages (@whoa-studio/ui) live outside the app,
+   so Tailwind does not scan them on its own. */
 @source '../../../../packages/*/*.{ts,tsx}';
 @source '../../../../packages/templates/registry/**/*.{ts,tsx}';
 

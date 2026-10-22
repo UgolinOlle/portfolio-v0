@@ -48,7 +48,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     label: 'Twitter',
-    link: 'https://twitter.com/ugolin_olle',
+    link: 'https://x.com/ugolin_olle',
     icon: LOGOS.XLight,
     iconDark: LOGOS.XDark,
     preview: {

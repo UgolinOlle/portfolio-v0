@@ -16,11 +16,15 @@ export const metadata: Metadata = defaultMetadata;
 export const viewport: Viewport = defaultViewport;
 
 const geistSans = Geist({
+  display: 'swap',
   subsets: ['latin'],
   variable: '--font-geist-sans',
 });
 
+// Only used for code and small labels: not worth a preload on every page.
 const geistMono = Geist_Mono({
+  display: 'swap',
+  preload: false,
   subsets: ['latin'],
   variable: '--font-geist-mono',
 });

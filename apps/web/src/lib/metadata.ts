@@ -6,20 +6,11 @@ export const siteConfig = {
   title: 'Ugolin Ollé — Développeur full stack freelance Next.js',
   description:
     'Développeur full stack freelance : SaaS, applications web et landing pages rapides avec Next.js, React, NestJS et TypeScript. Disponible pour vos projets.',
-  keywords: [
-    'Ugolin Ollé',
-    'Développeur full stack freelance',
-    'Développeur Next.js freelance',
-    'Développeur React freelance',
-    'Création de SaaS',
-    'Landing page',
-    'Next.js',
-    'NestJS',
-    'TypeScript',
-  ],
   locale: 'fr_FR',
   alternateLocale: 'en_US',
   ogImage: '/og.png',
+  /** Real pixel size of `public/og.png`; generated per-page OG images are 1200x630. */
+  ogImageSize: { width: 2400, height: 1260 },
   profileImage: '/assets/profile.png',
   email: 'hello@ugolin-olle.com',
   socials: {
@@ -28,6 +19,7 @@ export const siteConfig = {
     github: 'https://github.com/UgolinOlle',
     linkedin: 'https://www.linkedin.com/in/ugolin-olle',
     malt: 'https://www.malt.fr/profile/ugolinolle',
+    npm: 'https://www.npmjs.com/~ugolin-olle',
   },
 } as const;
 
@@ -48,7 +40,6 @@ export const defaultMetadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: [...siteConfig.keywords],
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
   publisher: siteConfig.name,
@@ -84,9 +75,8 @@ export const defaultMetadata: Metadata = {
     images: [
       {
         url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
+        ...siteConfig.ogImageSize,
+        alt: siteConfig.title,
       },
     ],
   },
@@ -136,6 +126,8 @@ type PageMetadataInput = {
   languages?: readonly Locale[];
   /** Publication date (ISO) for articles: switches og:type to `article`. */
   publishedTime?: string;
+  /** Last modification date (ISO) for articles. */
+  modifiedTime?: string;
 };
 
 /**
@@ -151,6 +143,7 @@ export const createMetadata = ({
   lang = DEFAULT_LOCALE,
   languages = [DEFAULT_LOCALE],
   publishedTime,
+  modifiedTime,
 }: PageMetadataInput): Metadata => {
   const url = localizedPath(pathname, lang);
 
@@ -163,7 +156,7 @@ export const createMetadata = ({
     },
     openGraph: {
       ...(publishedTime
-        ? { type: 'article', publishedTime, authors: [siteConfig.url] }
+        ? { type: 'article', publishedTime, modifiedTime, authors: [siteConfig.name] }
         : { type: 'website' }),
       locale: OG_LOCALES[lang],
       alternateLocale: languages.filter((l) => l !== lang).map((l) => OG_LOCALES[l]),
@@ -174,8 +167,7 @@ export const createMetadata = ({
       images: [
         {
           url: image,
-          width: 1200,
-          height: 630,
+          ...(image === siteConfig.ogImage ? siteConfig.ogImageSize : { width: 1200, height: 630 }),
           alt: title,
         },
       ],

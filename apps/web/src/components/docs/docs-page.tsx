@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { ConstructionBanner } from '~/components/core/construction-banner';
+import { JsonLd } from '~/components/core/json-ld';
 import { RegistryGrid } from '~/components/registry/registry-grid';
 import {
   DocsBody,
@@ -19,6 +20,7 @@ import {
 import { GITHUB_REPO } from '~/lib/constants';
 import { getRegistryExamples, getRegistryItems } from '~/lib/registry';
 import type { blocksSource, componentsSource, templatesSource } from '~/lib/source';
+import { docsBreadcrumbSchema } from '~/lib/structured-data';
 
 import { RegistryInstall } from './install';
 import { Preview } from './preview';
@@ -102,6 +104,12 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
   ];
   const showToc = toc.length >= MIN_TOC_ITEMS;
 
+  const sectionPath = `/ui/${section.segment}`;
+  const breadcrumbs = [
+    { name: section.label, path: sectionPath },
+    ...(isRootIndex ? [] : [{ name: page.data.title, path: page.url }]),
+  ];
+
   return (
     <DocsPage
       breadcrumb={{ enabled: false }}
@@ -111,6 +119,7 @@ export const RegistryDocsPage = ({ source, slug, type }: RegistryDocsPageProps) 
       tableOfContentPopover={{ enabled: showToc }}
       toc={showToc ? toc : []}
     >
+      <JsonLd data={docsBreadcrumbSchema(breadcrumbs)} />
       <header className={cn('flex flex-col gap-3 border-b border-foreground/5 pb-8', gutter)}>
         <div className="flex min-h-7 flex-wrap items-center justify-between gap-3">
           <p className="label-mono text-foreground/45">

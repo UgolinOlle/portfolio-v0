@@ -31,8 +31,6 @@ const parseDate = (value: string) => {
 const registryRoutes = (source: RegistrySource): MetadataRoute.Sitemap =>
   source.getPages().map((page) => ({
     url: absolute(page.url),
-    changeFrequency: 'monthly',
-    priority: 0.4,
   }));
 
 /** One entry per available locale, each listing every translation as an `hreflang` alternate. */
@@ -61,16 +59,15 @@ const localizedRoutes = (
 };
 
 const projectRoutes = (): MetadataRoute.Sitemap =>
-  projectsSource.getPages().flatMap((page) =>
-    localizedRoutes(
-      `/projects/${page.slugs.join('/')}`,
-      getPageLocales(projectsSource, page.slugs),
-      {
-        changeFrequency: 'monthly',
-        priority: 0.8,
-      },
-    ),
-  );
+  projectsSource
+    .getPages()
+    .flatMap((page) =>
+      localizedRoutes(
+        `/projects/${page.slugs.join('/')}`,
+        getPageLocales(projectsSource, page.slugs),
+        {},
+      ),
+    );
 
 const writingRoutes = (): MetadataRoute.Sitemap =>
   writingsSource.getPages().flatMap((page) =>
@@ -78,19 +75,17 @@ const writingRoutes = (): MetadataRoute.Sitemap =>
       `/writings/${page.slugs.join('/')}`,
       getPageLocales(writingsSource, page.slugs),
       {
-        lastModified: parseDate(page.data.date),
-        changeFrequency: 'yearly',
-        priority: 0.7,
+        lastModified: parseDate(page.data.updated ?? page.data.date),
       },
     ),
   );
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: siteConfig.url, changeFrequency: 'monthly', priority: 1 },
-    ...localizedRoutes('/writings', LOCALES, { changeFrequency: 'weekly', priority: 0.7 }),
-    { url: absolute('/ui'), changeFrequency: 'weekly', priority: 0.6 },
-    { url: absolute('/inspirations'), changeFrequency: 'monthly', priority: 0.3 },
+    { url: siteConfig.url },
+    ...localizedRoutes('/writings', LOCALES, {}),
+    { url: absolute('/ui') },
+    { url: absolute('/inspirations') },
   ];
 
   return [

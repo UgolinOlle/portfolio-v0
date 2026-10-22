@@ -45,6 +45,8 @@ export const { docs: projectsDocs, meta: projectsMeta } = defineDocs({
 
 const writingsSchema = frontmatterSchema.extend({
   date: z.string(),
+  /** Last significant edit (ISO date): feeds `dateModified`, `article:modified_time` and the sitemap. */
+  updated: z.string().optional(),
   category: z.string(),
 });
 

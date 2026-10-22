@@ -18,7 +18,6 @@ export const personSchema = () => ({
   name: siteConfig.name,
   url: siteConfig.url,
   image: absolute(siteConfig.profileImage),
-  email: `mailto:${siteConfig.email}`,
   jobTitle: 'Développeur full stack freelance',
   description: siteConfig.description,
   knowsAbout: [
@@ -42,6 +41,7 @@ export const personSchema = () => ({
     siteConfig.socials.linkedin,
     siteConfig.socials.malt,
     siteConfig.socials.x,
+    siteConfig.socials.npm,
   ],
 });
 
@@ -75,7 +75,7 @@ export const homeSchema = () => ({
 
 type Crumb = { name: string; path: string };
 
-const breadcrumbSchema = (crumbs: Crumb[]) => ({
+export const breadcrumbSchema = (crumbs: Crumb[]) => ({
   '@type': 'BreadcrumbList',
   itemListElement: [{ name: siteConfig.name, path: '' }, ...crumbs].map((crumb, index) => ({
     '@type': 'ListItem',
@@ -91,6 +91,7 @@ type ArticleInput = {
   pathname: string;
   lang: Locale;
   datePublished: string;
+  dateModified?: string;
   image: string;
 };
 
@@ -100,6 +101,7 @@ export const articleSchema = ({
   pathname,
   lang,
   datePublished,
+  dateModified,
   image,
 }: ArticleInput) => {
   const url = absolute(localizedPath(pathname, lang));
@@ -117,6 +119,7 @@ export const articleSchema = ({
         url,
         mainEntityOfPage: url,
         datePublished,
+        dateModified: dateModified ?? datePublished,
         inLanguage: lang,
         author: personRef,
         publisher: personRef,
@@ -162,3 +165,9 @@ export const projectSchema = ({ title, description, pathname, lang }: ProjectInp
     ],
   };
 };
+
+/** Registry doc pages: Home > Whoa UI > section > page, as a standalone graph. */
+export const docsBreadcrumbSchema = (crumbs: Crumb[]) => ({
+  '@context': 'https://schema.org',
+  '@graph': [breadcrumbSchema([{ name: 'Whoa UI', path: '/ui' }, ...crumbs])],
+});

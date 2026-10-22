@@ -71,31 +71,31 @@ None found.
 
 ## Low
 
-### L1. 404 head carries two robots tags and the home page's metadata
+### L1. (FIXED) 404 head carries two robots tags and the home page's metadata
 
 - **File:** `apps/web/src/app/not-found.tsx:1` (`'use client'`, so it cannot export `metadata`)
 - **Issue:** The HTTP status is correct (404, verified for `/nope`, `/projects/nope`, `/ui/components/button`) and Next adds `noindex`. But the head also keeps the root `robots: index, follow` (`metadata.ts:66-78`), giving two conflicting robots tags, plus the home title, description, OG data and canonical. Google resolves it to noindex, so this is cosmetic.
 - **Fix:** Split the client part into a child component so `not-found.tsx` can be a server component with `export const metadata = { title: 'Page introuvable', robots: { index: false }, alternates: {} }`.
 
-### L2. Sitemap metadata is thin
+### L2. (FIXED) Sitemap metadata is thin
 
 - **File:** `apps/web/src/app/sitemap.ts:31-36, 90-93`
 - **Issue:** The home page, `/ui`, `/inspirations` and all 3 registry sections have no `lastModified`. `changeFrequency` and `priority` are ignored by Google. The home entry has no hreflang alternates (see H6). Writings use the publish date as `lastModified` (line 81) because no modified date exists.
 - **Fix:** Add real `lastModified` (git date or frontmatter `updated`); drop `changeFrequency`/`priority`.
 
-### L3. Article structured data lacks a modified date
+### L3. (FIXED) Article structured data lacks a modified date
 
 - **Files:** `lib/structured-data.ts:113-125`, `lib/metadata.ts:168-170`
 - **Issue:** `BlogPosting` has `datePublished` only, and no `dateModified`. `article:author` is the site URL, not a profile or author name. No `article:modified_time`.
 - **Fix:** Add an optional `updated` frontmatter field and emit `dateModified` and `article:modified_time`. Use `authors: [siteConfig.name]` or the Person URL deliberately.
 
-### L4. Person JSON-LD details
+### L4. (FIXED) Person JSON-LD details
 
 - **File:** `apps/web/src/lib/structured-data.ts:21, 40-45`
 - **Issue:** `email: mailto:hello@...` publishes an address for scrapers. `sameAs` lists x.com, but the UI links `twitter.com/ugolin_olle` (`data/social-links.tsx:51`), and the npm profile in the home page links is missing from `sameAs`. `ProfilePage` (lines 64-72) has no `dateCreated`/`dateModified`, which Google lists for profile-page rich results.
 - **Fix:** Drop `email` or use a contact form URL. Align the X URL in both places. Add npm to `sameAs`. Add the profile dates.
 
-### L5. No structured data on the registry docs and `/ui`
+### L5. (FIXED) No structured data on the registry docs and `/ui`
 
 - **Files:** `app/ui/page.tsx`, `components/docs/docs-page.tsx`
 - **Issue:** None of the 90+ registry pages emit JSON-LD or BreadcrumbList (verified live on `/ui/components/buttons/button`).
@@ -113,7 +113,7 @@ None found.
 - **Issue:** Dozens of `<title>…Logo</title>` appear in the home HTML (verified live: "LinkedIn Logo", "Github Light Logo", …). Valid inside SVG, but naive parsers may pick the wrong title, and duplicate Light/Dark variants are both announced.
 - **Fix:** Use `aria-hidden="true"` on decorative icons, or keep one accessible label per logo.
 
-### L8. Both Geist fonts are preloaded on every page
+### L8. (FIXED) Both Geist fonts are preloaded on every page
 
 - **File:** `apps/web/src/app/layout.tsx:18-26`
 - **Issue:** `Geist_Mono` is loaded in the root layout and preloaded sitewide (two `font/woff2` preload `Link` headers on `/`, verified live), but it is only used for code and labels. No explicit `display`.
@@ -125,19 +125,19 @@ None found.
 - **Issue:** The H1 is split into per-word spans, each animating for 800 ms with a 40 ms stagger (last word starts at about 0.7 s). If the H1 is the LCP element, LCP may land after the animation. Text is in the server HTML, so indexing is unaffected.
 - **Fix:** Measure first. If LCP is late, shorten the stagger/duration or keep the first words static. **Needs live check** (Lighthouse on a production build).
 
-### L10. Non-featured project covers are hidden until hydration
+### L10. (FIXED) Non-featured project covers are hidden until hydration
 
 - **File:** `apps/web/src/components/sections/projects-section.tsx:56-58`
 - **Issue:** `!featured && !loaded && 'opacity-0'` ships non-featured covers invisible in the SSR HTML. Their `alt` is empty (decorative), so there is no text lost, but it adds a JS dependency to image display. Every cover currently points at the same `/assets/background.svg`.
 - **Fix:** Drop the JS-gated opacity or use a CSS-only fade-in.
 
-### L11. Default OG image dimensions don't match the file
+### L11. (FIXED) Default OG image dimensions don't match the file
 
 - **Files:** `lib/metadata.ts:90-91` (declares 1200×630), `public/og.png` (actually 2400×1260)
 - **Issue:** Same aspect ratio, so previews render fine; the metadata is simply wrong. The home OG `alt` is just the site name (`metadata.ts:92`).
 - **Fix:** Declare 2400×1260 or export a 1200×630 file. Use a descriptive `alt`.
 
-### L12. `keywords` meta and robots housekeeping
+### L12. (FIXED) `keywords` meta and robots housekeeping
 
 - **Files:** `lib/metadata.ts:9-19,51`, `app/robots.ts:7-10`
 - **Issue:** `<meta name="keywords">` is ignored by Google and Bing. `robots.txt` allows everything, including `/api/search` and `/og/`.

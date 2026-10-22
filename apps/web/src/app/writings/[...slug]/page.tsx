@@ -32,6 +32,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
           pathname: `/writings/${slug.join('/')}`,
           lang: resolvePageLocale(writingsSource, slug, lang).lang,
           datePublished: page.data.date,
+          dateModified: page.data.updated,
           image: `/og/content/writings/${slug.join('/')}/image.png`,
         })}
       />
@@ -59,6 +60,7 @@ export const generateMetadata = async ({ params, searchParams }: PageProps): Pro
     pathname: `/writings/${slug.join('/')}`,
     image: `/og/content/writings/${slug.join('/')}/image.png`,
     publishedTime: page.data.date,
+    modifiedTime: page.data.updated,
     ...resolvePageLocale(writingsSource, slug, lang),
   });
 };

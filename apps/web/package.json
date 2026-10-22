@@ -30,6 +30,7 @@
     "fumadocs-mdx": "15.0.0",
     "fumadocs-ui": "16.8.8",
     "i18next": "^26.0.10",
+    "lenis": "^1.3.27",
     "lucide-react": "catalog:",
     "mermaid": "^12.2.0",
     "motion": "catalog:",

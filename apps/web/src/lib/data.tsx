@@ -14,7 +14,6 @@ export const PROJECTS: Project[] = [
     id: 'whoa-ui',
     content: (
       <div className="relative size-12">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="Whoa UI"
           className={cn(
@@ -34,7 +33,6 @@ export const PROJECTS: Project[] = [
     done: false,
     content: (
       <div className="relative size-12">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="Whoa Bar"
           className={cn(
@@ -86,13 +84,11 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="Calyx"
           className="relative size-full dark:hidden"
           src="/assets/projects/calyx/mark-light.svg"
         />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="Calyx"
           className="relative hidden size-full dark:block"
@@ -160,7 +156,6 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="Whoa Jobs"
           className="relative size-full p-[13%]"
@@ -184,7 +179,6 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="42"
           className="relative size-full p-[22%] dark:invert"

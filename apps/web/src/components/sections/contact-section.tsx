@@ -5,7 +5,7 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { m } from 'motion/react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { MagneticSocialLink } from '~/components/ui';
+import { MagneticSocialLink } from '~/components/ui/magnetic-social-link';
 import {
   EMAIL,
   SECTION_REVEAL_LIST,

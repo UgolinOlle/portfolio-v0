@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { LanguageSwitcher } from '~/components/ui';
+import { LanguageSwitcher } from '~/components/ui/language-switcher';
 import { ThemeSwitch } from '~/layouts/shared/slots/theme-switch';
 import { SOCIAL_LINKS } from '~/lib/data';
 

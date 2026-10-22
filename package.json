@@ -45,9 +45,6 @@
     "version": "changeset version && bun install --lockfile-only",
     "release": "changeset publish"
   },
-  "dependencies": {
-    "lenis": "^1.3.27"
-  },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.0",

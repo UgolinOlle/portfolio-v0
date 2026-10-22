@@ -18,6 +18,7 @@ export function HeroFigure({ className }: { className?: string }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const [stage, setStage] = useState('');
   const [still, setStill] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const el = stageRef.current;
@@ -51,6 +52,8 @@ export function HeroFigure({ className }: { className?: string }) {
         },
       };
       handle = figure.mount({ stage: el, svg, read }, figure.range[1]);
+      // Next frame, so the resting (hidden) state is painted before the transition starts.
+      requestAnimationFrame(() => !cancelled && setReady(true));
     }
 
     const arm = () => {
@@ -82,7 +85,11 @@ export function HeroFigure({ className }: { className?: string }) {
   }, []);
 
   return (
-    <div className={cn('w-64 max-w-full md:w-full', className)} aria-hidden="true">
+    <div
+      className={cn('hero-figure w-64 max-w-full md:w-full', className)}
+      aria-hidden="true"
+      data-ready={ready}
+    >
       <div className={cn('aspect-[5/4] w-full', still && 'pointer-events-none')} ref={stageRef} />
       <p className="h-4 text-right font-mono text-xs text-zinc-500">{stage}</p>
     </div>

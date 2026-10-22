@@ -31,22 +31,63 @@
   animation: thumbnail-in 400ms var(--ease-out-strong) both;
 }
 
-/* Hero call to action: the only load-time entrance on the home page. The h1 and lead stay
-   static because they are LCP candidates. */
+/* Hero choreography. Pure CSS so it plays from the server HTML, before hydration: the headline
+   rises word by word out of a mask (`--i` is the word index), then the pill, lead and call to
+   action follow (`--hero-delay`). Transform and opacity only. */
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
+  }
+}
+
+@keyframes word-up {
+  from {
+    transform: translateY(105%);
   }
 }
 
 .hero-in {
-  animation: rise-in 350ms var(--ease-out-strong) 120ms both;
+  animation: rise-in 600ms var(--ease-out-strong) var(--hero-delay, 0ms) both;
+}
+
+/* The padding / negative margin pair keeps descenders inside the mask without moving the lines. */
+.hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.hero-word > span {
+  display: inline-block;
+  animation: word-up 800ms var(--ease-out-strong) calc(80ms + var(--i, 0) * 40ms) both;
+}
+
+/* The Hairline figure mounts after idle: it settles in instead of popping. */
+.hero-figure {
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  transition:
+    opacity 900ms var(--ease-out-strong),
+    transform 900ms var(--ease-out-strong);
+}
+
+.hero-figure[data-ready='true'] {
+  opacity: 1;
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-in {
+  .hero-in,
+  .hero-word > span {
     animation: none;
+  }
+
+  .hero-figure {
+    transform: none;
+    transition: opacity 200ms ease;
   }
 }
 

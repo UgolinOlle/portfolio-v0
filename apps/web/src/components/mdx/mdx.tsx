@@ -3,6 +3,7 @@ import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
 
 import { Mermaid } from '~/components/mdx/mermaid';
+import { Table } from '~/components/mdx/table';
 import { ScreenshotsWithSize } from '~/components/projects/screenshots-with-size';
 import { TechStack } from '~/components/projects/tech-stack';
 
@@ -15,6 +16,7 @@ export function getMDXComponents(components?: MDXComponents) {
     Mermaid,
     Screenshots: ScreenshotsWithSize,
     TechStack,
+    table: Table,
     ...components,
   } satisfies MDXComponents;
 }

@@ -13,8 +13,8 @@
   },
   "hero": {
     "availability": "Disponible pour de nouvelles missions",
-    "headline": "Je conçois et développe des SaaS et applications web, de la maquette à la mise en production.",
-    "lead": "Développeur full stack freelance, j’accompagne startups, indépendants et PME avec Next.js, React, NestJS et TypeScript, et je me spécialise en administration systèmes, réseaux et cybersécurité.",
+    "headline": "Je construis des choses",
+    "lead": "Développeur qui livre. Je crée des applications web, des systèmes de design et des outils qui marchent. Full stack avec Next.js, React, NestJS. Spécialisé en systèmes, réseaux et cybersécurité pour sécuriser ce qu’on construit.",
     "ctaPrimary": "Me contacter",
     "ctaSecondary": "Voir les projets"
   },
@@ -68,7 +68,8 @@
       "whoa-jobs": "Application web pour la gestion des candidatures et des offres d'emploi.",
       "claude-kit": "CLI zéro dépendance qui configure et audite des projets Claude Code optimisés en tokens.",
       "calyx": "Application de nutrition IA qui analyse vos repas en photo.",
-      "whoa-bar": "Application macOS pour gérer la barre de menu."
+      "whoa-bar": "Application macOS pour gérer la barre de menu.",
+      "whoa-type": "Application macOS pour reproduire un clavier mécanique."
     }
   },
   "writings": {

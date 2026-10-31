@@ -141,3 +141,8 @@ svg[data-icon-weight='fill'] {
 [aria-current='page'] svg[data-icon-weight='fill'] {
   display: block;
 }
+
+/* Clear the fixed header when the TOC (or a #hash) scrolls to a heading. */
+main :is(h2, h3)[id] {
+  scroll-margin-top: 6rem;
+}

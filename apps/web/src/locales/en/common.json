@@ -13,8 +13,8 @@
   },
   "hero": {
     "availability": "Available for new projects",
-    "headline": "I design and build SaaS products and web apps, from mockup to production.",
-    "lead": "Freelance full stack developer helping startups, independents and small businesses ship with Next.js, React, NestJS and TypeScript, now specialising in systems, networks and cybersecurity.",
+    "headline": "I build things",
+    "lead": "Developer shipping web apps, design systems, and tools that work. Full stack with Next.js, React, NestJS. Specializing in systems, networks, and cybersecurity to keep what we build safe.",
     "ctaPrimary": "Get in touch",
     "ctaSecondary": "See projects"
   },
@@ -68,7 +68,8 @@
       "neovim-config": "Neovim configuration for web development.",
       "42": "Projects completed at 42 school, including web applications and internal tools.",
       "whoa-jobs": "Web application for managing job applications and job offers.",
-      "claude-kit": "Zero-dependency CLI that scaffolds and audits token-optimized Claude Code projects."
+      "claude-kit": "Zero-dependency CLI that scaffolds and audits token-optimized Claude Code projects.",
+      "whoa-type": "macOS app that reproduces a mechanical keyboard."
     }
   },
   "writings": {

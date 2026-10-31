@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { ArrowRightIcon } from '~/components/icons/ui';
-import { SectionHeading } from '~/components/sections/section-heading';
+import { HomeHeading } from '~/components/sections/home-heading';
 import type { WritingSummary } from '~/components/writings/writings-list';
 import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import { formatDate } from '~/lib/format-date';
@@ -37,7 +37,7 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
 
   return (
     <m.section {...SECTION_REVEAL_LIST} className="space-y-4">
-      <SectionHeading
+      <HomeHeading
         action={
           <Link
             className="group inline-flex items-center gap-1 rounded text-sm text-zinc-500 transition-colors hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none dark:text-zinc-400 dark:hover:text-zinc-50"
@@ -52,20 +52,20 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
         }
       >
         {t('writings.recentTitle')}
-      </SectionHeading>
+      </HomeHeading>
 
       <div className="flex flex-col space-y-2">
         {recentPages.map((page) => (
           <m.div
-            className="relative overflow-hidden bg-zinc-300/30 p-px dark:bg-zinc-600/30"
+            className="relative overflow-hidden rounded-2xl bg-zinc-300/30 p-px dark:bg-zinc-600/30"
             key={page.url}
             transition={TRANSITION_SECTION}
             variants={VARIANTS_SECTION}
           >
             <Link
               className={cn(
-                'group relative flex flex-col gap-1 bg-white p-4 dark:bg-zinc-950',
-                'transition-[background-color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.99]',
+                'group relative flex flex-col gap-1 rounded-[calc(var(--radius-2xl)-1px)] bg-white p-5 dark:bg-zinc-950',
+                'transition-[background-color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]',
                 'hover:bg-zinc-50 dark:hover:bg-zinc-900',
               )}
               href={page.url}

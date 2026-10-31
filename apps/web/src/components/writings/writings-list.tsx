@@ -82,28 +82,30 @@ export function WritingsList({ pages }: WritingsListProps) {
       {/* Remounted per filter: a short crossfade, no layout or slide animation. */}
       <m.div
         animate={{ opacity: 1 }}
-        className="flex flex-col divide-y divide-zinc-200 dark:divide-zinc-800"
+        className="flex flex-col divide-y divide-zinc-200/70 dark:divide-zinc-800/70"
         initial={{ opacity: 0 }}
         key={selectedCategory ?? 'all'}
         transition={{ duration: 0.15 }}
       >
         {filteredPages.map((page) => (
-          <Link className="group flex flex-col gap-1 py-4" href={page.url} key={page.url}>
+          <Link className="group flex flex-col gap-1.5 py-6" href={page.url} key={page.url}>
             <div className="flex items-center justify-between gap-4">
-              <span className="font-[450] text-zinc-900 transition-opacity group-hover:opacity-60 dark:text-zinc-50">
+              <span className="text-lg font-semibold tracking-tight text-zinc-950 transition-opacity group-hover:opacity-60 dark:text-zinc-50">
                 {page.title}
               </span>
 
-              <span className="shrink-0 rounded-full border border-zinc-300 px-2 py-0.5 font-mono text-xs text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+              <span className="shrink-0 rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
                 {page.category}
               </span>
             </div>
 
             {page.description && (
-              <p className="text-sm text-zinc-600 dark:text-zinc-300">{page.description}</p>
+              <p className="text-base text-pretty text-zinc-600 dark:text-zinc-400">
+                {page.description}
+              </p>
             )}
 
-            <time className="text-xs text-zinc-500 dark:text-zinc-400" dateTime={page.date}>
+            <time className="text-sm text-zinc-500 dark:text-zinc-400" dateTime={page.date}>
               {formatDate(page.date, i18n.language)}
             </time>
           </Link>

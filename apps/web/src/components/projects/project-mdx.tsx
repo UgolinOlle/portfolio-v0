@@ -1,3 +1,4 @@
+import { Toc } from '~/components/core/toc';
 import { ArrowRightIcon } from '~/components/icons/ui';
 import { getMDXComponents } from '~/components/mdx/mdx';
 import { DocsBody } from '~/layouts/docs/page';
@@ -14,14 +15,15 @@ export const ProjectMDX = ({ page }: ProjectMDXProps) => {
   const { title, description, stack, links } = page.data;
 
   return (
-    <article>
-      <header className="mb-10 flex flex-col items-start gap-4 border-b border-zinc-200 pb-8 dark:border-zinc-800">
-        <h1 className="text-3xl font-medium tracking-tight text-balance text-zinc-950 sm:text-4xl dark:text-zinc-50">
+    <article className="relative md:has-[>aside]:pl-48 xl:has-[>aside]:pl-0">
+      <Toc items={page.data.toc} />
+      <header className="mb-12 flex flex-col items-start gap-5 border-b border-zinc-200/70 pb-10 dark:border-zinc-800/70">
+        <h1 className="text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-zinc-950 sm:text-5xl dark:text-zinc-50">
           {title}
         </h1>
 
         {description && (
-          <p className="max-w-[60ch] text-base leading-relaxed text-pretty text-zinc-600 dark:text-zinc-400">
+          <p className="max-w-[52ch] text-lg leading-normal text-pretty text-zinc-600 dark:text-zinc-400">
             {description}
           </p>
         )}
@@ -32,7 +34,7 @@ export const ProjectMDX = ({ page }: ProjectMDXProps) => {
               <ul className="flex flex-wrap gap-1.5">
                 {stack.map((tech) => (
                   <li
-                    className="rounded-md border border-zinc-200 px-2 py-0.5 font-mono text-xs text-zinc-600 dark:border-zinc-800 dark:text-zinc-400"
+                    className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
                     key={tech}
                   >
                     {tech}
@@ -45,7 +47,7 @@ export const ProjectMDX = ({ page }: ProjectMDXProps) => {
               <div className="flex flex-wrap items-center gap-4">
                 {links.map((link) => (
                   <a
-                    className="group inline-flex items-center gap-1 text-sm font-medium text-zinc-700 transition-colors hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-zinc-50"
+                    className="group inline-flex items-center gap-1 text-base font-medium text-zinc-700 transition-colors hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-zinc-50"
                     href={link.href}
                     key={link.href}
                     rel="noopener noreferrer"

@@ -62,7 +62,7 @@ export function TechStack({ groups }: TechStackProps) {
 
           <m.h3
             variants={textVariants}
-            className="pt-1 font-mono text-xs tracking-wider text-zinc-500 uppercase transition-colors duration-300 group-hover:text-zinc-950 dark:text-zinc-400 dark:group-hover:text-zinc-50"
+            className="pt-1 text-sm font-medium text-zinc-500 transition-colors duration-300 group-hover:text-zinc-950 dark:text-zinc-400 dark:group-hover:text-zinc-50"
           >
             {group.layer}
           </m.h3>

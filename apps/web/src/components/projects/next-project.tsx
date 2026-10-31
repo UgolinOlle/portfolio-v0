@@ -34,14 +34,16 @@ export function NextProject({ slug, lang }: NextProjectProps) {
 
   return (
     <Link
-      className="group mt-16 flex items-center justify-between gap-4 rounded-2xl border border-zinc-200 p-5 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:hover:bg-zinc-900/60"
+      className="group mt-20 flex items-center justify-between gap-4 rounded-3xl border border-zinc-200/70 p-6 transition-[background-color,border-color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-zinc-300 hover:bg-zinc-50 active:scale-[0.98] dark:border-zinc-800/70 dark:hover:border-zinc-700 dark:hover:bg-zinc-900/60"
       href={localizedPath(`/projects/${nextSlug}`, lang)}
     >
       <div className="min-w-0">
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">{LABELS[lang]}</p>
-        <p className="mt-1 font-medium text-zinc-900 dark:text-zinc-50">{nextPage.data.title}</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">{LABELS[lang]}</p>
+        <p className="mt-1 text-xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+          {nextPage.data.title}
+        </p>
         {nextPage.data.description && (
-          <p className="mt-1 line-clamp-1 text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="mt-1 line-clamp-1 text-base text-zinc-600 dark:text-zinc-400">
             {nextPage.data.description}
           </p>
         )}

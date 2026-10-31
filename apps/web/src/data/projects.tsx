@@ -1,7 +1,5 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { Command, TerminalWindow as SquareTerminal } from '@phosphor-icons/react/ssr';
-import { Bot } from 'lucide-react';
 import Image from 'next/image';
 
 import type { Project } from '~/types';
@@ -57,17 +55,17 @@ export const PROJECTS: Project[] = [
     done: false,
     content: (
       <div className="relative size-12">
-        <div
+        <Image
+          fill
+          sizes="48px"
+          alt="Whoa Stash"
           className={cn(
-            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'absolute inset-0 size-full rounded-xl shadow',
             'transition-transform duration-300 group-hover:rotate-45',
-            'dark:border-zinc-700 dark:bg-zinc-950/40',
           )}
+          unoptimized
+          src="/assets/projects/whoa-stash/icon-master.svg"
         />
-
-        <div className="relative flex size-full items-center justify-center">
-          <Command className="size-7" weight="duotone" />
-        </div>
       </div>
     ),
     id: 'whoa-stash',
@@ -124,33 +122,42 @@ export const PROJECTS: Project[] = [
           )}
         />
 
-        <div className="relative flex size-full items-center justify-center">
-          <Bot className="size-7" />
-        </div>
+        <Image
+          fill
+          sizes="48px"
+          alt="Claude Code"
+          className="relative size-full p-[18%]"
+          unoptimized
+          src="/assets/projects/claude-kit/claude-code-logo.svg"
+        />
       </div>
     ),
     id: 'claude-kit',
   },
   {
-    name: 'Neovim Config',
-    description: 'Configuration Neovim pour le développement web.',
-    link: '/projects/neovim',
+    name: 'Whoa Type',
+    description:
+      'A macOS utility that adds sound to typing and clicks, with 38 built-in sound packs, previews, and a native audio engine.',
+    link: '/projects/whoa-type',
+    id: 'whoa-type',
+    done: false,
     content: (
       <div className="relative size-12">
-        <div
+        <Image
+          fill
+          sizes="48px"
+          alt="Whoa Type"
           className={cn(
-            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
-            'transition-transform duration-300 group-hover:rotate-45',
-            'dark:border-zinc-700 dark:bg-zinc-950/40',
+            'absolute inset-0 size-full scale-150 drop-shadow-md',
+            'transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]',
+            'group-hover:translate-y-1 group-hover:scale-[1.38]',
+            'motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-150',
           )}
+          unoptimized
+          src="/assets/projects/whoa-type/whoa-type-logo.png"
         />
-
-        <div className="relative flex size-full items-center justify-center">
-          <SquareTerminal className="size-7" weight="duotone" />
-        </div>
       </div>
     ),
-    id: 'neovim-config',
   },
   {
     name: 'Whoa Jobs',
@@ -177,6 +184,32 @@ export const PROJECTS: Project[] = [
         />
       </div>
     ),
+  },
+  {
+    name: 'Neovim Config',
+    description: 'Configuration Neovim pour le développement web.',
+    link: '/projects/neovim',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <Image
+          fill
+          sizes="48px"
+          alt="Neovim"
+          className="relative size-full p-[22%]"
+          unoptimized
+          src="/assets/projects/neovim-config/neovim-logo.svg"
+        />
+      </div>
+    ),
+    id: 'neovim-config',
   },
   {
     name: '42 Bangkok',

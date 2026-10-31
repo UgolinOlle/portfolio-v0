@@ -10,7 +10,7 @@ import { ArrowRightIcon } from '~/components/icons/ui';
 import { EMAIL, SECTION_REVEAL } from '~/lib/constants';
 
 import { HeroFigure } from './hero-figure';
-import { SectionHeading } from './section-heading';
+import { HomeHeading } from './home-heading';
 
 const WORD_STEP_MS = 40;
 
@@ -46,7 +46,7 @@ export function HeroSection() {
           {t('hero.availability')}
         </span>
 
-        <h1 className="max-w-[26ch] text-3xl leading-[1.12] font-medium tracking-tight text-balance text-zinc-950 sm:text-4xl dark:text-zinc-50">
+        <h1 className="max-w-[24ch] text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-zinc-950 sm:text-5xl dark:text-zinc-50">
           {words.map((word, i) => (
             // oxlint-disable-next-line react/no-array-index-key -- static copy, order is the key
             <Fragment key={i}>
@@ -58,7 +58,7 @@ export function HeroSection() {
         </h1>
 
         <p
-          className="hero-in max-w-[60ch] text-base leading-relaxed text-pretty text-zinc-600 dark:text-zinc-400"
+          className="hero-in max-w-[52ch] text-lg leading-normal text-pretty text-zinc-600 dark:text-zinc-400"
           style={{ '--hero-delay': `${afterHeadline}ms` } as CSSProperties}
         >
           {t('hero.lead')}
@@ -70,7 +70,7 @@ export function HeroSection() {
         >
           <a
             className={cn(
-              'inline-flex items-center rounded-lg bg-zinc-950 px-4 py-2 text-sm font-medium text-white',
+              'inline-flex items-center rounded-full bg-zinc-950 px-5 py-2.5 text-base font-medium text-white',
               'transition-[background-color,transform] duration-150 ease-(--ease-out-strong) hover:bg-zinc-800 active:scale-[0.97]',
               'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none',
               'dark:bg-zinc-50 dark:text-zinc-950 dark:hover:bg-zinc-200',
@@ -81,7 +81,7 @@ export function HeroSection() {
           </a>
 
           <a
-            className="group inline-flex items-center gap-1 text-sm font-medium text-zinc-700 transition-colors hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-zinc-50"
+            className="group inline-flex items-center gap-1 text-base font-medium text-zinc-700 transition-colors hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-zinc-50"
             href="#projects"
           >
             {t('hero.ctaSecondary')}
@@ -108,13 +108,13 @@ export function AboutSection() {
 
   return (
     <m.section {...SECTION_REVEAL}>
-      <SectionHeading>{t('sections.about')}</SectionHeading>
+      <HomeHeading>{t('sections.about')}</HomeHeading>
 
-      <p className="max-w-[65ch] text-sm leading-relaxed text-pretty whitespace-pre-line text-zinc-600 dark:text-zinc-400">
+      <p className="max-w-[65ch] text-base leading-relaxed text-pretty whitespace-pre-line text-zinc-600 dark:text-zinc-400">
         {t('about.description')}
       </p>
 
-      <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm">
+      <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-base">
         <h3 className="font-medium text-zinc-950 dark:text-zinc-50">
           {t('about.languages.title')}
         </h3>

@@ -11,7 +11,7 @@ import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib
 
 import { useTranslation } from '../core/i18n-provider';
 
-import { SectionHeading } from './section-heading';
+import { HomeHeading } from './home-heading';
 
 type CompanyLogoProps = {
   company: string;
@@ -36,7 +36,7 @@ function CompanyLogo({ company, logo }: CompanyLogoProps) {
   return (
     <div
       className={cn(
-        'flex size-8 shrink-0 items-center justify-center rounded-lg border',
+        'flex size-10 shrink-0 items-center justify-center rounded-xl border',
         showLogo
           ? 'bg-white dark:bg-zinc-900'
           : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400',
@@ -68,14 +68,14 @@ function WorksSection() {
 
   return (
     <m.section {...SECTION_REVEAL_LIST} id="works">
-      <SectionHeading>{t('sections.works')}</SectionHeading>
+      <HomeHeading>{t('sections.works')}</HomeHeading>
 
-      <ul className="flex flex-col">
+      <ul className="flex flex-col divide-y divide-zinc-200/70 dark:divide-zinc-800/70">
         {WORKS_EXPERIENCES.map((job) => (
           <m.li
             transition={TRANSITION_SECTION}
             variants={VARIANTS_SECTION}
-            className="-mx-3 flex items-start justify-between gap-4 rounded-xl px-3 py-3 text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-900/60"
+            className="flex items-start justify-between gap-4 py-4 text-base"
             key={job.id}
           >
             <div className="flex min-w-0 items-start gap-3">

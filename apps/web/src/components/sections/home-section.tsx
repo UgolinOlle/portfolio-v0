@@ -12,11 +12,11 @@ type HomeContentProps = {
 
 export function HomeContent({ recentWritings }: HomeContentProps) {
   return (
-    <div className="space-y-24">
+    <div className="space-y-28">
       <HeroSection />
       <ProjectsSection />
       {/* Works and About read as one story: keep them closer than the other sections. */}
-      <div className="space-y-16">
+      <div className="space-y-20">
         <WorksSection />
         <AboutSection />
       </div>

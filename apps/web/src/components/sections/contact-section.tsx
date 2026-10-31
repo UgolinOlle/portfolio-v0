@@ -15,16 +15,16 @@ import {
   VARIANTS_SECTION,
 } from '~/lib/constants';
 
-import { SectionHeading } from './section-heading';
+import { HomeHeading } from './home-heading';
 
 function ContactSection() {
   const { t } = useTranslation();
 
   return (
     <m.section {...SECTION_REVEAL_LIST} className="space-y-6" id="contact">
-      <SectionHeading>{t('contact.title')}</SectionHeading>
+      <HomeHeading className="mb-0">{t('contact.title')}</HomeHeading>
 
-      <p className="mb-5 text-sm text-zinc-600 dark:text-zinc-300">
+      <p className="mb-5 text-base text-zinc-600 dark:text-zinc-300">
         {t('contact.description')}{' '}
         <a
           className={cn(

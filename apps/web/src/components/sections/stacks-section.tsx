@@ -22,7 +22,7 @@ import { useTranslation } from '~/components/core/i18n-provider';
 import { DATABASES, FRAMEWORKS, LANGUAGES, TOOLS } from '~/components/icons';
 import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 
-import { SectionHeading } from './section-heading';
+import { HomeHeading } from './home-heading';
 
 type IconFactory = () => React.ComponentType<{ className?: string }>;
 
@@ -153,7 +153,7 @@ function StacksSection() {
 
   return (
     <m.section {...SECTION_REVEAL_LIST} className="space-y-8" id="stacks">
-      <SectionHeading>{t('sections.stacks')}</SectionHeading>
+      <HomeHeading className="mb-0">{t('sections.stacks')}</HomeHeading>
 
       {Object.entries(SKILLS).map(([category, skills]) => (
         <m.div key={category} transition={TRANSITION_SECTION} variants={VARIANTS_SECTION}>

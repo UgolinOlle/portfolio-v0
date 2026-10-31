@@ -12,7 +12,7 @@ import { PROJECTS } from '~/data/projects';
 import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import type { Project } from '~/types';
 
-import { SectionHeading } from './section-heading';
+import { HomeHeading } from './home-heading';
 
 type ProjectCardProps = {
   project: Project;
@@ -33,8 +33,8 @@ function ProjectCard({ project, featured = false, index = 0 }: ProjectCardProps)
     >
       <Link
         className={cn(
-          'group flex flex-col gap-3 rounded-2xl outline-none',
-          `transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.99]`,
+          'group flex flex-col gap-4 rounded-3xl outline-none',
+          `transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]`,
           'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4',
         )}
         href={project.link}
@@ -43,7 +43,7 @@ function ProjectCard({ project, featured = false, index = 0 }: ProjectCardProps)
       >
         <div
           className={cn(
-            'relative overflow-hidden rounded-2xl bg-zinc-50 ring-1 ring-zinc-200/70 ring-inset',
+            'relative overflow-hidden rounded-3xl bg-zinc-50 ring-1 ring-zinc-200/70 ring-inset',
             'dark:bg-zinc-900/40 dark:ring-zinc-800/70',
             featured ? 'aspect-video sm:aspect-[2.2/1]' : 'aspect-video',
           )}
@@ -75,9 +75,10 @@ function ProjectCard({ project, featured = false, index = 0 }: ProjectCardProps)
             <span
               className={cn(
                 'absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full py-1 pr-2.5 pl-2',
-                'bg-white/80 text-[11px] leading-none font-medium text-zinc-600 backdrop-blur-sm',
+                'bg-white/80 text-[11px] leading-none font-medium text-zinc-600 backdrop-blur-md',
                 'ring-1 ring-zinc-200/70 ring-inset',
                 'dark:bg-zinc-950/60 dark:text-zinc-300 dark:ring-zinc-700/70',
+                'contrast-more:bg-white dark:contrast-more:bg-zinc-950',
               )}
             >
               <span aria-hidden="true" className="size-1.5 rounded-full bg-amber-500" />
@@ -90,13 +91,13 @@ function ProjectCard({ project, featured = false, index = 0 }: ProjectCardProps)
           <div className="min-w-0">
             <h3
               className={cn(
-                'font-medium text-zinc-900 dark:text-zinc-50',
-                featured ? 'text-base' : 'text-sm',
+                'font-semibold tracking-tight text-zinc-900 dark:text-zinc-50',
+                featured ? 'text-xl' : 'text-lg',
               )}
             >
               {project.name}
             </h3>
-            <p className="mt-1 text-sm text-pretty text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1 text-base text-pretty text-zinc-600 dark:text-zinc-400">
               {t(`projects.descriptions.${project.id}`)}
             </p>
           </div>
@@ -121,9 +122,9 @@ export function ProjectsSection() {
 
   return (
     <m.section {...SECTION_REVEAL_LIST} id="projects">
-      <SectionHeading>{t('projects.title')}</SectionHeading>
+      <HomeHeading>{t('projects.title')}</HomeHeading>
 
-      <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2">
         {featured && <ProjectCard featured project={featured} />}
         {rest.map((project, index) => (
           <ProjectCard index={index + 1} key={project.id} project={project} />

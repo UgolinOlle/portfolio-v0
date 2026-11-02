@@ -79,6 +79,50 @@
   transform: none;
 }
 
+/*
+ * Strates: one hue per layer. The kernel reads --hl-hi for the bright edge and the dots, so
+ * overriding it on a layer's group tints only that layer; `.lit` also carries it onto the layer's
+ * line work. Strokes and fills already fade over 260ms in the kernel.
+ */
+.hero-figure [data-layer='3'] {
+  --hl-hi: #0071e3;
+}
+.hero-figure [data-layer='2'] {
+  --hl-hi: #5e5ce6;
+}
+.hero-figure [data-layer='1'] {
+  --hl-hi: #1fa2bd;
+}
+.hero-figure [data-layer='0'] {
+  --hl-hi: #28a745;
+}
+
+.dark .hero-figure [data-layer='3'] {
+  --hl-hi: #0a84ff;
+}
+.dark .hero-figure [data-layer='2'] {
+  --hl-hi: #7d7aff;
+}
+.dark .hero-figure [data-layer='1'] {
+  --hl-hi: #40c8e0;
+}
+.dark .hero-figure [data-layer='0'] {
+  --hl-hi: #30d158;
+}
+
+/* Nothing in the figure is clipped at the 400 × 320 frame, whatever pose it takes. */
+.hero-figure svg {
+  overflow: visible;
+}
+
+.hero-figure [data-layer].lit .feat {
+  stroke: var(--hl-hi);
+}
+
+.hero-figure [data-layer].lit .dot {
+  fill: var(--hl-hi);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-in,
   .hero-word > span {

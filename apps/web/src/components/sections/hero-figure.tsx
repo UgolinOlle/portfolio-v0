@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 const REDUCED = '(prefers-reduced-motion: reduce)';
 
 /**
- * The Hairline "pipeline" figure (maquette → code → conteneur → production).
+ * The Hairline "strates" figure (interface, API, réseau, sécurité).
  *
  * Decorative and below the LCP: the kernel and the figure load once the
  * browser is idle and the box is in view. The box reserves its 5:4 ratio so nothing shifts.
@@ -37,11 +37,11 @@ export function HeroFigure({ className }: { className?: string }) {
     async function start() {
       const [{ default: HL }, figure] = await Promise.all([
         import('~/lib/hairline/kernel'),
-        import('~/lib/hairline/pipeline'),
+        import('~/lib/hairline/strates'),
       ]);
       if (cancelled || !el) return;
       HL.inject(document);
-      el.setAttribute('data-hairline', 'pipeline');
+      el.setAttribute('data-hairline', 'strates');
       const svg = HL.mk('svg', { viewBox: '0 0 400 320', 'aria-hidden': 'true' }, el);
       const read = {
         get textContent() {

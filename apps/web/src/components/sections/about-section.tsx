@@ -3,10 +3,13 @@
 import { cn } from '@portfolio-v0/shadcn/utils';
 
 import { m, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { usePathname } from 'next/navigation';
 import { Fragment, useRef, type CSSProperties } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
+import { SocialLinksNav } from '~/components/effects/social-links-nav';
 import { ArrowRightIcon } from '~/components/icons/ui';
+import { SOCIAL_LINKS } from '~/data/social-links';
 import { SECTION_REVEAL } from '~/lib/constants';
 
 import { HeroFigure } from './hero-figure';
@@ -18,6 +21,7 @@ export function HeroSection() {
   const { t } = useTranslation();
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const showSocialLinks = usePathname() === '/';
 
   // The hero drifts away as it leaves: text and figure at different rates for depth.
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -30,7 +34,10 @@ export function HeroSection() {
 
   return (
     <section
-      className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_20rem]"
+      className={cn(
+        'grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_20rem]',
+        showSocialLinks ? 'mt-10' : 'mt-0',
+      )}
       id="about"
       ref={ref}
     >
@@ -50,7 +57,6 @@ export function HeroSection() {
             </Fragment>
           ))}
         </h1>
-
         <p
           className={cn(
             'hero-in max-w-[44ch] text-lg leading-snug font-normal tracking-[-0.01em] text-pretty',
@@ -60,7 +66,6 @@ export function HeroSection() {
         >
           {t('hero.lead')}
         </p>
-
         <div
           className="hero-in flex flex-wrap items-center gap-x-6 gap-y-3"
           style={{ '--hero-delay': `${afterHeadline + 100}ms` } as CSSProperties}
@@ -76,6 +81,12 @@ export function HeroSection() {
             />
           </a>
         </div>
+
+        {showSocialLinks && (
+          <div className="flex flex-col items-start gap-4">
+            <SocialLinksNav links={SOCIAL_LINKS} />
+          </div>
+        )}
       </m.div>
 
       <m.div style={{ y: figureY }}>
@@ -103,6 +114,7 @@ export function AboutSection() {
         <h3 className="font-medium text-zinc-950 dark:text-zinc-50">
           {t('about.languages.title')}
         </h3>
+
         <ul className="flex flex-wrap gap-x-4 gap-y-1 text-zinc-600 dark:text-zinc-400">
           {SPOKEN_LANGUAGES.map((language) => (
             <li key={language}>

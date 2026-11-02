@@ -29,7 +29,6 @@ const AUTOPLAY_REST_MS = 4000;
 
 /** Same value in every state so the corners only change between round and square, never in size. */
 const NOTCH_RADIUS = 24;
-
 const MORPH_SPRING = { type: 'spring', bounce: 0, duration: 0.4 } as const;
 
 /** The state only changes when a threshold is crossed, so scrolling does not re-render per pixel. */
@@ -242,14 +241,15 @@ function Header() {
         </m.div>
       </header>
 
-      <div className="mt-10 mb-14 flex flex-col items-start gap-4">
-        {showTagline && (
+      {showTagline && (
+        <div className="mt-10 mb-14 flex flex-col items-start gap-4">
           <p className="font-sans text-base font-normal tracking-tight text-primary">
             {t('header.title')}
           </p>
-        )}
-        <SocialLinksNav links={SOCIAL_LINKS} />
-      </div>
+
+          <SocialLinksNav links={SOCIAL_LINKS} />
+        </div>
+      )}
     </>
   );
 }

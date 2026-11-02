@@ -205,6 +205,22 @@ export function Toc({ items, label = 'On this page' }: { items: TOCItemType[]; l
   const ids = groups.flatMap((group) => [group.id, ...group.children.map((child) => child.id)]);
   const activeId = useActiveHeading(ids);
   const { rootRef, pos, ready } = useIndicator(activeId, groups);
+  const navRef = useRef<HTMLElement>(null);
+
+  // Long lists overflow the sticky nav: keep the active row centred as the reader moves through the page.
+  useEffect(() => {
+    const nav = navRef.current;
+    const row = nav?.querySelector<HTMLElement>(`[data-toc-row="${CSS.escape(activeId)}"]`);
+    if (!nav || !row || nav.scrollHeight <= nav.clientHeight) return;
+
+    const navRect = nav.getBoundingClientRect();
+    const rowRect = row.getBoundingClientRect();
+    const rowCenter = rowRect.top + rowRect.height / 2 - navRect.top + nav.scrollTop;
+    nav.scrollTo({
+      top: rowCenter - nav.clientHeight / 2,
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    });
+  }, [activeId, reduceMotion]);
 
   if (groups.length < 2) {
     return null;
@@ -222,7 +238,8 @@ export function Toc({ items, label = 'On this page' }: { items: TOCItemType[]; l
     <aside className="absolute inset-y-0 left-0 hidden w-40 md:block xl:right-full xl:left-auto xl:mr-8 xl:w-48">
       <nav
         aria-label={label}
-        className="sticky top-28 max-h-[calc(100dvh-8rem)] overflow-y-auto overscroll-contain"
+        className="sticky top-28 max-h-[calc(100dvh-8rem)] overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        ref={navRef}
       >
         <ul className="relative flex flex-col gap-5 pl-3" ref={rootRef}>
           <m.span

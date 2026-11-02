@@ -36,7 +36,7 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
   }
 
   return (
-    <m.section {...SECTION_REVEAL_LIST} className="space-y-4">
+    <m.section {...SECTION_REVEAL_LIST} className="space-y-4" id="writings">
       <HomeHeading
         action={
           <Link

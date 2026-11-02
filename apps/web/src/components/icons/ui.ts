@@ -34,6 +34,11 @@ export {
   FileJs as FileJsIcon,
   FileTs as FileTsIcon,
   FileTsx as FileTsxIcon,
+  Briefcase as BriefcaseIcon,
+  EnvelopeSimple as EnvelopeIcon,
+  PenNib as PenNibIcon,
+  Stack as StackIcon,
+  User as UserIcon,
   Folder as FolderIcon,
   FolderOpen as FolderOpenIcon,
 } from '@phosphor-icons/react/ssr';

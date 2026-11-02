@@ -7,7 +7,7 @@ import { Fragment, useRef, type CSSProperties } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
 import { ArrowRightIcon } from '~/components/icons/ui';
-import { EMAIL, SECTION_REVEAL } from '~/lib/constants';
+import { SECTION_REVEAL } from '~/lib/constants';
 
 import { HeroFigure } from './hero-figure';
 import { HomeHeading } from './home-heading';
@@ -35,18 +35,12 @@ export function HeroSection() {
       ref={ref}
     >
       <m.div className="flex flex-col items-start gap-6" style={{ y: textY, opacity: textOpacity }}>
-        <span
-          className="hero-in flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400"
-          style={{ '--hero-delay': '0ms' } as CSSProperties}
+        <h1
+          className={cn(
+            'max-w-[14ch] text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance',
+            'text-zinc-950 sm:text-5xl sm:tracking-[-0.035em] md:text-6xl md:tracking-[-0.04em] dark:text-zinc-50',
+          )}
         >
-          <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500/60 motion-reduce:hidden" />
-            <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-          </span>
-          {t('hero.availability')}
-        </span>
-
-        <h1 className="max-w-[24ch] text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-zinc-950 sm:text-5xl dark:text-zinc-50">
           {words.map((word, i) => (
             // oxlint-disable-next-line react/no-array-index-key -- static copy, order is the key
             <Fragment key={i}>
@@ -58,36 +52,27 @@ export function HeroSection() {
         </h1>
 
         <p
-          className="hero-in max-w-[52ch] text-lg leading-normal text-pretty text-zinc-600 dark:text-zinc-400"
+          className={cn(
+            'hero-in max-w-[44ch] text-lg leading-snug font-normal tracking-[-0.01em] text-pretty',
+            'text-zinc-500 dark:text-zinc-400',
+          )}
           style={{ '--hero-delay': `${afterHeadline}ms` } as CSSProperties}
         >
           {t('hero.lead')}
         </p>
 
         <div
-          className="hero-in flex flex-wrap items-center gap-x-5 gap-y-3 pt-1"
+          className="hero-in flex flex-wrap items-center gap-x-6 gap-y-3"
           style={{ '--hero-delay': `${afterHeadline + 100}ms` } as CSSProperties}
         >
           <a
-            className={cn(
-              'inline-flex items-center rounded-full bg-zinc-950 px-5 py-2.5 text-base font-medium text-white',
-              'transition-[background-color,transform] duration-150 ease-(--ease-out-strong) hover:bg-zinc-800 active:scale-[0.97]',
-              'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none',
-              'dark:bg-zinc-50 dark:text-zinc-950 dark:hover:bg-zinc-200',
-            )}
-            href={`mailto:${EMAIL}`}
-          >
-            {t('hero.ctaPrimary')}
-          </a>
-
-          <a
-            className="group inline-flex items-center gap-1 text-base font-medium text-zinc-700 transition-colors hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-zinc-50"
+            className="group inline-flex items-center gap-1 rounded-sm text-base font-medium text-zinc-700 transition-colors hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none dark:text-zinc-300 dark:hover:text-zinc-50"
             href="#projects"
           >
             {t('hero.ctaSecondary')}
             <ArrowRightIcon
               aria-hidden="true"
-              className="size-3.5 transition-transform duration-200 ease-(--ease-out-strong) group-hover:translate-x-0.5"
+              className="size-3.5 transition-transform duration-200 ease-out-strong group-hover:translate-x-0.5"
             />
           </a>
         </div>

@@ -15,7 +15,9 @@ import {
   SiPhp,
   SiPrometheus,
   SiPython,
+  SiSwift,
   SiWireshark,
+  SiXcode,
 } from 'react-icons/si';
 
 import { useTranslation } from '~/components/core/i18n-provider';
@@ -79,6 +81,7 @@ const BashLogo = themedLogo(LANGUAGES.BashDark, LANGUAGES.BashLight);
 const PrismaLogo = themedLogo(DATABASES.PrismaDark, DATABASES.PrismaLight);
 const PhpLogo = brandLogo(SiPhp, '#777BB4');
 const PythonLogo = brandLogo(SiPython, '#3776AB');
+const SwiftLogo = brandLogo(SiSwift, '#F05138');
 const LaravelLogo = brandLogo(SiLaravel, '#FF2D20');
 // MySQL's brand blue disappears on the dark background, so dark mode gets a lighter tint.
 const MysqlLogo = themedLogo(brandLogo(SiMysql, '#4479A1'), brandLogo(SiMysql, '#5FA8D3'));
@@ -87,6 +90,8 @@ const GithubActionsLogo = brandLogo(SiGithubactions, '#2088FF');
 const GrafanaLogo = brandLogo(SiGrafana, '#F46800');
 const PrometheusLogo = brandLogo(SiPrometheus, '#E6522C');
 const WiresharkLogo = brandLogo(SiWireshark, '#1679A7');
+// Xcode's brand blue reads fine on both backgrounds, so it needs no dark-mode variant.
+const XcodeLogo = brandLogo(SiXcode, '#147EFB');
 // Simple Icons has no Nmap logo, so it uses the closest Lucide glyph in the brand color.
 const NmapLogo = brandLogo(Radar, '#4F9FD8');
 
@@ -99,6 +104,7 @@ const SKILLS: Record<string, Skill[]> = {
     { name: 'JavaScript', icon: LANGUAGES.Javascript },
     { name: 'PHP', icon: PhpLogo },
     { name: 'Python', icon: PythonLogo },
+    { name: 'Swift', icon: SwiftLogo },
     { name: 'C', icon: LANGUAGES.C },
     { name: 'Lua', icon: LANGUAGES.Lua },
     { name: 'Bash', icon: BashLogo },
@@ -142,6 +148,7 @@ const SKILLS: Record<string, Skill[]> = {
     { name: 'GitHub', icon: TOOLS.GitHub },
     { name: 'Neovim', icon: TOOLS.Neovim },
     { name: 'VSCode', icon: TOOLS.VSCode },
+    { name: 'Xcode', icon: XcodeLogo },
     { name: 'Bun', icon: TOOLS.Bun },
     { name: 'Figma', icon: TOOLS.Figma },
     { name: 'Claude', icon: TOOLS.Anthropic },

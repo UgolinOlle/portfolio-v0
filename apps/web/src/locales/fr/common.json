@@ -12,9 +12,8 @@
     "profileAlt": "Photo de profil d'Ugolin Ollé"
   },
   "hero": {
-    "availability": "Disponible pour de nouvelles missions",
-    "headline": "Je construis des choses",
-    "lead": "Développeur qui livre. Je crée des applications web, des systèmes de design et des outils qui marchent. Full stack avec Next.js, React, NestJS. Spécialisé en systèmes, réseaux et cybersécurité pour sécuriser ce qu’on construit.",
+    "headline": "Je craft des tools & des apps.",
+    "lead": "Je crée des apps web, des tools et des design systems avec Next.js, React et NestJS. Je touche aussi aux systèmes, aux réseaux et à la cybersécurité. J'aime construire des produits simples, rapides et bien pensés.",
     "ctaPrimary": "Me contacter",
     "ctaSecondary": "Voir les projets"
   },

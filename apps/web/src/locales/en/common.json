@@ -12,9 +12,8 @@
     "profileAlt": "Ugolin Ollé profile picture"
   },
   "hero": {
-    "availability": "Available for new projects",
-    "headline": "I build things",
-    "lead": "Developer shipping web apps, design systems, and tools that work. Full stack with Next.js, React, NestJS. Specializing in systems, networks, and cybersecurity to keep what we build safe.",
+    "headline": "I craft tools & apps",
+    "lead": "I build web apps, tools, and design systems with Next.js, React, and NestJS. I also work with systems, networking, and cybersecurity. I like building simple, fast, and well-crafted products.",
     "ctaPrimary": "Get in touch",
     "ctaSecondary": "See projects"
   },

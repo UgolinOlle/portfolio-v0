@@ -29,7 +29,7 @@ export function SiteNav() {
           <Link
             aria-current={isActive ? 'page' : undefined}
             className={cn(
-              'transition-colors hover:text-zinc-950 dark:hover:text-zinc-50',
+              'rounded-sm transition-colors outline-none hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/40 motion-reduce:transition-none dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-50/40',
               isActive
                 ? 'font-medium text-zinc-950 dark:text-zinc-50'
                 : 'text-zinc-500 dark:text-zinc-400',

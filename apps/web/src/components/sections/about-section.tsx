@@ -35,7 +35,7 @@ export function HeroSection() {
   return (
     <section
       className={cn(
-        'grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_20rem]',
+        'grid items-center gap-10 xl:grid-cols-[minmax(0,1fr)_20rem]',
         showSocialLinks ? 'mt-10' : 'mt-0',
       )}
       id="about"

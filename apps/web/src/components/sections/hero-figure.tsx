@@ -86,7 +86,7 @@ export function HeroFigure({ className }: { className?: string }) {
 
   return (
     <div
-      className={cn('hero-figure w-64 max-w-full md:w-full', className)}
+      className={cn('hero-figure w-64 max-w-full md:w-80 xl:w-full', className)}
       aria-hidden="true"
       data-ready={ready}
     >

@@ -123,7 +123,7 @@ function HomeTocNav({ items, label }: { items: HomeTocItem[]; label?: string }) 
   };
 
   return (
-    <aside className="absolute inset-y-0 left-0 hidden w-40 md:block xl:right-full xl:left-auto xl:mr-8 xl:w-48">
+    <aside className="fixed inset-y-0 left-0 hidden w-40 md:block xl:absolute xl:right-full xl:left-auto xl:mr-8 xl:w-48">
       <nav aria-label={label} className="sticky top-0 flex h-dvh items-center">
         <ul className="relative flex flex-col gap-5 pl-6" ref={listRef}>
           {/* Track links every header; the blue fill is the page progression. */}
@@ -207,7 +207,7 @@ export function HomeToc({ children, label }: { children: ReactNode; label?: stri
   }, []);
 
   return (
-    <div className="relative md:has-[>aside]:pl-48 xl:has-[>aside]:pl-0" ref={rootRef}>
+    <div className="relative md:has-[>aside]:px-40 xl:has-[>aside]:px-0" ref={rootRef}>
       {items.length > 1 && <HomeTocNav items={items} label={label} />}
       {children}
     </div>

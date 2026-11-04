@@ -143,7 +143,7 @@ function TocGroup({
   return (
     <li>
       <a
-        className={`flex items-center gap-2 text-sm leading-6 transition-colors duration-150 ${
+        className={`flex items-center gap-2 text-[13px] leading-6 transition-colors duration-150 ${
           isActive
             ? 'font-medium text-zinc-950 dark:text-zinc-50'
             : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50'
@@ -174,7 +174,7 @@ function TocGroup({
                 />
                 <a
                   aria-current={current ? 'location' : undefined}
-                  className={`block py-1 text-sm leading-5 transition-colors duration-150 ${
+                  className={`block py-1 text-[13px] leading-5 transition-colors duration-150 ${
                     current
                       ? 'text-zinc-950 dark:text-zinc-50'
                       : 'text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-300'
@@ -196,8 +196,8 @@ function TocGroup({
 
 /**
  * Sticky table of contents for long pages, built from the page's H2/H3 headings.
- * Hidden on phones. From `md` the article reserves a left gutter for it (`md:has-[>aside]:pl-48`);
- * from `xl` there is room, so it moves into the page margin instead.
+ * Hidden below `xl`, so the article always shares the navbar's left edge;
+ * from `xl` there is room, so it sits in the page margin.
  */
 export function Toc({ items, label = 'On this page' }: { items: TOCItemType[]; label?: string }) {
   const reduceMotion = useReducedMotion();
@@ -235,7 +235,7 @@ export function Toc({ items, label = 'On this page' }: { items: TOCItemType[]; l
   };
 
   return (
-    <aside className="absolute inset-y-0 left-0 hidden w-40 md:block xl:right-full xl:left-auto xl:mr-8 xl:w-48">
+    <aside className="absolute inset-y-0 right-full mr-6 hidden w-40 xl:block">
       <nav
         aria-label={label}
         className="sticky top-28 max-h-[calc(100dvh-8rem)] overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"

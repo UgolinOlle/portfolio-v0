@@ -123,9 +123,9 @@ function HomeTocNav({ items, label }: { items: HomeTocItem[]; label?: string }) 
   };
 
   return (
-    <aside className="fixed inset-y-0 left-0 hidden w-40 md:block xl:absolute xl:right-full xl:left-auto xl:mr-8 xl:w-48">
+    <aside className="absolute inset-y-0 right-full mr-6 hidden w-36 xl:block">
       <nav aria-label={label} className="sticky top-0 flex h-dvh items-center">
-        <ul className="relative flex flex-col gap-5 pl-6" ref={listRef}>
+        <ul className="relative flex flex-col gap-4 pl-5" ref={listRef}>
           {/* Track links every header; the blue fill is the page progression. */}
           <span
             aria-hidden="true"
@@ -141,7 +141,7 @@ function HomeTocNav({ items, label }: { items: HomeTocItem[]; label?: string }) 
             className="absolute top-0 left-0 size-1.5 rounded-full bg-blue-500 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"
             style={{
               opacity: dotY === null ? 0 : 1,
-              transform: `translate(15px, ${(dotY ?? 0) - 3}px)`,
+              transform: `translate(12px, ${(dotY ?? 0) - 3}px)`,
             }}
           />
           {items.map((item) => {
@@ -151,13 +151,13 @@ function HomeTocNav({ items, label }: { items: HomeTocItem[]; label?: string }) 
               <li className="relative" data-toc-row={item.id} key={item.id}>
                 <span
                   aria-hidden="true"
-                  className={`absolute top-1 -left-6 h-2 w-3 rounded-bl-md border-b border-l transition-colors duration-150 ${
+                  className={`absolute top-0.5 -left-5 h-2 w-2.5 rounded-bl-md border-b border-l transition-colors duration-150 ${
                     current ? 'border-blue-500' : 'border-zinc-200 dark:border-zinc-800'
                   }`}
                 />
                 <a
                   aria-current={current ? 'location' : undefined}
-                  className={`flex items-center gap-2 rounded text-sm leading-6 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+                  className={`flex items-center gap-2 rounded text-[13px] leading-5 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
                     current
                       ? 'font-medium text-zinc-950 dark:text-zinc-50'
                       : 'text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50'
@@ -165,7 +165,7 @@ function HomeTocNav({ items, label }: { items: HomeTocItem[]; label?: string }) 
                   href={`#${item.id}`}
                   onClick={(event) => jump(event, item.id)}
                 >
-                  <Icon aria-hidden="true" className="size-4 shrink-0 text-zinc-400" />
+                  <Icon aria-hidden="true" className="size-3.5 shrink-0 text-zinc-400" />
                   <span className="text-balance">{item.title}</span>
                 </a>
               </li>
@@ -207,7 +207,7 @@ export function HomeToc({ children, label }: { children: ReactNode; label?: stri
   }, []);
 
   return (
-    <div className="relative md:has-[>aside]:px-40 xl:has-[>aside]:px-0" ref={rootRef}>
+    <div className="relative" ref={rootRef}>
       {items.length > 1 && <HomeTocNav items={items} label={label} />}
       {children}
     </div>

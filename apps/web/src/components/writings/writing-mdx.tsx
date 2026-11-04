@@ -15,10 +15,10 @@ export const WritingMDX = ({ page }: WritingMDXProps) => {
   const MDX = page.data.body;
 
   return (
-    <article className="relative md:has-[>aside]:pl-48 xl:has-[>aside]:pl-0">
+    <article className="relative">
       <Toc items={page.data.toc} />
       <ReadingProgress />
-      <h1 className="text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance text-zinc-950 sm:text-5xl dark:text-zinc-50">
+      <h1 className="fluid-title font-semibold text-balance text-zinc-950 dark:text-zinc-50">
         {page.data.title}
       </h1>
       {page.data.description && (
@@ -28,7 +28,7 @@ export const WritingMDX = ({ page }: WritingMDXProps) => {
       )}
       <WritingsBanner />
 
-      <DocsBody>
+      <DocsBody className="[&_h2]:leading-[1.2] [&_h2]:tracking-[-0.02em] [&_h3]:leading-[1.25] [&_h3]:tracking-[-0.015em]">
         <MDX components={getMDXComponents()} />
       </DocsBody>
     </article>

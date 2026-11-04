@@ -75,12 +75,15 @@ export function RecentWritingsSection({ pages }: RecentWritingsSectionProps) {
                   {page.title}
                 </span>
 
-                <span className="shrink-0 rounded-full border border-zinc-300 px-2 py-0.5 font-mono text-xs text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+                <span className="shrink-0 rounded-full border border-zinc-300 px-2 py-0.5 font-mono text-sm text-zinc-500 sm:text-xs dark:border-zinc-700 dark:text-zinc-400">
                   {page.category}
                 </span>
               </div>
 
-              <time className="text-xs text-zinc-500 dark:text-zinc-400" dateTime={page.date}>
+              <time
+                className="text-sm text-zinc-500 sm:text-xs dark:text-zinc-400"
+                dateTime={page.date}
+              >
                 {formatDate(page.date, i18n.language)}
               </time>
             </Link>

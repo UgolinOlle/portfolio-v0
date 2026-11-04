@@ -82,7 +82,7 @@ export function Screenshots({ items }: ScreenshotsProps) {
             </m.button>
 
             {item.caption && (
-              <p className="mt-3 px-1 font-mono text-xs tracking-wide text-zinc-500 dark:text-zinc-400">
+              <p className="mt-3 px-1 font-mono text-sm tracking-wide text-zinc-500 sm:text-xs dark:text-zinc-400">
                 {item.caption}
               </p>
             )}
@@ -189,7 +189,7 @@ function Lightbox({ item, onClose, reduceMotion }: LightboxProps) {
         autoFocus
         onClick={onClose}
         aria-label="Fermer"
-        className="absolute top-4 right-4 rounded-full bg-white/10 px-3 py-1.5 font-mono text-xs text-zinc-100 backdrop-blur transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+        className="absolute top-4 right-4 rounded-full bg-white/10 px-3 py-1.5 font-mono text-sm text-zinc-100 backdrop-blur transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none sm:text-xs"
       >
         Esc
       </button>

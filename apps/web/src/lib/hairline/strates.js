@@ -156,9 +156,12 @@ function mount({ stage, svg, read }, value) {
   // hit zones, all from poses that never depend on the one on screen: the resting stack, where it
   // lands once a layer is picked, and everything the pointer may cross on the way to the drawing.
   const cx = (P(0, D, 0)[0] + P(W, 0, 0)[0]) / 2, rx = (P(W, 0, 0)[0] - P(0, D, 0)[0]) / 2 + 4;
-  const cy = (i) => P(W / 2, D / 2, i * (T + GMAX) + T)[1], ry = (P(W, D, 0)[1] - P(0, 0, 0)[1]) / 2;
-  const pitch = cy(0) - cy(1);
+  const cyAt = (i, g) => P(W / 2, D / 2, i * (T + g) + T)[1], ry = (P(W, D, 0)[1] - P(0, 0, 0)[1]) / 2;
+  const cy = (i) => cyAt(i, GMAX);
+  const pitchAt = (g) => cyAt(0, g) - cyAt(1, g);
   const rest = { l: cx - rx, r: cx + rx, t: cy(N - 1) - ry, b: cy(0) + ry };
+  // What the resting stack really covers: its slabs are packed at REST_GAP, tighter than the opened pose.
+  const resting = { ...rest, t: cyAt(N - 1, REST_GAP) - ry, b: cyAt(0, REST_GAP) + ry };
   const tx = (x) => 200 + (x - 200) * SC + SHIFT, ty = (y) => 166 + (y - 166) * SC;
   const aside = { l: tx(rest.l), r: tx(rest.r), t: ty(rest.t), b: ty(rest.b) };
   const keep = { l: Math.min(rest.l, aside.l), r: 400, t: Math.min(rest.t, aside.t), b: Math.max(rest.b, aside.b) };
@@ -166,9 +169,9 @@ function mount({ stage, svg, read }, value) {
   const pick = (y0, y, step) => clamp(Math.round((y0 - y) / step), 0, N - 1);
   /** Picks from the resting stack; once picked, only the stack's new place changes the pick, so it cannot flicker. */
   const hit = (p) => {
-    if (act < 0) return inside(rest, p) ? pick(cy(0), p[1], pitch) : -1;
+    if (act < 0) return inside(resting, p) ? pick(cyAt(0, REST_GAP), p[1], pitchAt(REST_GAP)) : -1;
     if (!inside(keep, p)) return -1;
-    return inside(aside, p) ? pick(ty(cy(0)), p[1], pitch * SC) : act;
+    return inside(aside, p) ? pick(ty(cyAt(0, open)), p[1], pitchAt(open) * SC) : act;
   };
 
   function setActive(a) {

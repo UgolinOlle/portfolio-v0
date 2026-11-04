@@ -167,13 +167,13 @@ function Header() {
           className={cn(
             'flex items-center py-2',
             // The notch is wider than the bar's content: roomier padding, and a minimum width while collapsed.
-            scrolled ? 'px-8' : 'justify-between px-5',
+            scrolled ? 'px-5 md:px-8' : 'justify-between px-5',
             collapsed
               ? 'min-w-64 justify-center'
-              : scrolled && 'max-w-full min-w-md justify-between',
+              : scrolled && 'max-w-full min-w-0 justify-between md:min-w-md',
             'transition-shadow duration-200 ease-out motion-reduce:transition-none',
             scrolled
-              ? 'fixed inset-x-0 top-0 mx-auto w-fit border-0 bg-(--notch) text-zinc-950 shadow-lg shadow-zinc-950/10 [--notch:#E5E4E2] dark:text-zinc-50 dark:shadow-black/40 dark:[--notch:#313338]'
+              ? 'fixed inset-x-0 top-0 mx-auto w-fit border-0 bg-(--notch) text-zinc-950 shadow-lg shadow-zinc-950/10 [--notch:#e6e6ea] dark:text-zinc-50 dark:shadow-black/40 dark:[--notch:#2b2d31]'
               : [
                   'relative w-full border border-zinc-200/80 bg-white/70 shadow-sm shadow-zinc-950/0 backdrop-blur-xl backdrop-saturate-150 dark:border-zinc-800/80 dark:bg-zinc-950/70',
                   '[@media(prefers-reduced-transparency:reduce)]:bg-white [@media(prefers-reduced-transparency:reduce)]:backdrop-blur-none dark:[@media(prefers-reduced-transparency:reduce)]:bg-zinc-950',

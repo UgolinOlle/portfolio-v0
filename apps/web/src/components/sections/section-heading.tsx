@@ -14,8 +14,9 @@ type SectionHeadingProps = {
 /** Shared home section title: label + hairline rule, so every section reads the same. */
 export function SectionHeading({ children, action, className }: SectionHeadingProps) {
   return (
-    <div className={cn('mb-6 flex items-center gap-4', className)}>
-      <h2 className="text-lg font-medium tracking-tight whitespace-nowrap">{children}</h2>
+    <div className={cn('mb-10 flex items-center gap-4', className)}>
+      <h2 className="fluid-heading min-w-0 font-semibold">{children}</h2>
+
       <span aria-hidden="true" className="relative h-px w-full">
         <DrawLine className="bg-zinc-200 dark:bg-zinc-800" />
       </span>

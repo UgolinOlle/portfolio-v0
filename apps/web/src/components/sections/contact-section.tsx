@@ -22,7 +22,7 @@ function ContactSection() {
 
   return (
     <m.section {...SECTION_REVEAL_LIST} className="space-y-6" id="contact">
-      <HomeHeading className="mb-0">{t('contact.title')}</HomeHeading>
+      <HomeHeading>{t('contact.title')}</HomeHeading>
 
       <p className="mb-5 text-base text-zinc-600 dark:text-zinc-300">
         {t('contact.description')}{' '}

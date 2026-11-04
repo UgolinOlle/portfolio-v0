@@ -215,7 +215,7 @@ export function ResourcesSection() {
 
   return (
     <m.section transition={TRANSITION_SECTION} variants={VARIANTS_SECTION} className="space-y-6">
-      <SectionHeading className="mb-0">{t('resources.title')}</SectionHeading>
+      <SectionHeading>{t('resources.title')}</SectionHeading>
 
       <div className="mb-4 flex flex-wrap gap-2">
         {types.map((type, index) => (

@@ -90,11 +90,11 @@ export function WritingsList({ pages }: WritingsListProps) {
         {filteredPages.map((page) => (
           <Link className="group flex flex-col gap-1.5 py-6" href={page.url} key={page.url}>
             <div className="flex items-center justify-between gap-4">
-              <span className="text-lg font-semibold tracking-tight text-zinc-950 transition-opacity group-hover:opacity-60 dark:text-zinc-50">
+              <span className="text-xl font-semibold tracking-tight text-zinc-950 transition-opacity group-hover:opacity-60 dark:text-zinc-50">
                 {page.title}
               </span>
 
-              <span className="shrink-0 rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
+              <span className="shrink-0 rounded-full bg-zinc-100 px-2.5 py-0.5 text-sm text-zinc-600 sm:text-xs dark:bg-zinc-800 dark:text-zinc-400">
                 {page.category}
               </span>
             </div>

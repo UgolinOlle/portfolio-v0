@@ -160,7 +160,7 @@ function StacksSection() {
 
   return (
     <m.section {...SECTION_REVEAL_LIST} className="space-y-8" id="stacks">
-      <HomeHeading className="mb-0">{t('sections.stacks')}</HomeHeading>
+      <HomeHeading>{t('sections.stacks')}</HomeHeading>
 
       {Object.entries(SKILLS).map(([category, skills]) => (
         <m.div key={category} transition={TRANSITION_SECTION} variants={VARIANTS_SECTION}>

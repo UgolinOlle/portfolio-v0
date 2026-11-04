@@ -27,7 +27,7 @@ export const RegistrySection = ({ index, section }: RegistrySectionProps) => {
             </span>
             {count} {count > 1 ? 'éléments' : 'élément'}
           </p>
-          <h2 className="text-2xl font-semibold tracking-tight">{section.title}</h2>
+          <h2 className="fluid-heading font-semibold">{section.title}</h2>
           <p className="max-w-[60ch] text-sm text-pretty text-foreground/60">
             {section.description}
           </p>

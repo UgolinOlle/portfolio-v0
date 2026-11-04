@@ -16,7 +16,7 @@ export function InspirationsContent() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}
       >
-        <h1 className="text-3xl font-semibold tracking-tight">Inspirations</h1>
+        <h1 className="fluid-heading font-semibold">Inspirations</h1>
 
         <p className="mt-4 leading-7 text-muted-foreground">
           Ce projet est construit grâce à de nombreuses <strong>inspirations</strong>, qu'elles

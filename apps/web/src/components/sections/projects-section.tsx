@@ -91,8 +91,8 @@ function ProjectCard({ project, featured = false, index = 0 }: ProjectCardProps)
           <div className="min-w-0">
             <h3
               className={cn(
-                'font-semibold tracking-tight text-zinc-900 dark:text-zinc-50',
-                featured ? 'text-xl' : 'text-lg',
+                'font-semibold text-zinc-900 dark:text-zinc-50',
+                featured ? 'fluid-subheading' : 'text-xl leading-tight tracking-tight',
               )}
             >
               {project.name}

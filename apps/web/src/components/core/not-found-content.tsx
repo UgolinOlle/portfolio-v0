@@ -20,7 +20,7 @@ export function NotFoundContent() {
       <section className="flex flex-col items-start gap-5 py-10">
         <p className="font-mono text-sm text-zinc-500 dark:text-zinc-400">404</p>
 
-        <h1 className="text-3xl font-medium tracking-tight text-balance text-zinc-950 sm:text-4xl dark:text-zinc-50">
+        <h1 className="fluid-heading font-semibold text-balance text-zinc-950 dark:text-zinc-50">
           {t('common.notFound.title')}
         </h1>
 

@@ -86,12 +86,12 @@ export function HeroFigure({ className }: { className?: string }) {
 
   return (
     <div
-      className={cn('hero-figure w-64 max-w-full md:w-80 xl:w-full', className)}
+      className={cn('hero-figure w-64 max-w-full md:max-lg:w-[30rem] lg:w-80 xl:w-full', className)}
       aria-hidden="true"
       data-ready={ready}
     >
       <div className={cn('aspect-[5/4] w-full', still && 'pointer-events-none')} ref={stageRef} />
-      <p className="h-4 text-right font-mono text-xs text-zinc-500">{stage}</p>
+      <p className="min-h-4 text-right font-mono text-sm text-zinc-500 sm:text-xs">{stage}</p>
     </div>
   );
 }

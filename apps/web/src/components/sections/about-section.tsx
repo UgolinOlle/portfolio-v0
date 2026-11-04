@@ -35,17 +35,17 @@ export function HeroSection() {
   return (
     <section
       className={cn(
-        'grid items-center gap-10 xl:grid-cols-[minmax(0,1fr)_20rem]',
+        'grid items-center gap-x-10 gap-y-6 xl:grid-cols-[minmax(0,1fr)_20rem]',
         showSocialLinks ? 'mt-10' : 'mt-0',
       )}
       id="about"
       ref={ref}
     >
-      <m.div className="flex flex-col items-start gap-6" style={{ y: textY, opacity: textOpacity }}>
+      <m.div className="xl:col-span-2" style={{ y: textY, opacity: textOpacity }}>
         <h1
           className={cn(
-            'max-w-[14ch] text-4xl leading-[1.05] font-semibold tracking-[-0.03em] text-balance',
-            'text-zinc-950 sm:text-5xl sm:tracking-[-0.035em] md:text-6xl md:tracking-[-0.04em] dark:text-zinc-50',
+            'fluid-title max-w-[14ch] font-semibold text-balance xl:max-w-none',
+            'text-zinc-950 dark:text-zinc-50',
           )}
         >
           {words.map((word, i) => (
@@ -57,6 +57,15 @@ export function HeroSection() {
             </Fragment>
           ))}
         </h1>
+
+        {showSocialLinks && (
+          <div className="mt-4 flex flex-col items-start gap-4">
+            <SocialLinksNav links={SOCIAL_LINKS} />
+          </div>
+        )}
+      </m.div>
+
+      <m.div className="flex flex-col items-start gap-6" style={{ y: textY, opacity: textOpacity }}>
         <p
           className={cn(
             'hero-in max-w-[44ch] text-lg leading-snug font-normal tracking-[-0.01em] text-pretty',
@@ -66,6 +75,7 @@ export function HeroSection() {
         >
           {t('hero.lead')}
         </p>
+
         <div
           className="hero-in flex flex-wrap items-center gap-x-6 gap-y-3"
           style={{ '--hero-delay': `${afterHeadline + 100}ms` } as CSSProperties}
@@ -81,15 +91,9 @@ export function HeroSection() {
             />
           </a>
         </div>
-
-        {showSocialLinks && (
-          <div className="flex flex-col items-start gap-4">
-            <SocialLinksNav links={SOCIAL_LINKS} />
-          </div>
-        )}
       </m.div>
 
-      <m.div style={{ y: figureY }}>
+      <m.div className="max-xl:mt-4 md:max-xl:flex md:max-lg:justify-center" style={{ y: figureY }}>
         <HeroFigure />
       </m.div>
     </section>

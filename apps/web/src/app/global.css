@@ -165,9 +165,36 @@ html > body[data-scroll-locked] {
 /* Small uppercase mono label used across the /ui chrome (tabs, eyebrows, buttons). */
 @utility label-mono {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
+
+  @media (min-width: 40rem) {
+    font-size: 0.6875rem;
+  }
+}
+
+/* Type scale: size, leading and tracking move together (tighter as text grows, ~0 at body size). */
+
+/* Page title: 44px on phones up to 80px on desktop. */
+@utility fluid-title {
+  font-size: clamp(2.75rem, 1.5rem + 5vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+/* Section title: 26px on phones up to 44px on desktop. */
+@utility fluid-heading {
+  font-size: clamp(1.625rem, 1.15rem + 2vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+/* Card / item title: 20px on phones up to 24px on desktop. */
+@utility fluid-subheading {
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 /*

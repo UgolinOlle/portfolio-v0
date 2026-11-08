@@ -1,0 +1,159 @@
+---
+title: 'Créer une app barre des menus macOS en Swift'
+description: 'Créer une app barre des menus macOS en Swift : NSStatusItem ou MenuBarExtra, masquer l’icône du Dock, popover, état avec Combine et distribution.'
+date: '2026-11-08'
+category: 'macOS'
+---
+
+**Créer une app barre des menus macOS en Swift** est l'un des meilleurs points d'entrée dans le développement Mac : peu d'interface, une seule responsabilité, et un accès direct aux API système. C'est le format de [Whoa Bar](/projects/whoa-bar), une app qui organise la barre des menus sans aucune dépendance externe. Ce guide reprend les choix techniques que j'ai faits pour elle : AppKit ou SwiftUI, l'icône dans la barre, la disparition du Dock, le popover flottant et la gestion d'état avec Combine.
+
+**En bref :**
+
+- Une app de barre des menus repose sur un **`NSStatusItem`** (AppKit) ou une scène **`MenuBarExtra`** (SwiftUI, macOS 13+).
+- **`LSUIElement = true`** dans `Info.plist` retire l'icône du Dock.
+- Un **`NSPopover`** affiche une fenêtre flottante sous l'icône.
+- **Combine** relie l'état de l'app à l'interface sans chaîne de callbacks.
+
+## AppKit ou SwiftUI pour la barre des menus ?
+
+Depuis macOS 13, SwiftUI propose `MenuBarExtra`, une scène dédiée à la barre des menus. Pour un utilitaire simple, c'est le chemin le plus court :
+
+```swift
+import SwiftUI
+
+@main
+struct MonApp: App {
+    var body: some Scene {
+        MenuBarExtra("Mon app", systemImage: "circle.fill") {
+            ContentView()
+        }
+        .menuBarExtraStyle(.window)
+    }
+}
+```
+
+Le style `.menu` affiche un menu classique, le style `.window` une petite fenêtre avec votre vue SwiftUI.
+
+Pour Whoa Bar, j'ai choisi **AppKit**. L'app a besoin de contrôler finement le bouton de la barre, d'afficher un popover sur mesure et de capturer les icônes du système : `NSStatusBar`, `NSStatusItem` et `NSPopover` donnent un accès direct à tout ça. Vu de loin, AppKit paraît daté ; bien utilisé, c'est une API stable et complète.
+
+Ma règle : `MenuBarExtra` pour un menu ou un panneau simple, AppKit dès que l'app doit sortir du cadre.
+
+## Afficher une icône avec NSStatusItem
+
+Le point d'entrée d'une app AppKit est son `AppDelegate`. C'est là qu'on crée l'élément de la barre des menus :
+
+```swift
+import AppKit
+
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    private var statusItem: NSStatusItem!
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem.button?.image = NSImage(
+            systemSymbolName: "circle.fill",
+            accessibilityDescription: "Statut"
+        )
+
+        let menu = NSMenu()
+        menu.addItem(
+            NSMenuItem(title: "Quitter", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        )
+        statusItem.menu = menu
+    }
+}
+```
+
+### Garder une référence forte
+
+Piège classique : si `statusItem` est une variable locale, il est libéré à la fin de la fonction et l'icône disparaît aussitôt. Il doit être stocké dans une propriété d'un objet qui vit aussi longtemps que l'app.
+
+### Menu ou action au clic
+
+Si `statusItem.menu` est défini, un clic ouvre le menu. Pour réagir au clic vous-même (basculer un état, ouvrir un popover), laissez `menu` vide et branchez `button.target` et `button.action`. Dans Whoa Bar, un clic bascule l'état actif/inactif et l'icône change aussitôt.
+
+## Masquer l'icône du Dock avec LSUIElement
+
+Une app de barre des menus n'a rien à faire dans le Dock ni dans le sélecteur d'apps (Cmd+Tab). Il suffit d'ajouter cette clé dans `Info.plist` :
+
+```xml
+<key>LSUIElement</key>
+<true/>
+```
+
+L'app démarre alors en mode « agent » : pas d'icône dans le Dock, pas de barre de menus d'application. On peut obtenir le même résultat par code avec `NSApp.setActivationPolicy(.accessory)`, utile si l'app doit parfois réapparaître dans le Dock (par exemple quand une fenêtre de réglages est ouverte).
+
+## Afficher un panneau flottant avec NSPopover
+
+Pour afficher plus qu'un menu, `NSPopover` ouvre une petite fenêtre ancrée sous l'icône. Whoa Bar s'en sert pour sa bulle d'icônes masquées :
+
+```swift
+let popover = NSPopover()
+popover.behavior = .transient
+popover.contentViewController = HiddenItemsBubbleViewController()
+
+if let button = statusItem.button {
+    popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+}
+```
+
+Le comportement `.transient` ferme le popover dès que l'utilisateur clique ailleurs : c'est ce qu'on attend d'un élément de la barre des menus. Le contenu reste un `NSViewController` ordinaire ; on peut même y placer une vue SwiftUI via `NSHostingController`.
+
+## Gérer l'état avec Combine
+
+Sans outil réactif, l'état d'une app de barre des menus finit dispersé dans des callbacks. Avec Combine, un modèle `ObservableObject` expose l'état et l'interface s'y abonne :
+
+```swift
+import Combine
+
+final class AppState: ObservableObject {
+    @Published var isActive = true
+}
+
+// Dans le contrôleur de la barre des menus
+state.$isActive
+    .sink { [weak self] active in
+        self?.statusItem.button?.title = active ? "🟢" : "🔴"
+    }
+    .store(in: &cancellables)
+```
+
+Quand `isActive` change, l'icône se met à jour toute seule. Le même modèle peut alimenter une vue SwiftUI sans code supplémentaire.
+
+## Une architecture simple et sans dépendance
+
+Une app de barre des menus est petite, mais elle touche au système : permissions, capture d'écran, événements. Une structure claire évite qu'elle devienne un seul fichier de 1 000 lignes. Celle de Whoa Bar tient en quelques couches :
+
+- **App** : `AppDelegate`, initialisation en mode accessoire ;
+- **Features** : un `ViewController` pour l'affichage, un `ViewModel` pour la logique (MVVM) ;
+- **Core/Services** : orchestration, capture des icônes, permissions, sans état métier ;
+- **Core/Models** : l'état observable (`AppState`, éléments masqués) ;
+- **System** : l'intégration AppKit (`NSStatusBar`, `NSPopover`).
+
+Les contrôleurs parlent aux ViewModels, jamais directement aux services. Et l'app n'a **aucune dépendance externe** : Swift, AppKit, Combine et Foundation, rien d'autre. Cette contrainte force à écrire un code minimal et testable avec `swift test`.
+
+### Les permissions système
+
+Certaines fonctions demandent l'accord de l'utilisateur. Par exemple, capturer le contenu des fenêtres d'autres apps nécessite l'autorisation **Enregistrement de l'écran** dans les réglages de confidentialité. Centraliser ces demandes dans un service dédié (`PermissionManager` dans Whoa Bar) évite de les éparpiller et permet d'expliquer clairement à l'utilisateur pourquoi l'app en a besoin.
+
+{/* TODO: ajouter ce que la capture d'icônes (CGWindowList) t'a réellement posé comme difficultés, et comment tu gères le refus de permission. */}
+
+## Distribuer son app de barre des menus
+
+Deux voies existent :
+
+- **Le Mac App Store** : l'app doit activer l'App Sandbox, ce qui limite certaines API système. À vérifier tôt si l'app capture l'écran ou pilote d'autres apps.
+- **En dehors de l'App Store** : signer l'app avec un certificat Developer ID, puis la faire notariser par Apple (`xcrun notarytool`) pour que Gatekeeper l'accepte sans avertissement.
+
+Pour lancer l'app automatiquement à l'ouverture de session, `SMAppService.mainApp.register()` (macOS 13+) remplace les anciennes méthodes.
+
+{/* TODO: préciser la voie de distribution choisie pour Whoa Bar (la roadmap mentionne le Mac App Store, pas encore fait) et ce que tu en as appris. */}
+
+## Ce que j'ai retenu en construisant Whoa Bar
+
+- **Les contraintes font le design.** Pas de dépendances, pas de Dock : ces limites ont imposé un code court et compréhensible.
+- **AppKit n'a rien perdu.** `NSStatusBar` pour l'ancrage et `NSPopover` pour la bulle couvrent tous les besoins.
+- **Combine change tout.** Un `@Published` change, l'interface se redessine, sans callbacks à faire circuler.
+- **La barre des menus est un contexte.** Une seule responsabilité : afficher, mettre à jour, écouter les clics.
+
+J'applique la même approche à mes autres apps Mac, [Whoa Stash](/projects/whoa-stash) et [Whoa Type](/projects/whoa-type). Pour voir l'architecture complète et le code, rendez-vous sur la page du projet [Whoa Bar](/projects/whoa-bar).

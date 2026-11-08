@@ -1,0 +1,155 @@
+---
+title: 'Remplacer ESLint et Prettier par oxlint et oxfmt'
+description: 'Remplacer ESLint et Prettier par oxlint et oxfmt : migration, configuration partagée en monorepo, tri des imports et des classes Tailwind, CI et éditeur.'
+date: '2026-11-08'
+category: 'Tooling'
+---
+
+**Remplacer ESLint et Prettier par oxlint** et son formateur oxfmt, c'est passer d'une chaîne d'outils JavaScript à deux outils natifs, écrits en Rust, qui partagent le même parseur. C'est la configuration que j'utilise sur ce site, dans [Calyx](/projects/calyx), dans [Whoa Jobs](/projects/whoa-jobs) et jusque dans ma [configuration Neovim](/projects/neovim). Ce guide explique comment migrer, comment structurer la configuration dans un monorepo et quelles limites garder en tête.
+
+**En bref :**
+
+- **oxlint** remplace ESLint, **oxfmt** remplace Prettier. Les deux font partie du projet **oxc**.
+- Deux commandes de migration convertissent la configuration existante : `@oxlint/migrate` et `oxfmt --migrate prettier`.
+- oxfmt intègre le **tri des imports** et des **classes Tailwind**, qui demandaient des plugins Prettier.
+- ESLint peut rester en parallèle le temps de couvrir les règles qu'oxlint ne gère pas encore.
+
+{/* TODO: ajouter une mesure réelle (temps de `bun run lint` / `format:check` avant et après sur un de tes repos), si tu en as une. */}
+
+## Qu'est-ce qu'oxc ?
+
+[oxc](https://oxc.rs/) (_The JavaScript Oxidation Compiler_) est une collection d'outils JavaScript et TypeScript écrits en Rust : parseur, linter, formateur, transformeur, minifieur. L'idée centrale est de parser le code une seule fois, très vite, et de construire les outils au-dessus.
+
+### oxlint, le linter
+
+oxlint reprend les règles d'ESLint et de ses plugins les plus utilisés (TypeScript, React, unicorn, import…). Les règles sont rangées par **catégories** : `correctness`, `suspicious`, `pedantic`, `style`, etc. Par défaut, seule la catégorie `correctness` est active, c'est-à-dire le code manifestement faux ou inutile.
+
+### oxfmt, le formateur
+
+oxfmt vise la compatibilité avec la sortie de Prettier. On garde donc les mêmes habitudes de style, avec un outil de plus dans la même famille que le linter.
+
+## Pourquoi remplacer ESLint et Prettier ?
+
+### Moins de dépendances
+
+Une configuration ESLint + Prettier typique empile le parseur TypeScript, plusieurs plugins, des configurations partagées et des plugins Prettier. Avec oxc, deux paquets suffisent : `oxlint` et `oxfmt`.
+
+### Une boucle de retour plus rapide
+
+Les deux outils sont natifs et parallélisés. Le lint et le formatage peuvent tourner à chaque sauvegarde dans l'éditeur, à chaque commit et en CI sans que personne ne cherche à les contourner.
+
+### Le tri intégré
+
+oxfmt sait trier les imports et les classes Tailwind sans plugin, là où Prettier demande des plugins séparés à installer et à maintenir.
+
+## Migrer depuis ESLint vers oxlint
+
+### Convertir la configuration
+
+L'outil de migration lit une configuration ESLint « flat config » et génère un fichier `.oxlintrc.json` :
+
+```bash
+npx @oxlint/migrate
+```
+
+Il conserve les niveaux de sévérité, les options, les `overrides`, les globals et les motifs ignorés. Si vous utilisez des règles typées de `typescript-eslint`, l'option `--type-aware` les inclut ; elles demandent le paquet `oxlint-tsgolint`.
+
+### Faire cohabiter les deux linters
+
+Toutes les règles ESLint n'existent pas encore dans oxlint. Pendant la transition, on peut lancer oxlint d'abord, puis ESLint, en désactivant côté ESLint les règles déjà couvertes grâce à `eslint-plugin-oxlint`. ESLint ne garde alors que ce qu'oxlint ne sait pas faire.
+
+### Les règles sur mesure
+
+Pour une règle propre au projet, oxlint accepte des **plugins JavaScript** compatibles avec l'API des plugins ESLint, déclarés dans `jsPlugins`. Une règle maison existante peut donc souvent être reprise telle quelle.
+
+### Avancer par étapes
+
+Sur un gros projet, mieux vaut ne pas tout activer d'un coup. Commencez avec la seule catégorie `correctness` en erreur, corrigez ce qu'elle remonte, puis ajoutez `suspicious` en avertissement. Chaque étape reste un diff lisible, et l'équipe découvre les nouvelles règles au fil de l'eau plutôt que dans une pull request de plusieurs milliers de lignes.
+
+## Migrer depuis Prettier vers oxfmt
+
+```bash
+bun add -D oxfmt && bunx oxfmt --migrate prettier && bunx oxfmt
+```
+
+La commande lit la configuration Prettier et crée `.oxfmtrc.json`. Elle reprend aussi `.prettierignore` dans `ignorePatterns` et convertit les options de `prettier-plugin-tailwindcss` vers l'équivalent intégré. Les options qu'oxfmt ne connaît pas sont ignorées avec un avertissement : relisez-les.
+
+Après le premier passage, isolez le reformatage dans un commit à part. Le diff de la migration ne se mélange alors pas avec de vrais changements.
+
+## Configurer oxlint et oxfmt dans un monorepo
+
+### Une configuration de base partagée
+
+Dans ce repo, la configuration oxlint commune vit dans le package `packages/config` :
+
+```json
+{
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": { "correctness": "error" },
+  "env": { "builtin": true }
+}
+```
+
+Le fichier racine `.oxlintrc.json` se contente de l'étendre et d'ignorer le code vendu :
+
+```json
+{
+  "extends": ["./packages/config/oxlint.json"],
+  "ignorePatterns": ["apps/web/src/lib/hairline/**"]
+}
+```
+
+Chaque nouveau package hérite ainsi des mêmes règles sans rien configurer.
+
+### Trier les imports et les classes Tailwind
+
+La configuration oxfmt du repo active le tri des imports par groupes (modules natifs, packages du monorepo, dépendances externes, imports relatifs) et le tri des classes Tailwind dans `className`, `cn()` et `clsx()` :
+
+```json
+{
+  "singleQuote": true,
+  "sortPackageJson": true,
+  "sortImports": { "newlinesBetween": true },
+  "sortTailwindcss": {
+    "stylesheet": "./packages/shadcn/styles/globals.css",
+    "functions": ["clsx", "cn"]
+  }
+}
+```
+
+L'option `stylesheet` pointe vers la feuille Tailwind du projet, pour que l'ordre suive le thème réel. oxfmt formate aussi les fichiers MDX : les articles de ce site passent par le même outil que le code.
+
+### Des scripts qui vérifient, d'autres qui corrigent
+
+Je sépare les commandes qui vérifient de celles qui modifient :
+
+```json
+{
+  "lint": "oxlint",
+  "lint:fix": "oxlint --fix",
+  "format": "oxfmt --write",
+  "format:check": "oxfmt --check",
+  "check": "bun run lint && bun run format:check && bun run check-types"
+}
+```
+
+`bun run check` ne touche à aucun fichier : c'est la commande que lance la CI à chaque pull request. Les corrections se font en local avec `lint:fix` et `format`.
+
+## Intégrer oxlint et oxfmt dans l'éditeur
+
+Dans ma [configuration Neovim](/projects/neovim), oxfmt est branché sur conform.nvim pour le formatage à la sauvegarde, et oxlint sur nvim-lint, qui relance le lint à l'ouverture d'un fichier, à l'enregistrement et en sortant du mode insertion. Les autres langages (JSON, YAML, Markdown) restent sur Prettier ou des formateurs dédiés.
+
+Dans VS Code, l'extension officielle oxc affiche les diagnostics d'oxlint directement dans l'éditeur.
+
+{/* TODO: préciser si tu utilises un hook pre-commit (Husky + lint-staged, comme dans Whoa Jobs) avec oxlint/oxfmt sur ce repo, et comment. */}
+
+## Limites à connaître avant de migrer
+
+- **Couverture des règles** : les règles les plus courantes sont là, mais pas tous les plugins ESLint. Vérifiez la sortie de `@oxlint/migrate` avant de supprimer ESLint.
+- **Lint typé** : les règles qui demandent l'information de type passent par un paquet séparé, à évaluer sur votre projet.
+- **Plugins Prettier** : hors Tailwind, Svelte, Astro et `package.json`, les plugins Prettier ne sont pas migrés.
+- **Petites différences de formatage** : même avec une sortie proche de Prettier, prévoyez un commit de reformatage.
+
+## Conclusion
+
+Remplacer ESLint et Prettier par oxlint et oxfmt réduit les dépendances, accélère la boucle de retour et ramène le tri des imports et des classes dans un seul outil. La migration se fait en deux commandes ; le vrai travail consiste à relire les règles non couvertes et à décider ce qui reste sur ESLint. Pour voir la configuration en situation, regardez [Calyx](/projects/calyx), [Whoa Jobs](/projects/whoa-jobs) ou ma [configuration Neovim](/projects/neovim).

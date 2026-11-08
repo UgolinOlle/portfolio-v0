@@ -1,0 +1,142 @@
+---
+title: 'Réduire les coûts de Claude Code : le guide pratique'
+description: 'Réduire les coûts de Claude Code : CLAUDE.md léger, règles deny, hooks, sous-agents et choix du modèle pour dépenser moins de tokens par session.'
+date: '2026-11-08'
+category: 'AI'
+---
+
+Pour **réduire les coûts de Claude Code**, il ne suffit pas d'écrire des prompts plus courts. L'essentiel de la facture vient de ce que l'agent charge sans que vous le demandiez : fichiers mémoire, définitions d'outils, fichiers lus, historique de la conversation. Ce guide passe en revue les réglages qui changent vraiment la donne, tels que je les applique dans mes projets et dans [Claude Kit](/projects/claude-kit), le CLI que j'ai écrit pour les automatiser.
+
+**En bref :**
+
+- Chaque session paie pour **tout ce qui entre dans le contexte**, pas seulement pour votre message.
+- Un `CLAUDE.md` court, des règles `permissions.deny` et des hooks évitent les lectures et éditions inutiles.
+- Les **sous-agents** et le bon **modèle par tâche** réservent les modèles chers au travail qui en a besoin.
+- On ne réduit bien que ce qu'on mesure : `/context` et les transcripts locaux montrent où partent les tokens.
+
+{/* TODO: ajouter un chiffre réel avant/après mesuré sur un de tes projets (tokens d'une session à froid, coût d'une session type). */}
+
+## Où partent les tokens dans une session Claude Code ?
+
+Claude Code est un agent : à chaque tour, le modèle reçoit le contexte complet de la session. Si vous découvrez le vocabulaire (tokens, fenêtre de contexte, cache), mon article [LLM : 36 notions clés](/writings/ai/ai-begin) pose les bases.
+
+### Ce qui est chargé avant même votre premier message
+
+Au démarrage, la session contient déjà :
+
+- les fichiers **`CLAUDE.md`** (global, projet, sous-dossiers) ;
+- les **définitions d'outils**, y compris celles des serveurs MCP connectés ;
+- les **skills** et sous-agents disponibles, sous forme de descriptions courtes.
+
+La commande `/context` affiche cette répartition. C'est le premier réflexe à prendre : on découvre souvent qu'un serveur MCP inutilisé ou un `CLAUDE.md` gonflé coûte plus que la tâche elle-même.
+
+### Ce qui s'accumule pendant la session
+
+Ensuite, chaque fichier lu, chaque sortie de commande et chaque réponse reste dans l'historique. Un `cat` sur un lockfile ou un dossier de build peut ajouter des milliers de tokens que l'agent traînera jusqu'à la fin de la session.
+
+### Le rôle du cache
+
+Le début du prompt (le « préfixe ») est mis en cache d'un tour à l'autre. Modifier ce qui s'y trouve, par exemple réécrire `CLAUDE.md` en pleine session, invalide le cache et fait repayer le préfixe au tarif plein. Mieux vaut stabiliser ces fichiers et les faire évoluer entre deux sessions.
+
+## Écrire un CLAUDE.md léger
+
+`CLAUDE.md` est relu à chaque session. Chaque ligne a donc un coût récurrent. La règle que je suis : n'y mettre que ce que l'agent ne peut pas deviner en lisant le code.
+
+### Ce qui a sa place dans CLAUDE.md
+
+- les **commandes** du projet (install, dev, build, typecheck, lint) ;
+- les **conventions** non évidentes (« ce fichier est généré, ne pas l'éditer ») ;
+- les **pièges** connus (« il n'y a pas de test runner, utiliser `check-types` ») ;
+- des pointeurs vers une documentation plus longue, à lire seulement si besoin.
+
+### Ce qui n'y a pas sa place
+
+- la description de la structure du code, que l'agent retrouve avec une recherche ;
+- l'historique des décisions, qui peut vivre dans un fichier séparé ;
+- les règles de style déjà appliquées par le linter ou le formateur.
+
+## Bloquer les lectures inutiles avec permissions.deny
+
+Les dossiers de build, `node_modules`, les lockfiles et les fichiers générés n'apportent rien à l'agent mais coûtent cher à lire. Claude Code permet de les exclure dans `.claude/settings.json` :
+
+```json
+{
+  "permissions": {
+    "deny": ["Read(./**/dist/**)", "Read(./**/.next/**)", "Read(./**/*.lock)", "Read(./.env*)"]
+  }
+}
+```
+
+Une règle `deny` l'emporte sur toutes les autres, même en mode de permissions permissif. Bonus : elle protège aussi les fichiers sensibles comme les `.env`.
+
+Un fichier `.claudeignore` est pratique pour lister ces chemins, mais Claude Code ne le lit pas lui-même. Claude Kit le compile donc en règles `permissions.deny` avec la commande `claude-kit sync`.
+
+## Ajouter des hooks garde-fous
+
+Les règles `deny` empêchent de lire. Pour empêcher d'**éditer** un fichier qui ne doit jamais l'être (lockfile, migration déjà appliquée, sortie de build), on utilise un hook `PreToolUse`. Claude Code l'exécute avant chaque appel d'outil : si le script sort avec le **code 2**, l'appel est bloqué et le message écrit sur stderr est renvoyé à l'agent.
+
+```bash
+#!/bin/bash
+path=$(jq -r '.tool_input.file_path // empty')
+
+case "$path" in
+  *bun.lock|*package-lock.json|*/dist/*)
+    echo "Fichier généré : modifie la source (manifest, sources) à la place." >&2
+    exit 2 ;;
+esac
+
+exit 0
+```
+
+Le coût évité est double : l'agent ne gaspille pas un tour sur une modification inutile, et le message lui indique quoi faire à la place, au lieu de le laisser réessayer. Attention, seul le code 2 bloque : un `exit 1` est traité comme une erreur non bloquante et l'action continue.
+
+## Choisir le bon modèle pour chaque tâche
+
+Tous les tours d'une session n'ont pas besoin du modèle le plus puissant.
+
+### Planifier avec Opus, exécuter avec Sonnet
+
+Le mode `/model opusplan` utilise Opus en Plan Mode et Sonnet pour l'exécution. Le raisonnement coûteux sert à écrire le plan, là où il a le plus de valeur. L'exécution, souvent mécanique, passe sur un modèle moins cher, qui voit tout ce qu'Opus a produit.
+
+### Déléguer aux sous-agents
+
+Un sous-agent travaille dans son **propre contexte** et ne renvoie qu'un résumé à la session principale. C'est idéal pour l'exploration : un agent `explorer` sur Haiku peut parcourir le code et ne renvoyer que les chemins utiles, au lieu de remplir le contexte principal de fichiers entiers.
+
+## Préserver le contexte d'une session à l'autre
+
+Quand la conversation devient longue, Claude Code la résume (compaction). L'état de la tâche peut s'y perdre, et l'agent repaie alors des tokens pour retrouver où il en était.
+
+Deux habitudes limitent ce coût :
+
+- tenir à jour un fichier de contexte de tâche (objectif, statut, prochaines étapes), réinjecté après compaction ;
+- démarrer une nouvelle session avec `/clear` quand on change de sujet, plutôt que de traîner un historique inutile.
+
+## Auditer son projet avec Claude Kit
+
+J'ai regroupé ces réglages dans [Claude Kit](/projects/claude-kit), un CLI sans dépendance qui analyse le dépôt et génère les fichiers adaptés à sa stack :
+
+```bash
+npx @whoa-studio/claude-kit init --preset standard
+npx @whoa-studio/claude-kit doctor
+```
+
+- **`init`** génère `.claudeignore`, les règles `deny`, un `CLAUDE.md` pré-rempli et le hook `pre-edit`, puis, selon le preset, le contexte de tâche, les sous-agents et une barre de statut avec le budget de tokens.
+- **`doctor`** note la configuration sur 100 et liste les corrections par priorité. Il peut tourner en CI sur chaque pull request.
+- **`context`** mesure les tokens chargés par une session à froid, et **`usage`** calcule le coût réel des sessions passées à partir des transcripts locaux.
+
+Les fichiers générés sont des fichiers Claude Code standards : la configuration continue de fonctionner même si vous désinstallez l'outil.
+
+{/* TODO: ajouter un retour d'expérience concret (score doctor avant/après, ou ce que `usage` t'a appris sur tes propres sessions). */}
+
+## Checklist pour réduire les coûts de Claude Code
+
+1. Lancer `/context` et repérer ce qui pèse le plus au démarrage.
+2. Réduire `CLAUDE.md` aux commandes, conventions et pièges.
+3. Désactiver les serveurs MCP inutiles pour le projet.
+4. Ajouter des règles `permissions.deny` pour le build, les dépendances, les lockfiles et les `.env`.
+5. Ajouter un hook `PreToolUse` qui bloque l'édition des fichiers générés.
+6. Utiliser `opusplan` et des sous-agents pour l'exploration.
+7. Tenir un fichier de contexte de tâche et utiliser `/clear` entre deux sujets.
+8. Mesurer à nouveau, puis automatiser le contrôle en CI.
+
+Aucun de ces réglages n'est spectaculaire seul. Combinés, ils évitent que chaque session paie pour des fichiers et des tours qui ne servent à rien. Pour démarrer en une commande, [Claude Kit](/projects/claude-kit) applique l'ensemble et vous dit ce qu'il reste à corriger.

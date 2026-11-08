@@ -1,0 +1,159 @@
+---
+title: 'How to Build a macOS Menu Bar App in Swift'
+description: 'Build a macOS menu bar app in Swift: NSStatusItem or MenuBarExtra, hiding the Dock icon, a floating popover, Combine state and distribution options.'
+date: '2026-11-08'
+category: 'macOS'
+---
+
+Learning to **build a macOS menu bar app in Swift** is one of the best ways into Mac development: little UI, a single responsibility, and direct access to system APIs. It is the format of [Whoa Bar](/projects/whoa-bar?lang=en), an app that organizes the menu bar with zero external dependencies. This guide walks through the technical choices I made for it: AppKit or SwiftUI, the menu bar icon, hiding from the Dock, the floating popover, and state management with Combine.
+
+**In short:**
+
+- A menu bar app is built on an **`NSStatusItem`** (AppKit) or a **`MenuBarExtra`** scene (SwiftUI, macOS 13+).
+- **`LSUIElement = true`** in `Info.plist` removes the Dock icon.
+- An **`NSPopover`** shows a floating window under the icon.
+- **Combine** binds app state to the UI without a chain of callbacks.
+
+## AppKit or SwiftUI for the menu bar?
+
+Since macOS 13, SwiftUI offers `MenuBarExtra`, a scene dedicated to the menu bar. For a simple utility, it is the shortest path:
+
+```swift
+import SwiftUI
+
+@main
+struct MyApp: App {
+    var body: some Scene {
+        MenuBarExtra("My app", systemImage: "circle.fill") {
+            ContentView()
+        }
+        .menuBarExtraStyle(.window)
+    }
+}
+```
+
+The `.menu` style shows a classic menu; the `.window` style shows a small window with your SwiftUI view.
+
+For Whoa Bar, I chose **AppKit**. The app needs fine control over the menu bar button, a custom popover and the ability to capture system icons: `NSStatusBar`, `NSStatusItem` and `NSPopover` give direct access to all of it. From a distance AppKit looks dated; used well, it is a stable and complete API.
+
+My rule: `MenuBarExtra` for a simple menu or panel, AppKit as soon as the app needs to step outside that frame.
+
+## Show an icon with NSStatusItem
+
+An AppKit app starts in its `AppDelegate`. That is where you create the menu bar item:
+
+```swift
+import AppKit
+
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    private var statusItem: NSStatusItem!
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem.button?.image = NSImage(
+            systemSymbolName: "circle.fill",
+            accessibilityDescription: "Status"
+        )
+
+        let menu = NSMenu()
+        menu.addItem(
+            NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        )
+        statusItem.menu = menu
+    }
+}
+```
+
+### Keep a strong reference
+
+A classic trap: if `statusItem` is a local variable, it is released at the end of the function and the icon vanishes immediately. Store it in a property of an object that lives as long as the app.
+
+### Menu or click action
+
+If `statusItem.menu` is set, a click opens the menu. To handle the click yourself (toggle a state, open a popover), leave `menu` empty and wire up `button.target` and `button.action`. In Whoa Bar, a click toggles the active/inactive state and the icon updates right away.
+
+## Hide the Dock icon with LSUIElement
+
+A menu bar app has no business in the Dock or the app switcher (Cmd+Tab). Add this key to `Info.plist`:
+
+```xml
+<key>LSUIElement</key>
+<true/>
+```
+
+The app then starts as an "agent": no Dock icon and no application menu bar. You can get the same result in code with `NSApp.setActivationPolicy(.accessory)`, which is useful if the app sometimes needs to reappear in the Dock (for example while a settings window is open).
+
+## Show a floating panel with NSPopover
+
+To show more than a menu, `NSPopover` opens a small window anchored under the icon. Whoa Bar uses it for its hidden-icons bubble:
+
+```swift
+let popover = NSPopover()
+popover.behavior = .transient
+popover.contentViewController = HiddenItemsBubbleViewController()
+
+if let button = statusItem.button {
+    popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+}
+```
+
+The `.transient` behavior closes the popover as soon as the user clicks elsewhere, which is what you expect from a menu bar item. The content is an ordinary `NSViewController`; you can even host a SwiftUI view in it through `NSHostingController`.
+
+## Manage state with Combine
+
+Without a reactive tool, a menu bar app's state ends up scattered across callbacks. With Combine, an `ObservableObject` model exposes the state and the UI subscribes to it:
+
+```swift
+import Combine
+
+final class AppState: ObservableObject {
+    @Published var isActive = true
+}
+
+// In the menu bar controller
+state.$isActive
+    .sink { [weak self] active in
+        self?.statusItem.button?.title = active ? "🟢" : "🔴"
+    }
+    .store(in: &cancellables)
+```
+
+When `isActive` changes, the icon updates by itself. The same model can drive a SwiftUI view with no extra code.
+
+## A simple, dependency-free architecture
+
+A menu bar app is small, but it touches the system: permissions, screen capture, events. A clear structure keeps it from turning into a single 1,000-line file. Whoa Bar's fits in a few layers:
+
+- **App**: `AppDelegate`, startup in accessory mode;
+- **Features**: a `ViewController` for display, a `ViewModel` for logic (MVVM);
+- **Core/Services**: orchestration, icon capture, permissions, with no business state;
+- **Core/Models**: observable state (`AppState`, hidden items);
+- **System**: AppKit integration (`NSStatusBar`, `NSPopover`).
+
+Controllers talk to ViewModels, never directly to services. And the app has **no external dependencies**: Swift, AppKit, Combine and Foundation, nothing else. That constraint forces minimal code that is testable with `swift test`.
+
+### System permissions
+
+Some features need the user's consent. For example, capturing the content of other apps' windows requires the **Screen Recording** permission in Privacy settings. Centralizing these requests in a dedicated service (`PermissionManager` in Whoa Bar) keeps them in one place and lets you explain clearly why the app needs them.
+
+{/* TODO: add the real difficulties icon capture (CGWindowList) caused you, and how you handle a denied permission. */}
+
+## Distribute your menu bar app
+
+There are two routes:
+
+- **The Mac App Store**: the app must enable the App Sandbox, which restricts some system APIs. Check this early if the app captures the screen or controls other apps.
+- **Outside the App Store**: sign the app with a Developer ID certificate, then have Apple notarize it (`xcrun notarytool`) so Gatekeeper accepts it without a warning.
+
+To launch the app automatically at login, `SMAppService.mainApp.register()` (macOS 13+) replaces the older approaches.
+
+{/* TODO: state which distribution route you chose for Whoa Bar (the roadmap mentions the Mac App Store, not done yet) and what you learned. */}
+
+## What I learned building Whoa Bar
+
+- **Constraints are design.** No dependencies, no Dock: those limits forced short, understandable code.
+- **AppKit hasn't lost anything.** `NSStatusBar` for anchoring and `NSPopover` for the bubble cover every need.
+- **Combine changes everything.** A `@Published` value changes and the UI redraws, with no callbacks to pass around.
+- **The menu bar is a context.** One responsibility: display, update, listen for clicks.
+
+I apply the same approach to my other Mac apps, [Whoa Stash](/projects/whoa-stash?lang=en) and [Whoa Type](/projects/whoa-type?lang=en). For the full architecture and the code, head to the [Whoa Bar](/projects/whoa-bar?lang=en) project page.

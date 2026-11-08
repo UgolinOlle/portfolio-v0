@@ -1,0 +1,147 @@
+---
+title: 'Architecture hexagonale avec NestJS : ports, adapters et CQRS'
+description: 'Architecture hexagonale NestJS : domaine sans dépendance, ports et tokens d’injection, adapters, CQRS et contrat OpenAPI validé par Zod.'
+date: '2026-11-08'
+category: 'Backend'
+---
+
+L'**architecture hexagonale avec NestJS** consiste à isoler la logique métier du framework, de la base de données et des services externes, pour pouvoir changer l'un sans réécrire l'autre. C'est l'architecture du serveur de [Calyx](/projects/calyx), une app de nutrition qui analyse les repas en photo, avec une API NestJS qui tourne sur Bun. Ce guide reprend les règles que j'y applique : ports, adapters, CQRS, événements de domaine et contrat d'API.
+
+**En bref :**
+
+- Le **domaine** ne dépend de rien : ni NestJS, ni Prisma, ni SDK tiers.
+- Le domaine définit des **ports** (interfaces + token d'injection), l'**infrastructure** fournit les **adapters**.
+- Les contrôleurs ne font que parser l'entrée et envoyer une commande ou une requête au **CommandBus** / **QueryBus**.
+- Les DTO **Zod** génèrent la spec **OpenAPI**, qui génère le client utilisé par le web et le mobile.
+
+## Pourquoi une architecture hexagonale ?
+
+Dans une API NestJS « classique », un service injecte directement le client Prisma, appelle un SDK externe et contient la logique métier. Ça va vite au début. Ensuite, changer d'ORM, de stockage ou de fournisseur d'IA oblige à toucher au cœur du métier, et chaque test doit simuler la base de données.
+
+L'architecture hexagonale (ou _ports and adapters_) inverse la dépendance : le métier déclare ce dont il a besoin, et l'extérieur s'y branche.
+
+### Les quatre couches
+
+Dans Calyx, chaque module d'API suit le même découpage, avec des règles de dépendance vérifiables :
+
+```
+interface → application → domain ← infrastructure
+```
+
+- **interface** : contrôleurs HTTP et DTO ;
+- **application** : un handler par commande ou par requête ;
+- **domain** : entités, événements et ports, sans aucune dépendance ;
+- **infrastructure** : adapters vers Postgres, le stockage, la file de jobs, l'IA.
+
+L'infrastructure dépend du domaine, jamais l'inverse.
+
+## Un domaine sans dépendance
+
+Le domaine ne connaît ni NestJS, ni Prisma, ni un SDK fournisseur. Il ne contient que du TypeScript : des types, des règles métier et des interfaces. On peut le tester sans démarrer l'application.
+
+C'est la règle la plus coûteuse au départ, et celle qui rapporte le plus. Imposer les ports et adapters dès le premier jour demande un peu de cérémonie, mais permet ensuite de remplacer l'IA, le stockage ou l'ORM sans réécrire la logique métier.
+
+## Ports et tokens d'injection
+
+Un port est une interface déclarée dans le domaine. Comme les interfaces TypeScript disparaissent à la compilation, NestJS a besoin d'un **token** pour savoir quoi injecter. Exemple simplifié :
+
+```ts
+// domain/ports/nutrition-analyzer.port.ts
+export const NUTRITION_ANALYZER = Symbol('NUTRITION_ANALYZER');
+
+export interface NutritionAnalyzer {
+  analyze(photoUrl: string): Promise<NutritionEstimate>;
+}
+```
+
+Le handler dépend du port, pas d'une implémentation :
+
+```ts
+constructor(@Inject(NUTRITION_ANALYZER) private readonly analyzer: NutritionAnalyzer) {}
+```
+
+### Les adapters dans l'infrastructure
+
+L'implémentation concrète vit dans `infrastructure` et se branche dans le module :
+
+```ts
+@Module({
+  providers: [{ provide: NUTRITION_ANALYZER, useClass: FakeNutritionAnalyzer }],
+})
+export class MealsModule {}
+```
+
+Dans Calyx, c'est exactement ce que permet le port `NUTRITION_ANALYZER` : un analyseur factice pour le développement et les tests, puis un vrai modèle d'IA, sans toucher au reste du code.
+
+## CQRS avec CommandBus et QueryBus
+
+Le module `@nestjs/cqrs` sépare les écritures (commandes) des lectures (requêtes). Les contrôleurs n'ont plus de logique métier : ils valident l'entrée et envoient un message.
+
+```ts
+@Post()
+create(@Body() dto: CreateMealDto) {
+  return this.commandBus.execute(new CreateMealCommand(dto.photoUrl));
+}
+```
+
+### Un handler par intention
+
+Chaque commande ou requête a son propre handler, petit, testable et nommé d'après ce qu'il fait :
+
+```ts
+@CommandHandler(CreateMealCommand)
+export class CreateMealHandler implements ICommandHandler<CreateMealCommand> {
+  async execute(command: CreateMealCommand) {
+    // règles métier, puis appel des ports
+  }
+}
+```
+
+Quand on cherche « où est créé un repas ? », la réponse tient dans un seul fichier.
+
+## Des modules étanches et des événements de domaine
+
+Un module n'importe jamais les services d'un autre module. Quand une action doit avoir un effet dans un autre contexte, le module émet un **événement de domaine** et l'autre module y réagit.
+
+Ce couplage faible évite les dépendances circulaires entre modules, un piège fréquent dans les grosses applications NestJS.
+
+## Traiter l'IA comme un service lent et faillible
+
+Une analyse d'image par IA n'est pas une requête synchrone. Dans Calyx, l'analyse passe par une file de jobs (**BullMQ** sur Redis) avec des états explicites (en attente, prête) et des tentatives en cas d'échec. Le client reçoit tout de suite une réponse, puis le résultat arrive quand le job se termine.
+
+L'architecture hexagonale rend ce choix invisible pour le domaine : la file de jobs est un adapter comme un autre.
+
+## Un contrat OpenAPI comme source de vérité
+
+Les DTO sont définis avec **Zod** via `nestjs-zod`. Ils valident les entrées et produisent la spec **OpenAPI** du serveur. Cette spec est commitée, vérifiée en CI, et sert à générer le client TypeScript avec **orval**, utilisé à la fois par l'app web (TanStack Start) et l'app mobile (Expo).
+
+Résultat : si le serveur change un champ sans régénérer le contrat, la CI échoue. Le web et le mobile ne peuvent plus se désynchroniser sans que personne ne le voie.
+
+## Faire tourner NestJS sur Bun
+
+Le serveur de Calyx tourne sur **Bun** plutôt que Node.js, dans un monorepo Nx avec des workspaces Bun. Les tests end-to-end s'exécutent aussi sur Bun. Avec un domaine sans dépendance, le choix du runtime reste un détail d'infrastructure, au même titre que l'ORM.
+
+{/* TODO: ajouter ce que le passage de NestJS sur Bun t'a demandé concrètement (décorateurs, reflect-metadata, Jest vs bun test, performances mesurées) — rien n'est documenté dans la page Calyx. */}
+
+## Tester chaque couche
+
+Le découpage en couches dicte aussi la stratégie de test :
+
+- **le domaine** se teste avec des tests unitaires purs, sans NestJS ni base de données ;
+- **les handlers** se testent en injectant des adapters factices à la place des vrais ports, comme l'analyseur factice de Calyx ;
+- **l'ensemble** se vérifie avec des tests end-to-end qui démarrent l'API et passent par HTTP.
+
+Plus une règle métier est testée bas dans les couches, plus son test est rapide et stable. Les tests end-to-end n'ont plus qu'à vérifier que les pièces sont bien branchées.
+
+## Ce que Calyx m'a appris
+
+- **Garder le domaine propre** coûte un peu au début et fait gagner du temps à chaque changement de fournisseur.
+- **Un handler par intention** rend le code facile à lire et à tester.
+- **Le contrat est la source de vérité** : la spec OpenAPI générée et vérifiée en CI protège les clients web et mobile.
+- **L'IA est un service lent et faillible** : file de jobs, états explicites et nouvelles tentatives.
+
+{/* TODO: ajouter une difficulté réelle rencontrée avec cette architecture (ex. trop de cérémonie sur un petit module, ou un remplacement d'adapter qui s'est bien passé). */}
+
+## Conclusion
+
+L'architecture hexagonale avec NestJS demande de la discipline : des ports, des tokens, des handlers et des règles de dépendance. En échange, le métier reste lisible et testable, et les choix d'infrastructure (ORM, stockage, IA, runtime) deviennent remplaçables. Pour voir l'architecture complète, avec le schéma des couches et la stack, rendez-vous sur la page du projet [Calyx](/projects/calyx).

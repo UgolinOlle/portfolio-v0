@@ -1,4 +1,4 @@
 {
   "title": "Cores",
-  "pages": ["colima"]
+  "pages": ["colima", "oxlint-oxfmt"]
 }

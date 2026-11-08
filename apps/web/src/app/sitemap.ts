@@ -3,6 +3,7 @@ import type { MetadataRoute } from 'next';
 import {
   languageAlternates,
   LOCALES,
+  LOCALIZED_CONTENT_PATH,
   localizedPath,
   siteConfig,
   type Locale,
@@ -15,6 +16,7 @@ import {
   templatesSource,
   writingsSource,
 } from '~/lib/source';
+import { getStaticRoutes } from '~/lib/static-routes';
 
 type RegistrySource = typeof componentsSource | typeof blocksSource | typeof templatesSource;
 type SitemapEntry = MetadataRoute.Sitemap[number];
@@ -80,20 +82,26 @@ const writingRoutes = (): MetadataRoute.Sitemap =>
     ),
   );
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes: MetadataRoute.Sitemap = [
-    { url: siteConfig.url },
-    ...localizedRoutes('/writings', LOCALES, {}),
-    { url: absolute('/ui') },
-    { url: absolute('/inspirations') },
-  ];
+export const dynamic = 'force-static';
 
-  return [
-    ...staticRoutes,
+/** Static pages come from the app directory; `/ui/*` index pages are listed by the registry sources. */
+const staticRoutes = (): MetadataRoute.Sitemap =>
+  getStaticRoutes().flatMap((pathname) =>
+    LOCALIZED_CONTENT_PATH.test(pathname)
+      ? localizedRoutes(pathname, LOCALES, {})
+      : [{ url: absolute(pathname === '/' ? '' : pathname) }],
+  );
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const entries = [
+    ...staticRoutes(),
     ...projectRoutes(),
     ...writingRoutes(),
     ...registryRoutes(componentsSource),
     ...registryRoutes(blocksSource),
     ...registryRoutes(templatesSource),
   ];
+
+  // Registry index pages (e.g. /ui/components) exist as both a static page and a source page.
+  return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
 }

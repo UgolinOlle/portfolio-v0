@@ -5,12 +5,9 @@ import { Suspense, useEffect, type ReactNode } from 'react';
 import { I18nextProvider, useTranslation as useI18nextTranslation } from 'react-i18next';
 
 import i18n from '~/lib/i18n';
-import { DEFAULT_LOCALE, resolveLocale, type Locale } from '~/lib/metadata';
+import { DEFAULT_LOCALE, LOCALIZED_CONTENT_PATH, resolveLocale, type Locale } from '~/lib/metadata';
 
 const STORAGE_KEY = 'language';
-
-// Pages whose content language comes from the URL (`?lang=en`, French when absent).
-const LOCALIZED_CONTENT_PATH = /^\/(projects\/.+|writings(\/.*)?)$/;
 
 const readStoredLocale = (): Locale | undefined => {
   try {

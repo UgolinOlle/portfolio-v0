@@ -1,0 +1,155 @@
+---
+title: 'How to Replace ESLint and Prettier with oxlint and oxfmt'
+description: 'Replace ESLint and Prettier with oxlint and oxfmt: migration commands, a shared monorepo config, import and Tailwind class sorting, CI and editor setup.'
+date: '2026-11-08'
+category: 'Tooling'
+---
+
+To **replace ESLint and Prettier with oxlint** and its formatter oxfmt is to swap a chain of JavaScript tools for two native tools, written in Rust, that share the same parser. It is the setup I use on this site, in [Calyx](/projects/calyx?lang=en), in [Whoa Jobs](/projects/whoa-jobs?lang=en) and even in my [Neovim config](/projects/neovim?lang=en). This guide explains how to migrate, how to structure the config in a monorepo, and which limits to keep in mind.
+
+**In short:**
+
+- **oxlint** replaces ESLint, **oxfmt** replaces Prettier. Both belong to the **oxc** project.
+- Two migration commands convert your existing config: `@oxlint/migrate` and `oxfmt --migrate prettier`.
+- oxfmt has built-in **import sorting** and **Tailwind class sorting**, which used to need Prettier plugins.
+- ESLint can keep running alongside while you cover the rules oxlint doesn't support yet.
+
+{/* TODO: add a real measurement (`bun run lint` / `format:check` time before and after on one of your repos), if you have one. */}
+
+## What is oxc?
+
+[oxc](https://oxc.rs/) (_The JavaScript Oxidation Compiler_) is a collection of JavaScript and TypeScript tools written in Rust: parser, linter, formatter, transformer, minifier. The core idea is to parse code once, very fast, and build the tools on top.
+
+### oxlint, the linter
+
+oxlint ports the rules of ESLint and its most popular plugins (TypeScript, React, unicorn, import…). Rules are grouped into **categories**: `correctness`, `suspicious`, `pedantic`, `style`, and so on. By default only `correctness` is on, meaning code that is outright wrong or useless.
+
+### oxfmt, the formatter
+
+oxfmt aims for compatibility with Prettier's output. You keep the same style habits, with one more tool from the same family as the linter.
+
+## Why replace ESLint and Prettier?
+
+### Fewer dependencies
+
+A typical ESLint + Prettier setup stacks the TypeScript parser, several plugins, shared configs and Prettier plugins. With oxc, two packages are enough: `oxlint` and `oxfmt`.
+
+### A faster feedback loop
+
+Both tools are native and parallel. Linting and formatting can run on every save in the editor, on every commit and in CI without anyone trying to skip them.
+
+### Built-in sorting
+
+oxfmt can sort imports and Tailwind classes without plugins, where Prettier needs separate plugins to install and maintain.
+
+## Migrate from ESLint to oxlint
+
+### Convert the config
+
+The migration tool reads an ESLint flat config and generates a `.oxlintrc.json` file:
+
+```bash
+npx @oxlint/migrate
+```
+
+It keeps severities, options, `overrides`, globals and ignore patterns. If you use type-aware rules from `typescript-eslint`, the `--type-aware` flag includes them; they require the `oxlint-tsgolint` package.
+
+### Run both linters side by side
+
+Not every ESLint rule exists in oxlint yet. During the transition, you can run oxlint first, then ESLint, with `eslint-plugin-oxlint` turning off the ESLint rules oxlint already covers. ESLint then only handles what oxlint can't.
+
+### Custom rules
+
+For a project-specific rule, oxlint accepts **JavaScript plugins** compatible with the ESLint plugin API, declared in `jsPlugins`. An existing in-house rule can often be reused as is.
+
+### Go step by step
+
+On a large project, don't turn everything on at once. Start with only the `correctness` category as errors, fix what it reports, then add `suspicious` as warnings. Each step stays a readable diff, and the team learns the new rules gradually instead of in a pull request several thousand lines long.
+
+## Migrate from Prettier to oxfmt
+
+```bash
+bun add -D oxfmt && bunx oxfmt --migrate prettier && bunx oxfmt
+```
+
+The command reads your Prettier config and creates `.oxfmtrc.json`. It also moves `.prettierignore` into `ignorePatterns` and converts `prettier-plugin-tailwindcss` options to the built-in equivalent. Options oxfmt doesn't know are skipped with a warning: read them.
+
+After the first run, keep the reformat in its own commit. The migration diff then doesn't mix with real changes.
+
+## Configure oxlint and oxfmt in a monorepo
+
+### A shared base config
+
+In this repo, the common oxlint config lives in the `packages/config` package:
+
+```json
+{
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": { "correctness": "error" },
+  "env": { "builtin": true }
+}
+```
+
+The root `.oxlintrc.json` just extends it and ignores vendored code:
+
+```json
+{
+  "extends": ["./packages/config/oxlint.json"],
+  "ignorePatterns": ["apps/web/src/lib/hairline/**"]
+}
+```
+
+Every new package inherits the same rules with no setup.
+
+### Sort imports and Tailwind classes
+
+The repo's oxfmt config sorts imports into groups (built-in modules, monorepo packages, external dependencies, relative imports) and sorts Tailwind classes in `className`, `cn()` and `clsx()`:
+
+```json
+{
+  "singleQuote": true,
+  "sortPackageJson": true,
+  "sortImports": { "newlinesBetween": true },
+  "sortTailwindcss": {
+    "stylesheet": "./packages/shadcn/styles/globals.css",
+    "functions": ["clsx", "cn"]
+  }
+}
+```
+
+The `stylesheet` option points to the project's Tailwind stylesheet, so the order follows the real theme. oxfmt also formats MDX files: the articles on this site go through the same tool as the code.
+
+### Scripts that check, scripts that fix
+
+I keep the commands that check apart from the ones that write:
+
+```json
+{
+  "lint": "oxlint",
+  "lint:fix": "oxlint --fix",
+  "format": "oxfmt --write",
+  "format:check": "oxfmt --check",
+  "check": "bun run lint && bun run format:check && bun run check-types"
+}
+```
+
+`bun run check` never touches a file: it is what CI runs on every pull request. Fixes happen locally with `lint:fix` and `format`.
+
+## Set up oxlint and oxfmt in your editor
+
+In my [Neovim config](/projects/neovim?lang=en), oxfmt is wired into conform.nvim for format-on-save, and oxlint into nvim-lint, which re-runs the linter when a file is opened, saved, or when leaving insert mode. Other languages (JSON, YAML, Markdown) stay on Prettier or dedicated formatters.
+
+In VS Code, the official oxc extension shows oxlint diagnostics right in the editor.
+
+{/* TODO: say whether you use a pre-commit hook (Husky + lint-staged, as in Whoa Jobs) with oxlint/oxfmt in this repo, and how. */}
+
+## Limits to know before you migrate
+
+- **Rule coverage**: the most common rules are there, but not every ESLint plugin. Check the output of `@oxlint/migrate` before removing ESLint.
+- **Type-aware linting**: rules that need type information go through a separate package; evaluate it on your project.
+- **Prettier plugins**: apart from Tailwind, Svelte, Astro and `package.json`, Prettier plugins are not migrated.
+- **Small formatting differences**: even with output close to Prettier's, plan for a reformat commit.
+
+## Conclusion
+
+Replacing ESLint and Prettier with oxlint and oxfmt cuts dependencies, speeds up the feedback loop and brings import and class sorting into a single tool. The migration takes two commands; the real work is reviewing the rules that aren't covered and deciding what stays on ESLint. To see the setup in context, look at [Calyx](/projects/calyx?lang=en), [Whoa Jobs](/projects/whoa-jobs?lang=en) or my [Neovim config](/projects/neovim?lang=en).

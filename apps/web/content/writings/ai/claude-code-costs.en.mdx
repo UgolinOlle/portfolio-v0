@@ -1,0 +1,142 @@
+---
+title: 'How to Reduce Claude Code Costs: A Practical Guide'
+description: 'Reduce Claude Code costs with a lean CLAUDE.md, deny rules, guardrail hooks, subagents and the right model per task, so every session spends fewer tokens.'
+date: '2026-11-08'
+category: 'AI'
+---
+
+To **reduce Claude Code costs**, writing shorter prompts is not enough. Most of the bill comes from what the agent loads without you asking: memory files, tool definitions, files it reads, conversation history. This guide covers the settings that actually make a difference, the way I apply them in my projects and in [Claude Kit](/projects/claude-kit?lang=en), the CLI I wrote to automate them.
+
+**In short:**
+
+- Every session pays for **everything that enters the context**, not just your message.
+- A short `CLAUDE.md`, `permissions.deny` rules and hooks prevent useless reads and edits.
+- **Subagents** and the right **model per task** keep expensive models for the work that needs them.
+- You can only cut what you measure: `/context` and local transcripts show where tokens go.
+
+{/* TODO: add a real before/after number measured on one of your projects (cold-session tokens, cost of a typical session). */}
+
+## Where do tokens go in a Claude Code session?
+
+Claude Code is an agent: on every turn, the model receives the full context of the session. If the vocabulary is new to you (tokens, context window, caching), my article [36 key LLM concepts](/writings/ai/ai-begin?lang=en) covers the basics.
+
+### What is loaded before your first message
+
+When a session starts, it already contains:
+
+- the **`CLAUDE.md`** files (global, project, subfolders);
+- the **tool definitions**, including those of connected MCP servers;
+- the available **skills** and subagents, as short descriptions.
+
+The `/context` command shows this breakdown. Make it your first reflex: you will often find that an unused MCP server or a bloated `CLAUDE.md` costs more than the task itself.
+
+### What piles up during the session
+
+After that, every file read, every command output and every reply stays in the history. A `cat` on a lockfile or a build folder can add thousands of tokens that the agent carries until the session ends.
+
+### The role of the cache
+
+The start of the prompt (the "prefix") is cached from one turn to the next. Changing what is in it, for example rewriting `CLAUDE.md` mid-session, invalidates the cache and makes you pay full price for the prefix again. Keep those files stable and change them between sessions.
+
+## Write a lean CLAUDE.md
+
+`CLAUDE.md` is read again in every session, so every line has a recurring cost. My rule: only put in it what the agent cannot work out by reading the code.
+
+### What belongs in CLAUDE.md
+
+- the project's **commands** (install, dev, build, typecheck, lint);
+- **non-obvious conventions** ("this file is generated, do not edit it");
+- known **gotchas** ("there is no test runner, use `check-types`");
+- pointers to longer documentation, to read only when needed.
+
+### What does not
+
+- a description of the code structure, which the agent can find with a search;
+- the history of decisions, which can live in a separate file;
+- style rules already enforced by the linter or formatter.
+
+## Block useless reads with permissions.deny
+
+Build folders, `node_modules`, lockfiles and generated files give the agent nothing but are expensive to read. Claude Code lets you exclude them in `.claude/settings.json`:
+
+```json
+{
+  "permissions": {
+    "deny": ["Read(./**/dist/**)", "Read(./**/.next/**)", "Read(./**/*.lock)", "Read(./.env*)"]
+  }
+}
+```
+
+A `deny` rule wins over every other rule, even in a permissive permission mode. As a bonus, it also protects sensitive files such as `.env`.
+
+A `.claudeignore` file is handy for listing these paths, but Claude Code does not read it itself. Claude Kit therefore compiles it into `permissions.deny` rules with `claude-kit sync`.
+
+## Add guardrail hooks
+
+`deny` rules stop reads. To stop **edits** to a file that should never be touched (lockfile, migration that already ran, build output), use a `PreToolUse` hook. Claude Code runs it before every tool call: if the script exits with **code 2**, the call is blocked and whatever it wrote to stderr is sent back to the agent.
+
+```bash
+#!/bin/bash
+path=$(jq -r '.tool_input.file_path // empty')
+
+case "$path" in
+  *bun.lock|*package-lock.json|*/dist/*)
+    echo "Generated file: change the source (manifest, sources) instead." >&2
+    exit 2 ;;
+esac
+
+exit 0
+```
+
+The saving is twofold: the agent does not waste a turn on a pointless edit, and the message tells it what to do instead of letting it retry. Be careful: only code 2 blocks. An `exit 1` is treated as a non-blocking error and the action goes ahead.
+
+## Pick the right model for each task
+
+Not every turn in a session needs the most powerful model.
+
+### Plan with Opus, execute with Sonnet
+
+`/model opusplan` uses Opus in Plan Mode and Sonnet for execution. The expensive reasoning goes into writing the plan, where it is worth the most. Execution, which is often mechanical, runs on a cheaper model that still sees everything Opus produced.
+
+### Delegate to subagents
+
+A subagent works in its **own context** and only returns a summary to the main session. That makes it ideal for exploration: an `explorer` agent on Haiku can search the code and return only the useful paths, instead of filling the main context with whole files.
+
+## Keep context across sessions
+
+When the conversation gets long, Claude Code summarizes it (compaction). The state of the task can get lost, and the agent then pays tokens again to find out where it was.
+
+Two habits limit that cost:
+
+- keep a task context file up to date (goal, status, next steps) that is re-injected after compaction;
+- start a fresh session with `/clear` when you switch topics, instead of carrying a history you no longer need.
+
+## Audit your project with Claude Kit
+
+I bundled these settings into [Claude Kit](/projects/claude-kit?lang=en), a zero-dependency CLI that analyzes the repository and generates the files that fit its stack:
+
+```bash
+npx @whoa-studio/claude-kit init --preset standard
+npx @whoa-studio/claude-kit doctor
+```
+
+- **`init`** generates `.claudeignore`, the `deny` rules, a pre-filled `CLAUDE.md` and the `pre-edit` hook, then, depending on the preset, task context, subagents and a status line with the token budget.
+- **`doctor`** scores the setup out of 100 and lists fixes by priority. It can run in CI on every pull request.
+- **`context`** measures the tokens a cold session loads, and **`usage`** computes the real cost of past sessions from local transcripts.
+
+The generated files are standard Claude Code files: the setup keeps working even if you uninstall the tool.
+
+{/* TODO: add a concrete result (doctor score before/after, or what `usage` showed you about your own sessions). */}
+
+## Checklist to reduce Claude Code costs
+
+1. Run `/context` and find what weighs the most at startup.
+2. Cut `CLAUDE.md` down to commands, conventions and gotchas.
+3. Disable MCP servers the project does not use.
+4. Add `permissions.deny` rules for build output, dependencies, lockfiles and `.env` files.
+5. Add a `PreToolUse` hook that blocks edits to generated files.
+6. Use `opusplan`, and subagents for exploration.
+7. Keep a task context file and use `/clear` between topics.
+8. Measure again, then automate the check in CI.
+
+None of these settings is spectacular on its own. Together, they stop every session from paying for files and turns that serve no purpose. To start with a single command, [Claude Kit](/projects/claude-kit?lang=en) applies all of them and tells you what is left to fix.

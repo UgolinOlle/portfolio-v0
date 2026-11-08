@@ -82,3 +82,8 @@ The primitives in `packages/shadcn/components/ui` animate with CSS transitions d
 - `ui` items are a single `index.tsx`; anything multi-file is a `block`.
 - Files using hooks, state, effects or handlers need `'use client';`.
 - The home page UI is client-side i18n (server always renders French); MDX translations are per-file. Keep both `locales/en` and `locales/fr` in sync.
+
+## SEO: site URL, sitemap, robots
+
+- The canonical origin lives only in `siteConfig.url` (`apps/web/src/lib/metadata.ts`), read from `NEXT_PUBLIC_SITE_URL` (default `https://ugolin-olle.com`). `metadataBase`, sitemap, robots and JSON-LD all derive from it.
+- `app/sitemap.ts` is generated at build time: static pages are discovered by `lib/static-routes.ts` (scans `src/app/**/page.tsx`, skipping `[dynamic]`, `_private`, `@slot`; `(group)` removed), dynamic pages come from the Fumadocs sources. A new `page.tsx` or content file appears with no edit. Paths matching `LOCALIZED_CONTENT_PATH` get fr/en `hreflang` entries.

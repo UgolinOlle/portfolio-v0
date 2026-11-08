@@ -1,4 +1,4 @@
 {
   "title": "AI",
-  "pages": ["ai-begin", "transformer"]
+  "pages": ["ai-begin", "transformer", "claude-code-costs"]
 }

@@ -1,0 +1,137 @@
+---
+title: 'How to Create a shadcn Registry in a Monorepo'
+description: 'Create a shadcn registry to ship your own React components: registry.json, import aliases, shadcn build, live docs previews and installs with shadcn add.'
+date: '2026-11-08'
+category: 'Frontend'
+---
+
+To **create a shadcn registry** is to distribute your own React components the way shadcn/ui does: the user runs one command and the source code lands directly in their project, ready to edit. That is what I built for [Whoa UI](/ui?lang=en), my library of components, blocks and templates. This guide walks through the architecture I use, the build steps, and the mistakes it helps you avoid.
+
+**In short:**
+
+- A shadcn registry is a **`registry.json`** file that describes items (files, npm dependencies, dependencies on other items).
+- The **`shadcn build`** command turns it into one JSON file per item, served statically.
+- Users install an item with **`npx shadcn@latest add <url>`**.
+- In my monorepo, each item is a **workspace package** and `registry.json` is **generated**, never written by hand.
+
+## What is a shadcn registry?
+
+shadcn/ui is not a library you install from npm: it is a CLI that copies component code into your project. A registry is the source that CLI reads, and anyone can publish one.
+
+### Component, block or template
+
+Each item has a type, which decides where its files are installed:
+
+| Type          | Contents                                | Installed to                      |
+| ------------- | --------------------------------------- | --------------------------------- |
+| **Component** | one reusable element, a single file     | `components/ui/ugolin/<name>.tsx` |
+| **Block**     | a self-contained section, several files | `components/blocks/<name>/`       |
+| **Template**  | a full page (app shell, dashboard)      | `components/blocks/<name>/`       |
+
+On the site, they map to the [components](/ui/components?lang=en), [blocks](/ui/blocks?lang=en) and [templates](/ui/templates?lang=en) sections.
+
+### The registry.json format
+
+The root file follows the `https://ui.shadcn.com/schema/registry.json` schema: a `name`, a `homepage` and a list of `items`. Each item declares its `name`, `type`, `files`, npm `dependencies` and `registryDependencies`, meaning the other items or shadcn primitives it needs.
+
+## Structure the registry as a monorepo
+
+For a handful of components, a hand-written `registry.json` is fine. Past a dozen items it becomes hard to keep correct: one forgotten dependency or renamed file and the install breaks for the user. So I made each item a workspace package.
+
+### One package per item
+
+```
+packages/my-block/
+├── index.tsx       # entry point
+├── motion.ts       # internal modules, imported relatively
+├── package.json
+└── tsconfig.json
+```
+
+The registry metadata lives in `package.json`, next to the dependencies:
+
+```json
+{
+  "name": "@portfolio-v0/my-block",
+  "description": "One sentence.",
+  "dependencies": { "motion": "catalog:", "react": "catalog:" },
+  "registry": { "title": "My Block", "type": "block" }
+}
+```
+
+The benefit: each item type-checks on its own, its dependencies are declared next to its code, and Turborepo knows to rebuild it when it changes.
+
+### Import only through the shadcn aliases
+
+An item's code is copied as-is into the user's project. It can therefore only import shared code through the aliases the shadcn CLI knows how to rewrite:
+
+- `@/lib/utils` for `cn`;
+- `@/components/ui/<primitive>` for shadcn primitives;
+- `@/components/ui/ugolin/<item>` or `@/components/blocks/<item>` for another item in the registry.
+
+A relative import from one package to another would work locally and break on install.
+
+### Don't forget 'use client'
+
+With Next.js and React Server Components, any file that uses hooks, state, effects or event handlers must start with `'use client';`. In the user's project, forgetting it means an error on the very first render.
+
+## Generate registry.json instead of writing it
+
+A script (`packages/ui/scripts/registry.ts`) walks the packages and produces `registry.json`. For each item, it derives:
+
+- **`files`**: `index.tsx` first, then the other modules;
+- **`dependencies`**: those from `package.json`, minus React and workspace packages;
+- **`registryDependencies`**: from the `@/components/...` imports, with nothing written by hand.
+
+The script also checks that the declared dependencies exactly match the imports in the code, and fails otherwise. That is the most useful guardrail: a missing dependency gets caught on my machine, not the user's.
+
+```bash
+bun run --cwd packages/ui registry:generate
+```
+
+The generated file is committed, but never edited by hand.
+
+## Build and serve the registry
+
+### shadcn build
+
+`shadcn build` reads `registry.json` and writes one JSON file per item, in `public/r` by default. Each file embeds the source code: that is what the CLI downloads.
+
+In my setup, the Next.js site runs this build before every `next build`, so the registry ships with the site. The files in `public/r/` are build output: you don't edit or commit them by hand.
+
+### One demo per item
+
+Each item has a demo in `apps/web/examples/<name>.tsx`. It becomes a `<name>-demo` item in the registry and serves as the preview on the docs page. It is also a visual test: if the demo doesn't render, the item isn't ready.
+
+## Document it with live previews
+
+The docs run on Fumadocs. Each item has an MDX page with `preview: <name>` in its frontmatter: the page renders the demo live and generates the install commands from the registry. See for example the [button](/ui/components/buttons/button?lang=en) or the [Activity](/ui/blocks/cards/activity?lang=en) block.
+
+A page must also be listed in its folder's `meta.json`, or it won't show up in the navigation.
+
+## Install an item with shadcn add
+
+On the user's side, installing takes one line:
+
+```bash
+npx shadcn@latest add https://ugolin-olle.com/r/button.json
+```
+
+The CLI downloads the JSON, installs the npm dependencies, recursively installs the `registryDependencies` and copies the files to the right places, rewriting the aliases according to the project's `components.json`.
+
+Alongside that, the same sources are compiled into an npm package, `@whoa-studio/ui`, for those who prefer a regular dependency. Both channels start from the same `registry.json`.
+
+{/* TODO: add a lesson learned — why you moved from a hand-written registry.json to generating it, or an install bug it saved you from. */}
+
+## Common mistakes when you create a shadcn registry
+
+- **Editing `registry.json` by hand** when it is generated: the change disappears on the next build.
+- **npm dependencies that don't match the imports**: the install succeeds, then the project no longer compiles.
+- **Relative imports between packages** instead of the `@/components/...` aliases.
+- **A missing `'use client';`** in a file that uses hooks.
+- **A docs page without `preview`**, or missing from `meta.json`.
+- **Editing `public/r/`** directly, when it is build output.
+
+## Conclusion
+
+Creating a shadcn registry takes little code: a `registry.json`, a build command and static hosting. What takes discipline is keeping it correct as it grows. By making each item a package and generating the registry from the code, mistakes show up at build time rather than in the user's project. You can browse the result on [Whoa UI](/ui?lang=en) and install any item with a single command.

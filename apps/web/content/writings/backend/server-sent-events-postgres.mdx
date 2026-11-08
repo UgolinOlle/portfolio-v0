@@ -1,0 +1,149 @@
+---
+title: 'Notifications temps réel avec les Server-Sent Events et Postgres'
+description: 'Notifications temps réel avec les Server-Sent Events : LISTEN/NOTIFY dans Postgres, flux SSE côté API, reconnexion, état lu et pièges des proxys.'
+date: '2026-11-08'
+category: 'Backend'
+---
+
+Envoyer des **notifications temps réel avec les Server-Sent Events** (SSE) est souvent plus simple qu'on ne le pense : pas besoin de WebSocket ni de broker de messages si votre base est déjà Postgres. C'est l'approche de [Whoa Jobs](/projects/whoa-jobs), une plateforme qui agrège des offres d'emploi : les notifications arrivent dans le dashboard dès qu'elles sont commitées dans Postgres, grâce à `LISTEN/NOTIFY`. Ce guide explique le principe, le code de chaque étape et les pièges à éviter.
+
+**En bref :**
+
+- Les **SSE** sont un flux HTTP à sens unique, du serveur vers le navigateur, avec reconnexion automatique.
+- **`LISTEN/NOTIFY`** permet à Postgres de prévenir l'API dès qu'une transaction est commitée.
+- Les notifications sont **stockées dans une table** ; le flux SSE ne sert qu'à les pousser.
+- Il faut prévoir la **perte de messages** : reconnexion, rattrapage et filet de sécurité périodique.
+
+## SSE, WebSocket ou polling ?
+
+Trois façons de faire arriver une information dans le navigateur sans qu'il la demande :
+
+| Approche      | Sens                        | Complexité  | Bon usage                        |
+| ------------- | --------------------------- | ----------- | -------------------------------- |
+| **Polling**   | client → serveur, en boucle | faible      | données qui changent rarement    |
+| **SSE**       | serveur → client            | faible      | notifications, flux d'événements |
+| **WebSocket** | bidirectionnel              | plus élevée | chat, collaboration, jeux        |
+
+Une notification ne va que dans un sens : du serveur vers l'utilisateur. Les actions de l'utilisateur (marquer comme lu) passent par une requête HTTP classique. Les SSE suffisent donc, et elles reposent sur du HTTP ordinaire : cookies, authentification et proxys fonctionnent comme pour le reste de l'API.
+
+## LISTEN/NOTIFY : Postgres comme bus d'événements
+
+Postgres intègre un mécanisme de publication/abonnement. Une connexion s'abonne à un canal avec `LISTEN`, une autre y publie avec `NOTIFY` ou la fonction `pg_notify()`.
+
+### Publier à chaque insertion
+
+Un trigger peut publier automatiquement à chaque nouvelle notification :
+
+```sql
+create function notify_new_notification() returns trigger as $$
+begin
+  perform pg_notify(
+    'notifications',
+    json_build_object('id', new.id, 'userId', new.user_id)::text
+  );
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger on_notification_insert
+after insert on notifications
+for each row execute function notify_new_notification();
+```
+
+Point clé : un `NOTIFY` émis dans une transaction n'est délivré **qu'au commit**. Si la transaction échoue, rien n'est envoyé. L'utilisateur ne reçoit jamais une notification qui n'existe pas en base.
+
+### Envoyer un identifiant, pas la donnée
+
+Le payload d'un `NOTIFY` est limité (8 000 octets par défaut). Mieux vaut n'y mettre que l'identifiant et le destinataire, et laisser l'API relire la notification complète en base avant de l'envoyer. La table reste la source de vérité.
+
+### Écouter côté API
+
+Côté Node.js ou Bun, une connexion dédiée écoute le canal :
+
+```ts
+const listener = new Client({ connectionString: process.env.DATABASE_URL });
+await listener.connect();
+await listener.query('LISTEN notifications');
+
+listener.on('notification', (message) => {
+  const { id, userId } = JSON.parse(message.payload ?? '{}');
+  hub.publish(userId, id);
+});
+```
+
+Cette connexion doit rester ouverte en permanence. Elle ne peut pas passer par un pooler en mode transaction, qui rend la connexion après chaque requête et perd donc l'abonnement : utilisez une connexion directe ou un pooler en mode session.
+
+## Le flux SSE côté API
+
+Une réponse SSE est une réponse HTTP qui ne se termine pas, avec le type `text/event-stream`. Chaque message est un bloc de lignes `id:`, `event:` et `data:`, séparé par une ligne vide :
+
+```
+id: 42
+event: notification
+data: {"id":42,"title":"Nouvelle offre","importance":"high"}
+
+```
+
+Avec NestJS, le décorateur `@Sse()` transforme un `Observable` en flux SSE. Exemple simplifié, qui filtre les événements de l'utilisateur connecté :
+
+```ts
+@Sse('notifications/stream')
+stream(@CurrentUser() user: User): Observable<MessageEvent> {
+  return this.hub.forUser(user.id).pipe(map((notification) => ({ id: String(notification.id), type: 'notification', data: notification })));
+}
+```
+
+{/* TODO: préciser comment le flux est réellement exposé dans Whoa Jobs (endpoint SSE NestJS, ou subscription tRPC sur SSE), pour que l'exemple corresponde à ton code. */}
+
+### Envoyer un battement régulier
+
+Un flux inactif peut être coupé par un proxy ou un load balancer. Un commentaire SSE (une ligne qui commence par `:`) envoyé toutes les 20 à 30 secondes garde la connexion ouverte sans déclencher d'événement côté client.
+
+## Côté navigateur : EventSource
+
+L'API `EventSource` du navigateur gère la connexion :
+
+```ts
+const source = new EventSource('/api/notifications/stream', { withCredentials: true });
+
+source.addEventListener('notification', (event) => {
+  const notification = JSON.parse(event.data);
+  showNotification(notification);
+});
+```
+
+### Reconnexion et Last-Event-ID
+
+Si la connexion tombe, `EventSource` se reconnecte tout seul et renvoie l'identifiant du dernier message reçu dans l'en-tête `Last-Event-ID`. Le serveur peut alors renvoyer les notifications manquées depuis cet identifiant. C'est pour ça que chaque message porte un `id:` : sans lui, une coupure de quelques secondes fait perdre des messages.
+
+### Les limites d'EventSource
+
+`EventSource` ne permet pas d'ajouter d'en-têtes personnalisés. L'authentification passe donc par les cookies de session, ce qui convient bien à un dashboard servi sur le même domaine que l'API.
+
+## Niveaux d'importance et état lu
+
+Dans Whoa Jobs, chaque notification a un niveau d'importance et un état lu/non lu. Comme elles sont stockées en base, ces informations survivent à un rechargement de page :
+
+- au chargement, le dashboard récupère les notifications non lues par une requête classique ;
+- ensuite, le flux SSE ajoute les nouvelles en temps réel ;
+- « marquer comme lu » est une simple mutation qui met à jour la ligne en base.
+
+Le temps réel n'est qu'une couche d'affichage au-dessus d'une table ordinaire.
+
+## Prévoir la perte de messages
+
+`NOTIFY` ne stocke rien : si aucune connexion n'écoute au moment de l'envoi (redémarrage de l'API, coupure réseau), le message est perdu. Whoa Jobs utilise aussi `LISTEN/NOTIFY` pour appliquer à chaud les réglages de son moteur d'ingestion, avec un **rattrapage périodique** au cas où une notification se perdrait.
+
+Le même principe s'applique aux notifications : au démarrage et à chaque reconnexion, relire en base ce qui n'a pas encore été envoyé. `NOTIFY` accélère la livraison ; la base garantit qu'elle a lieu.
+
+## Les pièges en production
+
+- **Buffering des proxys** : certains proxys gardent la réponse en mémoire avant de l'envoyer, ce qui bloque le flux. Désactivez le buffering pour cette route (par exemple l'en-tête `X-Accel-Buffering: no` avec Nginx).
+- **Limite de connexions en HTTP/1.1** : les navigateurs limitent le nombre de connexions simultanées par domaine. Avec plusieurs onglets ouverts, servez l'API en HTTP/2.
+- **Plusieurs instances d'API** : chaque instance écoute Postgres et ne pousse qu'aux clients qui lui sont connectés. Postgres fait office de bus commun, sans Redis supplémentaire pour cette partie.
+
+{/* TODO: ajouter un problème réel rencontré en production ou en dev (proxy Caddy, reconnexions, onglets multiples) si tu en as eu un. */}
+
+## Conclusion
+
+Les notifications temps réel avec les Server-Sent Events et Postgres demandent peu de pièces : une table, un trigger `pg_notify`, une connexion qui écoute et un flux HTTP. La règle qui rend le tout fiable : la base reste la source de vérité, et le flux SSE ne fait qu'accélérer l'affichage. Pour voir le reste de l'architecture, du moteur d'ingestion au dashboard, rendez-vous sur la page du projet [Whoa Jobs](/projects/whoa-jobs).

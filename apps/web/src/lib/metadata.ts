@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from 'next';
 
 export const siteConfig = {
   name: 'Ugolin Ollé',
-  url: 'https://ugolin-olle.com',
+  /** Single source of truth for the canonical origin: set `NEXT_PUBLIC_SITE_URL` per environment. */
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ugolin-olle.com').replace(/\/+$/, ''),
   title: 'Ugolin Ollé — Développeur full stack freelance Next.js',
   description:
     'Développeur full stack freelance : SaaS, applications web et landing pages rapides avec Next.js, React, NestJS et TypeScript. Disponible pour vos projets.',
@@ -95,6 +96,9 @@ export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = 'fr';
 
 const OG_LOCALES: Record<Locale, string> = { fr: 'fr_FR', en: 'en_US' };
+
+/** Paths whose content language comes from the URL (`?lang=en`, French when absent). */
+export const LOCALIZED_CONTENT_PATH = /^\/(projects\/.+|writings(\/.*)?)$/;
 
 export const resolveLocale = (lang: string | undefined): Locale =>
   LOCALES.includes(lang as Locale) ? (lang as Locale) : DEFAULT_LOCALE;

@@ -19,6 +19,12 @@ export const personSchema = () => ({
   url: siteConfig.url,
   image: absolute(siteConfig.profileImage),
   jobTitle: 'Développeur full stack freelance',
+  email: siteConfig.email,
+  areaServed: ['FR', 'Worldwide'],
+  makesOffer: ['SaaS', 'Applications web', 'Landing pages'].map((name) => ({
+    '@type': 'Offer',
+    itemOffered: { '@type': 'Service', name, provider: { '@id': PERSON_ID } },
+  })),
   description: siteConfig.description,
   knowsAbout: [
     'Next.js',

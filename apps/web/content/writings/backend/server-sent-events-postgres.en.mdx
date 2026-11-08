@@ -1,0 +1,149 @@
+---
+title: 'Real-Time Notifications with Server-Sent Events and Postgres'
+description: 'Real-time notifications with Server-Sent Events: Postgres LISTEN/NOTIFY, an SSE stream in the API, reconnection, read state and proxy pitfalls.'
+date: '2026-11-08'
+category: 'Backend'
+---
+
+Sending **real-time notifications with Server-Sent Events** (SSE) is often simpler than you think: no WebSocket or message broker required if your database is already Postgres. It is the approach behind [Whoa Jobs](/projects/whoa-jobs?lang=en), a platform that aggregates job postings: notifications reach the dashboard as soon as they are committed in Postgres, thanks to `LISTEN/NOTIFY`. This guide explains the principle, the code for each step and the pitfalls to avoid.
+
+**In short:**
+
+- **SSE** is a one-way HTTP stream, from server to browser, with automatic reconnection.
+- **`LISTEN/NOTIFY`** lets Postgres tell the API as soon as a transaction commits.
+- Notifications are **stored in a table**; the SSE stream only pushes them.
+- Plan for **lost messages**: reconnection, catch-up and a periodic safety net.
+
+## SSE, WebSocket or polling?
+
+Three ways to get information into the browser without it asking:
+
+| Approach      | Direction                  | Complexity | Good for                     |
+| ------------- | -------------------------- | ---------- | ---------------------------- |
+| **Polling**   | client → server, in a loop | low        | data that rarely changes     |
+| **SSE**       | server → client            | low        | notifications, event streams |
+| **WebSocket** | both ways                  | higher     | chat, collaboration, games   |
+
+A notification only goes one way: from the server to the user. User actions (mark as read) go through a regular HTTP request. SSE is therefore enough, and it runs on plain HTTP: cookies, authentication and proxies work the same as for the rest of the API.
+
+## LISTEN/NOTIFY: Postgres as an event bus
+
+Postgres has a built-in publish/subscribe mechanism. One connection subscribes to a channel with `LISTEN`; another publishes to it with `NOTIFY` or the `pg_notify()` function.
+
+### Publish on every insert
+
+A trigger can publish automatically for every new notification:
+
+```sql
+create function notify_new_notification() returns trigger as $$
+begin
+  perform pg_notify(
+    'notifications',
+    json_build_object('id', new.id, 'userId', new.user_id)::text
+  );
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger on_notification_insert
+after insert on notifications
+for each row execute function notify_new_notification();
+```
+
+Key point: a `NOTIFY` sent inside a transaction is only delivered **on commit**. If the transaction fails, nothing is sent. The user never receives a notification that doesn't exist in the database.
+
+### Send an ID, not the data
+
+A `NOTIFY` payload is limited (8,000 bytes by default). It is better to put only the ID and the recipient in it, and let the API read the full notification from the database before sending it. The table stays the source of truth.
+
+### Listen in the API
+
+In Node.js or Bun, a dedicated connection listens to the channel:
+
+```ts
+const listener = new Client({ connectionString: process.env.DATABASE_URL });
+await listener.connect();
+await listener.query('LISTEN notifications');
+
+listener.on('notification', (message) => {
+  const { id, userId } = JSON.parse(message.payload ?? '{}');
+  hub.publish(userId, id);
+});
+```
+
+This connection must stay open at all times. It can't go through a transaction-mode pooler, which hands the connection back after each query and therefore loses the subscription: use a direct connection or a session-mode pooler.
+
+## The SSE stream in the API
+
+An SSE response is an HTTP response that never ends, with the `text/event-stream` content type. Each message is a block of `id:`, `event:` and `data:` lines, followed by a blank line:
+
+```
+id: 42
+event: notification
+data: {"id":42,"title":"New posting","importance":"high"}
+
+```
+
+In NestJS, the `@Sse()` decorator turns an `Observable` into an SSE stream. A simplified example that filters events for the signed-in user:
+
+```ts
+@Sse('notifications/stream')
+stream(@CurrentUser() user: User): Observable<MessageEvent> {
+  return this.hub.forUser(user.id).pipe(map((notification) => ({ id: String(notification.id), type: 'notification', data: notification })));
+}
+```
+
+{/* TODO: state how the stream is actually exposed in Whoa Jobs (NestJS SSE endpoint, or a tRPC subscription over SSE), so the example matches your code. */}
+
+### Send a regular heartbeat
+
+An idle stream can be cut by a proxy or load balancer. An SSE comment (a line starting with `:`) sent every 20 to 30 seconds keeps the connection open without firing an event on the client.
+
+## In the browser: EventSource
+
+The browser's `EventSource` API handles the connection:
+
+```ts
+const source = new EventSource('/api/notifications/stream', { withCredentials: true });
+
+source.addEventListener('notification', (event) => {
+  const notification = JSON.parse(event.data);
+  showNotification(notification);
+});
+```
+
+### Reconnection and Last-Event-ID
+
+If the connection drops, `EventSource` reconnects on its own and sends the ID of the last message it received in the `Last-Event-ID` header. The server can then resend the notifications missed since that ID. That is why every message carries an `id:`: without it, a few seconds of disconnection means lost messages.
+
+### EventSource limits
+
+`EventSource` can't add custom headers. Authentication therefore goes through session cookies, which suits a dashboard served on the same domain as the API.
+
+## Importance levels and read state
+
+In Whoa Jobs, each notification has an importance level and a read/unread state. Because they are stored in the database, that information survives a page reload:
+
+- on load, the dashboard fetches unread notifications with a regular request;
+- after that, the SSE stream adds new ones in real time;
+- "mark as read" is a simple mutation that updates the row.
+
+Real time is just a display layer on top of an ordinary table.
+
+## Plan for lost messages
+
+`NOTIFY` stores nothing: if no connection is listening when it fires (API restart, network drop), the message is lost. Whoa Jobs also uses `LISTEN/NOTIFY` to apply its ingestion engine's settings live, with a **periodic fallback** in case a notification gets lost.
+
+The same principle applies to notifications: on startup and on every reconnection, read from the database whatever hasn't been sent yet. `NOTIFY` speeds up delivery; the database guarantees it happens.
+
+## Production pitfalls
+
+- **Proxy buffering**: some proxies hold the response in memory before sending it, which blocks the stream. Turn buffering off for that route (for example the `X-Accel-Buffering: no` header with Nginx).
+- **HTTP/1.1 connection limit**: browsers cap the number of simultaneous connections per domain. With several tabs open, serve the API over HTTP/2.
+- **Several API instances**: each instance listens to Postgres and only pushes to the clients connected to it. Postgres acts as the shared bus, with no extra Redis for this part.
+
+{/* TODO: add a real problem you hit in production or dev (Caddy proxy, reconnections, multiple tabs) if you had one. */}
+
+## Conclusion
+
+Real-time notifications with Server-Sent Events and Postgres need few moving parts: a table, a `pg_notify` trigger, a listening connection and an HTTP stream. The rule that makes it reliable: the database stays the source of truth, and the SSE stream only speeds up the display. For the rest of the architecture, from the ingestion engine to the dashboard, head to the [Whoa Jobs](/projects/whoa-jobs?lang=en) project page.

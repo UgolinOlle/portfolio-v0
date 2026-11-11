@@ -235,7 +235,7 @@ export function Toc({ items, label = 'On this page' }: { items: TOCItemType[]; l
   };
 
   return (
-    <aside className="absolute inset-y-0 right-full mr-6 hidden w-40 xl:block">
+    <aside className="absolute inset-y-0 right-full mr-14 hidden w-40 xl:block">
       <nav
         aria-label={label}
         className="sticky top-28 max-h-[calc(100dvh-8rem)] overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"

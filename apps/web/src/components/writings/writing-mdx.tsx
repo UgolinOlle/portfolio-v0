@@ -18,7 +18,7 @@ export const WritingMDX = ({ page }: WritingMDXProps) => {
     <article className="relative">
       <Toc items={page.data.toc} />
       <ReadingProgress />
-      <h1 className="fluid-title font-semibold text-balance text-zinc-950 dark:text-zinc-50">
+      <h1 className="text-[clamp(2.25rem,1.25rem+3vw,3.5rem)] leading-[1.08] font-semibold tracking-[-0.035em] text-balance text-zinc-950 dark:text-zinc-50">
         {page.data.title}
       </h1>
       {page.data.description && (

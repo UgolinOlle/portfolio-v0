@@ -31,24 +31,13 @@
   animation: thumbnail-in 400ms var(--ease-out-strong) both;
 }
 
-/* Hero choreography. Pure CSS so it plays from the server HTML, before hydration: the headline
-   rises word by word out of a mask (`--i` is the word index), then the pill, lead and call to
-   action follow (`--hero-delay`). Transform and opacity only. */
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-}
-
+/* Hero choreography. Pure CSS so it plays from the server HTML, before hydration: only the
+   headline rises word by word out of a mask (`--i` is the word index). The lead and call to
+   action are visible from the first frame. Transform only. */
 @keyframes word-up {
   from {
     transform: translateY(105%);
   }
-}
-
-.hero-in {
-  animation: rise-in 600ms var(--ease-out-strong) var(--hero-delay, 0ms) both;
 }
 
 /* The padding / negative margin pair keeps descenders inside the mask without moving the lines. */
@@ -62,7 +51,7 @@
 
 .hero-word > span {
   display: inline-block;
-  animation: word-up 800ms var(--ease-out-strong) calc(80ms + var(--i, 0) * 40ms) both;
+  animation: word-up 300ms var(--ease-out-strong) calc(var(--i, 0) * 30ms) both;
 }
 
 /* The Hairline figure mounts after idle: it settles in instead of popping. */
@@ -124,7 +113,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-in,
   .hero-word > span {
     animation: none;
   }
@@ -137,6 +125,27 @@
 
 html {
   scrollbar-gutter: stable;
+}
+
+/* Base typography. Suisse Intl is commercial and no font files are in the repo, so the stack falls
+   through to the system font; add @font-face (weight 300, font-display: swap) once files exist.
+   Headings and other elements inherit the family through `--font-sans`. */
+:root {
+  --font-sans:
+    'Suisse Intl', -apple-system, system-ui, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 23px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.23px;
+}
+
+/* Dark mode keeps its own foreground token. */
+:root:not(.dark) body {
+  color: #181d16;
 }
 
 html > body[data-scroll-locked] {
@@ -185,9 +194,9 @@ html > body[data-scroll-locked] {
 
 /* Section title: 26px on phones up to 44px on desktop. */
 @utility fluid-heading {
-  font-size: clamp(1.625rem, 1.15rem + 2vw, 2.75rem);
+  font-size: clamp(1.625rem, 1.25rem + 1.5vw, 2.25rem);
   line-height: 1.1;
-  letter-spacing: -0.03em;
+  letter-spacing: clamp(-0.03em, -0.01em - 0.15vw, -0.02em);
 }
 
 /* Card / item title: 20px on phones up to 24px on desktop. */

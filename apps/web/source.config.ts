@@ -36,6 +36,8 @@ const projectsSchema = frontmatterSchema.extend({
   stack: z.array(z.string()).optional(),
   /** External links shown in the project header (site, repository...). */
   links: z.array(z.object({ label: z.string(), href: z.string().url() })).optional(),
+  /** Up to 3 pictures (public paths) that fan out from the project's icon on the home grid. */
+  previews: z.array(z.string()).max(3).optional(),
 });
 
 export const { docs: projectsDocs, meta: projectsMeta } = defineDocs({

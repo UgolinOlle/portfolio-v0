@@ -27,23 +27,26 @@ export const PROJECTS: Project[] = [
     ),
   },
   {
-    name: 'Whoa Bar',
-    description: 'Application macOS pour gérer la barre de menu.',
-    link: '/projects/whoa-bar',
-    id: 'whoa-bar',
-    done: false,
+    name: 'Whoa Type',
+    description:
+      'A macOS utility that adds sound to typing and clicks, with 38 built-in sound packs, previews, and a native audio engine.',
+    link: '/projects/whoa-type',
+    id: 'whoa-type',
+    done: true,
     content: (
       <div className="relative size-12">
         <Image
           fill
           sizes="48px"
-          alt="Whoa Bar"
+          alt="Whoa Type"
           className={cn(
-            'absolute inset-0 size-full scale-[1.24]',
-            'transition-transform duration-300 group-hover:rotate-45',
+            'absolute inset-0 size-full scale-150 drop-shadow-md',
+            'transition-transform duration-150 ease-out-strong',
+            'group-hover:translate-y-1 group-hover:scale-[1.38]',
+            'motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-150',
           )}
           unoptimized
-          src="/assets/projects/whoa-bar/whoa-bar-logo.svg"
+          src="/assets/projects/whoa-type/whoa-type-logo.png"
         />
       </div>
     ),
@@ -69,6 +72,59 @@ export const PROJECTS: Project[] = [
       </div>
     ),
     id: 'whoa-stash',
+  },
+  {
+    name: 'Claude Kit',
+    description:
+      'CLI zéro dépendance qui configure et audite des projets Claude Code optimisés en tokens.',
+    link: '/projects/claude-kit',
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+            'dark:border-zinc-700 dark:bg-zinc-950/40',
+          )}
+        />
+
+        <Image
+          fill
+          sizes="48px"
+          alt="Claude Code"
+          className="relative size-full p-[18%]"
+          unoptimized
+          src="/assets/projects/claude-kit/claude-code-logo.svg"
+        />
+      </div>
+    ),
+    id: 'claude-kit',
+  },
+  {
+    name: 'Whoa Jobs',
+    description:
+      'Collect, centralize and track job offers (work-study & full-time) from multiple job boards — in a single dashboard.',
+    link: '/projects/whoa-jobs',
+    id: 'whoa-jobs',
+    done: false,
+    content: (
+      <div className="relative size-12">
+        <div
+          className={cn(
+            'absolute inset-0 rounded-xl bg-[#F2541B] shadow',
+            'transition-transform duration-300 group-hover:rotate-45',
+          )}
+        />
+
+        <Image
+          fill
+          sizes="48px"
+          alt="Whoa Jobs"
+          className="relative size-full p-[13%]"
+          src="/assets/projects/whoa-jobs/logo/whoa-jobs-symbol-white.png"
+        />
+      </div>
+    ),
   },
   {
     name: 'Calyx',
@@ -108,79 +164,23 @@ export const PROJECTS: Project[] = [
     ),
   },
   {
-    name: 'Claude Kit',
-    description:
-      'CLI zéro dépendance qui configure et audite des projets Claude Code optimisés en tokens.',
-    link: '/projects/claude-kit',
-    content: (
-      <div className="relative size-12">
-        <div
-          className={cn(
-            'absolute inset-0 rounded-xl border border-zinc-200 bg-white shadow',
-            'transition-transform duration-300 group-hover:rotate-45',
-            'dark:border-zinc-700 dark:bg-zinc-950/40',
-          )}
-        />
-
-        <Image
-          fill
-          sizes="48px"
-          alt="Claude Code"
-          className="relative size-full p-[18%]"
-          unoptimized
-          src="/assets/projects/claude-kit/claude-code-logo.svg"
-        />
-      </div>
-    ),
-    id: 'claude-kit',
-  },
-  {
-    name: 'Whoa Type',
-    description:
-      'A macOS utility that adds sound to typing and clicks, with 38 built-in sound packs, previews, and a native audio engine.',
-    link: '/projects/whoa-type',
-    id: 'whoa-type',
+    name: 'Whoa Bar',
+    description: 'Application macOS pour gérer la barre de menu.',
+    link: '/projects/whoa-bar',
+    id: 'whoa-bar',
     done: false,
     content: (
       <div className="relative size-12">
         <Image
           fill
           sizes="48px"
-          alt="Whoa Type"
+          alt="Whoa Bar"
           className={cn(
-            'absolute inset-0 size-full scale-150 drop-shadow-md',
-            'transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]',
-            'group-hover:translate-y-1 group-hover:scale-[1.38]',
-            'motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-150',
-          )}
-          unoptimized
-          src="/assets/projects/whoa-type/whoa-type-logo.png"
-        />
-      </div>
-    ),
-  },
-  {
-    name: 'Whoa Jobs',
-    description:
-      'Collect, centralize and track job offers (work-study & full-time) from multiple job boards — in a single dashboard.',
-    link: '/projects/whoa-jobs',
-    id: 'whoa-jobs',
-    done: false,
-    content: (
-      <div className="relative size-12">
-        <div
-          className={cn(
-            'absolute inset-0 rounded-xl bg-[#F2541B] shadow',
+            'absolute inset-0 size-full scale-[1.24]',
             'transition-transform duration-300 group-hover:rotate-45',
           )}
-        />
-
-        <Image
-          fill
-          sizes="48px"
-          alt="Whoa Jobs"
-          className="relative size-full p-[13%]"
-          src="/assets/projects/whoa-jobs/logo/whoa-jobs-symbol-white.png"
+          unoptimized
+          src="/assets/projects/whoa-bar/whoa-bar-logo.svg"
         />
       </div>
     ),

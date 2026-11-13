@@ -5,131 +5,257 @@ import { cn } from '@portfolio-v0/shadcn/utils';
 import { m } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState, type MouseEvent, type RefObject } from 'react';
 
 import { useTranslation } from '~/components/core/i18n-provider';
-import { ArrowRightIcon } from '~/components/icons/ui';
 import { PROJECTS } from '~/data/projects';
 import { SECTION_REVEAL_LIST, TRANSITION_SECTION, VARIANTS_SECTION } from '~/lib/constants';
 import type { Project } from '~/types';
 
 import { HomeHeading } from './home-heading';
+import { ProjectTile } from './project-tile';
 
-type ProjectCardProps = {
-  project: Project;
-  featured?: boolean;
-  index?: number;
+type Slot = { x: number; y: number; rotate: number; delay: number };
+
+// Card centres relative to the icon centre. The middle card leads, the sides follow.
+const SLOTS: Record<1 | 2 | 3, Slot[]> = {
+  1: [{ x: 0, y: -92, rotate: 0, delay: 0 }],
+  2: [
+    { x: -44, y: -88, rotate: -8, delay: 0 },
+    { x: 44, y: -88, rotate: 8, delay: 0.03 },
+  ],
+  3: [
+    { x: -76, y: -80, rotate: -12, delay: 0.03 },
+    { x: 0, y: -96, rotate: 0, delay: 0 },
+    { x: 76, y: -80, rotate: 12, delay: 0.03 },
+  ],
 };
 
-function ProjectCard({ project, featured = false, index = 0 }: ProjectCardProps) {
-  const { t } = useTranslation();
-  const isExternal = project.link.startsWith('http');
-  const cover = project.image ?? '/assets/background.svg';
+const FAN_HALF_WIDTH = 160; // widest card edge from the icon centre, rotation included
+const FAN_HEIGHT = 150; // room the fan needs above the icon centre
+const EDGE = 16;
+
+const OPEN = { type: 'spring', bounce: 0, duration: 0.3 } as const;
+const CLOSE = { type: 'spring', bounce: 0, duration: 0.2 } as const;
+
+type Fan = { id: string; shift: number; dir: 1 | -1 };
+
+/** Keeps the fan inside the viewport: slides it sideways near an edge, flips it below when the top is tight. */
+function measureFan(id: string, el: HTMLElement): Fan {
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const left = EDGE - (cx - FAN_HALF_WIDTH);
+  const right = cx + FAN_HALF_WIDTH - (window.innerWidth - EDGE);
+  const shift = left > 0 ? left : right > 0 ? -right : 0;
+  const dir = rect.top + rect.height / 2 < FAN_HEIGHT ? -1 : 1;
+
+  return { id, shift, dir };
+}
+
+function FanCards({ fan, images, open }: { fan: Fan | null; images: string[]; open: boolean }) {
+  const slots = SLOTS[images.length as 1 | 2 | 3];
+  if (!slots) return null;
 
   return (
-    <m.div
-      className={cn(featured && 'sm:col-span-2')}
-      transition={{ ...TRANSITION_SECTION, delay: (index % 2) * 0.06 }}
+    <div aria-hidden="true" className="pointer-events-none absolute top-10 left-1/2 size-0">
+      {images.map((src, i) => {
+        const slot = slots[i];
+        if (!slot) return null;
+        const dir = fan?.dir ?? 1;
+
+        return (
+          <m.div
+            animate={
+              open
+                ? {
+                    opacity: 1,
+                    scale: 1,
+                    x: slot.x + (fan?.shift ?? 0),
+                    y: slot.y * dir,
+                    rotate: slot.rotate * dir,
+                  }
+                : { opacity: 0, scale: 0.4, x: 0, y: 0, rotate: 0 }
+            }
+            className={cn(
+              'absolute -top-[45px] -left-[72px] h-[90px] w-[144px] overflow-hidden rounded-xl',
+              'bg-zinc-100 shadow-lg ring-1 ring-black/10 ring-inset dark:bg-zinc-900 dark:ring-white/10',
+            )}
+            initial={false}
+            key={src}
+            style={{ originY: 1, zIndex: i === 1 || slots.length < 3 ? 3 : 2 }}
+            transition={open ? { ...OPEN, delay: slot.delay } : CLOSE}
+          >
+            <Image alt="" className="object-cover" fill sizes="144px" src={src} />
+          </m.div>
+        );
+      })}
+    </div>
+  );
+}
+
+type ProjectIconProps = {
+  project: Project;
+  slug: string;
+  images: string[];
+  fan: Fan | null;
+  lastInput: RefObject<'mouse' | 'touch' | 'key'>;
+  onActivate: (id: string, el: HTMLElement) => void;
+  onClear: () => void;
+};
+
+function ProjectIcon({
+  project,
+  slug,
+  images,
+  fan,
+  lastInput,
+  onActivate,
+  onClear,
+}: ProjectIconProps) {
+  const isExternal = project.link.startsWith('http');
+  const open = fan?.id === project.id;
+  const dimmed = fan !== null && !open;
+  const preview = images.slice(0, 3);
+
+  const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    // Touch: the first tap previews, the second opens.
+    if (lastInput.current === 'touch' && preview.length > 0 && !open) {
+      event.preventDefault();
+      onActivate(project.id, event.currentTarget);
+    }
+  };
+
+  return (
+    <m.li
+      className={cn('relative', open && 'z-20')}
+      data-slug={slug}
+      transition={TRANSITION_SECTION}
       variants={VARIANTS_SECTION}
     >
       <Link
         className={cn(
-          'group flex flex-col gap-4 rounded-3xl outline-none',
-          `transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.98]`,
+          'flex flex-col items-center gap-2 rounded-2xl p-1 outline-none',
           'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4',
+          'transition-[filter,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none',
+          dimmed && 'opacity-50 grayscale',
         )}
         href={project.link}
+        onBlur={onClear}
+        onClick={onClick}
+        onFocus={(event) => {
+          if (lastInput.current !== 'touch') onActivate(project.id, event.currentTarget);
+        }}
+        onPointerEnter={(event) => {
+          if (event.pointerType !== 'touch') onActivate(project.id, event.currentTarget);
+        }}
         rel={isExternal ? 'noopener noreferrer' : undefined}
         target={isExternal ? '_blank' : undefined}
       >
-        <div
-          className={cn(
-            'relative overflow-hidden rounded-3xl bg-zinc-50 ring-1 ring-zinc-200/70 ring-inset',
-            'dark:bg-zinc-900/40 dark:ring-zinc-800/70',
-            featured ? 'aspect-video sm:aspect-[2.2/1]' : 'aspect-video',
-          )}
-        >
-          {/* Decorative: the project name is the link text right below. */}
-          <Image
-            alt=""
-            className="absolute inset-0 size-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
-            fill
-            // The featured cover is the LCP candidate: preload it instead of lazy-loading.
-            priority={featured}
-            sizes={featured ? '(min-width: 768px) 768px, 100vw' : '(min-width: 640px) 372px, 100vw'}
-            src={cover}
-            unoptimized={cover.endsWith('.svg')}
-          />
-
-          {!project.image && project.content && (
-            <div
-              className={cn(
-                'absolute inset-0 flex items-center justify-center text-zinc-900 dark:text-zinc-50',
-                featured && 'scale-125',
-              )}
-            >
-              {project.content}
-            </div>
-          )}
-
+        <span className="relative">
+          <span
+            className={cn(
+              'relative z-10 block transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]',
+              'active:scale-95 motion-reduce:transition-none',
+            )}
+          >
+            <ProjectTile fallback={project.content} id={project.id} />
+          </span>
           {project.done === false && (
             <span
-              className={cn(
-                'absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full py-1 pr-2.5 pl-2',
-                'bg-white/80 text-[11px] leading-none font-medium text-zinc-600 backdrop-blur-md',
-                'ring-1 ring-zinc-200/70 ring-inset',
-                'dark:bg-zinc-950/60 dark:text-zinc-300 dark:ring-zinc-700/70',
-                'contrast-more:bg-white dark:contrast-more:bg-zinc-950',
-              )}
-            >
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-amber-500" />
-              {t('projects.wip')}
-            </span>
+              aria-hidden="true"
+              className="absolute -top-1 -right-1 z-20 size-3 rounded-full bg-amber-500 ring-2 ring-background"
+            />
           )}
-        </div>
-
-        <div className="flex items-start justify-between gap-4 px-1">
-          <div className="min-w-0">
-            <h3
-              className={cn(
-                'font-semibold text-zinc-900 dark:text-zinc-50',
-                featured ? 'fluid-subheading' : 'text-xl leading-tight tracking-tight',
-              )}
-            >
-              {project.name}
-            </h3>
-            <p className="mt-1 text-base text-pretty text-zinc-600 dark:text-zinc-400">
-              {t(`projects.descriptions.${project.id}`)}
-            </p>
-          </div>
-
-          <ArrowRightIcon
-            aria-hidden="true"
-            className={cn(
-              'mt-1 size-4 shrink-0 text-zinc-400 transition-[transform,color] duration-200',
-              'group-hover:translate-x-0.5 group-hover:text-zinc-900 dark:group-hover:text-zinc-50',
-              isExternal && '-rotate-45',
-            )}
-          />
-        </div>
+          <FanCards fan={fan} images={preview} open={open} />
+        </span>
+        <span className="max-w-full truncate text-sm font-medium text-zinc-900 dark:text-zinc-50">
+          {project.name}
+        </span>
       </Link>
-    </m.div>
+    </m.li>
   );
 }
 
-export function ProjectsSection() {
+export function ProjectsSection({ previews = {} }: { previews?: Record<string, string[]> }) {
   const { t } = useTranslation();
-  const [featured, ...rest] = PROJECTS;
+  const [fan, setFan] = useState<Fan | null>(null);
+  const gridRef = useRef<HTMLUListElement>(null);
+  const lastInput = useRef<'mouse' | 'touch' | 'key'>('mouse');
+
+  const onActivate = useCallback((id: string, el: HTMLElement) => setFan(measureFan(id, el)), []);
+  const onClear = useCallback(() => setFan(null), []);
+
+  // Escape closes the fan; a touch outside the grid dismisses a previewed icon.
+  useEffect(() => {
+    if (!fan) return;
+    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && setFan(null);
+    const onDown = (event: PointerEvent) => {
+      if (!gridRef.current?.contains(event.target as Node)) setFan(null);
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onDown);
+    };
+  }, [fan]);
+
+  const active = PROJECTS.find((project) => project.id === fan?.id);
 
   return (
     <m.section {...SECTION_REVEAL_LIST} id="projects">
       <HomeHeading>{t('projects.title')}</HomeHeading>
 
-      <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2">
-        {featured && <ProjectCard featured project={featured} />}
-        {rest.map((project, index) => (
-          <ProjectCard index={index + 1} key={project.id} project={project} />
-        ))}
-      </div>
+      <ul
+        className="grid grid-cols-3 gap-x-2 gap-y-8 sm:grid-cols-4"
+        onKeyDownCapture={() => {
+          lastInput.current = 'key';
+        }}
+        onPointerDownCapture={(event) => {
+          lastInput.current = event.pointerType === 'touch' ? 'touch' : 'mouse';
+        }}
+        onPointerLeave={(event) => {
+          // Per grid, not per icon: the gaps between icons must not flash colour back.
+          if (event.pointerType !== 'touch') setFan(null);
+        }}
+        ref={gridRef}
+      >
+        {PROJECTS.map((project) => {
+          const slug = project.link.split('/').pop() ?? project.id;
+
+          return (
+            <ProjectIcon
+              fan={fan}
+              images={previews[slug] ?? []}
+              key={project.id}
+              lastInput={lastInput}
+              onActivate={onActivate}
+              onClear={onClear}
+              project={project}
+              slug={slug}
+            />
+          );
+        })}
+      </ul>
+
+      {/* Fixed height: the description changing must never move the page. */}
+      <p
+        aria-live="polite"
+        className="mt-6 min-h-12 text-base text-pretty text-zinc-600 dark:text-zinc-400"
+      >
+        {active && (
+          <>
+            {t(`projects.descriptions.${active.id}`)}
+            {active.done === false && (
+              <span className="ml-2 inline-flex items-center gap-1.5 text-sm whitespace-nowrap text-zinc-500">
+                <span aria-hidden="true" className="size-1.5 rounded-full bg-amber-500" />
+                {t('projects.wip')}
+              </span>
+            )}
+          </>
+        )}
+      </p>
     </m.section>
   );
 }

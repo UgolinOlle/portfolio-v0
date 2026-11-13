@@ -171,6 +171,8 @@ export type Component = {
  * @description Type for works experiences
  * @property {string} company - The company name
  * @property {string} title - The title of experience
+ * @property {object} description - One-line description, per locale
+ * @property {boolean} current - Whether the position is still ongoing
  * @property {start} string - Date start
  * @property {end} string - Date end
  * @property {logo} string - Logo of the experience
@@ -180,6 +182,8 @@ export type Component = {
 export type WorkExperience = {
   company: string;
   title: string;
+  description: { fr: string; en: string };
+  current?: boolean;
   start: string;
   end?: string;
   logo?: string;

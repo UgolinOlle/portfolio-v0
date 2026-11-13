@@ -3,7 +3,9 @@
 import Link from 'next/link';
 
 import { useTranslation } from '~/components/core/i18n-provider';
+import { MagneticSocialLink } from '~/components/effects/magnetic-social-link';
 import { TextLoop } from '~/components/effects/text-loop';
+import { SOCIAL_LINKS } from '~/data/social-links';
 
 const FOOTER_LINKS = [
   { href: '/writings', labelKey: 'navigation.writings' },
@@ -16,6 +18,13 @@ export function Footer() {
 
   return (
     <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
+      <ul className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2">
+        {SOCIAL_LINKS.map((link) => (
+          <li key={link.label}>
+            <MagneticSocialLink link={link.link}>{link.label}</MagneticSocialLink>
+          </li>
+        ))}
+      </ul>
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
         <a href="https://github.com/UgolinOlle" rel="noreferrer" target="_blank">
           <TextLoop className="text-sm text-zinc-500 sm:text-xs">

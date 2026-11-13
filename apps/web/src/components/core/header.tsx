@@ -2,6 +2,7 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -71,13 +72,20 @@ function Header() {
         >
           <Link
             className={cn(
-              'rounded-full px-1 text-base font-semibold tracking-tight whitespace-nowrap text-zinc-950',
+              'inline-flex items-center gap-2 rounded-full px-1 text-base font-semibold tracking-tight whitespace-nowrap text-zinc-950',
               'transition-transform duration-100 ease-out active:scale-[0.97] motion-reduce:transition-none',
               'outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/40',
               'dark:text-zinc-50 dark:focus-visible:ring-zinc-50/40',
             )}
             href="/"
           >
+            <Image
+              src="/assets/profile.JPG"
+              alt="Portrait d'Ugolin Ollé"
+              width={28}
+              height={28}
+              className="size-7 shrink-0 rounded-full object-cover"
+            />
             Ugolin Ollé
           </Link>
 

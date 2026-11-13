@@ -13,7 +13,6 @@ import {
 
 import {
   BriefcaseIcon,
-  EnvelopeIcon,
   FolderOpenIcon,
   PenNibIcon,
   StackIcon,
@@ -35,7 +34,6 @@ const SECTION_ICONS: Record<
   about: UserIcon,
   writings: PenNibIcon,
   stacks: StackIcon,
-  contact: EnvelopeIcon,
 };
 
 /** Top-level headings only; the id comes from the enclosing section. */

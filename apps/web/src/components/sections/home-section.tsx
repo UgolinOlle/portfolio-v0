@@ -1,9 +1,8 @@
 import type { ReactNode } from 'react';
 
 import { AboutSection, HeroSection } from './about-section';
-import { ContactSection } from './contact-section';
 import { HomeToc } from './home-toc';
-import { ProjectsSection } from './projects-section';
+import { ProjectsLoader } from './projects-loader';
 import { StacksSection } from './stacks-section';
 import { WorksSection } from './works-section';
 
@@ -16,7 +15,7 @@ export function HomeContent({ recentWritings }: HomeContentProps) {
     <HomeToc>
       <div className="space-y-28">
         <HeroSection />
-        <ProjectsSection />
+        <ProjectsLoader />
         {/* Works and About read as one story: keep them closer than the other sections. */}
         <div className="space-y-20">
           <WorksSection />
@@ -24,7 +23,6 @@ export function HomeContent({ recentWritings }: HomeContentProps) {
         </div>
         {recentWritings}
         <StacksSection />
-        <ContactSection />
       </div>
     </HomeToc>
   );

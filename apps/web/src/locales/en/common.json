@@ -19,6 +19,14 @@
     "ctaSecondary": "See projects"
   },
   "about": {
+    "facts": {
+      "training": "Training",
+      "trainingValue": "42 school, Bangkok",
+      "studies": "Studies",
+      "studiesValue": "Bachelor’s in Systems, Networks & Cybersecurity, MyDigitalSchool Angers",
+      "abroad": "Abroad",
+      "abroadValue": "Two years in Cambodia"
+    },
     "languages": {
       "title": "Languages",
       "french": "French",
@@ -35,8 +43,7 @@
     "projects": "Projects",
     "works": "Experience",
     "stacks": "Technologies",
-    "resources": "Resources",
-    "contact": "Contact"
+    "resources": "Resources"
   },
   "common": {
     "loading": "Loading...",
@@ -91,9 +98,8 @@
       "languages": "Languages",
       "frameworks": "Frameworks",
       "tools": "Tools",
-      "databases": "Databases",
-      "devops": "DevOps & Monitoring",
-      "systems": "Systems, Networks & Security"
+      "databases": "Database",
+      "devops": "DevOps"
     }
   },
   "resources": {
@@ -106,14 +112,6 @@
       "App": "Apps",
       "IDE": "IDEs"
     }
-  },
-  "contact": {
-    "title": "Contact",
-    "description": "Feel free to contact me at",
-    "copy": "Copy email address",
-    "copied": "Address copied",
-    "copyFailed": "Couldn't copy, use the email link",
-    "write": "Send an email"
   },
   "components": {
     "title": "Component Library",

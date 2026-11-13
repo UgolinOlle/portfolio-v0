@@ -19,6 +19,14 @@
     "ctaSecondary": "Voir les projets"
   },
   "about": {
+    "facts": {
+      "training": "Formation",
+      "trainingValue": "École 42, Bangkok",
+      "studies": "Études",
+      "studiesValue": "Bachelor Systèmes, Réseaux & Cybersécurité, MyDigitalSchool Angers",
+      "abroad": "À l’étranger",
+      "abroadValue": "Deux ans au Cambodge"
+    },
     "languages": {
       "title": "Langues",
       "french": "Français",
@@ -35,8 +43,7 @@
     "projects": "Projets",
     "works": "Expériences",
     "stacks": "Technologies",
-    "resources": "Ressources",
-    "contact": "Contact"
+    "resources": "Ressources"
   },
   "common": {
     "loading": "Chargement...",
@@ -91,9 +98,8 @@
       "languages": "Langages",
       "frameworks": "Frameworks",
       "tools": "Outils",
-      "databases": "Bases de données",
-      "devops": "DevOps & Supervision",
-      "systems": "Systèmes, Réseaux & Sécurité"
+      "databases": "Database",
+      "devops": "DevOps"
     }
   },
   "resources": {
@@ -106,14 +112,6 @@
       "App": "App",
       "IDE": "IDE"
     }
-  },
-  "contact": {
-    "title": "Contact",
-    "description": "N'hésitez pas à me contacter à",
-    "copy": "Copier l'adresse e-mail",
-    "copied": "Adresse copiée",
-    "copyFailed": "Copie impossible, utilisez le lien e-mail",
-    "write": "Écrire un e-mail"
   },
   "components": {
     "title": "Bibliothèque de Composants",

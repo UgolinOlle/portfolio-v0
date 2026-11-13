@@ -2,7 +2,6 @@
 
 import { cn } from '@portfolio-v0/shadcn/utils';
 
-import { Network, Radar, ShieldCheck } from 'lucide-react';
 import { m } from 'motion/react';
 import type { ReactNode } from 'react';
 import type { IconType } from 'react-icons';
@@ -16,7 +15,6 @@ import {
   SiPrometheus,
   SiPython,
   SiSwift,
-  SiWireshark,
   SiXcode,
 } from 'react-icons/si';
 
@@ -43,11 +41,15 @@ function SkillItem({ name, icon }: SkillItemProps) {
     // Not interactive: hover only tints the pill, it must not suggest a click.
     <div
       className={cn(
-        'group flex w-fit items-center gap-2 rounded-full px-2.5 py-0.5 text-foreground/80',
-        'border border-primary/20 transition-colors duration-150 hover:border-primary/40 hover:bg-primary-foreground',
+        'flex w-fit items-center gap-2 rounded-full px-2.5 py-0.5 text-foreground/80',
+        'border border-primary/20 transition-colors duration-150 motion-reduce:transition-none',
+        'hover:border-primary/40 hover:bg-primary-foreground',
       )}
     >
-      <IconComponent className="h-4 w-4 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-rotate-15" />
+      {/* The visible name labels the tool, so the logo is decorative. */}
+      <span aria-hidden="true" className="flex">
+        <IconComponent className="h-4 w-4" />
+      </span>
       <span className="text-sm">{name}</span>
     </div>
   );
@@ -89,11 +91,8 @@ const GitLogo = brandLogo(SiGit, '#F05032');
 const GithubActionsLogo = brandLogo(SiGithubactions, '#2088FF');
 const GrafanaLogo = brandLogo(SiGrafana, '#F46800');
 const PrometheusLogo = brandLogo(SiPrometheus, '#E6522C');
-const WiresharkLogo = brandLogo(SiWireshark, '#1679A7');
 // Xcode's brand blue reads fine on both backgrounds, so it needs no dark-mode variant.
 const XcodeLogo = brandLogo(SiXcode, '#147EFB');
-// Simple Icons has no Nmap logo, so it uses the closest Lucide glyph in the brand color.
-const NmapLogo = brandLogo(Radar, '#4F9FD8');
 
 type Skill = { name: string; labelKey?: string; icon: SkillItemProps['icon'] };
 
@@ -136,13 +135,6 @@ const SKILLS: Record<string, Skill[]> = {
     { name: 'Prometheus', icon: PrometheusLogo },
     { name: 'Loki', icon: TOOLS.Loki },
   ],
-  systems: [
-    { name: 'Linux', icon: TOOLS.Linux },
-    { name: 'Networking', labelKey: 'stacks.networking', icon: Network },
-    { name: 'Cybersecurity', labelKey: 'stacks.cybersecurity', icon: ShieldCheck },
-    { name: 'Wireshark', icon: WiresharkLogo },
-    { name: 'Nmap', icon: NmapLogo },
-  ],
   tools: [
     { name: 'Git', icon: GitLogo },
     { name: 'GitHub', icon: TOOLS.GitHub },
@@ -162,23 +154,52 @@ function StacksSection() {
     <m.section {...SECTION_REVEAL_LIST} className="space-y-8" id="stacks">
       <HomeHeading>{t('sections.stacks')}</HomeHeading>
 
-      {Object.entries(SKILLS).map(([category, skills]) => (
-        <m.div key={category} transition={TRANSITION_SECTION} variants={VARIANTS_SECTION}>
-          <h3 className="mb-3 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-            {t(`stacks.categories.${category}`)}
-          </h3>
+      {/* Spec sheet: same blueprint language as the project cards, but static (this text is read, not clicked). */}
+      <m.div
+        className="relative overflow-hidden rounded-2xl bg-zinc-900/[0.03] dark:bg-zinc-50/[0.03]"
+        transition={TRANSITION_SECTION}
+        variants={VARIANTS_SECTION}
+      >
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 hidden w-px translate-x-[9.5rem] bg-gradient-to-b from-transparent via-zinc-400/60 to-transparent sm:block"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0 left-0 hidden size-1.5 translate-x-[9.5rem] -translate-y-1/2 rounded-full bg-zinc-500/60 sm:block"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-0 left-0 hidden size-1.5 translate-x-[9.5rem] translate-y-1/2 rounded-full bg-zinc-500/60 sm:block"
+        />
 
-          <div className="flex flex-wrap gap-x-1.5 gap-y-2">
-            {skills.map((skill) => (
-              <SkillItem
-                icon={skill.icon}
-                key={skill.name}
-                name={skill.labelKey ? t(skill.labelKey) : skill.name}
-              />
-            ))}
-          </div>
-        </m.div>
-      ))}
+        <dl className="divide-y divide-zinc-400/25">
+          {Object.entries(SKILLS).map(([category, skills]) => (
+            <div
+              className="flex flex-col gap-2.5 px-4 py-4 sm:flex-row sm:gap-0 sm:py-5"
+              key={category}
+            >
+              <dt className="text-sm font-medium text-zinc-600 sm:w-[9.5rem] sm:shrink-0 sm:pr-4 dark:text-zinc-400">
+                {t(`stacks.categories.${category}`)}
+                {/* Inline so the count follows the name, even when the name wraps. */}
+                <span className="ml-2 inline-block rounded-full bg-zinc-900/[0.05] px-1.5 text-xs text-zinc-500 tabular-nums dark:bg-zinc-50/[0.08] dark:text-zinc-400">
+                  {skills.length}
+                </span>
+              </dt>
+              {/* content-start: otherwise a one-line list stretches its chips to the row height. */}
+              <dd className="flex flex-wrap content-start gap-x-1.5 gap-y-2 sm:pl-5">
+                {skills.map((skill) => (
+                  <SkillItem
+                    icon={skill.icon}
+                    key={skill.name}
+                    name={skill.labelKey ? t(skill.labelKey) : skill.name}
+                  />
+                ))}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </m.div>
     </m.section>
   );
 }
